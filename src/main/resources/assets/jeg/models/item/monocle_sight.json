@@ -1,0 +1,322 @@
+{
+	"credit": "Model by MrCrayfish (https://twitter.com/MrCrayfish) using Blockbench. All Rights Reserved.",
+	"texture_size": [64, 64],
+	"textures": {
+		"0": "jeg:item/monocle_sight",
+		"particle": "jeg:item/monocle_sight"
+	},
+	"elements": [
+		{
+			"name": "holographic_sight",
+			"from": [7.62219, 8.065, 7.53281],
+			"to": [8.37782, 8.28275, 8.49969],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 2.8, 8.00382]},
+			"faces": {
+				"north": {"uv": [0.75, 1.25, 0, 1.5], "texture": "#0"},
+				"south": {"uv": [0.75, 1.25, 0, 1.5], "texture": "#0"},
+				"west": {"uv": [1, 0, 0, 0.25], "texture": "#0"},
+				"up": {"uv": [0, 0.25, 0.75, 1.25], "texture": "#0"},
+				"down": {"uv": [0.75, 0.25, 0, 1.25], "texture": "#0"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.79235, 9.15209, 7.01606],
+			"to": [8.15798, 9.28209, 7.52956],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [7.96229, 8.91666, 7.17531]},
+			"faces": {
+				"north": {"uv": [5, 0, 5.25, 0.25], "texture": "#0"},
+				"south": {"uv": [5, 0, 5.25, 0.25], "texture": "#0"},
+				"up": {"uv": [5, 0, 5.25, 0.25], "texture": "#0"},
+				"down": {"uv": [5, 0, 5.25, 0.25], "texture": "#0"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.58373, 8.68927, 7.01931],
+			"to": [7.71373, 9.05489, 7.52631],
+			"rotation": {"angle": -22.5, "axis": "z", "origin": [7.96229, 8.91666, 7.17531]},
+			"faces": {
+				"north": {"uv": [4.5, 0, 4.75, 0.25], "rotation": 90, "texture": "#0"},
+				"east": {"uv": [4.5, 0, 4.75, 0.25], "rotation": 270, "texture": "#0"},
+				"south": {"uv": [4.5, 0, 4.75, 0.25], "rotation": 270, "texture": "#0"},
+				"west": {"uv": [4.5, 0, 4.75, 0.25], "rotation": 270, "texture": "#0"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.53382, 8.90868, 7.02256],
+			"to": [7.66382, 9.02355, 7.52306],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [7.96229, 8.91666, 7.17531]},
+			"faces": {
+				"north": {"uv": [4.5, 0, 4.75, 0.25], "rotation": 90, "texture": "#0"},
+				"east": {"uv": [4.5, 0, 4.75, 0.25], "rotation": 270, "texture": "#0"},
+				"south": {"uv": [4.5, 0, 4.75, 0.25], "rotation": 270, "texture": "#0"},
+				"west": {"uv": [4.5, 0, 4.75, 0.25], "rotation": 270, "texture": "#0"},
+				"down": {"uv": [4.5, 0, 4.75, 0.25], "rotation": 270, "texture": "#0"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.66964, 8.60973, 7.01931],
+			"to": [7.86951, 8.73973, 7.13631],
+			"rotation": {"angle": -22.5, "axis": "z", "origin": [7.96729, 8.93166, 7.17531]},
+			"faces": {
+				"north": {"uv": [4.5, 0, 4.75, 0.25], "texture": "#0"},
+				"east": {"uv": [4.5, 0, 4.75, 0.25], "texture": "#0"},
+				"south": {"uv": [4.5, 0, 4.75, 0.25], "texture": "#0"},
+				"up": {"uv": [4.5, 0, 4.75, 0.25], "texture": "#0"},
+				"down": {"uv": [4.5, 0, 4.75, 0.25], "texture": "#0"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [8.39788, 8.46524, 7.01606],
+			"to": [8.52788, 9.20055, 7.52956],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [8.46288, 8.72524, 7.27281]},
+			"faces": {
+				"north": {"uv": [4, 0, 4.25, 1], "texture": "#0"},
+				"east": {"uv": [4, 0, 4.25, 1], "texture": "#0"},
+				"south": {"uv": [4, 0, 4.25, 1], "texture": "#0"},
+				"west": {"uv": [4, 0, 4.25, 1], "texture": "#0"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.84227, 9.18343, 7.01281],
+			"to": [8.20789, 9.31343, 7.53281],
+			"rotation": {"angle": -22.5, "axis": "z", "origin": [7.96229, 8.91666, 7.17531]},
+			"faces": {
+				"north": {"uv": [5, 0, 5.25, 0.25], "texture": "#0"},
+				"south": {"uv": [5, 0, 5.25, 0.25], "texture": "#0"},
+				"up": {"uv": [5, 0, 5.25, 0.25], "texture": "#0"},
+				"down": {"uv": [5, 0, 5.25, 0.25], "texture": "#0"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [8.3812, 8.065, 7.01281],
+			"to": [8.8362, 8.54275, 8.82469],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8.00338, 2.8, 8.00382]},
+			"faces": {
+				"north": {"uv": [3.75, 0, 3.25, 0.5], "texture": "#0"},
+				"east": {"uv": [1.5, 0, 3.25, 0.5], "texture": "#0"},
+				"west": {"uv": [3.25, 0, 1.5, 0.5], "texture": "#0"},
+				"up": {"uv": [2.5, 0.5, 2, 2.25], "texture": "#0"},
+				"down": {"uv": [2, 0.5, 1.5, 2.25], "texture": "#0"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [8.37795, 8.13497, 8.65578],
+			"to": [8.83945, 8.47278, 8.9936],
+			"rotation": {"angle": 45, "axis": "x", "origin": [8.6087, 8.30388, 8.82469]},
+			"faces": {
+				"east": {"uv": [2.75, 0.75, 3.25, 1.25], "texture": "#0"},
+				"south": {"uv": [3, 1.25, 2.75, 1.5], "texture": "#0"},
+				"west": {"uv": [3.25, 0.75, 2.75, 1.25], "texture": "#0"},
+				"up": {"uv": [3.25, 0.75, 3, 1.25], "texture": "#0"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [8.5112, 8.06518, 8.82469],
+			"to": [8.7062, 8.54275, 9.01969],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8.00338, 2.8, 8.00382]},
+			"faces": {
+				"east": {"uv": [1, 0.5, 1.25, 1], "texture": "#0"},
+				"south": {"uv": [1, 0.5, 1.25, 1], "texture": "#0"},
+				"west": {"uv": [1, 0.5, 1.25, 1], "texture": "#0"},
+				"up": {"uv": [1, 0.5, 1.25, 0.75], "texture": "#0"},
+				"down": {"uv": [1, 0.75, 1.25, 1], "texture": "#0"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.7273, 8.57659, 7.08675],
+			"to": [8.2798, 9.12909, 7.08675],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [8.00355, 8.85284, 7.08675]},
+			"faces": {
+				"south": {"uv": [8, 8, 0, 16], "texture": "#0"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.91108, 8.59724, 7.09],
+			"to": [8.13858, 8.61674, 7.09],
+			"rotation": {"angle": -22.5, "axis": "z", "origin": [7.96229, 8.91666, 7.17531]},
+			"faces": {
+				"south": {"uv": [13.5, 3, 16, 3.25], "texture": "#0"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [8.23095, 8.74872, 7.09],
+			"to": [8.25045, 8.97622, 7.09],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [8.01737, 8.92501, 7.17531]},
+			"faces": {
+				"south": {"uv": [13.5, 3.25, 16, 3.5], "rotation": 90, "texture": "#0"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.86258, 9.11834, 7.09],
+			"to": [8.09008, 9.13784, 7.09],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [8.0195, 8.92412, 7.17531]},
+			"faces": {
+				"south": {"uv": [15.75, 0, 16, 2.5], "texture": "#0"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.74947, 8.7576, 7.09],
+			"to": [7.76897, 8.9851, 7.09],
+			"rotation": {"angle": -22.5, "axis": "z", "origin": [7.96318, 8.91453, 7.17531]},
+			"faces": {
+				"south": {"uv": [15.75, 0, 16, 2.5], "rotation": 270, "texture": "#0"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.9092, 9.08529, 7.09],
+			"to": [8.1367, 9.10479, 7.09],
+			"rotation": {"angle": -22.5, "axis": "z", "origin": [8.06612, 8.89108, 7.17531]},
+			"faces": {
+				"south": {"uv": [15.75, 0, 16, 2.5], "texture": "#0"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [8.27945, 8.75885, 7.09],
+			"to": [8.29895, 8.98635, 7.09],
+			"rotation": {"angle": -22.5, "axis": "z", "origin": [7.96016, 8.91578, 7.17531]},
+			"faces": {
+				"south": {"uv": [13.5, 3, 16, 3.25], "rotation": 270, "texture": "#0"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.87762, 8.60415, 7.09],
+			"to": [8.10512, 8.62365, 7.09],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [8.06612, 8.8941, 7.17531]},
+			"faces": {
+				"south": {"uv": [16, 3.25, 13.5, 3.5], "texture": "#0"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.73911, 8.71065, 7.09],
+			"to": [7.75861, 8.93815, 7.09],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [7.94062, 8.8107, 7.17531]},
+			"faces": {
+				"south": {"uv": [15.75, 0, 16, 2.5], "rotation": 90, "texture": "#0"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.83485, 9.24816, 7.09],
+			"to": [8.06235, 9.26766, 7.09],
+			"rotation": {"angle": -45, "axis": "z", "origin": [7.96229, 8.91666, 7.17531]},
+			"faces": {
+				"south": {"uv": [13.5, 2.75, 16, 3], "texture": "#0"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.83485, 9.24816, 7.08463],
+			"to": [8.06235, 9.26766, 7.08463],
+			"rotation": {"angle": -45, "axis": "z", "origin": [7.96229, 8.91666, 7.17531]},
+			"faces": {
+				"north": {"uv": [16, 2.75, 13.5, 3], "texture": "#0"}
+			}
+		},
+		{
+			"name": "glow",
+			"from": [7.92213, 8.78203, 7.155],
+			"to": [8.08463, 8.94453, 7.155],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8.00338, 2.8, 8.00382]},
+			"faces": {
+				"south": {"uv": [16, 12.25, 12.25, 16], "texture": "#0"}
+			}
+		},
+		{
+			"name": "bb_main",
+			"from": [7.99851, 8.82973, 7.155],
+			"to": [8.00826, 8.85573, 7.155],
+			"rotation": {"angle": -45, "axis": "z", "origin": [8.00338, 8.85085, 7.155]},
+			"faces": {
+				"south": {"uv": [13, 3.25, 13.25, 3.5], "texture": "#0"}
+			}
+		},
+		{
+			"name": "bb_main",
+			"from": [7.99851, 8.82973, 7.155],
+			"to": [8.00826, 8.85573, 7.155],
+			"rotation": {"angle": 45, "axis": "z", "origin": [8.00338, 8.85085, 7.155]},
+			"faces": {
+				"south": {"uv": [13.25, 3.25, 13, 3.5], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [114, 0, 0],
+			"translation": [0, 2, 0.5],
+			"scale": [2, 2, 2]
+		},
+		"firstperson_righthand": {
+			"translation": [2.25, 0.25, 0],
+			"scale": [2, 2, 2]
+		},
+		"ground": {
+			"translation": [0, -3, 0],
+			"scale": [2, 2, 2]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"translation": [0.5, -1.75, 0],
+			"scale": [4, 4, 4]
+		},
+		"fixed": {
+			"rotation": [0, 90, 0],
+			"translation": [-1, -2, -1.75],
+			"scale": [4, 4, 4]
+		}
+	},
+	"groups": [
+		{
+			"name": "holographic_sight",
+			"origin": [8.99588, 8, 7.74382],
+			"color": 1,
+			"children": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				{
+					"name": "glow",
+					"origin": [7.24588, 0, 7.74382],
+					"color": 2,
+					"children": [21, 22, 23]
+				}
+			]
+		}
+	]
+}

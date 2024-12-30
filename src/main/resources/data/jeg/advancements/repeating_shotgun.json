@@ -1,0 +1,37 @@
+{
+    "display": {
+        "title": {
+            "translate": "jeg.advancements.repeating_shotgun.title"
+        },
+        "description": {
+            "translate": "jeg.advancements.repeating_shotgun.description"
+        },
+        "icon": {
+            "item": "jeg:repeating_shotgun"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": false,
+        "hidden": false
+    },
+    "criteria": {
+        "Item": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "jeg:repeating_shotgun"
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "requirements": [
+        [
+          "Item"
+        ]
+      ],
+    "parent": "jeg:blueprint_workbench"
+}

@@ -1,0 +1,29 @@
+{
+  "type": "jeg:blueprint_workbench",
+  "materials": [
+    {
+      "item": "jeg:pump_shotgun",
+      "count": 1
+    },
+    {
+      "item": "minecraft:sculk",
+      "count": 24
+    },
+    {
+      "item": "minecraft:bone",
+      "count": 10
+    },
+    {
+      "item": "jeg:gunnite_ingot",
+      "count": 20
+    },
+    {
+      "item": "jeg:scrap",
+      "count": 37
+    }
+  ],
+  "result": {
+    "item": "jeg:supersonic_shotgun"
+  },
+  "time": 30
+}

@@ -1,0 +1,8 @@
+{
+  "name": "night_of_the_undead",
+  "aiLevel": 1,
+  "mobs": ["minecraft:zombie", "minecraft:zombie_villager", "minecraft:husk"],
+  "closeGuns": ["jeg:custom_smg", "jeg:waterpipe_shotgun"],
+  "longGuns": ["jeg:revolver"],
+  "eliteGuns": ["jeg:double_barrel_shotgun"]
+}

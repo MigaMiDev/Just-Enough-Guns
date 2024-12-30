@@ -1,0 +1,10 @@
+{
+  "type": "jeg:infantry_rifle_bp_on_fishing",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:gameplay/fishing"
+    }
+  ],
+  "item": "jeg:firearm_blueprint"
+}

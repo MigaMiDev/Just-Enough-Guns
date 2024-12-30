@@ -1,0 +1,12 @@
+{
+  "type": "jeg:recycling",
+  "ingredient": {
+    "item": "jeg:grenade"
+  },
+  "result": {
+    "item": "minecraft:gunpowder",
+    "count": 3
+  },
+  "experience": 15,
+  "recyclingtime": 20
+}

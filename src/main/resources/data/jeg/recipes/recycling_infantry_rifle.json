@@ -1,0 +1,12 @@
+{
+  "type": "jeg:recycling",
+  "ingredient": {
+    "item": "jeg:infantry_rifle"
+  },
+  "result": {
+    "item": "jeg:gunmetal_ingot",
+    "count": 8
+  },
+  "experience": 30,
+  "recyclingtime": 600
+}

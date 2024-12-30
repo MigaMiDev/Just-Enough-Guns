@@ -1,0 +1,104 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [32, 32],
+	"textures": {
+		"particle": "jeg:item/flashlight"
+	},
+	"elements": [
+		{
+			"name": "flashlight",
+			"from": [7.54485, 7.46, 6.8],
+			"to": [8.50485, 8.42, 10.4],
+			"rotation": {"angle": -45, "axis": "z", "origin": [8.08485, 8, 9.8]},
+			"faces": {
+				"east": {"uv": [0, 1, 4, 2], "texture": "#particle"},
+				"south": {"uv": [4, 0, 5, 1], "texture": "#particle"},
+				"west": {"uv": [4, 0, 0, 1], "texture": "#particle"},
+				"up": {"uv": [2, 6, 1, 2], "texture": "#particle"},
+				"down": {"uv": [1, 2, 0, 6], "texture": "#particle"}
+			}
+		},
+		{
+			"name": "flashlight",
+			"from": [7.24485, 7.16, 5.6],
+			"to": [8.80485, 8.72, 6.8],
+			"rotation": {"angle": -45, "axis": "z", "origin": [8.08485, 8, 9.8]},
+			"faces": {
+				"north": {"uv": [7, 1.5, 5.5, 3], "texture": "#particle"},
+				"east": {"uv": [7, 0, 8, 1.5], "texture": "#particle"},
+				"south": {"uv": [5.5, 0, 7, 1.5], "texture": "#particle"},
+				"west": {"uv": [8, 0, 7, 1.5], "texture": "#particle"},
+				"up": {"uv": [8.5, 2.5, 7, 1.5], "texture": "#particle"},
+				"down": {"uv": [8.5, 1.5, 7, 2.5], "texture": "#particle"}
+			}
+		},
+		{
+			"name": "flashlight_glow",
+			"from": [7.22, 7.22, 5.5425],
+			"to": [8.78, 8.78, 5.5425],
+			"rotation": {"angle": -45, "axis": "z", "origin": [8, 8, 5.5425]},
+			"faces": {
+				"north": {"uv": [7, 3, 5.5, 4.5], "texture": "#particle"}
+			}
+		},
+		{
+			"name": "flashlight_glow",
+			"from": [6.22, 6.22, 5.5725],
+			"to": [9.78, 9.78, 5.5725],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 7.9975]},
+			"faces": {
+				"south": {"uv": [12, 12, 16, 16], "texture": "#particle"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [67.75, 0, 0],
+			"translation": [0, 3.25, 1],
+			"scale": [1.25, 1.25, 1.25]
+		},
+		"firstperson_righthand": {
+			"rotation": [12.25, 0, 0],
+			"translation": [2.25, 3, 0],
+			"scale": [1.5, 1.5, 1.5]
+		},
+		"ground": {
+			"translation": [0, -4, -0.3],
+			"scale": [2, 2, 2]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"translation": [-0.5, 0.25, 0],
+			"scale": [3, 3, 3]
+		},
+		"fixed": {
+			"rotation": [0, 90, 0],
+			"translation": [0, 0, -1.75],
+			"scale": [4, 4, 4]
+		}
+	},
+	"groups": [
+		{
+			"name": "flashlight",
+			"origin": [8, 0, 8.6],
+			"color": 0,
+			"children": [
+				0,
+				1,
+				{
+					"name": "glow",
+					"origin": [8.08485, 8, 10.7075],
+					"color": 1,
+					"children": [
+						{
+							"name": "flashlight_glow",
+							"origin": [8, 0, 8.9275],
+							"color": 2,
+							"children": [2, 3]
+						}
+					]
+				}
+			]
+		}
+	]
+}

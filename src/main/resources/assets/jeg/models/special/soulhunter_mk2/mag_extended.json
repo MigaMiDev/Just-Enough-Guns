@@ -1,0 +1,95 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [128, 128],
+	"textures": {
+		"0": "jeg:item/soulhunter_mk2",
+		"particle": "jeg:item/soulhunter_mk2"
+	},
+	"elements": [
+		{
+			"name": "extended_mag",
+			"from": [7.6465, 0.42435, 10.25582],
+			"to": [8.3535, 1.70435, 11.77582],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7.9975, 3.21413, 6.77229]},
+			"faces": {
+				"north": {"uv": [10, 2.25, 10.5, 2.875], "texture": "#0"},
+				"east": {"uv": [9.25, 2.25, 10.125, 2.875], "texture": "#0"},
+				"south": {"uv": [8.625, 2.25, 9.125, 2.875], "texture": "#0"},
+				"west": {"uv": [10.25, 2.25, 9.375, 2.875], "texture": "#0"}
+			}
+		},
+		{
+			"name": "extended_mag",
+			"from": [7.644, 1.70435, 10.25582],
+			"to": [8.364, 3.30435, 11.77582],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 3.21413, 6.77229]},
+			"faces": {
+				"north": {"uv": [10, 1.375, 10.5, 2.25], "texture": "#0"},
+				"east": {"uv": [9.25, 1.375, 10.125, 2.25], "texture": "#0"},
+				"south": {"uv": [8.625, 1.375, 9.125, 2.25], "texture": "#0"},
+				"west": {"uv": [10.25, 1.375, 9.375, 2.25], "texture": "#0"},
+				"up": {"uv": [8.625, 3.5, 9.125, 4.375], "texture": "#0"}
+			}
+		},
+		{
+			"name": "extended_mag",
+			"from": [7.644, 1.27148, 10.94255],
+			"to": [8.348, 2.55148, 12.46255],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [8, 3.21413, 6.77229]},
+			"faces": {
+				"north": {"uv": [10, 2.875, 10.5, 3.5], "texture": "#0"},
+				"east": {"uv": [9.25, 2.875, 10.125, 3.5], "texture": "#0"},
+				"south": {"uv": [8.625, 2.875, 9.125, 3.5], "texture": "#0"},
+				"west": {"uv": [10.25, 2.875, 9.375, 3.5], "texture": "#0"},
+				"down": {"uv": [9.125, 3.5, 9.625, 4.375], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"translation": [0, 6.5, -6.75]
+		},
+		"firstperson_righthand": {
+			"translation": [-3.5, 9, -1]
+		},
+		"firstperson_lefthand": {
+			"translation": [3.75, -3.25, 0]
+		},
+		"ground": {
+			"translation": [0, 5, -1]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"translation": [1.25, 4.5, 0],
+			"scale": [1.2, 1.2, 1.2]
+		},
+		"fixed": {
+			"rotation": [0, 90, 0],
+			"translation": [-3.25, 11.25, -2],
+			"scale": [2, 2, 2]
+		}
+	},
+	"groups": [
+		{
+			"name": "magazine",
+			"origin": [8, 0.08624, 10.14277],
+			"color": 8,
+			"children": [
+				{
+					"name": "glow",
+					"origin": [8, 0.08624, 10.14277],
+					"color": 9,
+					"children": [
+						{
+							"name": "extended_mag",
+							"origin": [8.0016, 0.50871, 8.0976],
+							"rotation": [12.5, 0, 0],
+							"color": 1,
+							"children": [0, 1, 2]
+						}
+					]
+				}
+			]
+		}
+	]
+}

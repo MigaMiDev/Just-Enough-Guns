@@ -1,0 +1,95 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [128, 128],
+	"textures": {
+		"0": "jeg:item/hollenfire_mk2",
+		"particle": "jeg:item/hollenfire_mk2"
+	},
+	"elements": [
+		{
+			"name": "default_mag",
+			"from": [7.64145, 0.04544, 11.46173],
+			"to": [8.36145, 3.04544, 12.98173],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8.00145, -0.005, 10.20829]},
+			"faces": {
+				"north": {"uv": [5.375, 2.375, 5.75, 4.25], "texture": "#0"},
+				"east": {"uv": [4.5, 2.375, 5.375, 4.25], "texture": "#0"},
+				"south": {"uv": [4.125, 2.375, 4.5, 4.25], "texture": "#0"},
+				"west": {"uv": [5.375, 2.375, 4.5, 4.25], "texture": "#0"},
+				"up": {"uv": [4.125, 4.25, 4.5, 5.125], "texture": "#0"},
+				"down": {"uv": [4.5, 4.25, 4.875, 5.125], "texture": "#0"}
+			}
+		},
+		{
+			"name": "default_mag",
+			"from": [8.00145, -0.15456, 12.37889],
+			"to": [8.00145, 0.24544, 12.77889],
+			"rotation": {"angle": -45, "axis": "x", "origin": [8.00145, 0.04544, 12.57889]},
+			"faces": {
+				"east": {"uv": [5, 4.375, 5.25, 4.625], "texture": "#0"}
+			}
+		},
+		{
+			"name": "default_mag",
+			"from": [8.00145, -0.15456, 11.66457],
+			"to": [8.00145, 0.24544, 12.06457],
+			"rotation": {"angle": -45, "axis": "x", "origin": [8.00145, 0.04544, 11.86457]},
+			"faces": {
+				"east": {"uv": [5, 4.375, 5.25, 4.625], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"translation": [0, 6.5, -6.75]
+		},
+		"firstperson_righthand": {
+			"translation": [-3.5, 9, -1]
+		},
+		"firstperson_lefthand": {
+			"translation": [3.75, -3.25, 0]
+		},
+		"ground": {
+			"translation": [0, 5, -1]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"translation": [1.25, 4.5, 0],
+			"scale": [1.2, 1.2, 1.2]
+		},
+		"fixed": {
+			"rotation": [0, 90, 0],
+			"translation": [-3.25, 11.25, -2],
+			"scale": [2, 2, 2]
+		}
+	},
+	"groups": [
+		{
+			"name": "magazine_default",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [
+				{
+					"name": "magazine",
+					"origin": [-0.11694, 2.17234, 2.83174],
+					"color": 3,
+					"children": [
+						{
+							"name": "glow",
+							"origin": [-0.11694, 2.17234, 2.83174],
+							"color": 4,
+							"children": [
+								{
+									"name": "default_mag",
+									"origin": [-0.11194, 0.99321, 3.4992],
+									"color": 5,
+									"children": [0, 1, 2]
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

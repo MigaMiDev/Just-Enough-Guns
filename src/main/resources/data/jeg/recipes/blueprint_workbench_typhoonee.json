@@ -1,0 +1,25 @@
+{
+  "type": "jeg:blueprint_workbench",
+  "materials": [
+    {
+      "item": "minecraft:heart_of_the_sea",
+      "count": 1
+    },
+    {
+      "item": "minecraft:prismarine_shard",
+      "count": 24
+    },
+    {
+      "item": "minecraft:prismarine_crystals",
+      "count": 12
+    },
+    {
+      "item": "jeg:scrap",
+      "count": 20
+    }
+  ],
+  "result": {
+    "item": "jeg:typhoonee"
+  },
+  "time": 30
+}

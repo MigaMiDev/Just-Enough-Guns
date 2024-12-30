@@ -1,0 +1,95 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [128, 128],
+	"textures": {
+		"2": "jeg:item/subsonic_rifle",
+		"particle": "jeg:item/subsonic_rifle"
+	},
+	"elements": [
+		{
+			"name": "default_mag",
+			"from": [7.636, 0.52469, 11.54878],
+			"to": [8.352, 1.80469, 12.96878],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 1.10469, 8.44878]},
+			"faces": {
+				"north": {"uv": [3.75, 3.25, 4.25, 3.875], "texture": "#2"},
+				"east": {"uv": [2.875, 3.25, 3.75, 3.875], "texture": "#2"},
+				"south": {"uv": [2.375, 3.25, 2.875, 3.875], "texture": "#2"},
+				"west": {"uv": [3.75, 3.25, 2.875, 3.875], "texture": "#2"}
+			}
+		},
+		{
+			"name": "default_mag",
+			"from": [7.64, 1.80469, 11.54878],
+			"to": [8.36, 2.60469, 12.96878],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 6.34322]},
+			"faces": {
+				"north": {"uv": [3.75, 2.375, 4.25, 3.25], "texture": "#2"},
+				"east": {"uv": [2.875, 2.375, 3.75, 3.25], "texture": "#2"},
+				"south": {"uv": [2.375, 2.375, 2.875, 3.25], "texture": "#2"},
+				"west": {"uv": [3.75, 2.375, 2.875, 3.25], "texture": "#2"},
+				"up": {"uv": [2.375, 4.5, 2.875, 5.375], "texture": "#2"}
+			}
+		},
+		{
+			"name": "default_mag",
+			"from": [7.64, 1.04292, 11.05254],
+			"to": [8.344, 2.32292, 12.47254],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [8, 0.17642, 8.20049]},
+			"faces": {
+				"north": {"uv": [3.75, 3.875, 4.25, 4.5], "texture": "#2"},
+				"east": {"uv": [2.875, 3.875, 3.75, 4.5], "texture": "#2"},
+				"south": {"uv": [2.375, 3.875, 2.875, 4.5], "texture": "#2"},
+				"west": {"uv": [3.75, 3.875, 2.875, 4.5], "texture": "#2"},
+				"down": {"uv": [3.75, 4.5, 4.25, 5.375], "texture": "#2"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"translation": [0, 6.5, -6.75]
+		},
+		"firstperson_righthand": {
+			"translation": [-3.5, 9, -1]
+		},
+		"firstperson_lefthand": {
+			"translation": [3.75, -3.25, 0]
+		},
+		"ground": {
+			"translation": [0, 5, -1]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"translation": [1.25, 4.5, 0],
+			"scale": [1.2, 1.2, 1.2]
+		},
+		"fixed": {
+			"rotation": [0, 90, 0],
+			"translation": [-3.25, 11.25, -2],
+			"scale": [2, 2, 2]
+		}
+	},
+	"groups": [
+		{
+			"name": "magazine",
+			"origin": [8, 1.47125, 7.86962],
+			"rotation": [2.5, 0, 0],
+			"color": 5,
+			"children": [
+				{
+					"name": "glow_2",
+					"origin": [8, 1.47125, 7.86962],
+					"color": 6,
+					"children": [
+						{
+							"name": "default_mag",
+							"origin": [8.004, 1.24882, 7.90722],
+							"color": 7,
+							"children": [0, 1, 2]
+						}
+					]
+				}
+			]
+		}
+	]
+}

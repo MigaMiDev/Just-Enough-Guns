@@ -1,0 +1,10 @@
+{
+  "type": "jeg:fire_starter_on_bartering",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:gameplay/piglin_bartering"
+    }
+  ],
+  "item": "minecraft:enchanted_book"
+}

@@ -1,0 +1,29 @@
+{
+  "type": "jeg:blueprint_workbench",
+  "materials": [
+    {
+      "item": "minecraft:sculk_shrieker",
+      "count": 1
+    },
+    {
+      "item": "minecraft:sculk",
+      "count": 24
+    },
+    {
+      "item": "minecraft:bone",
+      "count": 18
+    },
+    {
+      "item": "jeg:gunnite_ingot",
+      "count": 8
+    },
+    {
+      "item": "jeg:scrap",
+      "count": 40
+    }
+  ],
+  "result": {
+    "item": "jeg:hypersonic_cannon"
+  },
+  "time": 30
+}

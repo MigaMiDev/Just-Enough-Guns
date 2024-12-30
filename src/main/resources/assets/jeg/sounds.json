@@ -1,0 +1,1175 @@
+{
+  "item.finger_gun": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/finger_gun"
+      }
+    ]
+  },
+  "item.doot": {
+    "subtitle": "subtitle.jeg.doot",
+    "sounds": [
+      {
+        "name": "jeg:item/doot"
+      }
+    ]
+  },
+  "item.beep": {
+    "subtitle": "subtitle.jeg.beep",
+    "sounds": [
+      {
+        "name": "jeg:item/beep"
+      }
+    ]
+  },
+  "item.goose": {
+    "subtitle": "subtitle.jeg.goose",
+    "sounds": [
+      {
+        "name": "jeg:item/goose"
+      }
+    ]
+  },
+  "item.loot_drop.item.ammo_pouch": {
+    "sounds": [
+      {
+        "name": "jeg:item/loot_drop/item/ammo_pouch"
+      }
+    ]
+  },
+  "item.loot_drop.item.badge_pack": {
+    "sounds": [
+      {
+        "name": "jeg:item/loot_drop/item/badge_pack"
+      }
+    ]
+  },
+  "item.flashlight": {
+    "subtitle": "subtitle.jeg.flashlight",
+    "sounds": [
+      {
+        "name": "jeg:item/flashlight"
+      }
+    ]
+  },
+  "event.raid.dark_horn": {
+    "subtitle": "subtitle.event.raid.dark_horn",
+    "sounds": [
+      {
+        "name": "jeg:event/raid/dark_horn"
+      }
+    ]
+  },
+  "item.flashlight_charge": {
+    "subtitle": "subtitle.jeg.flashlight_charge",
+    "sounds": [
+      {
+        "name": "jeg:item/flashlight_charge"
+      }
+    ]
+  },
+  "block.recycler_loop": {
+    "subtitle": "subtitle.block.recycler_loop",
+    "sounds": [
+      {
+        "name": "jeg:block/recycler_loop"
+      }
+    ]
+  },
+  "block.recycler_shredding": {
+    "subtitle": "subtitle.block.recycler_shredding",
+    "sounds": [
+      {
+        "name": "jeg:block/recycler_shredding"
+      }
+    ]
+  },
+  "block.hit.metal": {
+    "subtitle": "subtitles.block.generic.break",
+    "sounds": [
+      {
+        "name": "jeg:block/hit/metal1",
+        "stream": true
+      },
+      {
+        "name": "jeg:block/hit/metal2",
+        "stream": true
+      },
+      {
+        "name": "jeg:block/hit/metal3",
+        "stream": true
+      }
+    ]
+  },
+  "block.hit.stone": {
+    "subtitle": "subtitles.block.generic.break",
+    "sounds": [
+      {
+        "name": "jeg:block/hit/stone1",
+        "stream": true
+      },
+      {
+        "name": "jeg:block/hit/stone2",
+        "stream": true
+      }
+    ]
+  },
+  "block.hit.wood": {
+    "subtitle": "subtitles.block.generic.break",
+    "sounds": [
+      {
+        "name": "jeg:block/hit/wood1",
+        "stream": true
+      },
+      {
+        "name": "jeg:block/hit/wood2",
+        "stream": true
+      },
+      {
+        "name": "jeg:block/hit/wood3",
+        "stream": true
+      },
+      {
+        "name": "jeg:block/hit/wood4",
+        "stream": true
+      },
+      {
+        "name": "jeg:block/hit/wood5",
+        "stream": true
+      },
+      {
+        "name": "jeg:block/hit/wood6",
+        "stream": true
+      },
+      {
+        "name": "jeg:block/hit/wood7",
+        "stream": true
+      }
+    ]
+  },
+  "block.hit.squishy": {
+    "subtitle": "subtitles.block.generic.break",
+    "sounds": [
+      {
+        "name": "minecraft:mob/turtle/egg/egg_break1",
+        "stream": true
+      },
+      {
+        "name": "minecraft:mob/turtle/egg/egg_break2",
+        "stream": true
+      }
+    ]
+  },
+  "entity.bullet.close": {
+    "subtitle": "subtitle.jeg.bullet_close",
+    "sounds": [
+      {
+        "name": "jeg:entity/bullet/close1",
+        "stream": true
+      },
+      {
+        "name": "jeg:entity/bullet/close2",
+        "stream": true
+      },
+      {
+        "name": "jeg:entity/bullet/close3",
+        "stream": true
+      },
+      {
+        "name": "jeg:entity/bullet/close4",
+        "stream": true
+      },
+      {
+        "name": "jeg:entity/bullet/close5",
+        "stream": true
+      }
+    ]
+  },
+  "entity.bullet.hit": {
+    "subtitle": "subtitle.jeg.bullet_hit",
+    "sounds": [
+      {
+        "name": "jeg:entity/bullet/hit",
+        "stream": true
+      }
+    ]
+  },
+  "ui.medal.generic": {
+    "sounds": [
+      {
+        "name": "jeg:ui/medal/generic",
+        "stream": true
+      }
+    ]
+  },
+  "ui.medal.headshot": {
+    "sounds": [
+      {
+        "name": "jeg:ui/medal/headshot",
+        "stream": true
+      }
+    ]
+  },
+  "item.kill_effect.birthday_party": {
+    "sounds": [
+      {
+        "name": "jeg:item/kill_effect/birthday_party"
+      }
+    ]
+  },
+  "item.kill_effect.air_horn": {
+    "sounds": [
+      {
+        "name": "jeg:item/kill_effect/air_horn"
+      }
+    ]
+  },
+
+  "item.combat_rifle.fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/combat_rifle/fire"
+      }
+    ]
+  },
+  "item.combat_rifle.silenced_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/combat_rifle/silenced_fire"
+      }
+    ]
+  },
+  "item.combat_rifle.enchanted_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/combat_rifle/enchanted_fire"
+      }
+    ]
+  },
+  "item.assault_rifle.fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/assault_rifle/fire"
+      }
+    ]
+  },
+  "item.assault_rifle.silenced_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/assault_rifle/silenced_fire"
+      }
+    ]
+  },
+  "item.assault_rifle.enchanted_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/assault_rifle/enchanted_fire"
+      }
+    ]
+  },
+  "item.revolver.fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/revolver/fire"
+      }
+    ]
+  },
+  "item.revolver.silenced_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/revolver/silenced_fire"
+      }
+    ]
+  },
+  "item.revolver.enchanted_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/revolver/enchanted_fire"
+      }
+    ]
+  },
+  "item.waterpipe_shotgun.fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/waterpipe_shotgun/fire"
+      }
+    ]
+  },
+  "item.waterpipe_shotgun.enchanted_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/waterpipe_shotgun/enchanted_fire"
+      }
+    ]
+  },
+  "item.semi_auto_rifle.fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/semi_auto_rifle/fire"
+      }
+    ]
+  },
+  "item.semi_auto_rifle.silenced_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/semi_auto_rifle/silenced_fire"
+      }
+    ]
+  },
+  "item.semi_auto_rifle.enchanted_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/semi_auto_rifle/enchanted_fire"
+      }
+    ]
+  },
+  "item.burst_rifle.fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/burst_rifle/fire"
+      }
+    ]
+  },
+  "item.burst_rifle.silenced_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/burst_rifle/silenced_fire"
+      }
+    ]
+  },
+  "item.burst_rifle.enchanted_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/burst_rifle/enchanted_fire"
+      }
+    ]
+  },
+  "item.pump_shotgun.fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/pump_shotgun/fire"
+      }
+    ]
+  },
+  "item.pump_shotgun.silenced_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/pump_shotgun/silenced_fire"
+      }
+    ]
+  },
+  "item.pump_shotgun.enchanted_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/pump_shotgun/enchanted_fire"
+      }
+    ]
+  },
+  "item.bolt_action_rifle.fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/bolt_action_rifle/fire"
+      }
+    ]
+  },
+  "item.bolt_action_rifle.silenced_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/bolt_action_rifle/silenced_fire"
+      }
+    ]
+  },
+  "item.bolt_action_rifle.enchanted_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/bolt_action_rifle/enchanted_fire"
+      }
+    ]
+  },
+  "item.custom_smg.fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/custom_smg/fire"
+      }
+    ]
+  },
+  "item.custom_smg.silenced_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/custom_smg/silenced_fire"
+      }
+    ]
+  },
+  "item.custom_smg.enchanted_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/custom_smg/enchanted_fire"
+      }
+    ]
+  },
+  "item.blossom_rifle.fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/blossom_rifle/fire"
+      }
+    ]
+  },
+  "item.blossom_rifle.silenced_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/blossom_rifle/silenced_fire"
+      }
+    ]
+  },
+  "item.blossom_rifle.enchanted_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/blossom_rifle/enchanted_fire"
+      }
+    ]
+  },
+  "item.double_barrel_shotgun.fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/double_barrel_shotgun/fire"
+      }
+    ]
+  },
+  "item.double_barrel_shotgun.enchanted_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/double_barrel_shotgun/enchanted_fire"
+      }
+    ]
+  },
+  "item.holy_shotgun.fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/holy_shotgun/fire"
+      }
+    ]
+  },
+  "item.holy_shotgun.silenced_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/holy_shotgun/silenced_fire"
+      }
+    ]
+  },
+  "item.holy_shotgun.enchanted_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/holy_shotgun/enchanted_fire"
+      }
+    ]
+  },
+  "item.typhoonee.fire": {
+    "subtitle": "subtitle.jeg.typhoonee_fire",
+    "sounds": [
+      {
+        "name": "jeg:item/typhoonee/fire"
+      }
+    ]
+  },
+  "item.typhoonee.prefire": {
+    "subtitle": "subtitle.jeg.typhoonee_prefire",
+    "sounds": [
+      {
+        "name": "jeg:item/typhoonee/prefire"
+      }
+    ]
+  },
+  "item.repeating_shotgun.fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/repeating_shotgun/fire"
+      }
+    ]
+  },
+  "item.repeating_shotgun.enchanted_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/repeating_shotgun/enchanted_fire"
+      }
+    ]
+  },
+  "item.infantry_rifle.fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/infantry_rifle/fire"
+      }
+    ]
+  },
+  "item.infantry_rifle.silenced_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/infantry_rifle/silenced_fire"
+      }
+    ]
+  },
+  "item.infantry_rifle.enchanted_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/infantry_rifle/enchanted_fire"
+      }
+    ]
+  },
+  "item.infantry_rifle.ping": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/infantry_rifle/ping"
+      }
+    ]
+  },
+  "item.service_rifle.fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/service_rifle/fire"
+      }
+    ]
+  },
+  "item.service_rifle.enchanted_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/service_rifle/enchanted_fire"
+      }
+    ]
+  },
+  "item.hollenfire_mk2.fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/hollenfire_mk2/fire"
+      }
+    ]
+  },
+  "item.hollenfire_mk2.enchanted_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/hollenfire_mk2/enchanted_fire"
+      }
+    ]
+  },
+  "item.soulhunter_mk2.fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/soulhunter_mk2/fire"
+      }
+    ]
+  },
+  "item.soulhunter_mk2.enchanted_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/soulhunter_mk2/enchanted_fire"
+      }
+    ]
+  },
+  "item.subsonic_rifle.fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/subsonic_rifle/fire"
+      }
+    ]
+  },
+  "item.subsonic_rifle.enchanted_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/subsonic_rifle/enchanted_fire"
+      }
+    ]
+  },
+  "item.supersonic_shotgun.fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/supersonic_shotgun/fire"
+      }
+    ]
+  },
+  "item.hypersonic_cannon.charge": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/hypersonic_cannon/charge1",
+        "stream": true
+      },
+      {
+        "name": "jeg:item/hypersonic_cannon/charge2",
+        "stream": true
+      },
+      {
+        "name": "jeg:item/hypersonic_cannon/charge3",
+        "stream": true
+      },
+      {
+        "name": "jeg:item/hypersonic_cannon/charge4",
+        "stream": true
+      }
+    ]
+  },
+  "item.rocket_launcher.fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/rocket_launcher/fire"
+      }
+    ]
+  },
+  "item.flare_gun.fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/flare_gun/fire"
+      }
+    ]
+  },
+  "item.light_machine_gun.fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/light_machine_gun/fire"
+      }
+    ]
+  },
+  "item.light_machine_gun.enchanted_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/light_machine_gun/enchanted_fire"
+      }
+    ]
+  },
+  "item.light_machine_gun.silenced_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/light_machine_gun/silenced_fire"
+      }
+    ]
+  },
+  "item.compound_bow.fire": {
+    "subtitle": "subtitles.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/compound_bow/fire1",
+        "stream": true
+      },
+      {
+        "name": "jeg:item/compound_bow/fire2",
+        "stream": true
+      },
+      {
+        "name": "jeg:item/compound_bow/fire3",
+        "stream": true
+      }
+    ]
+  },
+
+  "item.combat_rifle.reload_magazine_out": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/combat_rifle/reload_magazine_out"
+      }
+    ]
+  },
+  "item.combat_rifle.reload_magazine_in": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/combat_rifle/reload_magazine_in"
+      }
+    ]
+  },
+  "item.combat_rifle.reload_ejector": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/combat_rifle/reload_ejector"
+      }
+    ]
+  },
+  "item.combat_rifle.ejector_pull": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/combat_rifle/ejector_pull"
+      }
+    ]
+  },
+  "item.combat_rifle.ejector_release": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/combat_rifle/ejector_release"
+      }
+    ]
+  },
+  "item.pump_shotgun.pump": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/pump_shotgun/pump"
+      }
+    ]
+  },
+  "item.pump_shotgun.pump_pull": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/pump_shotgun/pump_pull"
+      }
+    ]
+  },
+  "item.pump_shotgun.pump_release": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/pump_shotgun/pump_release"
+      }
+    ]
+  },
+  "item.pump_shotgun.shell": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/pump_shotgun/shell"
+      }
+    ]
+  },
+  "item.assault_rifle.reload_magazine_out": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/assault_rifle/reload_magazine_out"
+      }
+    ]
+  },
+  "item.assault_rifle.reload_magazine_in": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/assault_rifle/reload_magazine_in"
+      }
+    ]
+  },
+  "item.assault_rifle.reload_ejector": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/assault_rifle/reload_ejector"
+      }
+    ]
+  },
+  "item.assault_rifle.ejector_pull": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/assault_rifle/ejector_pull"
+      }
+    ]
+  },
+  "item.assault_rifle.ejector_release": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/assault_rifle/ejector_release"
+      }
+    ]
+  },
+  "item.infantry_rifle.clip_in": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/infantry_rifle/clip_in"
+      }
+    ]
+  },
+  "item.infantry_rifle.ejector": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/infantry_rifle/ejector"
+      }
+    ]
+  },
+  "item.infantry_rifle.ejector_pull": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/infantry_rifle/ejector_pull"
+      }
+    ]
+  },
+  "item.infantry_rifle.ejector_release": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/infantry_rifle/ejector_release"
+      }
+    ]
+  },
+  "item.service_rifle.reload_magazine_out": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/service_rifle/reload_magazine_out"
+      }
+    ]
+  },
+  "item.service_rifle.reload_magazine_in": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/service_rifle/reload_magazine_in"
+      }
+    ]
+  },
+
+  "item.gun_generic.enchanted_fire": {
+    "subtitle": "subtitle.jeg.fire.enchanted",
+    "sounds": [
+      {
+        "name": "jeg:item/gun_generic/enchanted_fire"
+      }
+    ]
+  },
+  "item.revolver.reload_bullets_out": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/revolver/reload_bullets_out"
+      }
+    ]
+  },
+  "item.revolver.reload_bullet_in": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/revolver/reload_bullet_in"
+      }
+    ]
+  },
+  "item.revolver.chamber_spin": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/revolver/chamber_spin"
+      }
+    ]
+  },
+  "item.bolt_action_rifle.bolt_pull": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/bolt_action_rifle/bolt_pull"
+      }
+    ]
+  },
+  "item.bolt_action_rifle.bolt_release": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/bolt_action_rifle/bolt_release"
+      }
+    ]
+  },
+  "item.bolt_action_rifle.bullet_in": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/bolt_action_rifle/bullet_in"
+      }
+    ]
+  },
+  "item.rocket_launcher.lid_open": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/rocket_launcher/lid_open"
+      }
+    ]
+  },
+  "item.rocket_launcher.lid_close": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/rocket_launcher/lid_close"
+      }
+    ]
+  },
+  "item.rocket_launcher.rocket_in": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/rocket_launcher/rocket_in"
+      }
+    ]
+  },
+  "item.compound_bow.charge": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/compound_bow/charge"
+      }
+    ]
+  },
+  "item.compound_bow.pull": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/compound_bow/pull"
+      }
+    ]
+  },
+  "item.compound_bow.place_arrow": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/compound_bow/place_arrow1",
+        "stream": true
+      },
+      {
+        "name": "jeg:item/compound_bow/place_arrow2",
+        "stream": true
+      },
+      {
+        "name": "jeg:item/compound_bow/place_arrow3",
+        "stream": true
+      }
+    ]
+  },
+
+  "item.pistol.silenced_fire": {
+    "subtitle": "subtitle.jeg.fire.silenced",
+    "sounds": [
+      {
+        "name": "jeg:item/pistol/silenced_fire"
+      }
+    ]
+  },
+  "item.pistol.enchanted_fire": {
+    "subtitle": "subtitle.jeg.fire.enchanted",
+    "sounds": [
+      {
+        "name": "jeg:item/pistol/enchanted_fire"
+      }
+    ]
+  },
+  "item.pistol.reload": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/pistol/reload"
+      }
+    ]
+  },
+  "item.pistol.cock": {
+    "subtitle": "subtitle.jeg.cock",
+    "sounds": [
+      {
+        "name": "jeg:item/pistol/cock"
+      }
+    ]
+  },
+  "item.grenade_launcher.fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/grenade_launcher/fire"
+      }
+    ]
+  },
+  "item.bazooka.fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/bazooka/fire",
+        "stream": true
+      }
+    ]
+  },
+  "item.grenade.pin": {
+    "subtitle": "subtitle.jeg.grenade.pin",
+    "sounds": [
+      {
+        "name": "jeg:item/grenade/pin"
+      }
+    ]
+  },
+  "item.gun_rustle": {
+    "subtitle": "subtitle.jeg.gun_rustle",
+    "sounds": [
+      {
+        "name": "jeg:item/gun_rustle/rustle1",
+        "stream": true
+      },
+      {
+        "name": "jeg:item/gun_rustle/rustle2",
+        "stream": true
+      },
+      {
+        "name": "jeg:item/gun_rustle/rustle3",
+        "stream": true
+      },
+      {
+        "name": "jeg:item/gun_rustle/rustle4",
+        "stream": true
+      },
+      {
+        "name": "jeg:item/gun_rustle/rustle5",
+        "stream": true
+      },
+      {
+        "name": "jeg:item/gun_rustle/rustle6",
+        "stream": true
+      },
+      {
+        "name": "jeg:item/gun_rustle/rustle7",
+        "stream": true
+      },
+      {
+        "name": "jeg:item/gun_rustle/rustle8",
+        "stream": true
+      }
+    ]
+  },
+  "item.gun_screw": {
+    "subtitle": "subtitle.jeg.gun_rustle",
+    "sounds": [
+      {
+        "name": "jeg:item/gun_rustle/screw1",
+        "stream": true
+      },
+      {
+        "name": "jeg:item/gun_rustle/screw2",
+        "stream": true
+      },
+      {
+        "name": "jeg:item/gun_rustle/screw3",
+        "stream": true
+      },
+      {
+        "name": "jeg:item/gun_rustle/screw4",
+        "stream": true
+      }
+    ]
+  },
+  "entity.stun_grenade.explosion": {
+    "subtitle": "subtitle.jeg.stun.explosion",
+    "sounds": [
+      {
+        "name": "jeg:entity/stun_grenade/explosion",
+        "stream": true
+      }
+    ]
+  },
+  "entity.stun_grenade.ring": {
+    "subtitle": "subtitle.jeg.stun.ring",
+    "sounds": [
+      {
+        "name": "jeg:entity/stun_grenade/ring",
+        "stream": true
+      }
+    ]
+  },
+  "entity.ghoul.death": {
+    "subtitle": "subtitle.jeg.ghoul.death",
+    "sounds": [
+      {
+        "name": "jeg:entity/ghoul/death1",
+        "stream": true
+      },
+      {
+        "name": "jeg:entity/ghoul/death2",
+        "stream": true
+      }
+    ]
+  },
+  "entity.ghoul.hurt": {
+    "subtitle": "subtitle.jeg.ghoul.hurt",
+    "sounds": [
+      {
+        "name": "jeg:entity/ghoul/hurt1",
+        "stream": true
+      },
+      {
+        "name": "jeg:entity/ghoul/hurt2",
+        "stream": true
+      }
+    ]
+  },
+  "entity.ghoul.ambient": {
+    "subtitle": "subtitle.jeg.ghoul.ambient",
+    "sounds": [
+      {
+        "name": "jeg:entity/ghoul/idle1",
+        "stream": true
+      },
+      {
+        "name": "jeg:entity/ghoul/idle2",
+        "stream": true
+      },
+      {
+        "name": "jeg:entity/ghoul/idle3",
+        "stream": true
+      }
+    ]
+  },
+  "ui.weapon.attach": {
+    "subtitle": "subtitle.jeg.attach",
+    "sounds": [
+      {
+        "name": "jeg:ui/weapon/attach"
+      }
+    ]
+  }
+}

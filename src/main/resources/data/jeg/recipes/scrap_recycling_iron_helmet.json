@@ -1,0 +1,12 @@
+{
+  "type": "jeg:recycling",
+  "ingredient": {
+    "item": "minecraft:iron_helmet"
+  },
+  "result": {
+    "item": "jeg:scrap",
+    "count": 5
+  },
+  "experience": 0,
+  "recyclingtime": 50
+}

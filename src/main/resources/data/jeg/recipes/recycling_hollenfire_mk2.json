@@ -1,0 +1,12 @@
+{
+  "type": "jeg:recycling",
+  "ingredient": {
+    "item": "jeg:hollenfire_mk2"
+  },
+  "result": {
+    "item": "jeg:scrap",
+    "count": 30
+  },
+  "experience": 15,
+  "recyclingtime": 400
+}

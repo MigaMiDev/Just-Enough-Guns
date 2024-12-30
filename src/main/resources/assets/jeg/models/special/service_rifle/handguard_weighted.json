@@ -1,0 +1,209 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [128, 128],
+	"textures": {
+		"0": "jeg:item/service_rifle",
+		"particle": "jeg:item/service_rifle"
+	},
+	"elements": [
+		{
+			"name": "weighted_handguard",
+			"from": [7.89775, 3.24956, 6.2525],
+			"to": [8.49775, 3.74956, 10.9485],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8.19775, 3.39956, 8.3485]},
+			"faces": {
+				"north": {"uv": [9.25, 0.375, 9.375, 0.5], "texture": "#0"},
+				"south": {"uv": [9.25, 0.375, 9.375, 0.5], "texture": "#0"},
+				"down": {"uv": [9.875, 1.25, 10.125, 3.25], "texture": "#0"}
+			}
+		},
+		{
+			"name": "weighted_handguard",
+			"from": [7.36192, 3.24956, 6.2525],
+			"to": [7.96192, 3.74956, 10.9485],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7.66192, 3.39956, 8.3485]},
+			"faces": {
+				"north": {"uv": [9.25, 0.375, 9.375, 0.5], "texture": "#0"},
+				"south": {"uv": [9.25, 0.375, 9.375, 0.5], "texture": "#0"},
+				"down": {"uv": [10.125, 1.25, 10.375, 3.25], "texture": "#0"}
+			}
+		},
+		{
+			"name": "weighted_handguard",
+			"from": [8.45634, 3.35469, 6.2525],
+			"to": [8.75015, 3.45964, 10.9525],
+			"rotation": {"angle": 45, "axis": "z", "origin": [8.60394, 3.3521, 8.35249]},
+			"faces": {
+				"north": {"uv": [9.25, 0.375, 9.375, 0.5], "texture": "#0"},
+				"south": {"uv": [9.25, 0.375, 9.375, 0.5], "texture": "#0"},
+				"down": {"uv": [9.375, 1.125, 9.5, 3.125], "texture": "#0"}
+			}
+		},
+		{
+			"name": "weighted_handguard",
+			"from": [7.80058, 4.30102, 6.2525],
+			"to": [8.0591, 4.43102, 10.9525],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7.92983, 0.01, 10.06499]},
+			"faces": {
+				"north": {"uv": [9.25, 0.125, 9.375, 0.25], "texture": "#0"},
+				"south": {"uv": [9.25, 0.125, 9.375, 0.25], "texture": "#0"},
+				"up": {"uv": [9.25, 1.125, 9.375, 3.125], "texture": "#0"}
+			}
+		},
+		{
+			"name": "weighted_handguard",
+			"from": [7.10951, 3.35469, 6.2525],
+			"to": [7.40332, 3.45964, 10.9525],
+			"rotation": {"angle": -45, "axis": "z", "origin": [7.25572, 3.3521, 8.35249]},
+			"faces": {
+				"north": {"uv": [9.375, 0.375, 9.25, 0.5], "texture": "#0"},
+				"south": {"uv": [9.375, 0.375, 9.25, 0.5], "texture": "#0"},
+				"down": {"uv": [9.5, 1.125, 9.375, 3.125], "texture": "#0"}
+			}
+		},
+		{
+			"name": "weighted_handguard",
+			"from": [7.35784, 3.31819, 6.2525],
+			"to": [7.8536, 3.9135, 10.9525],
+			"rotation": {"angle": -22.5, "axis": "z", "origin": [7.60572, 3.89973, 8.6025]},
+			"faces": {
+				"north": {"uv": [8.875, 0.125, 9.125, 0.25], "rotation": 270, "texture": "#0"},
+				"south": {"uv": [9.125, 0.125, 8.875, 0.25], "rotation": 90, "texture": "#0"},
+				"west": {"uv": [9.5, 3.125, 9.75, 1.125], "rotation": 90, "texture": "#0"}
+			}
+		},
+		{
+			"name": "weighted_handguard",
+			"from": [7.5215, 3.74416, 6.2525],
+			"to": [8.01726, 4.34414, 10.9525],
+			"rotation": {"angle": -45, "axis": "z", "origin": [7.76938, 4.04415, 8.6025]},
+			"faces": {
+				"north": {"uv": [9.375, 0.125, 9.25, 0.25], "rotation": 270, "texture": "#0"},
+				"south": {"uv": [9.375, 0.125, 9.25, 0.25], "rotation": 90, "texture": "#0"},
+				"west": {"uv": [9.25, 1.125, 9.5, 3.125], "rotation": 90, "texture": "#0"}
+			}
+		},
+		{
+			"name": "weighted_handguard",
+			"from": [7.84274, 3.74416, 6.2525],
+			"to": [8.3385, 4.34414, 10.9525],
+			"rotation": {"angle": 45, "axis": "z", "origin": [8.09062, 4.04415, 8.6025]},
+			"faces": {
+				"north": {"uv": [9.375, 0.25, 9.25, 0.125], "rotation": 270, "texture": "#0"},
+				"east": {"uv": [9.25, 3.125, 9.5, 1.125], "rotation": 90, "texture": "#0"},
+				"south": {"uv": [9.375, 0.25, 9.25, 0.125], "rotation": 90, "texture": "#0"}
+			}
+		},
+		{
+			"name": "weighted_handguard",
+			"from": [8.11504, 3.3398, 6.2525],
+			"to": [8.6108, 3.9351, 10.9525],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [8.36292, 3.63745, 8.6025]},
+			"faces": {
+				"north": {"uv": [8.875, 0.25, 9.125, 0.125], "rotation": 270, "texture": "#0"},
+				"east": {"uv": [9.5, 1.125, 9.75, 3.125], "rotation": 90, "texture": "#0"},
+				"south": {"uv": [9.125, 0.25, 8.875, 0.125], "rotation": 90, "texture": "#0"}
+			}
+		},
+		{
+			"name": "weighted_hg_grip",
+			"from": [7.62983, 0.26, 13.57249],
+			"to": [8.22983, 2.26, 14.5725],
+			"rotation": {"angle": -22.5, "axis": "x", "origin": [7.92983, 4.56, 14.8725]},
+			"faces": {
+				"north": {"uv": [1, 4.5, 0.625, 5.75], "texture": "#0"},
+				"east": {"uv": [0, 4.5, 0.625, 5.75], "texture": "#0"},
+				"south": {"uv": [1, 4.5, 0.625, 5.75], "texture": "#0"},
+				"west": {"uv": [0.625, 4.5, 0, 5.75], "texture": "#0"},
+				"down": {"uv": [0, 6.25, 0.625, 5.75], "texture": "#0"}
+			}
+		},
+		{
+			"name": "weighted_hg_grip",
+			"from": [7.63483, 0.16, 15.0625],
+			"to": [8.22483, 0.46, 15.3625],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [7.92983, 0.24, 15.1675]},
+			"faces": {
+				"north": {"uv": [0.75, 5.875, 0.875, 6], "texture": "#0"},
+				"east": {"uv": [0.75, 5.875, 0.875, 6], "texture": "#0"},
+				"west": {"uv": [0.75, 5.875, 0.875, 6], "texture": "#0"},
+				"down": {"uv": [0.75, 5.875, 0.875, 6], "texture": "#0"}
+			}
+		},
+		{
+			"name": "weighted_hg_grip",
+			"from": [7.63483, 1.935, 14.5525],
+			"to": [8.22483, 2.735, 15.4775],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7.92983, 0.09, 10.06499]},
+			"faces": {
+				"north": {"uv": [0.75, 3.875, 0.5, 4.375], "texture": "#0"},
+				"east": {"uv": [0, 3.875, 0.5, 4.375], "texture": "#0"},
+				"south": {"uv": [1, 3.875, 0.75, 4.375], "texture": "#0"},
+				"west": {"uv": [1, 3.875, 0.5, 4.375], "texture": "#0"},
+				"up": {"uv": [0, 3.5, 0.625, 3.875], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"translation": [0, 6.5, -6.75]
+		},
+		"firstperson_righthand": {
+			"translation": [-3.5, 9, -1]
+		},
+		"firstperson_lefthand": {
+			"translation": [3.75, -3.25, 0]
+		},
+		"ground": {
+			"translation": [0, 5, -1]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"translation": [1.25, 4.5, 0],
+			"scale": [1.2, 1.2, 1.2]
+		},
+		"fixed": {
+			"rotation": [0, 90, 0],
+			"translation": [-3.25, 11.25, -2],
+			"scale": [2, 2, 2]
+		}
+	},
+	"groups": [
+		{
+			"name": "handguard_weighted",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [
+				{
+					"name": "handguard",
+					"origin": [7.48104, 4.80482, 4.35936],
+					"color": 7,
+					"children": [
+						{
+							"name": "weighted_handguard",
+							"origin": [7.48104, 4.80482, 4.35936],
+							"color": 2,
+							"children": [
+								0,
+								1,
+								2,
+								3,
+								4,
+								5,
+								6,
+								7,
+								8,
+								{
+									"name": "weighted_hg_grip",
+									"origin": [7.91229, 0.71491, 12.64823],
+									"color": 3,
+									"children": [9, 10, 11]
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

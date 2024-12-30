@@ -1,0 +1,12 @@
+{
+  "type": "jeg:recycling",
+  "ingredient": {
+    "item": "minecraft:heavy_weighted_pressure_plate"
+  },
+  "result": {
+    "item": "jeg:scrap",
+    "count": 2
+  },
+  "experience": 0,
+  "recyclingtime": 50
+}

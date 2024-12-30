@@ -1,0 +1,12 @@
+{
+  "type": "jeg:recycling",
+  "ingredient": {
+    "item": "minecraft:iron_ingot"
+  },
+  "result": {
+    "item": "jeg:scrap",
+    "count": 1
+  },
+  "experience": 0,
+  "recyclingtime": 50
+}

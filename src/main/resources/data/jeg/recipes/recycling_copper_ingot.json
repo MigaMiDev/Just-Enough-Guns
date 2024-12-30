@@ -1,0 +1,12 @@
+{
+  "type": "jeg:recycling",
+  "ingredient": {
+    "item": "minecraft:copper_ingot"
+  },
+  "result": {
+    "item": "jeg:gunmetal_nugget",
+    "count": 6
+  },
+  "experience": 0,
+  "recyclingtime": 100
+}

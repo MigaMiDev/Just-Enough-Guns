@@ -1,0 +1,66 @@
+{
+  "display": {
+    "flash": {
+      "size": 0.8,
+      "yOffset": 4.52,
+      "zOffset": -10.66
+    }
+  },
+  "general": {
+    "burstAmount": 3,
+    "burstDelay": 6,
+    "canBeBlueprinted": false,
+    "fireMode": "jeg:burst",
+    "gripType": "jeg:two_handed",
+    "overheatTimer": 100,
+    "rate": 1,
+    "recoilAngle": 2.0,
+    "recoilKick": 0.25,
+    "spread": 2.0
+  },
+  "modules": {
+    "attachments": {
+      "magazine": {
+        "scale": 0.0
+      },
+      "scope": {
+        "yOffset": 5.305,
+        "zOffset": 1.5
+      },
+      "underBarrel": {
+        "yOffset": 3.3,
+        "zOffset": -4.33
+      }
+    },
+    "zoom": {
+      "fovModifier": 0.6,
+      "yOffset": 4.415,
+      "zOffset": 2.0
+    }
+  },
+  "projectile": {
+    "advantage": "jeg:very_heavy",
+    "damage": 9.0,
+    "ejectsCasing": true,
+    "headshotMultiplier": 1.5,
+    "hitsRubberFruit": true,
+    "item": "jeg:blaze_round",
+    "life": 100,
+    "size": 0.05,
+    "speed": 7.0,
+    "trailColor": -16720641,
+    "trailLengthMultiplier": 2.0
+  },
+  "reloads": {
+    "emptyMagTimer": 10,
+    "maxAmmo": 30,
+    "reloadTimer": 100,
+    "reloadType": "jeg:mag_fed"
+  },
+  "sounds": {
+    "cock": "jeg:item.pistol.cock",
+    "enchantedFire": "jeg:item.soulhunter_mk2.enchanted_fire",
+    "fire": "jeg:item.soulhunter_mk2.fire",
+    "reload": "jeg:item.pistol.reload"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "jeg:gunnite_workbench",
+  "materials": [
+    {
+      "item": "jeg:gunnite_ingot",
+      "count": 2
+    },
+    {
+      "tag": "forge:ingots/iron",
+      "count": 6
+    },
+    {
+      "tag": "forge:gunpowder",
+      "count": 8
+    }
+  ],
+  "result": {
+    "item": "jeg:rocket",
+    "count": 1
+  }
+}

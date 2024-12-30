@@ -1,0 +1,29 @@
+{
+  "type": "jeg:gunmetal_workbench",
+  "materials": [
+    {
+      "item": "jeg:scrap",
+      "count": 12
+    },
+    {
+      "item": "minecraft:amethyst_shard",
+      "count": 16
+    },
+    {
+      "item": "minecraft:redstone",
+      "count": 5
+    },
+    {
+      "item": "minecraft:redstone_lamp",
+      "count": 1
+    },
+    {
+      "tag": "forge:ingots/iron",
+      "count": 15
+    }
+  ],
+  "result": {
+    "item": "jeg:flashlight"
+  },
+  "time": 30
+}

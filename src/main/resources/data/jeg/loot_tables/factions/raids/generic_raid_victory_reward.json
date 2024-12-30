@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "jeg:badge_pack",
+          "weight": 1,
+          "functions": [],
+          "conditions": []
+        },
+        {
+          "type": "minecraft:item",
+          "name": "jeg:skin_crate",
+          "weight": 1,
+          "functions": [],
+          "conditions": []
+        }
+      ]
+    }
+  ]
+}

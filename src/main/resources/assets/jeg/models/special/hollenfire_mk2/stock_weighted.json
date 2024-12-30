@@ -1,0 +1,102 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [128, 128],
+	"textures": {
+		"0": "jeg:item/hollenfire_mk2",
+		"particle": "jeg:item/hollenfire_mk2"
+	},
+	"elements": [
+		{
+			"name": "weighted_stock",
+			"from": [7.60145, 2.84, 15.82079],
+			"to": [8.40145, 4.24, 20.42079],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8.00145, -0.005, 10.20829]},
+			"faces": {
+				"east": {"uv": [8.375, 7.125, 11.25, 8], "texture": "#0"},
+				"west": {"uv": [11.25, 7.125, 8.375, 8], "texture": "#0"},
+				"up": {"uv": [8.375, 10.875, 8.875, 8], "texture": "#0"},
+				"down": {"uv": [8.375, 8.25, 8.875, 11.125], "texture": "#0"}
+			}
+		},
+		{
+			"name": "weighted_stock",
+			"from": [7.60145, 1.04, 20.42079],
+			"to": [8.40145, 4.24, 20.82079],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8.00145, -0.005, 10.20829]},
+			"faces": {
+				"east": {"uv": [8, 7.125, 8.25, 9.125], "texture": "#0"},
+				"south": {"uv": [7.5, 7.125, 8, 9.125], "texture": "#0"},
+				"west": {"uv": [8.25, 7.125, 8, 9.125], "texture": "#0"},
+				"up": {"uv": [7.5, 7.125, 8, 7.25], "texture": "#0"},
+				"down": {"uv": [7.5, 9, 8, 9.125], "texture": "#0"}
+			}
+		},
+		{
+			"name": "weighted_stock",
+			"from": [7.60395, 1.86689, 16.15874],
+			"to": [8.39895, 2.86689, 20.86374],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [8.00395, 2.56689, 18.56374]},
+			"faces": {
+				"east": {"uv": [9, 8.125, 12, 8.75], "texture": "#0"},
+				"west": {"uv": [12, 8.125, 9, 8.75], "texture": "#0"},
+				"down": {"uv": [9, 8.75, 9.5, 11.75], "texture": "#0"}
+			}
+		},
+		{
+			"name": "weighted_stock",
+			"from": [7.60395, 2.86689, 18.55874],
+			"to": [8.39895, 3.56689, 20.46374],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [8.00395, 2.56689, 18.56374]},
+			"faces": {
+				"east": {"uv": [9.625, 8.875, 10.875, 9.375], "texture": "#0"},
+				"west": {"uv": [10.875, 8.875, 9.625, 9.375], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"translation": [0, 6.5, -6.75]
+		},
+		"firstperson_righthand": {
+			"translation": [-3.5, 9, -1]
+		},
+		"firstperson_lefthand": {
+			"translation": [3.75, -3.25, 0]
+		},
+		"ground": {
+			"translation": [0, 5, -1]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"translation": [1.25, 4.5, 0],
+			"scale": [1.2, 1.2, 1.2]
+		},
+		"fixed": {
+			"rotation": [0, 90, 0],
+			"translation": [-3.25, 11.25, -2],
+			"scale": [2, 2, 2]
+		}
+	},
+	"groups": [
+		{
+			"name": "stock_weighted",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [
+				{
+					"name": "stock",
+					"origin": [-0.11694, 1.43125, 12.62598],
+					"color": 9,
+					"children": [
+						{
+							"name": "weighted_stock",
+							"origin": [-0.11694, 1.43125, 12.12598],
+							"color": 2,
+							"children": [0, 1, 2, 3]
+						}
+					]
+				}
+			]
+		}
+	]
+}

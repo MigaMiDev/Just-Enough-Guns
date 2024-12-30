@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "jeg:camo_spray_can",
+          "weight": 1,
+          "functions": [],
+          "conditions": []
+        },
+        {
+          "type": "minecraft:item",
+          "name": "jeg:toy_spray_can",
+          "weight": 1,
+          "functions": [],
+          "conditions": []
+        },
+        {
+          "type": "minecraft:item",
+          "name": "jeg:whiteout_spray_can",
+          "weight": 1,
+          "functions": [],
+          "conditions": []
+        },
+        {
+          "type": "minecraft:item",
+          "name": "jeg:golden_spray_can",
+          "weight": 1,
+          "functions": [],
+          "conditions": []
+        }
+      ]
+    }
+  ]
+}

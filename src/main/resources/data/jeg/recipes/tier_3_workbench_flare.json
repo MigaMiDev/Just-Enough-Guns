@@ -1,0 +1,22 @@
+{
+  "type": "jeg:gunnite_workbench",
+  "materials": [
+    {
+      "item": "minecraft:gunpowder",
+      "count": 3
+    },
+    {
+      "item": "minecraft:glowstone_dust",
+      "count": 20
+    },
+    {
+      "item": "minecraft:redstone_block",
+      "count": 1
+    }
+  ],
+  "result": {
+    "item": "jeg:flare",
+    "count": 2
+  },
+  "time": 30
+}

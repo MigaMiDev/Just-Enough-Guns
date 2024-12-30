@@ -1,0 +1,30 @@
+{
+  "required": true,
+  "package": "ttv.migami.jeg.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "minVersion": "0.8",
+  "refmap": "jeg.refmap.json",
+  "plugin": "ttv.migami.jeg.mixin.MixinPlugin",
+  "mixins": [
+    "common.AbstractSkeletonMixin",
+    "common.CookieItemMixin",
+    "common.EndPortalBlockMixin",
+    "common.LeadItemMixin",
+    "common.LivingEntityMixin",
+    "common.PlayerMixin",
+    "common.SittingPhaseMixin"
+  ],
+  "client": [
+    "client.GameRendererMixin",
+    "client.GuiMixin",
+    "client.HumanoidModelMixin",
+    "client.ItemInHandLayerMixin",
+    "client.LevelRendererMixin",
+    "client.MinecraftMixin",
+    "client.MouseHandlerMixin",
+    "client.PlayerModelMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "jeg:recycling",
+  "ingredient": {
+    "item": "jeg:soulhunter_mk2"
+  },
+  "result": {
+    "item": "jeg:scrap",
+    "count": 30
+  },
+  "experience": 15,
+  "recyclingtime": 400
+}

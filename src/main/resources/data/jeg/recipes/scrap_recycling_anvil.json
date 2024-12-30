@@ -1,0 +1,12 @@
+{
+  "type": "jeg:recycling",
+  "ingredient": {
+    "item": "minecraft:anvil"
+  },
+  "result": {
+    "item": "jeg:scrap",
+    "count": 27
+  },
+  "experience": 0,
+  "recyclingtime": 50
+}

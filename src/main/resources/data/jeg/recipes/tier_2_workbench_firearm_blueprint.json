@@ -1,0 +1,21 @@
+{
+  "type": "jeg:gunmetal_workbench",
+  "materials": [
+    {
+      "item": "jeg:scrap",
+      "count": 10
+    },
+    {
+      "item": "minecraft:paper",
+      "count": 4
+    },
+    {
+      "item": "minecraft:lapis_lazuli",
+      "count": 10
+    }
+  ],
+  "result": {
+    "item": "jeg:firearm_blueprint",
+    "count": 1
+  }
+}

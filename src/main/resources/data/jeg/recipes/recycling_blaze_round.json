@@ -1,0 +1,12 @@
+{
+  "type": "jeg:recycling",
+  "ingredient": {
+    "item": "jeg:blaze_round"
+  },
+  "result": {
+    "item": "minecraft:blaze_powder",
+    "count": 1
+  },
+  "experience": 15,
+  "recyclingtime": 20
+}

@@ -1,0 +1,33 @@
+{
+  "type": "jeg:blueprint_workbench",
+  "materials": [
+    {
+      "item": "jeg:service_rifle",
+      "count": 1
+    },
+    {
+      "item": "minecraft:blaze_rod",
+      "count": 10
+    },
+    {
+      "item": "minecraft:nether_wart_block",
+      "count": 16
+    },
+    {
+      "item": "jeg:gunnite_ingot",
+      "count": 20
+    },
+    {
+      "item": "minecraft:netherite_ingot",
+      "count": 4
+    },
+    {
+      "item": "jeg:scrap",
+      "count": 28
+    }
+  ],
+  "result": {
+    "item": "jeg:hollenfire_mk2"
+  },
+  "time": 30
+}

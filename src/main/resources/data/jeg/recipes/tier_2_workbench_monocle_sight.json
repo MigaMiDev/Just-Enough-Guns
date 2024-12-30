@@ -1,0 +1,25 @@
+{
+  "type": "jeg:gunmetal_workbench",
+  "materials": [
+    {
+      "item": "jeg:gunmetal_ingot",
+      "count": 2
+    },
+    {
+      "item": "minecraft:amethyst_shard",
+      "count": 6
+    },
+    {
+      "item": "minecraft:glow_ink_sac",
+      "count": 2
+    },
+    {
+      "item": "jeg:tech_trash",
+      "count": 4
+    }
+  ],
+  "result": {
+    "item": "jeg:monocle_sight"
+  },
+  "time": 30
+}

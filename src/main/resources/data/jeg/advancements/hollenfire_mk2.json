@@ -1,0 +1,37 @@
+{
+    "display": {
+        "title": {
+            "translate": "jeg.advancements.hollenfire_mk2.title"
+        },
+        "description": {
+            "translate": "jeg.advancements.hollenfire_mk2.description"
+        },
+        "icon": {
+            "item": "jeg:hollenfire_mk2"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": false,
+        "hidden": false
+    },
+    "criteria": {
+        "Item": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "jeg:hollenfire_mk2"
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "requirements": [
+        [
+          "Item"
+        ]
+      ],
+    "parent": "jeg:advanced_firearm_blueprint"
+}

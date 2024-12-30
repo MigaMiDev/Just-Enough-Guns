@@ -1,0 +1,17 @@
+{
+  "type": "jeg:blueprint_workbench",
+  "materials": [
+    {
+      "tag": "forge:ingots/iron",
+      "count": 16
+    },
+    {
+      "item": "jeg:scrap",
+      "count": 10
+    }
+  ],
+  "result": {
+    "item": "jeg:flare_gun"
+  },
+  "time": 30
+}

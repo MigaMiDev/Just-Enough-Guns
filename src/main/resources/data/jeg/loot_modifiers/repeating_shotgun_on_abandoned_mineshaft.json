@@ -1,0 +1,10 @@
+{
+  "type": "jeg:repeating_shotgun_on_abandoned_mineshaft",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:chests/abandoned_mineshaft"
+    }
+  ],
+  "item": "jeg:repeating_shotgun"
+}

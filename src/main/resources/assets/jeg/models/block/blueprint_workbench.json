@@ -1,0 +1,206 @@
+{
+	"credit": "Made with Blockbench",
+	"ambientocclusion": false,
+	"textures": {
+		"2": "jeg:block/blueprint/blueprint_workbench_side",
+		"5": "jeg:block/blueprint/blueprint_workbench_bottom_surface",
+		"6": "jeg:block/blueprint/blueprint_workbench_bottom_surface_top",
+		"7": "jeg:block/blueprint/blueprint_workbench_surface",
+		"8": "jeg:block/blueprint/blueprint_workbench_plate",
+		"9": "jeg:block/blueprint/blueprint",
+		"particle": "jeg:block/blueprint/blueprint_workbench_bottom_surface",
+		"2_1": "jeg:block/blueprint/blueprint_workbench_top"
+	},
+	"elements": [
+		{
+			"name": "Gunnite Workbench 1",
+			"from": [0, 11, 0],
+			"to": [16, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 9.25, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 5], "texture": "#2"},
+				"east": {"uv": [0, 0, 16, 5], "texture": "#2"},
+				"south": {"uv": [0, 0, 16, 5], "texture": "#2"},
+				"west": {"uv": [0, 0, 16, 5], "texture": "#2"},
+				"up": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#2_1"},
+				"down": {"uv": [0, 16, 16, 0], "rotation": 180, "texture": "#7"}
+			}
+		},
+		{
+			"name": "Gunnite Workbench 2",
+			"from": [0, 0, 0],
+			"to": [2, 11, 2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 9.25, 8]},
+			"faces": {
+				"north": {"uv": [0, 5, 2, 16], "texture": "#2"},
+				"east": {"uv": [14, 5, 16, 16], "texture": "#2"},
+				"south": {"uv": [0, 5, 2, 16], "texture": "#2"},
+				"west": {"uv": [0, 5, 2, 16], "texture": "#2"},
+				"up": {"uv": [0, 0, 2, 2], "rotation": 90, "texture": "#missing"},
+				"down": {"uv": [0, 0, 2, 2], "rotation": 270, "texture": "#5"}
+			}
+		},
+		{
+			"name": "Gunnite Workbench 3",
+			"from": [14, 0, 0],
+			"to": [16, 11, 2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 9.25, 8]},
+			"faces": {
+				"north": {"uv": [0, 5, 2, 16], "texture": "#2"},
+				"east": {"uv": [14, 5, 16, 16], "texture": "#2"},
+				"south": {"uv": [14, 5, 16, 16], "texture": "#2"},
+				"west": {"uv": [0, 5, 2, 16], "texture": "#2"},
+				"up": {"uv": [0, 0, 2, 2], "rotation": 90, "texture": "#missing"},
+				"down": {"uv": [0, 0, 2, 2], "rotation": 270, "texture": "#5"}
+			}
+		},
+		{
+			"name": "Gunnite Workbench 4",
+			"from": [14, 0, 14],
+			"to": [16, 11, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 9.25, 8]},
+			"faces": {
+				"north": {"uv": [0, 5, 2, 16], "texture": "#2"},
+				"east": {"uv": [0, 5, 2, 16], "texture": "#2"},
+				"south": {"uv": [14, 5, 16, 16], "texture": "#2"},
+				"west": {"uv": [0, 5, 2, 16], "texture": "#2"},
+				"up": {"uv": [0, 0, 2, 2], "rotation": 90, "texture": "#missing"},
+				"down": {"uv": [0, 0, 2, 2], "rotation": 270, "texture": "#5"}
+			}
+		},
+		{
+			"name": "Gunnite Workbench 5",
+			"from": [0, 0, 14],
+			"to": [2, 11, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 9.25, 8]},
+			"faces": {
+				"north": {"uv": [14, 5, 16, 16], "texture": "#2"},
+				"east": {"uv": [0, 5, 2, 16], "texture": "#2"},
+				"south": {"uv": [0, 5, 2, 16], "texture": "#2"},
+				"west": {"uv": [14, 5, 16, 16], "texture": "#2"},
+				"up": {"uv": [0, 0, 2, 2], "rotation": 90, "texture": "#missing"},
+				"down": {"uv": [0, 0, 2, 2], "rotation": 270, "texture": "#5"}
+			}
+		},
+		{
+			"name": "Gunnite Workbench 6",
+			"from": [2, 3, 0],
+			"to": [14, 5, 2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 9.25, 8]},
+			"faces": {
+				"north": {"uv": [2, 12, 14, 14], "texture": "#2"},
+				"up": {"uv": [2, 14, 14, 16], "rotation": 180, "texture": "#6"},
+				"down": {"uv": [2, 0, 13, 2], "rotation": 180, "texture": "#5"}
+			}
+		},
+		{
+			"name": "Gunnite Workbench 7",
+			"from": [2, 3, 14],
+			"to": [14, 5, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 9.25, 8]},
+			"faces": {
+				"south": {"uv": [14, 12, 2, 14], "texture": "#2"},
+				"up": {"uv": [2, 16, 14, 14], "rotation": 180, "texture": "#6"},
+				"down": {"uv": [2, 2, 13, 0], "rotation": 180, "texture": "#5"}
+			}
+		},
+		{
+			"name": "Gunnite Workbench 7",
+			"from": [0, 3, 2],
+			"to": [16, 5, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 9.25, 8]},
+			"faces": {
+				"east": {"uv": [2, 12, 14, 14], "texture": "#2"},
+				"west": {"uv": [2, 12, 14, 14], "texture": "#2"},
+				"up": {"uv": [0, 2, 16, 14], "texture": "#6"},
+				"down": {"uv": [0, 2, 16, 14], "rotation": 180, "texture": "#5"}
+			}
+		},
+		{
+			"name": "Gunnite Workbench 9",
+			"from": [0, 16, 14],
+			"to": [16, 24, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 9.25, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 7], "texture": "#8"},
+				"east": {"uv": [0, 0, 2, 7], "texture": "#8"},
+				"south": {"uv": [16, 0, 0, 7], "texture": "#8"},
+				"west": {"uv": [14, 0, 16, 7], "texture": "#8"},
+				"up": {"uv": [0, 0, 16, 2], "texture": "#8"}
+			}
+		},
+		{
+			"name": "Blueprint",
+			"from": [2.40276, 5, 6.5],
+			"to": [12.40276, 7, 8.5],
+			"rotation": {"angle": 22.5, "axis": "y", "origin": [7.40276, 7, 9]},
+			"faces": {
+				"north": {"uv": [0, 0, 12, 2], "texture": "#9"},
+				"east": {"uv": [12, 0, 14, 2], "texture": "#9"},
+				"south": {"uv": [12, 0, 0, 2], "texture": "#9"},
+				"west": {"uv": [12, 0, 14, 2], "texture": "#9"},
+				"up": {"uv": [12, 2, 0, 4], "texture": "#9"},
+				"down": {"uv": [12, 0, 0, 2], "texture": "#9"}
+			}
+		},
+		{
+			"name": "Blueprint",
+			"from": [3.90276, 5, 9],
+			"to": [13.90276, 7, 11],
+			"rotation": {"angle": 22.5, "axis": "y", "origin": [7.40276, 7, 9]},
+			"faces": {
+				"north": {"uv": [0, 0, 12, 2], "texture": "#9"},
+				"east": {"uv": [12, 0, 14, 2], "texture": "#9"},
+				"south": {"uv": [12, 0, 0, 2], "texture": "#9"},
+				"west": {"uv": [12, 0, 14, 2], "texture": "#9"},
+				"up": {"uv": [12, 2, 0, 4], "texture": "#9"},
+				"down": {"uv": [12, 0, 0, 2], "texture": "#9"}
+			}
+		},
+		{
+			"name": "Blueprint",
+			"from": [3.20276, 7, 7.8],
+			"to": [13.20276, 9, 9.8],
+			"rotation": {"angle": 22.5, "axis": "y", "origin": [7.40276, 7, 9]},
+			"faces": {
+				"north": {"uv": [0, 0, 12, 2], "texture": "#9"},
+				"east": {"uv": [12, 0, 14, 2], "texture": "#9"},
+				"south": {"uv": [12, 0, 0, 2], "texture": "#9"},
+				"west": {"uv": [12, 0, 14, 2], "texture": "#9"},
+				"up": {"uv": [12, 2, 0, 4], "texture": "#9"},
+				"down": {"uv": [12, 0, 0, 2], "texture": "#9"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [-100, 45, -180],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [-180, 45, -180],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [-148.47, -44.14, -179.23],
+			"translation": [0, -1.75, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"fixed": {
+			"scale": [0.5, 0.5, 0.5]
+		}
+	},
+	"groups": [
+		{
+			"name": "Gunnite Workbench",
+			"origin": [0, 0, 0],
+			"color": 0,
+			"children": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+		}
+	]
+}

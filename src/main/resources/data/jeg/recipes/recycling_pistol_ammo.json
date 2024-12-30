@@ -1,0 +1,12 @@
+{
+  "type": "jeg:recycling",
+  "ingredient": {
+    "item": "jeg:pistol_ammo"
+  },
+  "result": {
+    "item": "minecraft:gunpowder",
+    "count": 1
+  },
+  "experience": 15,
+  "recyclingtime": 20
+}

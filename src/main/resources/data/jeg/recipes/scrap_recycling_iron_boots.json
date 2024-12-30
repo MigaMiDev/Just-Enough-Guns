@@ -1,0 +1,12 @@
+{
+  "type": "jeg:recycling",
+  "ingredient": {
+    "item": "minecraft:iron_boots"
+  },
+  "result": {
+    "item": "jeg:scrap",
+    "count": 4
+  },
+  "experience": 0,
+  "recyclingtime": 50
+}

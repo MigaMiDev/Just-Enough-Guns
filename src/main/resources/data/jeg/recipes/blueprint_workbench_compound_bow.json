@@ -1,0 +1,25 @@
+{
+  "type": "jeg:blueprint_workbench",
+  "materials": [
+    {
+      "tag": "forge:ingots/iron",
+      "count": 8
+    },
+    {
+      "item": "jeg:gunnite_ingot",
+      "count": 6
+    },
+    {
+      "item": "minecraft:string",
+      "count": 10
+    },
+    {
+      "item": "jeg:scrap",
+      "count": 15
+    }
+  ],
+  "result": {
+    "item": "jeg:compound_bow"
+  },
+  "time": 30
+}

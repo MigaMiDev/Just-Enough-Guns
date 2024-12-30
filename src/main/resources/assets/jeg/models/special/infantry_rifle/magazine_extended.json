@@ -1,0 +1,116 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [128, 128],
+	"textures": {
+		"0": "jeg:item/infantry_rifle",
+		"particle": "jeg:item/infantry_rifle"
+	},
+	"elements": [
+		{
+			"name": "extended_mag",
+			"from": [7.547, 3.225, 8.05522],
+			"to": [8.352, 3.57, 8.25522],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7.9495, 0, 10.66522]},
+			"faces": {
+				"east": {"uv": [6.125, 0.375, 6.25, 0.625], "texture": "#0"},
+				"west": {"uv": [6.25, 0.375, 6.125, 0.625], "texture": "#0"},
+				"down": {"uv": [6.125, 0.625, 6.25, 1.125], "texture": "#0"}
+			}
+		},
+		{
+			"name": "extended_mag",
+			"from": [7.55051, 3.37, 8.14522],
+			"to": [8.35051, 3.97, 11.54522],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7.9495, 0, 10.66522]},
+			"faces": {
+				"east": {"uv": [10.125, 4, 12.25, 4.375], "texture": "#0"},
+				"south": {"uv": [12.25, 4, 12.75, 4.375], "texture": "#0"},
+				"west": {"uv": [12.25, 3.625, 10.125, 4], "texture": "#0"},
+				"up": {"uv": [10.125, 6.5, 10.625, 4.375], "texture": "#0"}
+			}
+		},
+		{
+			"name": "extended_mag",
+			"from": [7.55199, 3.225, 5.44522],
+			"to": [8.34699, 3.97, 8.14522],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7.9495, 0, 10.66522]},
+			"faces": {
+				"north": {"uv": [9.5, 4, 10, 4.5], "texture": "#0"},
+				"east": {"uv": [7.625, 4, 9.5, 4.5], "texture": "#0"},
+				"west": {"uv": [9.5, 4, 7.625, 4.5], "texture": "#0"},
+				"up": {"uv": [7.625, 6.375, 8.125, 4.5], "texture": "#0"},
+				"down": {"uv": [8.125, 4.625, 8.625, 6.5], "texture": "#0"}
+			}
+		},
+		{
+			"name": "extended_magazine",
+			"from": [7.5895, 1.538, 11.26522],
+			"to": [8.3095, 2.658, 12.86522],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7.9095, 2.258, 12.12522]},
+			"faces": {
+				"north": {"uv": [11.5, 12.625, 12, 13.25], "texture": "#0"},
+				"east": {"uv": [10.5, 12.625, 11.5, 13.25], "texture": "#0"},
+				"south": {"uv": [11.5, 12.625, 12, 13.25], "texture": "#0"},
+				"west": {"uv": [11.5, 12.625, 10.5, 13.25], "texture": "#0"},
+				"up": {"uv": [11.5, 13.375, 12, 14.125], "texture": "#0"},
+				"down": {"uv": [11.5, 13.25, 12, 14.125], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"translation": [0, 6.5, -6.75]
+		},
+		"firstperson_righthand": {
+			"translation": [-3.5, 9, -1]
+		},
+		"firstperson_lefthand": {
+			"translation": [3.75, -3.25, 0]
+		},
+		"ground": {
+			"translation": [0, 5, -1]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"translation": [1.25, 4.5, 0],
+			"scale": [1.2, 1.2, 1.2]
+		},
+		"fixed": {
+			"rotation": [0, 90, 0],
+			"translation": [-3.25, 11.25, -2],
+			"scale": [2, 2, 2]
+		}
+	},
+	"groups": [
+		{
+			"name": "magazine_extended",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [
+				{
+					"name": "magazine",
+					"origin": [7.93814, 3.0125, 9.00653],
+					"color": 3,
+					"children": [
+						{
+							"name": "extended_mag",
+							"origin": [7.93814, 3.0125, 9.00653],
+							"color": 5,
+							"children": [
+								0,
+								1,
+								2,
+								{
+									"name": "extended_magazine",
+									"origin": [7.93814, 3.0125, 9.00653],
+									"color": 6,
+									"children": [3]
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

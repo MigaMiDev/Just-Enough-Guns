@@ -1,0 +1,21 @@
+{
+  "type": "jeg:gunnite_workbench",
+  "materials": [
+    {
+      "item": "jeg:scrap_workbench",
+      "count": 1
+    },
+    {
+      "item": "jeg:scrap",
+      "count": 10
+    },
+    {
+      "item": "jeg:firearm_blueprint",
+      "count": 2
+    }
+  ],
+  "result": {
+    "item": "jeg:blueprint_workbench"
+  },
+  "time": 30
+}

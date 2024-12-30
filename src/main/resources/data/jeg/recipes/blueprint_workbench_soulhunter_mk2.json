@@ -1,0 +1,37 @@
+{
+  "type": "jeg:blueprint_workbench",
+  "materials": [
+    {
+      "item": "jeg:assault_rifle",
+      "count": 1
+    },
+    {
+      "item": "minecraft:soul_lantern",
+      "count": 4
+    },
+    {
+      "item": "minecraft:warped_wart_block",
+      "count": 16
+    },
+    {
+      "item": "minecraft:soul_sand",
+      "count": 18
+    },
+    {
+      "item": "jeg:gunnite_ingot",
+      "count": 24
+    },
+    {
+      "item": "minecraft:netherite_ingot",
+      "count": 6
+    },
+    {
+      "item": "jeg:scrap",
+      "count": 32
+    }
+  ],
+  "result": {
+    "item": "jeg:soulhunter_mk2"
+  },
+  "time": 30
+}

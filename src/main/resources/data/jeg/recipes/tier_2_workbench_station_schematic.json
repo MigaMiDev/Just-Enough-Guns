@@ -1,0 +1,17 @@
+{
+  "type": "jeg:gunmetal_workbench",
+  "materials": [
+    {
+      "item": "minecraft:cartography_table",
+      "count": 1
+    },
+    {
+      "item": "jeg:firearm_blueprint",
+      "count": 1
+    }
+  ],
+  "result": {
+    "item": "jeg:schematic_station"
+  },
+  "time": 30
+}

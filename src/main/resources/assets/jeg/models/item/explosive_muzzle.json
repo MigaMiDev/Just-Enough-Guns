@@ -1,0 +1,85 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [32, 32],
+	"textures": {
+		"1": "jeg:item/explosive_muzzle",
+		"particle": "jeg:item/explosive_muzzle"
+	},
+	"elements": [
+		{
+			"name": "explosive_muzzle",
+			"from": [7.568, 7.552, 6.304],
+			"to": [8.464, 8.448, 7.264],
+			"rotation": {"angle": -45, "axis": "z", "origin": [8.016, 8, 6.624]},
+			"faces": {
+				"north": {"uv": [1.5, 0, 0, 1.5], "texture": "#1"},
+				"east": {"uv": [3, 1.5, 4.5, 3], "texture": "#1"},
+				"south": {"uv": [1.5, 0, 3, 1.5], "texture": "#1"},
+				"west": {"uv": [4.5, 0, 3, 1.5], "texture": "#1"},
+				"up": {"uv": [3, 3, 1.5, 1.5], "texture": "#1"},
+				"down": {"uv": [1.5, 1.5, 0, 3], "texture": "#1"}
+			}
+		},
+		{
+			"name": "explosive_muzzle",
+			"from": [7.312, 7.36, 7.264],
+			"to": [8.656, 8.64, 11.104],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8.016, 2.88, 9.184]},
+			"faces": {
+				"north": {"uv": [11, 0, 9.5, 1.5], "texture": "#1"},
+				"east": {"uv": [5, 0, 9.5, 1.5], "texture": "#1"},
+				"south": {"uv": [11, 0, 9.5, 1.5], "texture": "#1"},
+				"west": {"uv": [9.5, 0, 5, 1.5], "texture": "#1"},
+				"up": {"uv": [6.5, 6, 5, 1.5], "texture": "#1"},
+				"down": {"uv": [6.5, 1.5, 5, 6], "texture": "#1"}
+			}
+		},
+		{
+			"name": "explosive_muzzle",
+			"from": [7.568, 7.552, 11.104],
+			"to": [8.464, 8.448, 12],
+			"rotation": {"angle": -45, "axis": "z", "origin": [8.016, 8, 13.92]},
+			"faces": {
+				"east": {"uv": [13, 1.5, 11.5, 3], "texture": "#1"},
+				"south": {"uv": [13, 0, 11.5, 1.5], "texture": "#1"},
+				"west": {"uv": [14.5, 1.5, 13, 3], "texture": "#1"},
+				"up": {"uv": [16, 0, 14.5, 1.5], "texture": "#1"},
+				"down": {"uv": [16, 1.5, 14.5, 3], "texture": "#1"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [114, 0, 0],
+			"translation": [0, 3.25, 2],
+			"scale": [1.5, 1.5, 1.5]
+		},
+		"firstperson_righthand": {
+			"rotation": [90, 0, 0],
+			"translation": [2.25, 3, 0],
+			"scale": [1.5, 1.5, 1.5]
+		},
+		"ground": {
+			"translation": [0, -2, -0.55],
+			"scale": [1.5, 1.5, 1.5]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"translation": [2.5, -1.25, 0],
+			"scale": [3, 3, 3]
+		},
+		"fixed": {
+			"rotation": [0, 90, 0],
+			"translation": [-3.5, 0, -1.75],
+			"scale": [3, 3, 3]
+		}
+	},
+	"groups": [
+		{
+			"name": "explosive_muzzle",
+			"origin": [8.025, 8, -2],
+			"color": 0,
+			"children": [0, 1, 2]
+		}
+	]
+}

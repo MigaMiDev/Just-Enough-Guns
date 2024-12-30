@@ -1,0 +1,10 @@
+{
+  "type": "jeg:blueprint_on_warden",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:entities/warden"
+    }
+  ],
+  "item": "jeg:advanced_firearm_blueprint"
+}

@@ -1,0 +1,29 @@
+{
+  "type": "jeg:gunnite_workbench",
+  "materials": [
+    {
+      "item": "jeg:scrap",
+      "count": 7
+    },
+    {
+      "item": "minecraft:amethyst_shard",
+      "count": 24
+    },
+    {
+      "item": "minecraft:redstone_block",
+      "count": 1
+    },
+    {
+      "item": "minecraft:glowstone",
+      "count": 3
+    },
+    {
+      "tag": "forge:ingots/iron",
+      "count": 4
+    }
+  ],
+  "result": {
+    "item": "jeg:laser_pointer"
+  },
+  "time": 30
+}

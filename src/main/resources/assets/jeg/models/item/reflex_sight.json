@@ -1,0 +1,334 @@
+{
+	"credit": "Model by MrCrayfish (https://twitter.com/MrCrayfish) using Blockbench. All Rights Reserved.",
+	"texture_size": [64, 64],
+	"textures": {
+		"1": "jeg:item/reflex_sight",
+		"particle": "jeg:item/reflex_sight"
+	},
+	"elements": [
+		{
+			"name": "holographic_sight",
+			"from": [7.62219, 8.32, 7.16562],
+			"to": [8.37781, 8.60437, 8.9125],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 2.86, 7.89663]},
+			"faces": {
+				"north": {"uv": [0, 1.75, 0.75, 2], "texture": "#1"},
+				"east": {"uv": [0, 0, 1.5, 0.25], "texture": "#1"},
+				"south": {"uv": [0, 1.75, 0.75, 2], "texture": "#1"},
+				"west": {"uv": [1.5, 0, 0, 0.25], "texture": "#1"},
+				"up": {"uv": [0.75, 0.25, 1.5, 1.75], "texture": "#1"},
+				"down": {"uv": [0, 0.25, 0.75, 1.75], "texture": "#1"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.62219, 8.125, 7.23062],
+			"to": [8.37781, 8.32, 8.3925],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 2.96, 7.89663]},
+			"faces": {
+				"north": {"uv": [1.75, 0.25, 2.5, 0.5], "texture": "#1"},
+				"east": {"uv": [1.75, 0, 3.25, 0.25], "texture": "#1"},
+				"south": {"uv": [1.75, 0.25, 2.5, 0.5], "texture": "#1"},
+				"west": {"uv": [3.25, 0, 1.75, 0.25], "texture": "#1"},
+				"down": {"uv": [2.5, 0.25, 3.25, 1.25], "texture": "#1"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.62219, 8.60437, 8.5875],
+			"to": [8.37781, 8.79937, 8.9125],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 2.86, 7.89663]},
+			"faces": {
+				"north": {"uv": [1.75, 1.25, 2, 1.5], "texture": "#1"},
+				"east": {"uv": [1.75, 1.25, 2, 1.5], "texture": "#1"},
+				"south": {"uv": [1.75, 1.25, 2, 1.5], "texture": "#1"},
+				"west": {"uv": [1.75, 1.25, 2, 1.5], "texture": "#1"},
+				"up": {"uv": [1.75, 1.25, 2, 1.5], "texture": "#1"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.62381, 8.57046, 8.11088],
+			"to": [8.37619, 8.75121, 8.62488],
+			"rotation": {"angle": -22.5, "axis": "x", "origin": [7.99837, 8.68134, 8.48513]},
+			"faces": {
+				"north": {"uv": [1.75, 0.75, 2, 1], "texture": "#1"},
+				"east": {"uv": [1.75, 0.75, 2, 1], "texture": "#1"},
+				"south": {"uv": [1.75, 0.75, 2, 1], "texture": "#1"},
+				"west": {"uv": [1.75, 0.75, 2, 1], "texture": "#1"},
+				"up": {"uv": [1.75, 0.75, 2, 1], "texture": "#1"},
+				"down": {"uv": [1.75, 0.75, 2, 1], "texture": "#1"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.7725, 8.60437, 7.4825],
+			"to": [8.2275, 8.73437, 7.9375],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 2.86, 7.89663]},
+			"faces": {
+				"north": {"uv": [3.5, 0, 4, 0.25], "texture": "#1"},
+				"east": {"uv": [3.5, 0, 4, 0.25], "texture": "#1"},
+				"south": {"uv": [3.5, 0, 4, 0.25], "texture": "#1"},
+				"west": {"uv": [3.5, 0, 4, 0.25], "texture": "#1"},
+				"up": {"uv": [3.5, 0.25, 4, 0.75], "texture": "#1"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.72183, 9.31076, 7.16748],
+			"to": [8.27817, 9.44076, 7.36248],
+			"rotation": {"angle": 0, "axis": "x", "origin": [7.78763, 9.08357, 7.26498]},
+			"faces": {
+				"north": {"uv": [5.75, 0, 6, 0.25], "texture": "#1"},
+				"east": {"uv": [5.75, 0, 6, 0.25], "texture": "#1"},
+				"south": {"uv": [5.75, 0, 6, 0.25], "texture": "#1"},
+				"west": {"uv": [5.75, 0, 6, 0.25], "texture": "#1"},
+				"up": {"uv": [5.75, 0, 6, 0.25], "texture": "#1"},
+				"down": {"uv": [5.75, 0, 6, 0.25], "texture": "#1"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.69683, 8.60438, 7.17562],
+			"to": [8.30317, 8.81188, 7.35262],
+			"rotation": {"angle": 0, "axis": "x", "origin": [7.78764, 8.41293, 7.25662]},
+			"faces": {
+				"north": {"uv": [4.25, 0, 4.5, 0.25], "texture": "#1"},
+				"south": {"uv": [4.25, 0, 4.5, 0.25], "texture": "#1"},
+				"up": {"uv": [4.25, 0, 4.5, 0.25], "texture": "#1"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.51026, 8.9251, 7.17398],
+			"to": [7.64026, 9.22941, 7.35598],
+			"rotation": {"angle": 0, "axis": "x", "origin": [7.78763, 9.08357, 7.26498]},
+			"faces": {
+				"north": {"uv": [5.25, 0, 5.5, 0.25], "texture": "#1"},
+				"east": {"uv": [5.25, 0, 5.5, 0.25], "texture": "#1"},
+				"south": {"uv": [5.25, 0, 5.5, 0.25], "texture": "#1"},
+				"west": {"uv": [5.25, 0, 5.5, 0.25], "texture": "#1"},
+				"up": {"uv": [5.25, 0, 5.5, 0.25], "texture": "#1"},
+				"down": {"uv": [5.25, 0, 5.5, 0.25], "texture": "#1"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [8.35974, 8.9251, 7.17398],
+			"to": [8.48974, 9.22941, 7.35598],
+			"rotation": {"angle": 0, "axis": "x", "origin": [8.21237, 9.08357, 7.26498]},
+			"faces": {
+				"north": {"uv": [5.25, 0, 5.5, 0.25], "texture": "#1"},
+				"east": {"uv": [5.25, 0, 5.5, 0.25], "texture": "#1"},
+				"south": {"uv": [5.25, 0, 5.5, 0.25], "texture": "#1"},
+				"west": {"uv": [5.25, 0, 5.5, 0.25], "texture": "#1"},
+				"up": {"uv": [5.25, 0, 5.5, 0.25], "texture": "#1"},
+				"down": {"uv": [5.25, 0, 5.5, 0.25], "texture": "#1"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.47188, 8.66459, 7.17073],
+			"to": [7.60188, 9.0489, 7.35923],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [7.80263, 9.08357, 7.26498]},
+			"faces": {
+				"north": {"uv": [4.75, 0, 5, 0.5], "texture": "#1"},
+				"east": {"uv": [4.75, 0, 5, 0.5], "texture": "#1"},
+				"south": {"uv": [4.75, 0, 5, 0.5], "texture": "#1"},
+				"west": {"uv": [4.75, 0, 5, 0.5], "texture": "#1"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.5133, 9.22009, 7.16879],
+			"to": [7.81203, 9.35009, 7.35729],
+			"rotation": {"angle": 45, "axis": "z", "origin": [7.65592, 9.28509, 7.26304]},
+			"faces": {
+				"north": {"uv": [5.75, 0, 6, 0.25], "texture": "#1"},
+				"east": {"uv": [5.75, 0, 6, 0.25], "texture": "#1"},
+				"south": {"uv": [5.75, 0, 6, 0.25], "texture": "#1"},
+				"west": {"uv": [5.75, 0, 6, 0.25], "texture": "#1"},
+				"up": {"uv": [5.75, 0, 6, 0.25], "texture": "#1"},
+				"down": {"uv": [5.75, 0, 6, 0.25], "texture": "#1"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [8.27908, 9.14248, 7.16879],
+			"to": [8.40908, 9.44121, 7.35729],
+			"rotation": {"angle": 45, "axis": "z", "origin": [8.34408, 9.28509, 7.26304]},
+			"faces": {
+				"north": {"uv": [5.75, 0, 6, 0.25], "rotation": 270, "texture": "#1"},
+				"east": {"uv": [5.75, 0, 6, 0.25], "rotation": 90, "texture": "#1"},
+				"south": {"uv": [5.75, 0, 6, 0.25], "rotation": 90, "texture": "#1"},
+				"west": {"uv": [5.75, 0, 6, 0.25], "rotation": 90, "texture": "#1"},
+				"up": {"uv": [5.75, 0, 6, 0.25], "rotation": 90, "texture": "#1"},
+				"down": {"uv": [5.75, 0, 6, 0.25], "rotation": 90, "texture": "#1"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [8.39812, 8.66459, 7.17073],
+			"to": [8.52812, 9.0489, 7.35923],
+			"rotation": {"angle": -22.5, "axis": "z", "origin": [8.19737, 9.08357, 7.26498]},
+			"faces": {
+				"north": {"uv": [4.75, 0, 5, 0.5], "texture": "#1"},
+				"east": {"uv": [4.75, 0, 5, 0.5], "texture": "#1"},
+				"south": {"uv": [4.75, 0, 5, 0.5], "texture": "#1"},
+				"west": {"uv": [4.75, 0, 5, 0.5], "texture": "#1"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.69125, 8.80858, 7.24981],
+			"to": [8.30875, 8.83308, 7.24981],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 2.855, 7.85163]},
+			"faces": {
+				"south": {"uv": [8.25, 0.25, 16, 0.5], "texture": "#1"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.65875, 8.88508, 7.24981],
+			"to": [8.34125, 9.22958, 7.24981],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 2.86, 7.85163]},
+			"faces": {
+				"south": {"uv": [0, 4, 8, 8], "texture": "#1"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [8.31174, 8.80961, 7.24981],
+			"to": [8.33124, 8.94611, 7.24981],
+			"rotation": {"angle": -22.5, "axis": "z", "origin": [8.32149, 8.87786, 7.24981]},
+			"faces": {
+				"south": {"uv": [15.75, 0.5, 16, 0.75], "rotation": 270, "texture": "#1"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [8.34167, 8.93294, 7.24981],
+			"to": [8.36117, 9.19619, 7.24981],
+			"rotation": {"angle": 0, "axis": "z", "origin": [8.35142, 9.00119, 7.24981]},
+			"faces": {
+				"south": {"uv": [16, 0.5, 12.75, 0.75], "rotation": 270, "texture": "#1"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [8.30917, 9.15069, 7.24981],
+			"to": [8.33517, 9.32944, 7.24981],
+			"rotation": {"angle": 45, "axis": "z", "origin": [8.31892, 9.19782, 7.24981]},
+			"faces": {
+				"south": {"uv": [13.5, 0, 16, 0.25], "rotation": 270, "texture": "#1"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.66876, 8.80961, 7.24981],
+			"to": [7.68826, 8.94611, 7.24981],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [7.67851, 8.87786, 7.24981]},
+			"faces": {
+				"south": {"uv": [16, 0, 13.5, 0.25], "rotation": 90, "texture": "#1"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.63883, 8.93294, 7.24981],
+			"to": [7.65833, 9.19619, 7.24981],
+			"rotation": {"angle": 0, "axis": "z", "origin": [7.64858, 9.00119, 7.24981]},
+			"faces": {
+				"south": {"uv": [16, 0, 13.5, 0.25], "rotation": 90, "texture": "#1"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.66483, 9.15069, 7.24981],
+			"to": [7.69083, 9.32944, 7.24981],
+			"rotation": {"angle": -45, "axis": "z", "origin": [7.68108, 9.19782, 7.24981]},
+			"faces": {
+				"south": {"uv": [16, 0, 13.5, 0.25], "rotation": 90, "texture": "#1"}
+			}
+		},
+		{
+			"name": "holographic_sight",
+			"from": [7.74163, 9.28158, 7.24981],
+			"to": [8.25838, 9.31408, 7.24981],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 2.86, 7.85163]},
+			"faces": {
+				"south": {"uv": [13.5, 0, 16, 0.25], "texture": "#1"}
+			}
+		},
+		{
+			"name": "glow",
+			"from": [7.85375, 8.91028, 7.26281],
+			"to": [8.14625, 9.20278, 7.26281],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 2.86, 7.85163]},
+			"faces": {
+				"south": {"uv": [12.25, 12.25, 16, 16], "texture": "#1"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [114, 0, 0],
+			"translation": [0, 2, 0.5],
+			"scale": [2, 2, 2]
+		},
+		"firstperson_righthand": {
+			"translation": [2.25, 0.25, 0],
+			"scale": [2, 2, 2]
+		},
+		"ground": {
+			"translation": [0, -3, 0],
+			"scale": [2, 2, 2]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"translation": [0, -2, 0],
+			"scale": [4, 4, 4]
+		},
+		"fixed": {
+			"rotation": [0, 90, 0],
+			"translation": [-1, -2.75, -1.75],
+			"scale": [4, 4, 4]
+		}
+	},
+	"groups": [
+		{
+			"name": "reflex_sight",
+			"origin": [9.1375, 8, 7.63663],
+			"color": 0,
+			"children": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				{
+					"name": "glow",
+					"origin": [7.3875, 0, 7.63663],
+					"color": 1,
+					"children": [22]
+				}
+			]
+		}
+	]
+}

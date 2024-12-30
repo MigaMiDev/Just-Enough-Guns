@@ -1,0 +1,12 @@
+{
+  "type": "jeg:recycling",
+  "ingredient": {
+    "item": "minecraft:iron_axe"
+  },
+  "result": {
+    "item": "jeg:scrap",
+    "count": 3
+  },
+  "experience": 0,
+  "recyclingtime": 50
+}

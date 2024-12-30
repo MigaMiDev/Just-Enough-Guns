@@ -1,0 +1,41 @@
+{
+  "general": {
+    "fireMode": "jeg:release_fire",
+    "gripType": "jeg:two_handed",
+    "maxHoldFire": 20,
+    "rate": 10,
+    "recoilAngle": 2.0,
+    "recoilKick": 0.1,
+    "silenced": true
+  },
+  "modules": {
+    "zoom": {
+      "fovModifier": 0.6,
+      "xOffset": 1.05,
+      "yOffset": 3.5
+    }
+  },
+  "projectile": {
+    "advantage": "jeg:heavy",
+    "damage": 10.0,
+    "gravity": true,
+    "headshotMultiplier": 2.5,
+    "item": "minecraft:arrow",
+    "life": 1000,
+    "size": 0.05,
+    "speed": 8.0,
+    "trailColor": -1,
+    "trailLengthMultiplier": 2.0
+  },
+  "reloads": {
+    "emptyMagTimer": 0,
+    "maxAmmo": 1,
+    "reloadTimer": 20,
+    "reloadType": "jeg:inventory_fed"
+  },
+  "sounds": {
+    "cock": "jeg:item.pistol.cock",
+    "fire": "jeg:item.compound_bow.fire",
+    "reload": "jeg:item.pistol.reload"
+  }
+}

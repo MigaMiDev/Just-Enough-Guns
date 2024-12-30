@@ -1,0 +1,21 @@
+{
+  "type": "jeg:blueprint_workbench",
+  "materials": [
+    {
+      "item": "jeg:gunmetal_ingot",
+      "count": 14
+    },
+    {
+      "item": "minecraft:gunpowder",
+      "count": 10
+    },
+    {
+      "item": "jeg:scrap",
+      "count": 40
+    }
+  ],
+  "result": {
+    "item": "jeg:pump_shotgun"
+  },
+  "time": 30
+}

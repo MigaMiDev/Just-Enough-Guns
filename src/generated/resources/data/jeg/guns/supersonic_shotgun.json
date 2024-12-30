@@ -1,0 +1,71 @@
+{
+  "display": {
+    "flash": {
+      "size": 1.0,
+      "yOffset": 4.315,
+      "zOffset": -5.855
+    }
+  },
+  "general": {
+    "alwaysSpread": true,
+    "canBeBlueprinted": false,
+    "canFireUnderwater": true,
+    "fireMode": "jeg:pulse",
+    "gripType": "jeg:two_handed",
+    "projectileAmount": 6,
+    "rate": 22,
+    "recoilAngle": 7.0,
+    "recoilKick": 0.2,
+    "spread": 100.0
+  },
+  "modules": {
+    "attachments": {
+      "barrel": {
+        "yOffset": 4.125,
+        "zOffset": -5.51
+      },
+      "scope": {
+        "yOffset": 5.195,
+        "zOffset": 4.5
+      },
+      "stock": {
+        "scale": 0.0
+      },
+      "underBarrel": {
+        "scale": 0.0
+      }
+    },
+    "zoom": {
+      "fovModifier": 0.6,
+      "yOffset": 4.2,
+      "zOffset": -3.75
+    }
+  },
+  "projectile": {
+    "advantage": "jeg:very_heavy",
+    "damage": 20.0,
+    "damageReduceOverLife": true,
+    "ejectsCasing": true,
+    "headshotMultiplier": 1.5,
+    "hideTrail": true,
+    "item": "minecraft:echo_shard",
+    "life": 2,
+    "noProjectile": true,
+    "size": 0.05,
+    "speed": 3.0,
+    "trailLengthMultiplier": 2.0
+  },
+  "reloads": {
+    "emptyMagTimer": 0,
+    "maxAmmo": 6,
+    "reloadTimer": 100,
+    "reloadType": "jeg:manual"
+  },
+  "sounds": {
+    "cock": "jeg:item.pistol.cock",
+    "enchantedFire": "jeg:item.supersonic_shotgun.fire",
+    "fire": "jeg:item.supersonic_shotgun.fire",
+    "reload": "jeg:item.pistol.reload",
+    "silencedFire": "jeg:item.supersonic_shotgun.fire"
+  }
+}

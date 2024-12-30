@@ -1,0 +1,33 @@
+{
+  "type": "jeg:blueprint_workbench",
+  "materials": [
+    {
+      "tag": "forge:gunpowder",
+      "count": 8
+    },
+    {
+      "item": "minecraft:tnt",
+      "count": 1
+    },
+    {
+      "item": "minecraft:clay_ball",
+      "count": 8
+    },
+    {
+      "item": "minecraft:redstone_torch",
+      "count": 1
+    },
+    {
+      "item": "jeg:tech_trash",
+      "count": 2
+    },
+    {
+      "item": "jeg:scrap",
+      "count": 8
+    }
+  ],
+  "result": {
+    "item": "jeg:explosive_charge"
+  },
+  "time": 30
+}

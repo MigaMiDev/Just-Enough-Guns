@@ -1,0 +1,12 @@
+{
+  "type": "jeg:recycling",
+  "ingredient": {
+    "item": "minecraft:minecart"
+  },
+  "result": {
+    "item": "jeg:scrap",
+    "count": 5
+  },
+  "experience": 0,
+  "recyclingtime": 50
+}

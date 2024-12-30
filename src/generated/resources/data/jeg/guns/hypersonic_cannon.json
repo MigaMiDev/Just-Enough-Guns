@@ -1,0 +1,57 @@
+{
+  "display": {
+    "flash": {
+      "size": 0.8,
+      "yOffset": 3.935,
+      "zOffset": -2.285
+    }
+  },
+  "general": {
+    "canBeBlueprinted": false,
+    "canFireUnderwater": true,
+    "fireMode": "jeg:pulse",
+    "fireTimer": 20,
+    "gripType": "jeg:two_handed",
+    "infinityDisabled": true,
+    "rate": 10,
+    "recoilAngle": 3.0,
+    "recoilKick": 0.15,
+    "spread": 3.0
+  },
+  "modules": {
+    "zoom": {
+      "fovModifier": 0.6,
+      "yOffset": 3.9,
+      "zOffset": -2.25
+    }
+  },
+  "projectile": {
+    "advantage": "jeg:none",
+    "damage": 13.0,
+    "ejectsCasing": true,
+    "gravity": true,
+    "headshotMultiplier": 1.5,
+    "hideTrail": true,
+    "item": "minecraft:sculk_catalyst",
+    "life": 60,
+    "noProjectile": true,
+    "size": 0.05,
+    "speed": 12.0,
+    "trailLengthMultiplier": 2.0
+  },
+  "reloads": {
+    "emptyMagTimer": 10,
+    "maxAmmo": 15,
+    "reloadItem": "minecraft:sculk_catalyst",
+    "reloadTimer": 80,
+    "reloadType": "jeg:single_item"
+  },
+  "sounds": {
+    "cock": "jeg:item.pistol.cock",
+    "enchantedFire": "minecraft:entity.warden.sonic_boom",
+    "fire": "minecraft:entity.warden.sonic_boom",
+    "preFire": "jeg:item.hypersonic_cannon.charge",
+    "reload": "jeg:item.pistol.reload",
+    "silencedFire": "minecraft:entity.warden.sonic_boom"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "EEE",
+    "EBE",
+    "EEE"
+  ],
+  "key": {
+    "E": {
+      "item": "jeg:soul_treat"
+    },
+    "B": {
+      "item": "minecraft:bee_nest"
+    }
+  },
+  "result": {
+    "item": "jeg:boo_nest"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "display": {
+    "flash": {
+      "size": 0.8,
+      "yOffset": 4.645,
+      "zOffset": -10.635
+    }
+  },
+  "general": {
+    "alwaysSpread": true,
+    "fireMode": "jeg:semi_automatic",
+    "gripType": "jeg:two_handed",
+    "projectileAmount": 12,
+    "rate": 22,
+    "recoilAngle": 10.0,
+    "recoilKick": 0.5,
+    "spread": 8.0
+  },
+  "modules": {
+    "attachments": {
+      "barrel": {
+        "yOffset": 4.65,
+        "zOffset": -10.0
+      },
+      "scope": {
+        "yOffset": 4.9
+      },
+      "special": {
+        "xOffset": -0.8,
+        "yOffset": 4.0,
+        "zOffset": -5.0
+      },
+      "underBarrel": {
+        "yOffset": 3.0,
+        "zOffset": 0.45
+      }
+    },
+    "zoom": {
+      "fovModifier": 0.6,
+      "yOffset": 3.75,
+      "zOffset": -1.75
+    }
+  },
+  "projectile": {
+    "advantage": "jeg:very_heavy",
+    "damage": 25.0,
+    "damageReduceOverLife": true,
+    "ejectsCasing": true,
+    "headshotMultiplier": 1.5,
+    "item": "jeg:shotgun_shell",
+    "life": 10,
+    "size": 0.05,
+    "speed": 6.0,
+    "trailColor": -256,
+    "trailLengthMultiplier": 2.0
+  },
+  "reloads": {
+    "emptyMagTimer": 0,
+    "maxAmmo": 8,
+    "reloadTimer": 120,
+    "reloadType": "jeg:manual"
+  },
+  "sounds": {
+    "cock": "jeg:item.pistol.cock",
+    "enchantedFire": "jeg:item.repeating_shotgun.enchanted_fire",
+    "fire": "jeg:item.repeating_shotgun.fire",
+    "reload": "jeg:item.pistol.reload",
+    "silencedFire": "jeg:item.pump_shotgun.silenced_fire"
+  }
+}

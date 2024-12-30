@@ -1,0 +1,23 @@
+{
+  "replace": false,
+  "entries": [
+    "jeg:tech_trash_on_simple_dungeon",
+    "jeg:scrap_on_simple_dungeon",
+    "jeg:atlantean_spear_on_shipwreck_treasure",
+    "jeg:typhoonee_on_elder_guardian",
+    "jeg:grenade_on_creeper",
+    "jeg:repeating_shotgun_on_abandoned_mineshaft",
+    "jeg:repeating_shotgun_bp_on_fishing",
+    "jeg:infantry_rifle_on_abandoned_mineshaft",
+    "jeg:infantry_rifle_bp_on_fishing",
+    "jeg:service_rifle_on_abandoned_mineshaft",
+    "jeg:service_rifle_bp_on_fishing",
+    "jeg:hollenfire_mk2_bp_on_bartering",
+    "jeg:soulhunter_mk2_bp_on_bartering",
+    "jeg:fire_starter_on_bartering",
+    "jeg:flare_gun_on_abandoned_mineshaft",
+    "jeg:blueprint_on_wither",
+    "jeg:blueprint_on_warden",
+    "jeg:atlantic_shooter_on_shipwreck"
+  ]
+}

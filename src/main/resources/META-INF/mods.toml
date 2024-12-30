@@ -1,0 +1,60 @@
+modLoader="javafml"
+loaderVersion="[40,)"
+license="GNU GPLv3"
+
+[[mods]]
+modId="jeg"
+version="0.10.0"
+displayName="Just Enough Guns"
+authors="MigaMi"
+credits="MrCrayfish, Bomb787"
+description="The essentials needed for a survival friendly gun system done the right way!"
+
+[[dependencies.jeg]]
+    modId="forge"
+    mandatory=true
+    versionRange="[46, 48)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.jeg]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20, 1.20.2)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.jeg]]
+    modId="framework"
+    mandatory=true
+    versionRange="[0.7.0,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.jeg]]
+    modId="controllable"
+    mandatory=false
+    versionRange="[0.16.3,)"
+    ordering="AFTER"
+    side="CLIENT"
+[[dependencies.jeg]]
+    modId="geckolib"
+    mandatory=true
+    versionRange="[4.4.4,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.jeg]]
+    modId="jei"
+    mandatory=false
+    versionRange="[12.1.1,)"
+    ordering="AFTER"
+    side="CLIENT"
+[[dependencies.jeg]]
+    modId="valkyrienskies"
+    mandatory=false
+    versionRange="[2,)"
+    ordering="AFTER"
+    side="BOTH"
+[[dependencies.jeg]]
+    modId="mdf"
+    mandatory=false
+    versionRange="[0.2,)"
+    ordering="AFTER"
+    side="BOTH"

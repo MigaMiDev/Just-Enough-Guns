@@ -1,0 +1,82 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.unknown",
+				"texture_width": 64,
+				"texture_height": 64,
+				"visible_bounds_width": 2,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
+			},
+			"bones": [
+				{
+					"name": "flashlight",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{
+							"origin": [-0.50485, 7.46, -1.2],
+							"size": [0.96, 0.96, 3.6],
+							"pivot": [-0.08485, 8, 1.8],
+							"rotation": [0, 0, -45],
+							"uv": {
+								"east": {"uv": [0, 2], "uv_size": [8, 2]},
+								"south": {"uv": [10, 0], "uv_size": [-2, 2]},
+								"west": {"uv": [8, 2], "uv_size": [-8, -2]},
+								"up": {"uv": [4, 12], "uv_size": [-2, -8]},
+								"down": {"uv": [0, 12], "uv_size": [2, -8]}
+							}
+						},
+						{
+							"origin": [-0.80485, 7.16, -2.4],
+							"size": [1.56, 1.56, 1.2],
+							"pivot": [-0.08485, 8, 1.8],
+							"rotation": [0, 0, -45],
+							"uv": {
+								"north": {"uv": [14, 3], "uv_size": [-3, 3]},
+								"east": {"uv": [16, 0], "uv_size": [-2, 3]},
+								"south": {"uv": [14, 0], "uv_size": [-3, 3]},
+								"west": {"uv": [16, 0], "uv_size": [-2, 3]},
+								"up": {"uv": [14, 5], "uv_size": [3, -2]},
+								"down": {"uv": [14, 5], "uv_size": [3, -2]}
+							}
+						}
+					]
+				},
+				{
+					"name": "glow",
+					"parent": "flashlight",
+					"pivot": [-0.08485, 8, 1.78]
+				},
+				{
+					"name": "flashlight_glow",
+					"parent": "glow",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{
+							"origin": [-0.78, 7.22, -2.455],
+							"size": [1.56, 1.56, 0],
+							"pivot": [0, 8, -2.455],
+							"rotation": [0, 0, -45],
+							"uv": {
+								"north": {"uv": [14, 6], "uv_size": [-3, 3]}
+							}
+						},
+						{
+							"origin": [-1.78, 6.12, -6.615],
+							"size": [3.56, 3.56, 3.56],
+							"pivot": [0, 7.9, -4.835],
+							"rotation": [54.73561, -30, -35.26439],
+							"uv": {
+								"south": {"uv": [32, 0], "uv_size": [32, 32]},
+								"west": {"uv": [0, 64], "uv_size": [32, -32]},
+								"down": {"uv": [64, 64], "uv_size": [-32, -32]}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

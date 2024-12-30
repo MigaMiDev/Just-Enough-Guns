@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "jeg:advanced_firearm_blueprint",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"Namespace\":\"jeg\",\"Path\":\"compound_bow\"}"
+            }
+          ],
+          "conditions": []
+        }
+      ]
+    }
+  ]
+}

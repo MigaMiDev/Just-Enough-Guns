@@ -1,0 +1,21 @@
+{
+  "type": "jeg:blueprint_workbench",
+  "materials": [
+    {
+      "tag": "forge:ingots/iron",
+      "count": 12
+    },
+    {
+      "item": "jeg:gunnite_ingot",
+      "count": 24
+    },
+    {
+      "item": "jeg:scrap",
+      "count": 70
+    }
+  ],
+  "result": {
+    "item": "jeg:light_machine_gun"
+  },
+  "time": 30
+}

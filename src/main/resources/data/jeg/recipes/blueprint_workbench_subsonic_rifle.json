@@ -1,0 +1,33 @@
+{
+  "type": "jeg:blueprint_workbench",
+  "materials": [
+    {
+      "item": "jeg:semi_auto_rifle",
+      "count": 1
+    },
+    {
+      "item": "jeg:silencer",
+      "count": 1
+    },
+    {
+      "item": "minecraft:bone",
+      "count": 5
+    },
+    {
+      "item": "minecraft:sculk",
+      "count": 16
+    },
+    {
+      "item": "jeg:gunnite_ingot",
+      "count": 20
+    },
+    {
+      "item": "jeg:scrap",
+      "count": 33
+    }
+  ],
+  "result": {
+    "item": "jeg:subsonic_rifle"
+  },
+  "time": 30
+}
