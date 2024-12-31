@@ -53,6 +53,7 @@ public class C2SMessageShoot extends PlayMessage<C2SMessageShoot>
             if(player != null)
             {
                 ServerPlayHandler.handleShoot(message, player);
+                //ShootingHandler.playFireAnimation();
             }
         });
         context.setHandled(true);

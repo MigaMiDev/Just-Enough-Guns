@@ -58,10 +58,7 @@ import ttv.migami.jeg.item.AnimatedGunItem;
 import ttv.migami.jeg.item.GunItem;
 import ttv.migami.jeg.item.attachment.IAttachment;
 import ttv.migami.jeg.network.PacketHandler;
-import ttv.migami.jeg.network.message.C2SMessagePreFireSound;
-import ttv.migami.jeg.network.message.C2SMessageShoot;
-import ttv.migami.jeg.network.message.S2CMessageBulletTrail;
-import ttv.migami.jeg.network.message.S2CMessageGunSound;
+import ttv.migami.jeg.network.message.*;
 import ttv.migami.jeg.util.GunEnchantmentHelper;
 import ttv.migami.jeg.util.GunModifierHelper;
 

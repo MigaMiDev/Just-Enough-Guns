@@ -45,6 +45,7 @@ public class PacketHandler
                 .registerPlayMessage(S2CMessageSendHeadshot.class, MessageDirection.PLAY_CLIENT_BOUND)
                 .registerPlayMessage(C2SMessageToggleMedals.class, MessageDirection.PLAY_SERVER_BOUND)
                 .registerPlayMessage(S2CMessageStopReloadAnimation.class, MessageDirection.PLAY_CLIENT_BOUND)
+                .registerPlayMessage(S2CMessageShootAnimation.class, MessageDirection.PLAY_CLIENT_BOUND)
                 .registerPlayMessage(C2SMessageMayStopReloadAnimation.class, MessageDirection.PLAY_SERVER_BOUND)
                 .registerPlayMessage(C2SMessageChargeSync.class, MessageDirection.PLAY_SERVER_BOUND)
                 .registerPlayMessage(C2SMessageOverheat.class, MessageDirection.PLAY_SERVER_BOUND)

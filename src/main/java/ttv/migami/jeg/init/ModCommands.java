@@ -4,6 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
+import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
@@ -307,7 +308,7 @@ public class ModCommands {
         ServerLevel level = source.getLevel();
 
         if (level.getDifficulty() == Difficulty.PEACEFUL) {
-            source.sendFailure(Component.nullToEmpty("Mobs can't spawn in Peaceful!"));
+            source.sendFailure(Component.nullToEmpty("Raids, can't be started on Peaceful, dummy."));
             return 0;
         }
 
@@ -327,6 +328,13 @@ public class ModCommands {
     }
 
     public static void startRaid(ServerLevel level, Faction faction, Vec3 pos, boolean forceGun) {
+        if (level.getDifficulty().equals(Difficulty.PEACEFUL)) {
+            Component message = Component.translatable("broadcast.jeg.raid.peaceful").withStyle(ChatFormatting.WHITE);
+            level.getServer().getPlayerList().broadcastSystemMessage(message, true);
+
+            return;
+        }
+
         if (faction == null) {
             JustEnoughGuns.LOGGER.atInfo().log("A non existing Faction was trying to be summon for a Raid, but failed.");
             return;

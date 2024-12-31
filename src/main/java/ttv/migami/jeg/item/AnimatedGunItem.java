@@ -151,6 +151,7 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
                         !isAnimationPlaying(animationController, "melee") &&
                         !isAnimationPlaying(animationController, "bayonet") &&
                         !isAnimationPlaying(animationController, "hold_fire") &&
+                        !isAnimationPlaying(animationController, "hold") &&
                         !isAnimationPlaying(animationController, "shoot") &&
                         !isAnimationPlaying(animationController, "aim_shoot")) {
                     if ((nbtCompound.getBoolean("IsReloading") || nbtCompound.getBoolean("IsFinishingReloading")) &&
@@ -167,6 +168,8 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
                             !isAnimationPlaying(animationController, "bayonet") &&
                             !isAnimationPlaying(animationController, "shoot") &&
                             !isAnimationPlaying(animationController, "aim_shoot") &&
+                            !isAnimationPlaying(animationController, "hold_fire") &&
+                            !isAnimationPlaying(animationController, "hold") &&
                             //!isAnimationPlaying(animationController, "reload") &&
                             //!isAnimationPlaying(animationController, "reload_start") &&
                             //!isAnimationPlaying(animationController, "reload_loop") &&
@@ -369,9 +372,10 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
                 }))
 
                 .triggerableAnim("idle", GunAnimations.IDLE)
-                .triggerableAnim("hold_fire", GunAnimations.HOLD_FIRE)
                 .triggerableAnim("shoot", GunAnimations.SHOOT)
                 .triggerableAnim("aim_shoot", GunAnimations.AIM_SHOOT)
+                .triggerableAnim("hold_fire", GunAnimations.HOLD_FIRE)
+                .triggerableAnim("hold", GunAnimations.HOLD)
                 .triggerableAnim("reload", GunAnimations.RELOAD)
                 .triggerableAnim("reload_alt", GunAnimations.RELOAD_ALT)
                 .triggerableAnim("reload_start", GunAnimations.RELOAD_START)

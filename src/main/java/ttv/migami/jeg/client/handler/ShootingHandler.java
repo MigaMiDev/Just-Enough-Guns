@@ -233,11 +233,23 @@ public class ShootingHandler
             {
                 Gun gun = ((GunItem) heldItem.getItem()).getModifiedGun(heldItem);
 
+                if (gun.getGeneral().getOverheatTimer() == 0) {
+                    overheated = false;
+                }
+
                 if (!KeyBinds.getShootMapping().isDown() && gun.getGeneral().getFireMode() == FireMode.RELEASE_FIRE) {
+                    if (heldItem.getItem() instanceof AnimatedGunItem animatedGunItem) {
+                        final long id = GeoItem.getId(player.getMainHandItem());
+                        AnimationController<GeoAnimatable> animationController = animatedGunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("controller");
+
+                        if (animationController != null && animationController.getCurrentAnimation() != null
+                                && animationController.getCurrentAnimation().animation().name().matches("hold_fire")) {
+                            animationController.setAnimationSpeed(1.0D);
+                            animationController.tryTriggerAnimation("idle");
+                        }
+                    }
                     if (holdFire > 5 && previouslyPressed) {
                         this.fire(player, heldItem);
-                        holdFire = 0;
-                        previouslyPressed = false;
                         ChargeTracker.updateChargeTime(player, heldItem, false);
                     }
                 }
@@ -263,7 +275,6 @@ public class ShootingHandler
 
                 if(KeyBinds.getShootMapping().isDown())
                 {
-                    heldItem.getOrCreateTag().putBoolean("gay", true);
                     ItemCooldowns tracker = player.getCooldowns();
                     if(gun.getGeneral().getOverheatTimer() != 0 && overheatTimer < gun.getGeneral().getOverheatTimer()) {
                         if (heldItem.getItem() instanceof AnimatedGunItem animatedGunItem) {
@@ -282,7 +293,16 @@ public class ShootingHandler
                             PacketHandler.getPlayChannel().sendToServer(new C2SMessageOverheat());
                         }
                     }
+                    if (gun.getGeneral().getFireMode() == FireMode.RELEASE_FIRE && heldItem.getItem() instanceof AnimatedGunItem animatedGunItem && !tracker.isOnCooldown(heldItem.getItem())) {
+                        final long id = GeoItem.getId(player.getMainHandItem());
+                        AnimationController<GeoAnimatable> animationController = animatedGunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("controller");
 
+                        if (animationController != null && animationController.getCurrentAnimation() != null && !animationController.getCurrentAnimation().animation().name().matches("draw")
+                                && !animationController.getCurrentAnimation().animation().name().matches("reload")) {
+                            animationController.setAnimationSpeed(1.0D);
+                            animationController.tryTriggerAnimation("hold_fire");
+                        }
+                    }
                     if(gun.getGeneral().getMaxHoldFire() != 0) {
                         if(holdFire < gun.getGeneral().getMaxHoldFire() && !tracker.isOnCooldown(heldItem.getItem())) {
                             ChargeTracker.updateChargeTime(player, heldItem, true);
@@ -296,16 +316,6 @@ public class ShootingHandler
                             } else {
                                 holdFire++;
                             }
-                        }
-                    }
-                    if (gun.getGeneral().getFireMode() == FireMode.RELEASE_FIRE && heldItem.getItem() instanceof AnimatedGunItem animatedGunItem && !tracker.isOnCooldown(heldItem.getItem())) {
-                        final long id = GeoItem.getId(player.getMainHandItem());
-                        AnimationController<GeoAnimatable> animationController = animatedGunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("controller");
-
-                        if (animationController != null && animationController.getCurrentAnimation() != null && !animationController.getCurrentAnimation().animation().name().matches("draw")
-                                && !animationController.getCurrentAnimation().animation().name().matches("reload")) {
-                            animationController.setAnimationSpeed(1.0D);
-                            animationController.tryTriggerAnimation("hold_fire");
                         }
                     }
                     if(gun.getGeneral().getFireTimer() != 0)
@@ -350,17 +360,6 @@ public class ShootingHandler
                             mc.options.keyAttack.setDown(false);
                         }
                     }
-                } else {
-                    if (gun.getGeneral().getFireMode() == FireMode.RELEASE_FIRE && heldItem.getItem() instanceof AnimatedGunItem animatedGunItem) {
-                        final long id = GeoItem.getId(player.getMainHandItem());
-                        AnimationController<GeoAnimatable> animationController = animatedGunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("controller");
-
-                        if (animationController != null && animationController.getCurrentAnimation() != null && !animationController.getCurrentAnimation().animation().name().matches("shoot")
-                                && animationController.getCurrentAnimation().animation().name().matches("hold_fire")) {
-                            animationController.setAnimationSpeed(1.0D);
-                            animationController.tryTriggerAnimation("idle");
-                        }
-                    }
                 }
             } else {
                 previouslyPressed = false;
@@ -397,6 +396,9 @@ public class ShootingHandler
                 ModSyncedDataKeys.BURST_COUNT.setValue(player, 0);
             return;
         }
+
+        holdFire = 0;
+        previouslyPressed = false;
 
         ItemCooldowns tracker = player.getCooldowns();
         int maxDamage = heldItem.getMaxDamage();
@@ -443,6 +445,30 @@ public class ShootingHandler
                 tracker.addCooldown(heldItem.getItem(), rate);
                 PacketHandler.getPlayChannel().sendToServer(new C2SMessageShoot(player));
                 MinecraftForge.EVENT_BUS.post(new GunFireEvent.Post(player, heldItem));
+            }
+        }
+    }
+
+    public static void playFireAnimation() {
+        Player player = Minecraft.getInstance().player;
+        if(player == null)
+            return;
+
+        ItemStack stack = player.getMainHandItem();
+
+        if (stack.getTag() != null) {
+            if (stack.getItem() instanceof AnimatedGunItem animatedGunItem) {
+                stack.getTag().remove("IsReloading");
+                stack.getTag().remove("IsFinishingReloading");
+                final long id = GeoItem.getId(stack);
+                AnimationController<GeoAnimatable> animationController = animatedGunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("controller");
+                animationController.forceAnimationReset();
+                if (ModSyncedDataKeys.AIMING.getValue(player)) {
+                    animationController.tryTriggerAnimation("aim_shoot");
+                }
+                else {
+                    animationController.tryTriggerAnimation("shoot");
+                }
             }
         }
     }

@@ -15,6 +15,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.BossEvent;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -416,7 +417,7 @@ public class RaidEntity extends Entity {
             JustEnoughGuns.LOGGER.atInfo().log("activeMobs: " + activeMobs.size());
             JustEnoughGuns.LOGGER.atInfo().log("spawnedMobs: " + spawnedMobs.size());*/
 
-            if (this.getActivePlayers().isEmpty()) {
+            if (this.getActivePlayers().isEmpty() || this.level().getDifficulty().equals(Difficulty.PEACEFUL)) {
                 this.isFinished = true;
                 this.defeat = true;
             }

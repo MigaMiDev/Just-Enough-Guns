@@ -252,6 +252,139 @@
 				}
 			}
 		},
+		"hold": {
+			"loop": true,
+			"animation_length": 0.25,
+			"bones": {
+				"right_arm": {
+					"rotation": {
+						"vector": [90, 0, -202.5]
+					},
+					"position": {
+						"vector": [5.65, -1, 20],
+						"easing": "easeOutQuad"
+					}
+				},
+				"left_arm": {
+					"rotation": {
+						"vector": [132.54901, -25.91664, -200.29405]
+					},
+					"position": {
+						"vector": [-3.49676, -7.3155, 2.47434]
+					}
+				},
+				"bow_body": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0],
+							"easing": "easeInOutQuad"
+						},
+						"0.125": {
+							"vector": [-0.56332, 1.19074, 0.0098]
+						},
+						"0.25": {
+							"vector": [0, 0, 0],
+							"easing": "easeInOutSine"
+						}
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 0, -5]
+						},
+						"0.0833": {
+							"vector": [0, -0.1, -5],
+							"easing": "easeInOutSine"
+						},
+						"0.25": {
+							"vector": [0, 0, -5],
+							"easing": "easeInOutSine"
+						}
+					}
+				},
+				"frame_1": {
+					"rotation": {
+						"vector": [-5, 0, 0],
+						"easing": "easeOutQuad"
+					}
+				},
+				"frame_2": {
+					"rotation": {
+						"vector": [-5, 0, 0],
+						"easing": "easeOutQuad"
+					}
+				},
+				"pulley_1": {
+					"rotation": {
+						"vector": [-90, 0, 0],
+						"easing": "easeOutQuad"
+					}
+				},
+				"string_2": {
+					"rotation": {
+						"vector": [-55, 0, 0],
+						"easing": "easeOutQuad"
+					},
+					"scale": {
+						"vector": [1, 1.09, 1],
+						"easing": "easeOutQuad"
+					}
+				},
+				"string_1": {
+					"rotation": {
+						"vector": [52.5, 0, 0],
+						"easing": "easeOutQuad"
+					},
+					"scale": {
+						"vector": [1, 1.12, 1],
+						"easing": "easeOutQuad"
+					}
+				},
+				"frame_4": {
+					"rotation": {
+						"vector": [5, 0, 0],
+						"easing": "easeOutQuad"
+					}
+				},
+				"frame_5": {
+					"rotation": {
+						"vector": [5, 0, 0],
+						"easing": "easeOutQuad"
+					}
+				},
+				"pulley_2": {
+					"rotation": {
+						"vector": [90, 0, 0],
+						"easing": "easeOutQuad"
+					}
+				},
+				"pulley_string_2": {
+					"rotation": {
+						"vector": [-10, 0, 0],
+						"easing": "easeOutSine"
+					},
+					"position": {
+						"vector": [0, 0.01389, -0.00378]
+					}
+				},
+				"pulley_string_1": {
+					"rotation": {
+						"vector": [10, 0, 0],
+						"easing": "easeOutSine"
+					}
+				},
+				"arrow": {
+					"position": {
+						"vector": [0, 0, 8],
+						"easing": "easeOutQuad"
+					}
+				},
+				"reload_arrow": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				}
+			}
+		},
 		"shoot": {
 			"loop": true,
 			"animation_length": 2.0833,

@@ -74,7 +74,6 @@ public class GunFireEvent extends PlayerEvent
 
             if (stack.getTag() != null) {
                 if (stack.getItem() instanceof AnimatedGunItem gunItem) {
-                    //stack.getTag().putBoolean("IsShooting", true);
                     stack.getTag().remove("IsReloading");
                     stack.getTag().remove("IsFinishingReloading");
                     final long id = GeoItem.getId(stack);

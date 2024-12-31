@@ -68,7 +68,7 @@ public class EntityKillEventHandler {
 
         // Drop Raid Flares
         if (entity.getTags().contains("MobGunner")) {
-            if (entity.level().random.nextFloat() < 0.05F) {
+            if (entity.level().random.nextFloat() < 0.025F) {
                 GunnerManager manager = new GunnerManager(GunnerManager.getConfigFactions());
                 Faction faction = manager.getFactionForMob(ForgeRegistries.ENTITY_TYPES.getKey(entity.getType()));
                 if (faction != null) {

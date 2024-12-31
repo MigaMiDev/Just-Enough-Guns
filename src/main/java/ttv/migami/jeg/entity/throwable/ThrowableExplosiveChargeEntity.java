@@ -136,6 +136,6 @@ public class ThrowableExplosiveChargeEntity extends ThrowableGrenadeEntity {
         super.defineSynchedData();
         this.entityData.define(FUSE, 200);
         this.entityData.define(HAS_LANDED, false);
-        this.entityData.define(DEFUSED, true);
+        this.entityData.define(DEFUSED, false);
     }
 }

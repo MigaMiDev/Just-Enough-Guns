@@ -278,26 +278,25 @@ public class AttachmentScreen extends AbstractContainerScreen<AttachmentContaine
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button)
     {
-        if (Config.COMMON.gameplay.overrideHideMedals.get()) {
-            return false;
-        }
-
         int startX = (this.width - this.imageWidth) / 2;
         int startY = (this.height - this.imageHeight) / 2;
 
-        if(RenderUtil.isMouseWithin((int) mouseX, (int) mouseY, startX - 31, startY + 148, 22, 22))
-        {
-            if((button == GLFW.GLFW_MOUSE_BUTTON_LEFT || button == GLFW.GLFW_MOUSE_BUTTON_RIGHT))
+        if (!Config.COMMON.gameplay.overrideHideMedals.get()) {
+            if(RenderUtil.isMouseWithin((int) mouseX, (int) mouseY, startX - 31, startY + 148, 22, 22))
             {
-                this.toggleMedals();
-                Minecraft.getInstance().player.playSound(
-                        ModSounds.MEDAL_GENERIC.get(),
-                        1.0F,
-                        1.0F
-                );
-                return true;
+                if((button == GLFW.GLFW_MOUSE_BUTTON_LEFT || button == GLFW.GLFW_MOUSE_BUTTON_RIGHT))
+                {
+                    this.toggleMedals();
+                    Minecraft.getInstance().player.playSound(
+                            ModSounds.MEDAL_GENERIC.get(),
+                            1.0F,
+                            1.0F
+                    );
+                    return true;
+                }
             }
         }
+
         return super.mouseClicked(mouseX, mouseY, button);
     }
 

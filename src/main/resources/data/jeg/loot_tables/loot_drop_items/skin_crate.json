@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "jeg:camo_spray_can",
+          "name": "jeg:classic_spray_can",
           "weight": 1,
           "functions": [],
           "conditions": []
