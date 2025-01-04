@@ -378,7 +378,7 @@ public class ReloadTracker
         }
     }
 
-    public static void stopReloading (Player player) {
+    public static void stopReloading(Player player) {
         if(player.getMainHandItem().getItem() instanceof AnimatedGunItem gunItem)
         {
             if (player.getMainHandItem().getTag() != null) {
@@ -389,10 +389,10 @@ public class ReloadTracker
         }
     }
 
-    public static void mayStopReloading (Player player) {
+    public static void mayStopReloading(Player player) {
         if(player.getMainHandItem().getItem() instanceof AnimatedGunItem gunItem) {
             Gun gun = gunItem.getModifiedGun(player.getMainHandItem());
-            if(player.getMainHandItem().getTag() != null && player.getMainHandItem().getTag().getInt("AmmoCount") == gun.getReloads().getMaxAmmo() || Gun.findAmmo(player, gun.getProjectile().getItem()).stack().isEmpty())
+            if(player.getMainHandItem().getTag() != null && player.getMainHandItem().getTag().getInt("AmmoCount") == GunModifierHelper.getModifiedAmmoCapacity(player.getMainHandItem(), gun) || Gun.findAmmo(player, gun.getProjectile().getItem()).stack().isEmpty())
             {
                 if(gun.getReloads().getReloadType() == ReloadType.MANUAL) {
                     PacketHandler.getPlayChannel().sendToPlayer(() -> (ServerPlayer) player, new S2CMessageStopReloadAnimation());

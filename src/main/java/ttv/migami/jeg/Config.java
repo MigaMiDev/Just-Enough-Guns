@@ -326,6 +326,7 @@ public class Config
 		public final ForgeConfigSpec.BooleanValue dropAmmo;
 		public final ForgeConfigSpec.BooleanValue eliteSpawning;
 		public final ForgeConfigSpec.DoubleValue eliteChance;
+		public final ForgeConfigSpec.BooleanValue horsemen;
 		public final ForgeConfigSpec.IntValue minimunDays;
 		public final ForgeConfigSpec.IntValue initialChance;
 		public final ForgeConfigSpec.IntValue chanceIncrement;
@@ -351,6 +352,7 @@ public class Config
 				this.dropAmmo = builder.comment("If enabled, mobs with guns will have a chance to drop ammo for the gun they are using.").define("dropAmmo", true);
 				this.eliteSpawning = builder.comment("If enabled, mobs will have a chance to spawn as Elites.").define("eliteSpawning", true);
 				this.eliteChance = builder.comment("The chance for Elite Gunners to spawn, 1.0 is always, 0.0 is never.").defineInRange("eliteChance", 0.3D, 0.1D, 1.0D);
+				this.horsemen = builder.comment("If enabled, Elite Gunners have a chance to spawn riding Horses.").define("horsemen", true);
 				this.minimunDays = builder.comment("The in-game day where mobs will start spawning, and the spawn chance will increase every day after. 0 is the world-creation day.").defineInRange("minimunDays", 4, 0, 100);
 				this.initialChance = builder.comment("This will define the initial chance of mobs spawning with guns. Goes from 0% to 100%").defineInRange("initialChance", 1, 0, 100);
 				this.chanceIncrement = builder.comment("This defines the increment of the chance of mobs spawning with guns per day.").defineInRange("chanceIncrement", 1, 0, 100);

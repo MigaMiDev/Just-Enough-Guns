@@ -346,7 +346,7 @@ public class ShootingHandler
                             this.fire(player, heldItem);
                             if (gun.getGeneral().getFireMode() == FireMode.SEMI_AUTO || gun.getGeneral().getFireMode() == FireMode.PULSE)
                             {
-                                mc.options.keyAttack.setDown(false);
+                                KeyBinds.getShootMapping().setDown(false);
                                 fireTimer = 0;
                             }
                         }
@@ -357,7 +357,7 @@ public class ShootingHandler
                         }
                         if(gun.getGeneral().getFireMode() == FireMode.SEMI_AUTO && gun.getGeneral().getFireMode() != FireMode.RELEASE_FIRE)
                         {
-                            mc.options.keyAttack.setDown(false);
+                            KeyBinds.getShootMapping().setDown(false);
                         }
                     }
                 }

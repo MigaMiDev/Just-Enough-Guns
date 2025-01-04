@@ -15,7 +15,7 @@ import ttv.migami.jeg.Reference;
 @Mod.EventBusSubscriber(modid = Reference.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class FirstJoinMessageHandler {
 
-    private static final String FIRST_JOIN_TAG = "HasReceivedJEGsFirstJoinMessage";
+    public static final String FIRST_JOIN_TAG = "HasReceivedJEGsFirstJoinMessage";
 
     @SubscribeEvent
     public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {

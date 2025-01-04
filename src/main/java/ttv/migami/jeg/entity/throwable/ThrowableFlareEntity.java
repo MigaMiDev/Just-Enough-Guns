@@ -62,7 +62,6 @@ public class ThrowableFlareEntity extends ThrowableGrenadeEntity
     public void particleTick() {
         if (!this.level().isClientSide) {
             if (this.tickCount > 100 && this.hasRaid) {
-                JustEnoughGuns.LOGGER.atInfo().log("sumoned raid");
                 GunnerManager gunnerManager = GunnerManager.getInstance();
                 Faction faction = gunnerManager.getFactionByName(gunnerManager.getRandomFactionName());
                 if (this.raidName != null) {

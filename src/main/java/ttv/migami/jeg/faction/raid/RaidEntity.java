@@ -22,6 +22,9 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.animal.horse.Horse;
+import net.minecraft.world.entity.animal.horse.SkeletonHorse;
+import net.minecraft.world.entity.animal.horse.ZombieHorse;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
@@ -136,6 +139,31 @@ public class RaidEntity extends Entity {
                             spawnedMobs.add(mob);
                             if (!this.activePlayers.isEmpty() && mob instanceof PathfinderMob pathfinderMob) {
                                 pathfinderMob.setTarget(this.activePlayers.stream().findAny().get());
+                            }
+
+                            // Horsemen!
+                            if (mob.getTags().contains("EliteGunner") && level.random.nextBoolean() && Config.COMMON.gunnerMobs.horsemen.get()) {
+                                if (mob instanceof Zombie) {
+                                    ZombieHorse zombieHorse = new ZombieHorse(EntityType.ZOMBIE_HORSE, this.level());
+                                    zombieHorse.setPos(mob.position());
+                                    zombieHorse.addTag("GunnerPatroller");
+                                    this.level().addFreshEntity(zombieHorse);
+                                    zombieHorse.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 400));
+                                    mob.startRiding(zombieHorse);
+                                } else if (mob instanceof AbstractSkeleton) {
+                                    SkeletonHorse skeletonHorse = new SkeletonHorse(EntityType.SKELETON_HORSE, this.level());
+                                    skeletonHorse.setPos(mob.position());
+                                    skeletonHorse.addTag("GunnerPatroller");
+                                    this.level().addFreshEntity(skeletonHorse);
+                                    skeletonHorse.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 400));
+                                    mob.startRiding(skeletonHorse);
+                                } else {
+                                    Horse horse = new Horse(EntityType.HORSE, this.level());
+                                    horse.setPos(mob.position());
+                                    horse.addTag("GunnerPatroller");
+                                    this.level().addFreshEntity(horse);
+                                    mob.startRiding(horse);
+                                }
                             }
 
                             // Reinforcements!

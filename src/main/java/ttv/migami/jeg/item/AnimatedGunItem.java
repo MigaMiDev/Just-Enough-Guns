@@ -28,6 +28,7 @@ import software.bernie.geckolib.core.keyframe.event.SoundKeyframeEvent;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 import ttv.migami.jeg.Config;
+import ttv.migami.jeg.JustEnoughGuns;
 import ttv.migami.jeg.Reference;
 import ttv.migami.jeg.animations.GunAnimations;
 import ttv.migami.jeg.client.render.gun.animated.AnimatedGunRenderer;
@@ -98,6 +99,7 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
         }
 
         if (entity instanceof Player player) {
+            JustEnoughGuns.LOGGER.atInfo().log(player.getPersistentData().getBoolean("HasReceivedJEGsFirstJoinMessage"));
 
             if (player.getMainHandItem().getItem() == ModItems.HYPERSONIC_CANNON.get()) {
                 this.heartBeat--;
