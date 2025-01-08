@@ -170,6 +170,14 @@ public class ModItems {
                     "grenade_launcher",
                     ModSounds.CR_RELOAD_MAGAZINE_IN.get(), ModSounds.CR_RELOAD_MAGAZINE_OUT.get(), ModSounds.CR_RELOAD_EJECTOR.get(), ModSounds.CR_EJECTOR_PULL.get(), ModSounds.CR_EJECTOR_RELEASE.get()
             ));
+    public static final RegistryObject<AnimatedGunItem> FLAMETHROWER = REGISTER.register("flamethrower",
+            () -> new AnimatedGunItem(new Item.Properties()
+                    .stacksTo(1)
+                    .durability(1024)
+                    .rarity(Rarity.EPIC),
+                    "flamethrower",
+                    ModSounds.CR_RELOAD_MAGAZINE_OUT.get(), ModSounds.BOW_PLACE_ARROW.get(), ModSounds.CR_RELOAD_EJECTOR.get(), ModSounds.BOW_PULL.get(), ModSounds.BOW_STRING.get()
+            ));
 
     /* Spectre Tier */
     public static final RegistryObject<GunItem> BLOSSOM_RIFLE = REGISTER.register("blossom_rifle",

@@ -54,18 +54,56 @@ public class RocketEntity extends ProjectileEntity
     @Override
     protected void onProjectileTick()
     {
-        if (this.level().isClientSide && this.tickCount > 3)
-        {
+        if (this.level() instanceof ServerLevel serverLevel && (this.tickCount > 1 && this.tickCount < this.life)) {
             for (int i = 5; i > 0; i--)
             {
-                this.level().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, true, this.getX() - (this.getDeltaMovement().x() / i), this.getY() - (this.getDeltaMovement().y() / i), this.getZ() - (this.getDeltaMovement().z() / i), 0, 0, 0);
-                //this.level().addParticle(ParticleTypes.LARGE_SMOKE, true, this.getX() - (this.getDeltaMovement().x() / i), this.getY() - (this.getDeltaMovement().y() / i), this.getZ() - (this.getDeltaMovement().z() / i), 0, 0, 0);
+                sendParticlesToAll(
+                        serverLevel,
+                        ParticleTypes.CAMPFIRE_COSY_SMOKE,
+                        true,
+                        this.getX() - this.getDeltaMovement().x(),
+                        this.getY() - this.getDeltaMovement().y(),
+                        this.getZ() - this.getDeltaMovement().z(),
+                        1,
+                        0, 0, 0,
+                        0
+                );
             }
             if (this.level().random.nextInt(2) == 0)
             {
-                this.level().addParticle(ModParticleTypes.FIRE.get(), true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
-                this.level().addParticle(ParticleTypes.LAVA, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
-                this.level().addParticle(ParticleTypes.FLAME, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+                sendParticlesToAll(
+                        serverLevel,
+                        ModParticleTypes.FIRE.get(),
+                        true,
+                        this.getX() - this.getDeltaMovement().x(),
+                        this.getY() - this.getDeltaMovement().y(),
+                        this.getZ() - this.getDeltaMovement().z(),
+                        1,
+                        0, 0, 0,
+                        0
+                );
+                sendParticlesToAll(
+                        serverLevel,
+                        ParticleTypes.LAVA,
+                        true,
+                        this.getX() - this.getDeltaMovement().x(),
+                        this.getY() - this.getDeltaMovement().y(),
+                        this.getZ() - this.getDeltaMovement().z(),
+                        1,
+                        0, 0, 0,
+                        0
+                );
+                sendParticlesToAll(
+                        serverLevel,
+                        ParticleTypes.FLAME,
+                        true,
+                        this.getX() - this.getDeltaMovement().x(),
+                        this.getY() - this.getDeltaMovement().y(),
+                        this.getZ() - this.getDeltaMovement().z(),
+                        1,
+                        0, 0, 0,
+                        0
+                );
             }
         }
     }

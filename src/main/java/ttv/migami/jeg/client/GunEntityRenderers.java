@@ -20,6 +20,8 @@ public class GunEntityRenderers
     @SubscribeEvent
     public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event)
     {
+        event.registerEntityRenderer(ModEntities.ARROW_PROJECTILE.get(), ProjectileRenderer::new);
+        event.registerEntityRenderer(ModEntities.FLAME_PROJECTILE.get(), ProjectileRenderer::new);
         event.registerEntityRenderer(ModEntities.PROJECTILE.get(), ProjectileRenderer::new);
         event.registerEntityRenderer(ModEntities.SPECTRE_PROJECTILE.get(), ProjectileRenderer::new);
         event.registerEntityRenderer(ModEntities.WATER_PROJECTILE.get(), ProjectileRenderer::new);

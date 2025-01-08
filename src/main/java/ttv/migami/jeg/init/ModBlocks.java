@@ -27,6 +27,10 @@ public class ModBlocks {
 
     public static final DeferredRegister<Block> REGISTER = DeferredRegister.create(ForgeRegistries.BLOCKS, Reference.MOD_ID);
 
+    public static final RegistryObject<Block> AMMO_BOX = register("ammo_box",
+            () -> new AmmoBoxBlock(BlockBehaviour.Properties.copy(Blocks.COPPER_BLOCK)
+                    .strength(1.5F)));
+
     /*public static final RegistryObject<Block> BASIC_TURRET = register("basic_turret",
             () -> new BasicTurretBlock(BlockBehaviour.Properties.copy(Blocks.EMERALD_BLOCK)
                     .noOcclusion()

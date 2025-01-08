@@ -22,6 +22,7 @@ import ttv.migami.jeg.common.GripType;
 import ttv.migami.jeg.common.Gun;
 import ttv.migami.jeg.compat.PlayerReviveHelper;
 import ttv.migami.jeg.event.GunFireEvent;
+import ttv.migami.jeg.init.ModItems;
 import ttv.migami.jeg.init.ModSyncedDataKeys;
 import ttv.migami.jeg.item.AnimatedGunItem;
 import ttv.migami.jeg.item.GunItem;
@@ -288,6 +289,9 @@ public class ShootingHandler
                         }
                         if (overheatTimer >= gun.getGeneral().getOverheatTimer()) {
                             tracker.addCooldown(heldItem.getItem(), 80);
+                            if (heldItem.is(ModItems.FLAMETHROWER.get())) {
+                                PacketHandler.getPlayChannel().sendToServer(new C2SMessageBurnPlayer());
+                            }
                             overheated = true;
                             KeyBinds.getShootMapping().setDown(false);
                             PacketHandler.getPlayChannel().sendToServer(new C2SMessageOverheat());

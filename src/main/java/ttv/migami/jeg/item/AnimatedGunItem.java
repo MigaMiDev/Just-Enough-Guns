@@ -117,6 +117,9 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
                 if (stack.is(ModItems.ROCKET_LAUNCHER.get())) {
                     player.displayClientMessage(Component.translatable("chat.jeg.rocket_ride").withStyle(ChatFormatting.WHITE), true);
                 }
+                if (stack.is(ModItems.FLAMETHROWER.get())) {
+                    player.displayClientMessage(Component.translatable("chat.jeg.flamethrower").withStyle(ChatFormatting.WHITE), true);
+                }
             }
 
             //if (stack == player.getMainHandItem()) {

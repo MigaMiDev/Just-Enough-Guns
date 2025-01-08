@@ -44,6 +44,8 @@ public class ModContainers {
 
     public static final RegistryObject<MenuType<RecyclerMenu>> RECYCLER = register("recycler", RecyclerMenu::new);
 
+    public static final RegistryObject<MenuType<AmmoBoxMenu>> AMMO_BOX = register("ammo_box", AmmoBoxMenu::new);
+
     /*public static final RegistryObject<MenuType<BasicTurretContainer>> BASIC_TURRET_CONTAINER =
             REGISTER.register("basic_turret_container", () -> IForgeMenuType.create(BasicTurretContainer::new));*/
 

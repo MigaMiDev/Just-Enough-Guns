@@ -284,6 +284,7 @@ public class Config
 	 */
 	public static class World
 	{
+		//public final ForgeConfigSpec.IntValue scrapOreWeight;
 		public final ForgeConfigSpec.BooleanValue bossEnchants;
 		public final ForgeConfigSpec.IntValue maxWitheredLevel;
 		public final ForgeConfigSpec.BooleanValue bossRequirements;
@@ -300,6 +301,7 @@ public class Config
 		{
 			builder.comment("Properties relating to the JEG world and its ecosystem").push("world");
 			{
+				//this.scrapOreWeight = builder.comment("Controls the veins per chunk of the Scrap Ore").defineInRange("scrapOreWeight", 15, 0, 99);
 				this.bossEnchants = builder.comment("If enabled, killing bosses while holding a Gun/Firearm, will enchant the gun with their respective enchantment").define("bossEnchants", true);
 				this.maxWitheredLevel = builder.comment("The max level of Withered by killing the Wither. The maximum cap is 99, have fun.").defineInRange("maxWitheredLevel", 3, 1, 99);
 				this.bossRequirements = builder.comment("If enabled, boss enchanments will only be granted if their requirements are met").define("bossRequirements", true);

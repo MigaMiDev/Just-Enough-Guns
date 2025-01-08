@@ -39,6 +39,7 @@ import ttv.migami.jeg.particles.LaserData;
 import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Author: MrCrayfish
@@ -46,6 +47,8 @@ import java.util.Random;
 public class ClientPlayHandler
 {
     private static final Random RANDOM = new Random();
+    private static final AtomicLong lastSoundTime = new AtomicLong(0);
+    private static final long SOUND_COOLDOWN_MS = 50;
 
     public static void handleMessageGunSound(S2CMessageGunSound message)
     {
@@ -246,7 +249,11 @@ public class ClientPlayHandler
         if(event == null)
             return;
 
-        mc.getSoundManager().play(SimpleSoundInstance.forUI(event, 1.0F, 1.0F + world.random.nextFloat() * 0.2F));
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastSoundTime.get() > SOUND_COOLDOWN_MS) {
+            lastSoundTime.set(currentTime);
+            mc.getSoundManager().play(SimpleSoundInstance.forUI(event, 1.0F, 1.0F + world.random.nextFloat() * 0.2F));
+        }
     }
 
     @Nullable

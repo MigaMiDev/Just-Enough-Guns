@@ -745,4 +745,8 @@ public class ServerPlayHandler
             NetworkHooks.openScreen(player, new SimpleMenuProvider((windowId, playerInventory, player1) -> new AttachmentContainer(windowId, playerInventory, heldItem), Component.translatable("container.jeg.attachments")));
         }
     }
+
+    public static void burnPlayer(ServerPlayer player) {
+        player.setSecondsOnFire(5);
+    }
 }

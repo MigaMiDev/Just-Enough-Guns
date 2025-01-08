@@ -39,6 +39,9 @@ public class ModTileEntities
     /*public static final RegistryObject<BlockEntityType<BasicTurretBlockEntity>> BASIC_TURRET = register("basic_turret", BasicTurretBlockEntity::new,
             () -> new Block[]{ModBlocks.BASIC_TURRET.get()});*/
 
+    public static final RegistryObject<BlockEntityType<AmmoBoxBlockEntity>> AMMO_BOX = register("ammo_box", AmmoBoxBlockEntity::new,
+            () -> new Block[]{ModBlocks.AMMO_BOX.get()});
+
     public static final RegistryObject<BlockEntityType<DynamicLightBlockEntity>> DYNAMIC_LIGHT = register("dynamic_light", DynamicLightBlockEntity::new,
             () -> new Block[]{ModBlocks.DYNAMIC_LIGHT.get()});
 

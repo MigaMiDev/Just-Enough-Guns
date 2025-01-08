@@ -49,6 +49,8 @@ public class ModParticleTypes {
     public static final RegistryObject<SimpleParticleType> BIG_SONIC_RING = REGISTER.register("big_sonic_ring", () -> new SimpleParticleType(true));
     public static final RegistryObject<SimpleParticleType> FLARE_SMOKE = REGISTER.register("flare_smoke", () -> new SimpleParticleType(true));
     public static final RegistryObject<SimpleParticleType> FLARE = REGISTER.register("flare", () -> new SimpleParticleType(true));
+    public static final RegistryObject<SimpleParticleType> FLAME = REGISTER.register("flame", () -> new SimpleParticleType(true));
+    public static final RegistryObject<SimpleParticleType> BLUE_FLAME = REGISTER.register("blue_flame", () -> new SimpleParticleType(true));
 
     public static final RegistryObject<SimpleParticleType> SPARK = REGISTER.register("spark", () -> new SimpleParticleType(true));
     public static final RegistryObject<SimpleParticleType> BIG_EXPLOSION = REGISTER.register("big_explosion", () -> new SimpleParticleType(true));

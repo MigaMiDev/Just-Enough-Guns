@@ -186,6 +186,8 @@ public enum SpecialModels {
 
     GRENADE_LAUNCHER("gun/grenade_launcher"),
 
+    FLAMETHROWER("gun/flamethrower"),
+
     BUBBLE_CANNON("gun/bubble_cannon"),
     BUBBLE_CANNON_MAIN("bubble_cannon/main"),
 

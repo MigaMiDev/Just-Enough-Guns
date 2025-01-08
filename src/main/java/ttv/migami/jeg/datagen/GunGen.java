@@ -1480,5 +1480,52 @@ public class GunGen extends GunProvider
 
                 .build());
 
+        this.addGun(new ResourceLocation(Reference.MOD_ID, "flamethrower"), Gun.Builder.create()
+
+                // General
+                .setFireMode(FireMode.AUTOMATIC)
+                .setFireRate(1)
+                .setGripType(GripType.TWO_HANDED)
+                .setRecoilKick(0.15F)
+                .setRecoilAngle(.5F)
+                .setAlwaysSpread(true)
+                .setSpread(20.0F)
+                .setOverheatTimer(150)
+                .setCanBeBlueprinted(false)
+                .setProjectileAmount(3)
+
+                // Reloads
+                .setMaxAmmo(200)
+                .setReloadType(ReloadType.SINGLE_ITEM)
+                .setReloadTimer(220)
+                .setEmptyMagTimer(20)
+
+                // Projectile
+                .setReloadItem(Items.LAVA_BUCKET)
+                .setAmmo(Items.FIRE_CHARGE)
+                .setEjectsCasing(false)
+                .setProjectileVisible(false)
+                .setDamage(3.0F)
+                .setAdvantage(ModTags.Entities.VERY_HEAVY.location())
+                .setProjectileSize(0.05F)
+                .setProjectileSpeed(2.0F)
+                .setProjectileLife(7)
+                .setProjectileAffectedByGravity(false)
+                .setHideTrail(true)
+                .setCollateral(true)
+
+                // Sounds
+                .setFireSound(SoundEvents.FIRECHARGE_USE)
+                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
+                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+
+                // Attachments
+                .setMuzzleFlash(0.8, 0.0, 4.59, -7.955)
+                .setZoom(Gun.Modules.Zoom.builder()
+                        .setFovModifier(0.6F)
+                        .setOffset(0.0, 5.71, -1.75))
+
+                .build());
+
     }
 }

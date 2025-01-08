@@ -602,6 +602,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         @Optional
         private boolean visible;
         private boolean ignoresBlocks;
+        private boolean collateral;
         private float damage;
         private float headshotMultiplier = 1.5F;
         @Optional
@@ -629,6 +630,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             tag.putBoolean("EjectsCasing", this.ejectsCasing);
             tag.putBoolean("Visible", this.visible);
             tag.putBoolean("IgnoresBlocks", this.ignoresBlocks);
+            tag.putBoolean("Collateral", this.collateral);
             tag.putFloat("Damage", this.damage);
             tag.putFloat("HeadshotMultiplier", this.headshotMultiplier);
             tag.putString("Advantage", this.advantage.toString());
@@ -663,6 +665,10 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             if(tag.contains("IgnoresBlocks", Tag.TAG_ANY_NUMERIC))
             {
                 this.ignoresBlocks = tag.getBoolean("IgnoresBlocks");
+            }
+            if(tag.contains("Collateral", Tag.TAG_ANY_NUMERIC))
+            {
+                this.collateral = tag.getBoolean("IgnoresBlocksCollateral");
             }
             if(tag.contains("Damage", Tag.TAG_ANY_NUMERIC))
             {
@@ -731,6 +737,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             if(this.ejectsCasing) object.addProperty("ejectsCasing", true);
             if(this.visible) object.addProperty("visible", true);
             if(this.ignoresBlocks) object.addProperty("ignoresBlocks", true);
+            if(this.collateral) object.addProperty("collateral", true);
             object.addProperty("damage", this.damage);
             if(this.advantage != null) object.addProperty("advantage", this.advantage.toString());
             object.addProperty("size", this.size);
@@ -753,6 +760,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             projectile.ejectsCasing = this.ejectsCasing;
             projectile.visible = this.visible;
             projectile.ignoresBlocks = this.ignoresBlocks;
+            projectile.collateral = this.collateral;
             projectile.damage = this.damage;
             projectile.headshotMultiplier = this.headshotMultiplier;
             projectile.advantage = this.advantage;
@@ -799,6 +807,14 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         public boolean ignoresBlocks()
         {
             return this.ignoresBlocks;
+        }
+
+        /**
+         * @return If this projectile ignores entity collisions
+         */
+        public boolean isCollateral()
+        {
+            return this.collateral;
         }
 
         /**
@@ -2446,6 +2462,12 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         public Builder setIgnoresBlocks(boolean ignoresBlocks)
         {
             this.gun.projectile.ignoresBlocks = ignoresBlocks;
+            return this;
+        }
+
+        public Builder setCollateral(boolean collateral)
+        {
+            this.gun.projectile.collateral = collateral;
             return this;
         }
 

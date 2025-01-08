@@ -98,6 +98,7 @@ public class ClientHandler {
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.SCHEMATIC_STATION.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.BLUEPRINT_WORKBENCH.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.RECYCLER.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(ModBlocks.AMMO_BOX.get(), RenderType.cutout());
 
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.DYNAMIC_LIGHT.get(), RenderType.translucent());
     }
@@ -163,6 +164,7 @@ public class ClientHandler {
         ModelOverrides.register(ModItems.SUPERSONIC_SHOTGUN.get(), new SupersonicShotgunModel());
         ModelOverrides.register(ModItems.SUBSONIC_RIFLE.get(), new SubsonicRifleModel());
         ModelOverrides.register(ModItems.HYPERSONIC_CANNON.get(), new HypersonicCannonModel());
+        ModelOverrides.register(ModItems.FLAMETHROWER.get(), new FlamethrowerModel());
         //ModelOverrides.register(ModItems.BUBBLE_CANNON.get(), new BubbleCannonModel());
         ModelOverrides.register(Items.WOODEN_SWORD, new BayonetWoodenModel());
         ModelOverrides.register(Items.STONE_SWORD, new BayonetStoneModel());
@@ -181,6 +183,7 @@ public class ClientHandler {
         MenuScreens.register(ModContainers.RECYCLER.get(), RecyclerScreen::new);
         MenuScreens.register(ModContainers.SCHEMATIC_STATION.get(), SchematicStationScreen::new);
         MenuScreens.register(ModContainers.BLUEPRINT_WORKBENCH.get(), BlueprintWorkbenchScreen::new);
+        MenuScreens.register(ModContainers.AMMO_BOX.get(), AmmoBoxScreen::new);
         //MenuScreens.register(ModContainers.BASIC_TURRET_CONTAINER.get(), BasicTurretScreen::new);
     }
 

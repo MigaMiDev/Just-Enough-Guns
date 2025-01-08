@@ -1,0 +1,21 @@
+{
+  "type": "jeg:gunnite_workbench",
+  "materials": [
+    {
+      "item": "jeg:scrap",
+      "count": 8
+    },
+    {
+      "item": "jeg:gunmetal_block",
+      "count": 1
+    },
+    {
+      "item": "minecraft:chest",
+      "count": 1
+    }
+  ],
+  "result": {
+    "item": "jeg:ammo_box"
+  },
+  "time": 30
+}

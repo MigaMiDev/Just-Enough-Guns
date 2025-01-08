@@ -895,6 +895,7 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 		float maxU = weapon.isEnchanted() ? 1.0F : 0.5F;
 
 		if (weapon.getItem() == ModItems.SUBSONIC_RIFLE.get() ||
+				weapon.getItem() == ModItems.FLAMETHROWER.get() ||
 				weapon.getItem() == ModItems.SUPERSONIC_SHOTGUN.get() ||
 				weapon.getItem() == ModItems.HYPERSONIC_CANNON.get() ||
 				weapon.getItem() == ModItems.SOULHUNTER_MK2.get() ||

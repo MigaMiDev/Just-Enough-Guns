@@ -259,7 +259,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 
             List<EntityResult> hitEntities = null;
             int level = EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.COLLATERAL.get(), this.weapon);
-            if(level == 0)
+            if(level == 0 && !this.projectile.isCollateral())
             {
                 EntityResult entityResult = this.findEntityOnPath(startVec, endVec);
                 if(entityResult != null)
@@ -501,7 +501,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
         {
             BlockPos pos = blockHitResult.getBlockPos();
             BlockState state = this.level().getBlockState(pos);
-            if(blockHitResult.getType() == HitResult.Type.MISS || this.modifiedGun.getProjectile().ignoresBlocks() || state.is(ModBlocks.DYNAMIC_LIGHT.get()))
+            if(blockHitResult.getType() == HitResult.Type.MISS || this.projectile.ignoresBlocks() || state.is(ModBlocks.DYNAMIC_LIGHT.get()))
             {
                 return;
             }
@@ -580,8 +580,8 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
                 }
 
                 boolean advantageFlag = false;
-                if (Config.COMMON.gameplay.gunAdvantage.get() && modifiedGun.getProjectile().getAdvantage().equals(ModTags.Entities.HEAVY.location()) ||
-                        modifiedGun.getProjectile().getAdvantage().equals(ModTags.Entities.VERY_HEAVY.location())) {
+                if (Config.COMMON.gameplay.gunAdvantage.get() && this.projectile.getAdvantage().equals(ModTags.Entities.HEAVY.location()) ||
+                        this.projectile.getAdvantage().equals(ModTags.Entities.VERY_HEAVY.location())) {
                     advantageFlag = true;
                 } else if (!Config.COMMON.gameplay.gunAdvantage.get()) {
                     advantageFlag = true;
@@ -724,7 +724,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
                     advantage.equals(ModTags.Entities.UNDEAD.location())) ||
                     collateralLevel == 0)
             {
-                if (!(this instanceof RocketEntity)) {
+                if (!(this instanceof RocketEntity) && !this.projectile.isCollateral() && !(this instanceof FlameProjectileEntity)) {
                     this.remove(RemovalReason.KILLED);
                 }
             }
@@ -871,7 +871,9 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 
     protected void onHitBlock(BlockState state, BlockPos pos, Direction face, double x, double y, double z)
     {
-        PacketHandler.getPlayChannel().sendToTrackingChunk(() -> this.level().getChunkAt(pos), new S2CMessageProjectileHitBlock(x, y, z, pos, face));
+        if (!(this instanceof FlameProjectileEntity)) {
+            PacketHandler.getPlayChannel().sendToTrackingChunk(() -> this.level().getChunkAt(pos), new S2CMessageProjectileHitBlock(x, y, z, pos, face));
+        }
     }
 
     public void updateHeading()
@@ -975,7 +977,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
      * @param ignorePredicate the block state predicate
      * @return a result of the raytrace
      */
-    private static BlockHitResult rayTraceBlocks(Level world, ClipContext context, Predicate<BlockState> ignorePredicate)
+    static BlockHitResult rayTraceBlocks(Level world, ClipContext context, Predicate<BlockState> ignorePredicate)
     {
         return performRayTrace(context, (rayTraceContext, blockPos) -> {
             if (JustEnoughGuns.valkyrienSkiesLoaded) return RaycastUtilsKt.clipIncludeShips(world, context);
