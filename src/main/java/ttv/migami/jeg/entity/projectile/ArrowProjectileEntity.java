@@ -25,6 +25,7 @@ import net.minecraftforge.common.MinecraftForge;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.common.Gun;
 import ttv.migami.jeg.event.GunProjectileHitEvent;
+import ttv.migami.jeg.init.ModEnchantments;
 import ttv.migami.jeg.item.GunItem;
 
 import java.util.function.BiFunction;
@@ -45,7 +46,7 @@ public class ArrowProjectileEntity extends ProjectileEntity {
 
 	public ArrowProjectileEntity(EntityType<? extends ProjectileEntity> entityType, Level worldIn, LivingEntity shooter, ItemStack stack, GunItem item, Gun modifiedGun) {
 		super(entityType, worldIn, shooter, stack, item, modifiedGun);
-        if (stack.getEnchantmentLevel(Enchantments.FLAMING_ARROWS) != 0) {
+        if (stack.getEnchantmentLevel(Enchantments.FLAMING_ARROWS) != 0 || stack.getEnchantmentLevel(ModEnchantments.FIRE_STARTER.get()) != 0) {
             this.flaming = true;
         }
         if (this.chargeProgress == 1F) {

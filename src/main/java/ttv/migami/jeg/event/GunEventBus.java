@@ -135,7 +135,6 @@ public class GunEventBus {
     @SubscribeEvent
     public static void preShoot(GunFireEvent.Pre event)
     {
-
         Player player = event.getEntity();
         Level level = event.getEntity().level();
         ItemStack heldItem = player.getMainHandItem();

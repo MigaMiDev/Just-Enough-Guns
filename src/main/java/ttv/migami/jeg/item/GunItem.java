@@ -310,12 +310,16 @@ public class GunItem extends Item implements IColored, IMeta {
 
     // Telescopic Zoom
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
-        if (!this.scoping) {
-            pPlayer.playSound(SoundEvents.SPYGLASS_USE, 1.0F, 1.0F);
-            pPlayer.awardStat(Stats.ITEM_USED.get(this));
+        if (pUsedHand.equals(InteractionHand.MAIN_HAND))
+        {
+            if (!this.scoping) {
+                pPlayer.playSound(SoundEvents.SPYGLASS_USE, 1.0F, 1.0F);
+                pPlayer.awardStat(Stats.ITEM_USED.get(this));
+            }
+            this.scoping = true;
+            return InteractionResultHolder.pass(pPlayer.getMainHandItem());
         }
-        this.scoping = true;
-        return InteractionResultHolder.pass(pPlayer.getMainHandItem());
+        return InteractionResultHolder.pass(pPlayer.getOffhandItem());
     }
 
     public ItemStack finishUsingItem(ItemStack pStack, Level pLevel, LivingEntity pLivingEntity) {
