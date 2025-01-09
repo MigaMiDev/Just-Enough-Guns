@@ -1350,6 +1350,7 @@ public class GunGen extends GunProvider
                 .setSpread(0.0F)
                 .setMaxHoldFire(20)
                 .setSilenced(true)
+                .setCanBeBlueprinted(false)
 
                 // Reloads
                 .setMaxAmmo(1)
@@ -1445,6 +1446,7 @@ public class GunGen extends GunProvider
                 .setRecoilAngle(3.0F)
                 .setAlwaysSpread(true)
                 .setSpread(2.0F)
+                .setCanBeBlueprinted(false)
 
                 // Reloads
                 .setMaxAmmo(1)
@@ -1499,9 +1501,9 @@ public class GunGen extends GunProvider
                 .setReloadType(ReloadType.SINGLE_ITEM)
                 .setReloadTimer(220)
                 .setEmptyMagTimer(20)
+                .setReloadItem(Items.LAVA_BUCKET)
 
                 // Projectile
-                .setReloadItem(Items.LAVA_BUCKET)
                 .setAmmo(Items.FIRE_CHARGE)
                 .setEjectsCasing(false)
                 .setProjectileVisible(false)

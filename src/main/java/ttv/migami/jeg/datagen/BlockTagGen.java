@@ -129,7 +129,10 @@ public class BlockTagGen extends BlockTagsProvider
                 .add(ModBlocks.GUNNITE_WORKBENCH.get())
                 .add(ModBlocks.RECYCLER.get())
                 .add(ModBlocks.GUNMETAL_WORKBENCH.get())
-                .add(Blocks.SPAWNER);
+                .add(Blocks.SPAWNER)
+                .add(ModBlocks.AMMO_BOX.get())
+                .add(ModBlocks.GUNNITE_BLOCK.get())
+                .add(ModBlocks.GUNMETAL_BLOCK.get());
 
         this.tag(ModTags.Blocks.STONE)
                 .add(Blocks.STONE)

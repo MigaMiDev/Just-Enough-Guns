@@ -1,14 +1,11 @@
 package ttv.migami.jeg.client.render;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
@@ -24,11 +21,14 @@ import ttv.migami.jeg.client.handler.AimingHandler;
 import ttv.migami.jeg.client.handler.ShootingHandler;
 import ttv.migami.jeg.client.medal.MedalManager;
 import ttv.migami.jeg.common.Gun;
+import ttv.migami.jeg.common.ReloadType;
+import ttv.migami.jeg.init.ModEnchantments;
 import ttv.migami.jeg.init.ModItems;
 import ttv.migami.jeg.item.GunItem;
 import ttv.migami.jeg.item.TelescopicScopeItem;
 import ttv.migami.jeg.item.attachment.IAttachment;
-import ttv.migami.jeg.util.GunModifierHelper;
+
+import static ttv.migami.jeg.common.Gun.getTotalAmmoCount;
 
 @Mod.EventBusSubscriber(modid = Reference.MOD_ID, value = Dist.CLIENT)
 public class GuiRenderer {
@@ -171,9 +171,41 @@ public class GuiRenderer {
                 if (!tag.contains("AmmoCount")) return;
 
                 int ammoCount = tag.getInt("AmmoCount");
-                //if (ammoCount <= 0) return;
+                ItemStack[] ammoStack;
+                if (!gun.getReloads().getReloadType().equals(ReloadType.SINGLE_ITEM)) {
+                    ammoStack = Gun.findAmmoStack(player, gun.getProjectile().getItem());
+                } else {
+                    ammoStack = Gun.findAmmoStack(player, gun.getReloads().getReloadItem());
+                }
+                int startX = (int) (minecraft.getWindow().getGuiScaledWidth() * 0.95 - 100) + Config.CLIENT.display.displayAmmoGUIXOffset.get();
+                int startY = (int) (minecraft.getWindow().getGuiScaledHeight() - 65) + Config.CLIENT.display.displayAmmoGUIYOffset.get();
 
-                ResourceLocation ammoTexture = AMMO;
+                String name = heldItem.getHoverName().getString();
+                guiGraphics.drawString(Minecraft.getInstance().font, name, startX, startY - 10, heldItem.getRarity().color.getColor(), true);
+
+                guiGraphics.pose().pushPose();
+                guiGraphics.pose().translate(startX, startY, 0);
+                guiGraphics.pose().scale(2.0f, 2.0f, 1.0f);
+
+                String ammoText = String.format("%03d", ammoCount);
+
+                guiGraphics.drawString(Minecraft.getInstance().font, ammoText, 0, 0, 0xFFFFFF, true);
+                guiGraphics.pose().popPose();
+
+                String inventoryAmmo = String.format("%04d", ammoStack.length);
+                if (gun.getReloads().getReloadType().equals(ReloadType.SINGLE_ITEM)) {
+                    inventoryAmmo = String.format("%04d", ammoStack.length * gun.getReloads().getMaxAmmo());
+                } else {
+                    inventoryAmmo = String.format("%04d", getTotalAmmoCount(ammoStack));
+                }
+                if (player.isCreative() || heldItem.getEnchantmentLevel(ModEnchantments.INFINITY.get()) != 0 ||
+                        heldItem.getTag().getBoolean("IgnoreAmmo")) {
+                    inventoryAmmo = "9999";
+                }
+                guiGraphics.drawString(Minecraft.getInstance().font, inventoryAmmo, startX + 38, startY, 0x878787, true);
+
+
+                /*ResourceLocation ammoTexture = AMMO;
                 int segmentWidth = 3;
                 int segmentHeight = 9;
                 int rowPadding = 0;
@@ -194,7 +226,6 @@ public class GuiRenderer {
                 int startX = (int) (minecraft.getWindow().getGuiScaledWidth() * 0.95 - 90) + Config.CLIENT.display.displayAmmoGUIXOffset.get();
                 int startY = (int) (minecraft.getWindow().getGuiScaledHeight() - 45) + Config.CLIENT.display.displayAmmoGUIYOffset.get();
 
-                MutableComponent name = Component.translatable(heldItem.getDescriptionId()).withStyle(ChatFormatting.WHITE);
                 int textWidth = Minecraft.getInstance().font.width(name);
                 //guiGraphics.drawString(Minecraft.getInstance().font, name, startX + (90 - textWidth) / 2, startY - 9, 0xFFFFFF, true);
                 guiGraphics.drawString(Minecraft.getInstance().font, name, startX, startY - 9, 0xFFFFFF, true);
@@ -216,7 +247,7 @@ public class GuiRenderer {
                     int textureY = fullRows * rowHeight;
 
                     guiGraphics.blit(ammoTexture, startX, startY + fullRows * rowHeight, 0, textureY, renderWidth, renderHeight, 90, 9);
-                }
+                }*/
             }
         }
     }

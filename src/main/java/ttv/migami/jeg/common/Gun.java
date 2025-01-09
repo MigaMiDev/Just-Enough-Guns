@@ -2177,6 +2177,16 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         return stacks.toArray(new ItemStack[]{});
     }
 
+    public static int getTotalAmmoCount(ItemStack[] itemStacks) {
+        int total = 0;
+        for (ItemStack stack : itemStacks) {
+            if (!stack.isEmpty()) {
+                total += stack.getCount();
+            }
+        }
+        return total;
+    }
+
     public static boolean isAmmo(ItemStack stack, ResourceLocation id)
     {
         return stack != null && Objects.equals(ForgeRegistries.ITEMS.getKey(stack.getItem()), id);

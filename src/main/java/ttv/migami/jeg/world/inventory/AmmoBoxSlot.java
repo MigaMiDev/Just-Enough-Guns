@@ -3,6 +3,7 @@ package ttv.migami.jeg.world.inventory;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import ttv.migami.jeg.common.ModTags;
 import ttv.migami.jeg.item.AmmoItem;
 
 public class AmmoBoxSlot extends Slot {
@@ -11,6 +12,6 @@ public class AmmoBoxSlot extends Slot {
     }
 
     public boolean mayPlace(ItemStack pStack) {
-        return pStack.getItem() instanceof AmmoItem;
+        return pStack.getItem() instanceof AmmoItem || pStack.is(ModTags.Items.AMMO);
     }
 }

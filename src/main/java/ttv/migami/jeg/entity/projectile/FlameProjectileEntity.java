@@ -156,8 +156,19 @@ public class FlameProjectileEntity extends ProjectileEntity {
 	@Override
 	protected void onHitEntity(Entity entity, Vec3 hitVec, Vec3 startVec, Vec3 endVec, boolean headshot) {
 		super.onHitEntity(entity, hitVec, startVec, endVec, headshot);
-		
-		entity.setSecondsOnFire(10);
+
+        sendParticlesToAll(
+                ((ServerLevel) this.level()),
+                ModParticleTypes.FLAME.get(),
+                true,
+                entity.getX(),
+                entity.getY(),
+                entity.getZ(),
+                1,
+                0, 0, 0,
+                0.3
+        );
+        entity.setSecondsOnFire(10);
 		
 	}
 	
@@ -182,15 +193,26 @@ public class FlameProjectileEntity extends ProjectileEntity {
 
             Vec3 hitVec = result.getLocation();
             BlockPos pos = blockRayTraceResult.getBlockPos();
-            
+
+            BlockPos offsetPos = pos.relative(blockRayTraceResult.getDirection());
+            sendParticlesToAll(
+                    ((ServerLevel) this.level()),
+                    ModParticleTypes.FLAME.get(),
+                    true,
+                    offsetPos.getX(),
+                    offsetPos.getY(),
+                    offsetPos.getZ(),
+                    1,
+                    0, 0, 0,
+                    0.3
+            );
+
             if(Config.COMMON.gameplay.griefing.setFireToBlocks.get()) {
 
                 if (this.shooter == null || !this.shooter.isCrouching()) {
                     return;
                 }
 
-                BlockPos offsetPos = pos.relative(blockRayTraceResult.getDirection());
-                
                 if(BaseFireBlock.canBePlacedAt(this.level(), offsetPos, blockRayTraceResult.getDirection())) {
                 	
                     BlockState fireState = BaseFireBlock.getState(this.level(), offsetPos);

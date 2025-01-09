@@ -11,35 +11,35 @@ import ttv.migami.jeg.init.ModContainers;
 import ttv.migami.jeg.world.inventory.AmmoBoxSlot;
 
 public class AmmoBoxMenu extends AbstractContainerMenu {
-    private static final int CONTAINER_SIZE = 27;
+    private static final int CONTAINER_SIZE = 15;
     private final Container container;
 
     public AmmoBoxMenu(int pContainerId, Inventory pPlayerInventory) {
-        this(pContainerId, pPlayerInventory, new SimpleContainer(27));
+        this(pContainerId, pPlayerInventory, new SimpleContainer(15));
     }
 
     public AmmoBoxMenu(int pContainerId, Inventory pPlayerInventory, Container pContainer) {
         super(ModContainers.AMMO_BOX.get(), pContainerId);
-        checkContainerSize(pContainer, 27);
+        checkContainerSize(pContainer, 15);
         this.container = pContainer;
         pContainer.startOpen(pPlayerInventory.player);
 
-        int $$9;
-        int $$8;
-        for($$9 = 0; $$9 < 3; ++$$9) {
-            for($$8 = 0; $$8 < 9; ++$$8) {
-                this.addSlot(new AmmoBoxSlot(pContainer, $$8 + $$9 * 9, 8 + $$8 * 18, 18 + $$9 * 18));
+        int rows;
+        int columns;
+        for(rows = 0; rows < 3; ++rows) {
+            for(columns = 0; columns < 5; ++columns) {
+                this.addSlot(new AmmoBoxSlot(pContainer, columns + rows * 5, 43 + columns * 18, 18 + rows * 18));
             }
         }
 
-        for($$9 = 0; $$9 < 3; ++$$9) {
-            for($$8 = 0; $$8 < 9; ++$$8) {
-                this.addSlot(new Slot(pPlayerInventory, $$8 + $$9 * 9 + 9, 8 + $$8 * 18, 84 + $$9 * 18));
+        for(rows = 0; rows < 3; ++rows) {
+            for(columns = 0; columns < 9; ++columns) {
+                this.addSlot(new Slot(pPlayerInventory, columns + rows * 9 + 9, 8 + columns * 18, 91 + rows * 18));
             }
         }
 
-        for($$9 = 0; $$9 < 9; ++$$9) {
-            this.addSlot(new Slot(pPlayerInventory, $$9, 8 + $$9 * 18, 142));
+        for(rows = 0; rows < 9; ++rows) {
+            this.addSlot(new Slot(pPlayerInventory, rows, 8 + rows * 18, 149));
         }
 
     }

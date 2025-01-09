@@ -16,7 +16,7 @@ public class AmmoBoxScreen extends AbstractContainerScreen<AmmoBoxMenu> {
 
     public AmmoBoxScreen(AmmoBoxMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
-        ++this.imageHeight;
+        this.imageHeight = 172;
     }
 
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
@@ -29,5 +29,11 @@ public class AmmoBoxScreen extends AbstractContainerScreen<AmmoBoxMenu> {
         int $$4 = (this.width - this.imageWidth) / 2;
         int $$5 = (this.height - this.imageHeight) / 2;
         pGuiGraphics.blit(CONTAINER_TEXTURE, $$4, $$5, 0, 0, this.imageWidth, this.imageHeight);
+    }
+
+    @Override
+    protected void renderLabels(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY) {
+        pGuiGraphics.drawCenteredString(this.font, this.title, this.titleLabelX + 78, this.titleLabelY, 0xFFFFFF);
+        pGuiGraphics.drawString(this.font, this.playerInventoryTitle, this.inventoryLabelX, this.inventoryLabelY + 7, 4210752, false);
     }
 }

@@ -8,6 +8,7 @@
   },
   "general": {
     "alwaysSpread": true,
+    "canBeBlueprinted": false,
     "fireMode": "jeg:semi_automatic",
     "gripType": "jeg:two_handed",
     "rate": 20,

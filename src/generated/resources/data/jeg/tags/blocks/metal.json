@@ -63,6 +63,7 @@
     "jeg:gunnite_workbench",
     "jeg:recycler",
     "jeg:gunmetal_workbench",
-    "minecraft:spawner"
+    "minecraft:spawner",
+    "jeg:ammo_box"
   ]
 }

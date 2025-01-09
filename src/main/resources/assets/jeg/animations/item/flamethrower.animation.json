@@ -24,18 +24,14 @@
 		},
 		"shoot": {
 			"loop": true,
-			"animation_length": 0.375,
+			"animation_length": 0.75,
 			"bones": {
 				"gun_body": {
 					"rotation": {
 						"0.0": {
 							"vector": [-3.75, 0, 0]
 						},
-						"0.0833": {
-							"vector": [-1, 0, 0],
-							"easing": "easeInSine"
-						},
-						"0.3333": {
+						"0.5833": {
 							"vector": [0, 0, 0],
 							"easing": "easeInOutSine"
 						}
@@ -44,10 +40,7 @@
 						"0.0": {
 							"vector": [0, 0, 1.425]
 						},
-						"0.0833": {
-							"vector": [0, 0, 0.5]
-						},
-						"0.25": {
+						"0.5": {
 							"vector": [0, 0, 0],
 							"easing": "easeInOutSine"
 						}
@@ -61,7 +54,7 @@
 						"0.0": {
 							"vector": [5.65, -2.2, 5.5]
 						},
-						"0.25": {
+						"0.5": {
 							"vector": [5.65, -2.2, 5]
 						}
 					}
@@ -78,18 +71,14 @@
 		},
 		"aim_shoot": {
 			"loop": true,
-			"animation_length": 0.375,
+			"animation_length": 0.75,
 			"bones": {
 				"gun_body": {
 					"rotation": {
 						"0.0": {
 							"vector": [-3.75, 0, 0]
 						},
-						"0.0833": {
-							"vector": [-1, 0, 0],
-							"easing": "easeInSine"
-						},
-						"0.3333": {
+						"0.5833": {
 							"vector": [0, 0, 0],
 							"easing": "easeInOutSine"
 						}
@@ -98,10 +87,7 @@
 						"0.0": {
 							"vector": [0, 0, 1.425]
 						},
-						"0.0833": {
-							"vector": [0, 0, 0.5]
-						},
-						"0.25": {
+						"0.5": {
 							"vector": [0, 0, 0],
 							"easing": "easeInOutSine"
 						}
@@ -115,7 +101,7 @@
 						"0.0": {
 							"vector": [5.65, -2.2, 5.5]
 						},
-						"0.25": {
+						"0.5": {
 							"vector": [5.65, -2.2, 5]
 						}
 					}

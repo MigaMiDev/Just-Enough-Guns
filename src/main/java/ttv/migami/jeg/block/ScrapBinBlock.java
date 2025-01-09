@@ -2,9 +2,11 @@ package ttv.migami.jeg.block;
 
 import it.unimi.dsi.fastutil.objects.Object2FloatMap;
 import it.unimi.dsi.fastutil.objects.Object2FloatOpenHashMap;
+import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -16,6 +18,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
@@ -38,6 +41,7 @@ import ttv.migami.jeg.init.ModItems;
 import ttv.migami.jeg.init.ModParticleTypes;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Random;
 
 public class ScrapBinBlock extends Block implements WorldlyContainerHolder {
@@ -379,5 +383,10 @@ public class ScrapBinBlock extends Block implements WorldlyContainerHolder {
          ScrapBinBlock.empty((Entity)null, this.state, this.level, this.pos);
          this.changed = true;
       }
+   }
+
+   public void appendHoverText(ItemStack pStack, @Nullable BlockGetter pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
+      super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
+      pTooltip.add(Component.translatable("info.jeg.tooltip_block_" + this.asItem()).withStyle(ChatFormatting.GRAY));
    }
 }

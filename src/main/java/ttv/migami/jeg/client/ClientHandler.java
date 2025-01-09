@@ -1,5 +1,6 @@
 package ttv.migami.jeg.client;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.client.gui.components.OptionsList;
@@ -46,6 +47,7 @@ import ttv.migami.jeg.enchantment.EnchantmentTypes;
 import ttv.migami.jeg.init.ModBlocks;
 import ttv.migami.jeg.init.ModContainers;
 import ttv.migami.jeg.init.ModItems;
+import ttv.migami.jeg.item.FlareItem;
 import ttv.migami.jeg.item.GunItem;
 import ttv.migami.jeg.item.IColored;
 import ttv.migami.jeg.item.attachment.IAttachment;
@@ -269,6 +271,13 @@ public class ClientHandler {
                     }
                     if(registryObject.get().asItem() == ModBlocks.DYNAMIC_LIGHT.get().asItem()) {
                         return;
+                    }
+                    if(registryObject.get() instanceof FlareItem)
+                    {
+                        ItemStack flareStack = new ItemStack(ModItems.FLARE.get());
+                        flareStack.setHoverName(Component.translatable("item.jeg.raid_flare").withStyle(style -> style.withColor(ChatFormatting.RED).withItalic(false)));
+                        flareStack.getOrCreateTag().putBoolean("HasRaid", true);
+                        output.accept(flareStack);
                     }
                     output.accept(registryObject.get());
                 });

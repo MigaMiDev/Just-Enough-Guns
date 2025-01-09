@@ -2,8 +2,8 @@
   "display": {
     "flash": {
       "size": 0.8,
-      "yOffset": 4.88,
-      "zOffset": -10.0
+      "yOffset": 4.59,
+      "zOffset": -7.955
     }
   },
   "general": {
@@ -11,7 +11,7 @@
     "canBeBlueprinted": false,
     "fireMode": "jeg:automatic",
     "gripType": "jeg:two_handed",
-    "overheatTimer": 200,
+    "overheatTimer": 150,
     "projectileAmount": 3,
     "rate": 1,
     "recoilAngle": 0.5,
@@ -19,27 +19,9 @@
     "spread": 20.0
   },
   "modules": {
-    "attachments": {
-      "barrel": {
-        "yOffset": 4.855,
-        "zOffset": -7.0
-      },
-      "scope": {
-        "yOffset": 5.33
-      },
-      "special": {
-        "xOffset": -1.2,
-        "yOffset": 3.63,
-        "zOffset": -0.1
-      },
-      "underBarrel": {
-        "yOffset": 2.5,
-        "zOffset": 0.3
-      }
-    },
     "zoom": {
       "fovModifier": 0.6,
-      "yOffset": 4.56,
+      "yOffset": 5.71,
       "zOffset": -1.75
     }
   },
@@ -59,7 +41,7 @@
     "emptyMagTimer": 20,
     "maxAmmo": 200,
     "reloadItem": "minecraft:lava_bucket",
-    "reloadTimer": 120,
+    "reloadTimer": 220,
     "reloadType": "jeg:single_item"
   },
   "sounds": {

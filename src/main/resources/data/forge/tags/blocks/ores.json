@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "jeg:scrap_ore",
+    "jeg:deepslate_scrap_ore",
+    "jeg:scrap_ore",
+    "jeg:brimstone_ore",
+    "jeg:blackstone_brimstone_ore",
+    "jeg:basalt_brimstone_ore"
+  ]
+}

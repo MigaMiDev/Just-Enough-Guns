@@ -86,9 +86,13 @@ public class SchematicStationScreen extends AbstractContainerScreen<SchematicSta
          {
             pGuiGraphics.renderComponentTooltip(this.font, Arrays.asList(Component.translatable("slot.jeg.blueprint.incompatible").withStyle(ChatFormatting.YELLOW)), pMouseX, pMouseY);
          }
-         if(this.menu.getSlot(0).getItem().isEmpty() && this.menu.getCarried().getItem() instanceof AdvancedBlueprintItem)
+         else if(this.menu.getSlot(0).getItem().isEmpty() && this.menu.getCarried().getItem() instanceof AdvancedBlueprintItem)
          {
             pGuiGraphics.renderComponentTooltip(this.font, Arrays.asList(Component.translatable("slot.jeg.blueprint.advanced").withStyle(ChatFormatting.YELLOW)), pMouseX, pMouseY);
+         }
+         else if(this.menu.getSlot(0).getItem().isEmpty())
+         {
+            pGuiGraphics.renderComponentTooltip(this.font, Arrays.asList(Component.translatable("slot.jeg.blueprint.blueprint_help").withStyle(ChatFormatting.WHITE)), pMouseX, pMouseY);
          }
       }
       if(RenderUtil.isMouseWithin(pMouseX, pMouseY, startX + 15, startY + 15, 16, 16))
@@ -96,6 +100,10 @@ public class SchematicStationScreen extends AbstractContainerScreen<SchematicSta
          if(this.menu.getSlot(1).getItem().isEmpty() && this.menu.getCarried().getItem() instanceof AdvancedBlueprintItem)
          {
             pGuiGraphics.renderComponentTooltip(this.font, Arrays.asList(Component.translatable("slot.jeg.blueprint.overwrite").withStyle(ChatFormatting.YELLOW)), pMouseX, pMouseY);
+         }
+         else if(this.menu.getSlot(1).getItem().isEmpty())
+         {
+            pGuiGraphics.renderComponentTooltip(this.font, Arrays.asList(Component.translatable("slot.jeg.blueprint.blank_help").withStyle(ChatFormatting.WHITE)), pMouseX, pMouseY);
          }
       }
    }
