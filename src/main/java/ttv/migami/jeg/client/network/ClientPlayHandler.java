@@ -13,9 +13,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -181,14 +183,15 @@ public class ClientPlayHandler
             Vec3 motion = new Vec3(normal.getX(), normal.getY(), normal.getZ());
             motion.add(getRandomDir(world.random), getRandomDir(world.random), getRandomDir(world.random));
 
-            if (state.is(ModTags.Blocks.METAL)) {
+            SoundType soundType = state.getSoundType();
+            if (state.is(ModTags.Blocks.METAL) || soundType.equals(SoundType.METAL)) {
                 world.playLocalSound(message.getX(), message.getY(), message.getZ(), ModSounds.METAL_HIT.get(), SoundSource.BLOCKS, 0.5F, 1.0F, false);
                 for(int i = 0; i < 2; i++)
                 {
                     world.addParticle(ModParticleTypes.SPARK.get(), false, message.getX(), message.getY(), message.getZ(), motion.x, motion.y, motion.z);
                 }
             }
-            if (state.is(ModTags.Blocks.STONE)) {
+            if (state.is(ModTags.Blocks.STONE) || soundType.equals(SoundType.STONE)) {
                 world.playLocalSound(message.getX(), message.getY(), message.getZ(), ModSounds.STONE_HIT.get(), SoundSource.BLOCKS, 0.4F, 1.0F, false);
                 world.addParticle(ParticleTypes.CLOUD, true, message.getX(), message.getY(), message.getZ(), motion.x * RANDOM.nextFloat() / 10, motion.y * RANDOM.nextFloat() / 10, motion.z * RANDOM.nextFloat() / 10);
                 for(int i = 0; i < 2; i++)
@@ -196,7 +199,7 @@ public class ClientPlayHandler
                     world.addParticle(ModParticleTypes.SPARK.get(), false, message.getX(), message.getY(), message.getZ(), motion.x, motion.y, motion.z);
                 }
             }
-            if (state.is(ModTags.Blocks.WOOD)) {
+            if (((state.is(BlockTags.MINEABLE_WITH_AXE)) || state.is(ModTags.Blocks.WOOD)) || soundType.equals(SoundType.WOOD)) {
                 world.playLocalSound(message.getX(), message.getY(), message.getZ(), ModSounds.WOOD_HIT.get(), SoundSource.BLOCKS, 0.4F, 1.0F, false);
                 world.addParticle(ParticleTypes.CLOUD, false, message.getX(), message.getY(), message.getZ(), motion.x * RANDOM.nextFloat() / 10, motion.y * RANDOM.nextFloat() / 10, motion.z * RANDOM.nextFloat() / 10);
             }

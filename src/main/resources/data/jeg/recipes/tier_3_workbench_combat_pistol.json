@@ -1,0 +1,17 @@
+{
+  "type": "jeg:gunnite_workbench",
+  "materials": [
+    {
+      "item": "jeg:gunnite_ingot",
+      "count": 10
+    },
+    {
+      "item": "jeg:scrap",
+      "count": 12
+    }
+  ],
+  "result": {
+    "item": "jeg:combat_pistol"
+  },
+  "time": 30
+}

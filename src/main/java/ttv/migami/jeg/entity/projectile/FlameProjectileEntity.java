@@ -64,6 +64,17 @@ public class FlameProjectileEntity extends ProjectileEntity {
                 );
             }
             if (this.random.nextInt(5) == 0 && this.tickCount > 2) {
+                sendParticlesToAll(
+                        serverLevel,
+                        ParticleTypes.FALLING_LAVA,
+                        true,
+                        this.getX() - this.getDeltaMovement().x(),
+                        this.getY() - this.getDeltaMovement().y() - 0.6,
+                        this.getZ() - this.getDeltaMovement().z(),
+                        1,
+                        1, 1, 1,
+                        0
+                );
                 flame = ModParticleTypes.FLAME.get();
                 sendParticlesToAll(
                         serverLevel,
@@ -122,8 +133,8 @@ public class FlameProjectileEntity extends ProjectileEntity {
 	@Override
 	public void tick() {
 		super.tick();
-		
-		if(!this.level().isClientSide) {
+
+        if(!this.level().isClientSide) {
 
             if (this.isUnderWater()) {
                 sendParticlesToAll(
@@ -206,6 +217,19 @@ public class FlameProjectileEntity extends ProjectileEntity {
                     0, 0, 0,
                     0.3
             );
+            if (this.random.nextBoolean() && this.shooter.isCrouching()) {
+                sendParticlesToAll(
+                        ((ServerLevel) this.level()),
+                        ModParticleTypes.SMOKE.get(),
+                        true,
+                        offsetPos.relative(blockRayTraceResult.getDirection()).getX(),
+                        offsetPos.relative(blockRayTraceResult.getDirection()).getY(),
+                        offsetPos.relative(blockRayTraceResult.getDirection()).getZ(),
+                        1,
+                        0, 0, 0,
+                        0.1
+                );
+            }
 
             if(Config.COMMON.gameplay.griefing.setFireToBlocks.get()) {
 

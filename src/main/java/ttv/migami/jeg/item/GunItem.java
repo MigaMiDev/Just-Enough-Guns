@@ -62,6 +62,9 @@ public class GunItem extends Item implements IColored, IMeta {
 
     @Override
     public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
+        if (pStack.getTag() != null && !pStack.getTag().contains("AmmoCount")) {
+            pStack.getTag().putInt("AmmoCount", 0);
+        }
         if (pStack.is(ModItems.FLARE_GUN.get())) {
             if (pStack.hasTag() && pStack.getTag().getBoolean("HasRaid")) {
                 pStack.setHoverName(Component.translatable("item.jeg.raid_flare_gun").withStyle(style -> style.withColor(ChatFormatting.RED).withItalic(false)));
@@ -179,6 +182,9 @@ public class GunItem extends Item implements IColored, IMeta {
             }
             else if (this == ModItems.GRENADE_LAUNCHER.get()) {
                 tooltip.add(Component.translatable("info.jeg.tooltip_item.grenade_launcher_blueprint").withStyle(ChatFormatting.GRAY));
+            }
+            else if (this == ModItems.FLAMETHROWER.get()) {
+                tooltip.add(Component.translatable("info.jeg.tooltip_item.flamethrower_blueprint").withStyle(ChatFormatting.GRAY));
             }
 
             if (modifiedGun.getGeneral().getFireTimer() != 0) {

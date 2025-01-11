@@ -188,6 +188,10 @@ public enum SpecialModels {
 
     FLAMETHROWER("gun/flamethrower"),
 
+    SEMI_AUTO_PISTOL("gun/semi_auto_pistol"),
+
+    COMBAT_PISTOL("gun/combat_pistol"),
+
     BUBBLE_CANNON("gun/bubble_cannon"),
     BUBBLE_CANNON_MAIN("bubble_cannon/main"),
 

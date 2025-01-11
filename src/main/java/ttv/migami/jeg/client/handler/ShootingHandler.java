@@ -443,12 +443,14 @@ public class ShootingHandler
 
                 PacketHandler.getPlayChannel().sendToServer(new C2SMessageShoot(player));
                 MinecraftForge.EVENT_BUS.post(new GunFireEvent.Post(player, heldItem));
+                ModSyncedDataKeys.RELOADING.setValue(player, false);
             }
             else if(!stack.isDamageableItem())
             {
                 tracker.addCooldown(heldItem.getItem(), rate);
                 PacketHandler.getPlayChannel().sendToServer(new C2SMessageShoot(player));
                 MinecraftForge.EVENT_BUS.post(new GunFireEvent.Post(player, heldItem));
+                ModSyncedDataKeys.RELOADING.setValue(player, false);
             }
         }
     }

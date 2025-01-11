@@ -170,7 +170,6 @@ public class GunEventBus {
             if (Gun.hasAttachmentEquipped(heldItem, IAttachment.Type.BARREL)) {
                 if (Gun.getAttachment(IAttachment.Type.BARREL, heldItem).getItem() == ModItems.EXPLOSIVE_MUZZLE.get()) {
                     explosiveAmmo = true;
-                    chance = 0.975;
                 }
             }
 
@@ -197,9 +196,9 @@ public class GunEventBus {
                 int currentDamage = heldItem.getDamageValue();
 
                 double explosiveJam = 1.75;
-                if (explosiveAmmo) {
+                /*if (explosiveAmmo) {
                     explosiveJam = Double.MAX_VALUE;
-                }
+                }*/
 
                 //if (currentDamage >= maxDamage / explosiveJam && Config.COMMON.gameplay.gunJamming.get() && !nbtCompound.getBoolean("IsJammed")) {
                 if (currentDamage >= maxDamage / explosiveJam && Config.COMMON.gameplay.gunJamming.get()) {
@@ -249,6 +248,7 @@ public class GunEventBus {
                 level.gameEvent(player, GameEvent.EXPLODE, player.getPosition(1F));
             }
 
+            specialEffects(level, player);
             if (gun.getProjectile().ejectsCasing() && tag != null)
             {
                 if (tag.getInt("AmmoCount") >= 1 || player.getAbilities().instabuild) {
@@ -731,6 +731,7 @@ public class GunEventBus {
         Vec3 lookVec = player.getLookAngle();
         double opposite = force;
         player.push(lookVec.x * opposite, lookVec.y * opposite, lookVec.z * opposite);
+        player.fallDistance = 0;
     }
 
     public static void firingSmoke(Level level, Player player) {
@@ -798,9 +799,78 @@ public class GunEventBus {
         {
             serverLevel.sendParticles(casingType,
                     particlePos.x, particlePos.y, particlePos.z, 1, 0, 0, 0, 0);
-            if (livingEntity.getMainHandItem().getItem().toString().matches(ModItems.BLOSSOM_RIFLE.get().toString())) {
-                serverLevel.sendParticles(ParticleTypes.CHERRY_LEAVES,
-                        particlePos.x, particlePos.y, particlePos.z, 1, 0.3, 0.2, 0.3, 0);
+        }
+    }
+
+    public static void specialEffects(Level level, LivingEntity livingEntity) {
+        ItemStack heldItem = livingEntity.getMainHandItem();
+        Gun gun = ((GunItem) heldItem.getItem()).getModifiedGun(heldItem);
+
+        Vec3 lookVec = livingEntity.getLookAngle();
+        Vec3 rightVec = new Vec3(-lookVec.z, 0, lookVec.x).normalize();
+        Vec3 forwardVec = new Vec3(lookVec.x, 0, lookVec.z).normalize();
+
+        double divisor = 0.5;
+        if (livingEntity instanceof Player player) {
+            boolean isAiming = ModSyncedDataKeys.AIMING.getValue(player);
+            divisor = isAiming ? 0.4 : 0.5;
+        }
+
+        double offsetX = rightVec.x * divisor + forwardVec.x * divisor; //Move the particle 0.5 blocks to the right and 0.5 blocks forward
+        double offsetY = livingEntity.getEyeHeight() - 0.4; //Move the particle slightly below the player's head
+        double offsetZ = rightVec.z * divisor + forwardVec.z * divisor; //Move the particle 0.5 blocks to the right and 0.5 blocks forward
+
+        Vec3 particlePos = livingEntity.getPosition(1).add(offsetX, offsetY, offsetZ); //Add the offsets to the player's position
+
+        if (level instanceof ServerLevel serverLevel)
+        {
+            if (livingEntity.getMainHandItem().is(ModItems.FLAMETHROWER.get())) {
+                sendParticlesToAll(
+                        serverLevel,
+                        ParticleTypes.MYCELIUM,
+                        true,
+                        particlePos.x,
+                        particlePos.y + 2,
+                        particlePos.z,
+                        50,
+                        10.0, 5, 10.0,
+                        0
+                );
+                sendParticlesToAll(
+                        serverLevel,
+                        ParticleTypes.WHITE_ASH,
+                        true,
+                        particlePos.x,
+                        particlePos.y + 2,
+                        particlePos.z,
+                        50,
+                        10.0, 5, 10.0,
+                        0
+                );
+                sendParticlesToAll(
+                        serverLevel,
+                        ParticleTypes.ASH,
+                        true,
+                        particlePos.x,
+                        particlePos.y + 2,
+                        particlePos.z,
+                        50,
+                        10.0, 5, 10.0,
+                        0
+                );
+            }
+            if (livingEntity.getMainHandItem().is(ModItems.BLOSSOM_RIFLE.get())) {
+                sendParticlesToAll(
+                        serverLevel,
+                        ParticleTypes.CHERRY_LEAVES,
+                        true,
+                        particlePos.x,
+                        particlePos.y,
+                        particlePos.z,
+                        1,
+                        0.3, 0.2, 0.3,
+                        0
+                );
             }
         }
     }

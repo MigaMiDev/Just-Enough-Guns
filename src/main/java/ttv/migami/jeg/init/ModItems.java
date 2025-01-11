@@ -54,6 +54,15 @@ public class ModItems {
 
             ));
     /* Gunmetal Tier */
+    public static final RegistryObject<AnimatedGunItem> SEMI_AUTO_PISTOL = REGISTER.register("semi_auto_pistol",
+            () -> new AnimatedMakeshiftGunItem(new Item.Properties()
+                    .stacksTo(1)
+                    .durability(256)
+                    .rarity(Rarity.UNCOMMON),
+                    "semi_auto_pistol",
+                    ModSounds.REV_RELOAD_BULLETS_OUT.get(), ModSounds.REV_RELOAD_BULLET_IN.get(), ModSounds.REV_CHAMBER_SPIN.get(), SoundEvents.IRON_TRAPDOOR_OPEN, SoundEvents.IRON_TRAPDOOR_CLOSE
+
+            ));
     public static final RegistryObject<AnimatedGunItem> SEMI_AUTO_RIFLE = REGISTER.register("semi_auto_rifle",
             () -> new AnimatedMakeshiftGunItem(new Item.Properties()
                     .stacksTo(1)
@@ -80,6 +89,15 @@ public class ModItems {
                     ModSounds.PS_SHELL.get(), ModSounds.PS_SHELL.get(), ModSounds.PS_PUMP.get(), ModSounds.PS_PUMP_PULL.get(), ModSounds.PS_PUMP_RELEASE.get()
             ));
     /* Gunnite Tier */
+    public static final RegistryObject<AnimatedGunItem> COMBAT_PISTOL = REGISTER.register("combat_pistol",
+            () -> new AnimatedGunItem(new Item.Properties()
+                    .stacksTo(1)
+                    .durability(480)
+                    .rarity(Rarity.RARE),
+                    "combat_pistol",
+                    ModSounds.REV_RELOAD_BULLETS_OUT.get(), ModSounds.REV_RELOAD_BULLET_IN.get(), ModSounds.REV_CHAMBER_SPIN.get(), SoundEvents.IRON_TRAPDOOR_OPEN, SoundEvents.IRON_TRAPDOOR_CLOSE
+
+            ));
     public static final RegistryObject<AnimatedGunItem> BURST_RIFLE = REGISTER.register("burst_rifle",
             () -> new AnimatedGunItem(new Item.Properties()
                     .stacksTo(1)
@@ -176,7 +194,7 @@ public class ModItems {
                     .durability(1024)
                     .rarity(Rarity.EPIC),
                     "flamethrower",
-                    ModSounds.CR_RELOAD_MAGAZINE_OUT.get(), ModSounds.BOW_PLACE_ARROW.get(), ModSounds.CR_RELOAD_EJECTOR.get(), ModSounds.BOW_PULL.get(), ModSounds.BOW_STRING.get()
+                    SoundEvents.ITEM_FRAME_REMOVE_ITEM, SoundEvents.ITEM_FRAME_REMOVE_ITEM, ModSounds.CR_RELOAD_EJECTOR.get(), SoundEvents.IRON_TRAPDOOR_OPEN, SoundEvents.IRON_TRAPDOOR_CLOSE
             ));
 
     /* Spectre Tier */
@@ -582,5 +600,4 @@ public class ModItems {
 
     public static final RegistryObject<Item> HK_G36_FALLBACK = REGISTER.register("hk_g36",
             () -> new FallbackItem(new Item.Properties()));*/
-
 }

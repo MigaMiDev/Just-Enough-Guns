@@ -258,6 +258,51 @@ public class GunGen extends GunProvider
                 .build());
 
         /* Gunmetal Tier */
+        this.addGun(new ResourceLocation(Reference.MOD_ID, "semi_auto_pistol"), Gun.Builder.create()
+
+                // General
+                .setFireMode(FireMode.SEMI_AUTO)
+                .setFireRate(2)
+                .setGripType(GripType.ONE_HANDED)
+                .setRecoilKick(0.33F)
+                .setRecoilAngle(2.0F)
+                .setAlwaysSpread(false)
+                .setSpread(2.5F)
+
+                // Reloads
+                .setMaxAmmo(10)
+                .setReloadType(ReloadType.MAG_FED)
+                .setReloadTimer(60)
+                .setEmptyMagTimer(10)
+
+                // Projectile
+                .setAmmo(ModItems.PISTOL_AMMO.get())
+                .setProjectileVisible(false)
+                .setDamage(5.5F)
+                .setProjectileSize(0.05F)
+                .setProjectileSpeed(15F)
+                .setProjectileLife(40)
+                .setProjectileTrailLengthMultiplier(2)
+                .setProjectileTrailColor(0xFFFF00 | 0xFF000000)
+                .setProjectileAffectedByGravity(false)
+                .setEjectsCasing(true)
+
+                // Sounds
+                .setFireSound(ModSounds.REVOLVER_FIRE.get())
+                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
+                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setSilencedFireSound(ModSounds.REVOLVER_SILENCED_FIRE.get())
+                .setEnchantedFireSound(ModSounds.REVOLVER_ENCHANTED_FIRE.get())
+
+                // Attachments
+                .setMuzzleFlash(0.8, 0, 5.645, -2.2)
+                .setZoom(Gun.Modules.Zoom.builder()
+                        .setFovModifier(0.6F)
+                        .setOffset(0.0, 4.965, -1.75))
+                .setSpecial(1.0F, -0.8, 5.2, 0)
+
+                .build());
+
         this.addGun(new ResourceLocation(Reference.MOD_ID, "semi_auto_rifle"), Gun.Builder.create()
 
                 // General
@@ -411,6 +456,54 @@ public class GunGen extends GunProvider
                 .build());
 
         /* Gunnite Tier */
+        this.addGun(new ResourceLocation(Reference.MOD_ID, "combat_pistol"), Gun.Builder.create()
+
+                // General
+                .setFireMode(FireMode.SEMI_AUTO)
+                .setFireRate(2)
+                .setGripType(GripType.ONE_HANDED)
+                .setRecoilKick(0.33F)
+                .setRecoilAngle(2.0F)
+                .setAlwaysSpread(false)
+                .setSpread(1.5F)
+
+
+                // Reloads
+                .setMaxAmmo(15)
+                .setReloadType(ReloadType.MAG_FED)
+                .setReloadTimer(60)
+                .setEmptyMagTimer(10)
+
+                // Projectile
+                .setAmmo(ModItems.PISTOL_AMMO.get())
+                .setAdvantage(ModTags.Entities.HEAVY.location())
+                .setProjectileVisible(false)
+                .setDamage(6.5F)
+                .setProjectileSize(0.05F)
+                .setProjectileSpeed(15F)
+                .setProjectileLife(40)
+                .setProjectileTrailLengthMultiplier(2)
+                .setProjectileTrailColor(0xFFFF00 | 0xFF000000)
+                .setProjectileAffectedByGravity(false)
+                .setEjectsCasing(true)
+
+                // Sounds
+                .setFireSound(ModSounds.REVOLVER_FIRE.get())
+                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
+                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setSilencedFireSound(ModSounds.REVOLVER_SILENCED_FIRE.get())
+                .setEnchantedFireSound(ModSounds.REVOLVER_ENCHANTED_FIRE.get())
+
+                // Attachments
+                .setMuzzleFlash(0.8, 0, 5.645, -2.2)
+                .setZoom(Gun.Modules.Zoom.builder()
+                        .setFovModifier(0.6F)
+                        .setOffset(0.0, 4.735, -1.75))
+                .setBarrel(1.0F, 0.0, 5.5, -2.7773)
+                .setSpecial(1.0F, -0.8, 5.2, 0)
+
+                .build());
+
         this.addGun(new ResourceLocation(Reference.MOD_ID, "bolt_action_rifle"), Gun.Builder.create()
 
                 // General
@@ -1522,7 +1615,7 @@ public class GunGen extends GunProvider
                 .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
 
                 // Attachments
-                .setMuzzleFlash(0.8, 0.0, 4.59, -7.955)
+                .setMuzzleFlash(0.8, 0.0, 4.1, -11.8)
                 .setZoom(Gun.Modules.Zoom.builder()
                         .setFovModifier(0.6F)
                         .setOffset(0.0, 5.71, -1.75))

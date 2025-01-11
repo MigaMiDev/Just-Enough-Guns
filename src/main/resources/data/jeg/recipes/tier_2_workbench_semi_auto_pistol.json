@@ -1,0 +1,17 @@
+{
+  "type": "jeg:gunmetal_workbench",
+  "materials": [
+    {
+      "item": "jeg:gunmetal_ingot",
+      "count": 10
+    },
+    {
+      "item": "jeg:scrap",
+      "count": 8
+    }
+  ],
+  "result": {
+    "item": "jeg:semi_auto_pistol"
+  },
+  "time": 30
+}

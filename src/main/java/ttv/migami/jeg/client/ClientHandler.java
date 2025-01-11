@@ -167,6 +167,8 @@ public class ClientHandler {
         ModelOverrides.register(ModItems.SUBSONIC_RIFLE.get(), new SubsonicRifleModel());
         ModelOverrides.register(ModItems.HYPERSONIC_CANNON.get(), new HypersonicCannonModel());
         ModelOverrides.register(ModItems.FLAMETHROWER.get(), new FlamethrowerModel());
+        ModelOverrides.register(ModItems.SEMI_AUTO_PISTOL.get(), new SemiAutoPistolModel());
+        ModelOverrides.register(ModItems.COMBAT_PISTOL.get(), new CombatPistolModel());
         //ModelOverrides.register(ModItems.BUBBLE_CANNON.get(), new BubbleCannonModel());
         ModelOverrides.register(Items.WOODEN_SWORD, new BayonetWoodenModel());
         ModelOverrides.register(Items.STONE_SWORD, new BayonetStoneModel());

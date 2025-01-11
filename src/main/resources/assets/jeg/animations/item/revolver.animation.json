@@ -613,7 +613,7 @@
 							"vector": [0, 0, 0]
 						},
 						"0.5833": {
-							"vector": [0, 8, 4],
+							"vector": [0, 6, 4],
 							"easing": "easeInOutSine"
 						}
 					}

@@ -16,6 +16,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
@@ -601,7 +602,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
                     breakBlocks = false;
                 }
 
-                if(breakBlocks && Config.COMMON.gameplay.griefing.enableWoodBreaking.get() && state.is(ModTags.Blocks.WOOD) && (fireAmmo || advantageFlag || explosiveAmmo))
+                if(breakBlocks && Config.COMMON.gameplay.griefing.enableWoodBreaking.get() && ((state.is(BlockTags.MINEABLE_WITH_AXE) && state.is(BlockTags.DRAGON_IMMUNE)) || state.is(ModTags.Blocks.WOOD)) && (fireAmmo || advantageFlag || explosiveAmmo))
                 {
                     float destroySpeed = state.getDestroySpeed(this.level(), pos);
                     if(destroySpeed >= 0)
@@ -615,7 +616,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
                 }
 
                 if (explosiveAmmo) {
-                    if(breakBlocks && Config.COMMON.gameplay.griefing.enableStoneBreaking.get() && state.is(ModTags.Blocks.STONE))
+                    if(breakBlocks && Config.COMMON.gameplay.griefing.enableStoneBreaking.get() && ((state.is(BlockTags.MINEABLE_WITH_PICKAXE) && state.is(BlockTags.DRAGON_IMMUNE)) || state.is(ModTags.Blocks.STONE)))
                     {
                         float destroySpeed = state.getDestroySpeed(this.level(), pos);
                         if(destroySpeed >= 0)
