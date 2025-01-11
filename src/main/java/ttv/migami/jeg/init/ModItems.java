@@ -60,8 +60,7 @@ public class ModItems {
                     .durability(256)
                     .rarity(Rarity.UNCOMMON),
                     "semi_auto_pistol",
-                    ModSounds.REV_RELOAD_BULLETS_OUT.get(), ModSounds.REV_RELOAD_BULLET_IN.get(), ModSounds.REV_CHAMBER_SPIN.get(), SoundEvents.IRON_TRAPDOOR_OPEN, SoundEvents.IRON_TRAPDOOR_CLOSE
-
+                    ModSounds.PISTOL_MAG_OUT.get(), ModSounds.PISTOL_MAG_IN.get(), ModSounds.REV_CHAMBER_SPIN.get(), ModSounds.PISTOL_EJECTOR_PULL.get(), ModSounds.PISTOL_EJECTOR_RELEASE.get()
             ));
     public static final RegistryObject<AnimatedGunItem> SEMI_AUTO_RIFLE = REGISTER.register("semi_auto_rifle",
             () -> new AnimatedMakeshiftGunItem(new Item.Properties()
@@ -95,7 +94,7 @@ public class ModItems {
                     .durability(480)
                     .rarity(Rarity.RARE),
                     "combat_pistol",
-                    ModSounds.REV_RELOAD_BULLETS_OUT.get(), ModSounds.REV_RELOAD_BULLET_IN.get(), ModSounds.REV_CHAMBER_SPIN.get(), SoundEvents.IRON_TRAPDOOR_OPEN, SoundEvents.IRON_TRAPDOOR_CLOSE
+                    ModSounds.PISTOL_MAG_OUT.get(), ModSounds.PISTOL_MAG_IN.get(), ModSounds.REV_CHAMBER_SPIN.get(), ModSounds.PISTOL_EJECTOR_PULL.get(), ModSounds.PISTOL_EJECTOR_RELEASE.get()
 
             ));
     public static final RegistryObject<AnimatedGunItem> BURST_RIFLE = REGISTER.register("burst_rifle",

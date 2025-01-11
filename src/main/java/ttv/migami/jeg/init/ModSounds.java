@@ -77,6 +77,12 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> LIGHT_MACHINE_GUN_FIRE = register("item.light_machine_gun.fire");
     public static final RegistryObject<SoundEvent> LIGHT_MACHINE_GUN_SILENCED_FIRE = register("item.light_machine_gun.silenced_fire");
     public static final RegistryObject<SoundEvent> LIGHT_MACHINE_GUN_ENCHANTED_FIRE = register("item.light_machine_gun.enchanted_fire");
+    public static final RegistryObject<SoundEvent> SEMI_AUTO_PISTOL_FIRE = register("item.semi_auto_pistol.fire");
+    public static final RegistryObject<SoundEvent> SEMI_AUTO_PISTOL_SILENCED_FIRE = register("item.semi_auto_pistol.silenced_fire");
+    public static final RegistryObject<SoundEvent> SEMI_AUTO_PISTOL_ENCHANTED_FIRE = register("item.semi_auto_pistol.enchanted_fire");
+    public static final RegistryObject<SoundEvent> COMBAT_PISTOL_FIRE = register("item.combat_pistol.fire");
+    public static final RegistryObject<SoundEvent> COMBAT_PISTOL_SILENCED_FIRE = register("item.combat_pistol.silenced_fire");
+    public static final RegistryObject<SoundEvent> COMBAT_PISTOL_ENCHANTED_FIRE = register("item.combat_pistol.enchanted_fire");
 
     // Animation Sounds
     public static final RegistryObject<SoundEvent> GUN_RUSTLE = register("item.gun_rustle");
@@ -121,6 +127,11 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> BOW_PULL = register("item.compound_bow.pull");
     public static final RegistryObject<SoundEvent> BOW_PLACE_ARROW = register("item.compound_bow.place_arrow");
     public static final RegistryObject<SoundEvent> BOW_STRING = register("item.compound_bow.charge");
+
+    public static final RegistryObject<SoundEvent> PISTOL_MAG_OUT = register("item.combat_pistol.reload_mag_out");
+    public static final RegistryObject<SoundEvent> PISTOL_MAG_IN = register("item.combat_pistol.reload_mag_in");
+    public static final RegistryObject<SoundEvent> PISTOL_EJECTOR_PULL = register("item.combat_pistol.ejector_pull");
+    public static final RegistryObject<SoundEvent> PISTOL_EJECTOR_RELEASE = register("item.combat_pistol.ejector_release");
 
     /* Misc. Special Sounds */
     public static final RegistryObject<SoundEvent> BULLET_CLOSE = register("entity.bullet.close");

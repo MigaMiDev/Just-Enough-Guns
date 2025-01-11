@@ -28,6 +28,7 @@ import ttv.migami.jeg.item.GunItem;
 import ttv.migami.jeg.network.PacketHandler;
 import ttv.migami.jeg.network.message.S2CMessageGunSound;
 import ttv.migami.jeg.network.message.S2CMessageStopReloadAnimation;
+import ttv.migami.jeg.network.message.S2CMessageSyncReloadKey;
 import ttv.migami.jeg.util.GunEnchantmentHelper;
 import ttv.migami.jeg.util.GunModifierHelper;
 
@@ -323,6 +324,7 @@ public class ReloadTracker
                 {
                     RELOAD_TRACKER_MAP.remove(player);
                     ModSyncedDataKeys.RELOADING.setValue(player, false);
+                    PacketHandler.getPlayChannel().sendToPlayer(() -> (ServerPlayer) player, new S2CMessageSyncReloadKey());
                     if (player.getInventory().getSelected().getTag() != null) {
                         if (player.getInventory().getSelected().getItem() instanceof AnimatedGunItem) {
                             player.getInventory().getSelected().getTag().putBoolean("IsReloading", false);
@@ -349,6 +351,7 @@ public class ReloadTracker
                     if(tracker.isWeaponFull() || tracker.hasNoAmmo(player))
                     {
                         RELOAD_TRACKER_MAP.remove(player);
+                        PacketHandler.getPlayChannel().sendToPlayer(() -> (ServerPlayer) player, new S2CMessageSyncReloadKey());
                         ModSyncedDataKeys.RELOADING.setValue(player, false);
                         if (player.getInventory().getSelected().getTag() != null) {
                             if (player.getInventory().getSelected().getItem() instanceof AnimatedGunItem) {
@@ -368,6 +371,7 @@ public class ReloadTracker
                                 S2CMessageGunSound messageSound = new S2CMessageGunSound(cockSound, SoundSource.PLAYERS, (float) soundX, (float) soundY, (float) soundZ, 1.0F, 1.0F, finalPlayer.getId(), false, true);
                                 PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(finalPlayer.level(), soundX, soundY, soundZ, radius), messageSound);
                             }
+                            PacketHandler.getPlayChannel().sendToPlayer(() -> (ServerPlayer) player, new S2CMessageSyncReloadKey());
                         });
                     }
                 }
@@ -386,6 +390,7 @@ public class ReloadTracker
                 player.getMainHandItem().getTag().putBoolean("IsReloading", false);
             }
             ModSyncedDataKeys.RELOADING.setValue(player, false);
+            PacketHandler.getPlayChannel().sendToPlayer(() -> (ServerPlayer) player, new S2CMessageSyncReloadKey());
         }
     }
 
@@ -419,6 +424,8 @@ public class ReloadTracker
         if (tracker.isWeaponFull() || tracker.hasNoAmmo(player)) {
             if (player.getInventory().getSelected().getTag() != null) {
                 player.getInventory().getSelected().getTag().putBoolean("IsFinishingReloading", true);
+                ModSyncedDataKeys.RELOADING.setValue(player, false);
+                PacketHandler.getPlayChannel().sendToPlayer(() -> (ServerPlayer) player, new S2CMessageSyncReloadKey());
             }
         }
     }

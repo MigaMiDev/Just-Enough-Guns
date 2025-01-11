@@ -18,7 +18,7 @@
     "attachments": {
       "barrel": {
         "yOffset": 5.5,
-        "zOffset": -3.0
+        "zOffset": -3.2
       },
       "special": {
         "xOffset": -0.8,
@@ -27,7 +27,7 @@
     },
     "zoom": {
       "fovModifier": 0.6,
-      "yOffset": 4.735,
+      "yOffset": 5.135,
       "zOffset": -1.75
     }
   },
@@ -51,9 +51,9 @@
   },
   "sounds": {
     "cock": "jeg:item.pistol.cock",
-    "enchantedFire": "jeg:item.revolver.enchanted_fire",
-    "fire": "jeg:item.revolver.fire",
+    "enchantedFire": "jeg:item.combat_pistol.enchanted_fire",
+    "fire": "jeg:item.combat_pistol.fire",
     "reload": "jeg:item.pistol.reload",
-    "silencedFire": "jeg:item.revolver.silenced_fire"
+    "silencedFire": "jeg:item.combat_pistol.silenced_fire"
   }
 }

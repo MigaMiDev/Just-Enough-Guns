@@ -712,6 +712,54 @@
       }
     ]
   },
+  "item.semi_auto_pistol.fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/semi_auto_pistol/fire"
+      }
+    ]
+  },
+  "item.semi_auto_pistol.silenced_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/semi_auto_pistol/silenced_fire"
+      }
+    ]
+  },
+  "item.semi_auto_pistol.enchanted_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/semi_auto_pistol/enchanted_fire"
+      }
+    ]
+  },
+  "item.combat_pistol.fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/combat_pistol/fire"
+      }
+    ]
+  },
+  "item.combat_pistol.silenced_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/combat_pistol/silenced_fire"
+      }
+    ]
+  },
+  "item.combat_pistol.enchanted_fire": {
+    "subtitle": "subtitle.jeg.fire",
+    "sounds": [
+      {
+        "name": "jeg:item/combat_pistol/enchanted_fire"
+      }
+    ]
+  },
 
   "item.combat_rifle.reload_magazine_out": {
     "subtitle": "subtitle.jeg.reload",
@@ -984,6 +1032,38 @@
       {
         "name": "jeg:item/compound_bow/place_arrow3",
         "stream": true
+      }
+    ]
+  },
+  "item.combat_pistol.reload_mag_out": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/combat_pistol/reload_mag_out"
+      }
+    ]
+  },
+  "item.combat_pistol.reload_mag_in": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/combat_pistol/reload_mag_in"
+      }
+    ]
+  },
+  "item.combat_pistol.ejector_pull": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/combat_pistol/ejector_pull"
+      }
+    ]
+  },
+  "item.combat_pistol.ejector_release": {
+    "subtitle": "subtitle.jeg.reload",
+    "sounds": [
+      {
+        "name": "jeg:item/combat_pistol/ejector_release"
       }
     ]
   },

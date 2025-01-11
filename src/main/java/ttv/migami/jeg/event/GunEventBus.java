@@ -680,6 +680,30 @@ public class GunEventBus {
                     );
                 }
             }
+            if (level instanceof ServerLevel serverLevel) {
+                sendParticlesToAll(
+                        serverLevel,
+                        ModParticleTypes.SONIC_RING.get(),
+                        true,
+                        userPos.x,
+                        userPos.y,
+                        userPos.z,
+                        5,
+                        0, 0, 0,
+                        0.2
+                );
+                sendParticlesToAll(
+                        serverLevel,
+                        ModParticleTypes.BIG_SONIC_RING.get(),
+                        true,
+                        userPos.x,
+                        userPos.y,
+                        userPos.z,
+                        2,
+                        0, 0, 0,
+                        0.1
+                );
+            }
         }
     }
 

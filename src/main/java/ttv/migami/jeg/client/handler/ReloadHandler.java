@@ -236,4 +236,9 @@ public class ReloadHandler
     {
         return (this.prevReloadTimer + (this.reloadTimer - this.prevReloadTimer) * partialTicks) / 5F;
     }
+
+    public static void syncReloadKey() {
+        Player player = Minecraft.getInstance().player;
+        ModSyncedDataKeys.RELOADING.setValue(player, false);
+    }
 }

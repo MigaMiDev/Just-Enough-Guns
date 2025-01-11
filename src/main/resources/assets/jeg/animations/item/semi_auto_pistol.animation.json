@@ -877,6 +877,17 @@
 					}
 				}
 			},
+			"sound_effects": {
+				"0.0833": {
+					"effect": "reload_mag_out"
+				},
+				"1.5417": {
+					"effect": "reload_mag_in"
+				},
+				"2.9167": {
+					"effect": "ejector_release"
+				}
+			},
 			"timeline": {
 				"2.7917": "reloaded;",
 				"3.875": "finishReloading;"

@@ -40,6 +40,7 @@ public class PacketHandler
                 .registerPlayMessage(C2SMessageStopReloading.class, MessageDirection.PLAY_SERVER_BOUND)
                 .registerPlayMessage(C2SMessageGunUnjammed.class, MessageDirection.PLAY_SERVER_BOUND)
                 .registerPlayMessage(C2SMessageFlashlight.class, MessageDirection.PLAY_SERVER_BOUND)
+                .registerPlayMessage(S2CMessageSyncReloadKey.class, MessageDirection.PLAY_CLIENT_BOUND)
                 .registerPlayMessage(S2CMessageSendMedal.class, MessageDirection.PLAY_CLIENT_BOUND)
                 .registerPlayMessage(S2CMessageSendKillMedal.class, MessageDirection.PLAY_CLIENT_BOUND)
                 .registerPlayMessage(S2CMessageSendHeadshot.class, MessageDirection.PLAY_CLIENT_BOUND)

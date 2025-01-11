@@ -14,8 +14,9 @@
     "gripType": "jeg:two_handed",
     "infinityDisabled": true,
     "rate": 10,
-    "recoilAngle": 3.0,
-    "recoilKick": 0.15,
+    "recoilAngle": 4.0,
+    "recoilKick": 0.55,
+    "shooterPushback": -1.0,
     "spread": 3.0
   },
   "modules": {

@@ -288,11 +288,11 @@ public class GunGen extends GunProvider
                 .setEjectsCasing(true)
 
                 // Sounds
-                .setFireSound(ModSounds.REVOLVER_FIRE.get())
+                .setFireSound(ModSounds.SEMI_AUTO_PISTOL_FIRE.get())
                 .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
                 .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
-                .setSilencedFireSound(ModSounds.REVOLVER_SILENCED_FIRE.get())
-                .setEnchantedFireSound(ModSounds.REVOLVER_ENCHANTED_FIRE.get())
+                .setSilencedFireSound(ModSounds.SEMI_AUTO_PISTOL_SILENCED_FIRE.get())
+                .setEnchantedFireSound(ModSounds.SEMI_AUTO_PISTOL_ENCHANTED_FIRE.get())
 
                 // Attachments
                 .setMuzzleFlash(0.8, 0, 5.645, -2.2)
@@ -300,6 +300,7 @@ public class GunGen extends GunProvider
                         .setFovModifier(0.6F)
                         .setOffset(0.0, 4.965, -1.75))
                 .setSpecial(1.0F, -0.8, 5.2, 0)
+                .setBarrel(1.0F, 0.0, 5.4, -3.2)
 
                 .build());
 
@@ -488,18 +489,18 @@ public class GunGen extends GunProvider
                 .setEjectsCasing(true)
 
                 // Sounds
-                .setFireSound(ModSounds.REVOLVER_FIRE.get())
+                .setFireSound(ModSounds.COMBAT_PISTOL_FIRE.get())
                 .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
                 .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
-                .setSilencedFireSound(ModSounds.REVOLVER_SILENCED_FIRE.get())
-                .setEnchantedFireSound(ModSounds.REVOLVER_ENCHANTED_FIRE.get())
+                .setSilencedFireSound(ModSounds.COMBAT_PISTOL_SILENCED_FIRE.get())
+                .setEnchantedFireSound(ModSounds.COMBAT_PISTOL_ENCHANTED_FIRE.get())
 
                 // Attachments
                 .setMuzzleFlash(0.8, 0, 5.645, -2.2)
                 .setZoom(Gun.Modules.Zoom.builder()
                         .setFovModifier(0.6F)
-                        .setOffset(0.0, 4.735, -1.75))
-                .setBarrel(1.0F, 0.0, 5.5, -3)
+                        .setOffset(0.0, 5.135, -1.75))
+                .setBarrel(1.0F, 0.0, 5.5, -3.2)
                 .setSpecial(1.0F, -0.8, 5.2, 0)
 
                 .build());
@@ -1180,14 +1181,15 @@ public class GunGen extends GunProvider
                 .setFireMode(FireMode.PULSE)
                 .setFireRate(10)
                 .setGripType(GripType.TWO_HANDED)
-                .setRecoilKick(0.15F)
-                .setRecoilAngle(3.0F)
+                .setRecoilKick(0.55F)
+                .setRecoilAngle(4.0F)
                 .setAlwaysSpread(false)
                 .setSpread(3.0F)
                 .setFireTimer(20)
                 .setCanBeBlueprinted(false)
                 .setInfinityDisabled(true)
                 .setCanFireUnderwater(true)
+                .setShooterPushback(-1F)
 
                 // Reloads
                 .setMaxAmmo(15)
