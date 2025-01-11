@@ -18,16 +18,14 @@ import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.animal.horse.SkeletonHorse;
 import net.minecraft.world.entity.animal.horse.ZombieHorse;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -119,6 +117,15 @@ public class RaidEntity extends Entity {
         this.bossBar.setVisible(true);
     }
 
+    private static ItemStack getRandomHorseArmor(RandomSource random) {
+        Item[] horseArmors = {
+                Items.IRON_HORSE_ARMOR,
+                Items.GOLDEN_HORSE_ARMOR,
+                Items.DIAMOND_HORSE_ARMOR
+        };
+        return new ItemStack(horseArmors[random.nextInt(horseArmors.length)]);
+    }
+
     public void spawnMobs(ServerLevel level, Vec3 startPos, boolean forceGuns, int spread) {
         BlockPos.MutableBlockPos spawnPos = this.blockPosition().mutable()
                 .move((12 + random.nextInt(12)) * (random.nextBoolean() ? -1 : 1),
@@ -147,6 +154,12 @@ public class RaidEntity extends Entity {
                                     ZombieHorse zombieHorse = new ZombieHorse(EntityType.ZOMBIE_HORSE, this.level());
                                     zombieHorse.setPos(mob.position());
                                     zombieHorse.addTag("GunnerPatroller");
+
+                                    if (level.random.nextInt(3) == 0) {
+                                        ItemStack randomHorseArmor = getRandomHorseArmor(level.random);
+                                        zombieHorse.setItemSlot(EquipmentSlot.CHEST, randomHorseArmor);
+                                    }
+
                                     this.level().addFreshEntity(zombieHorse);
                                     zombieHorse.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 400));
                                     mob.startRiding(zombieHorse);
@@ -154,6 +167,12 @@ public class RaidEntity extends Entity {
                                     SkeletonHorse skeletonHorse = new SkeletonHorse(EntityType.SKELETON_HORSE, this.level());
                                     skeletonHorse.setPos(mob.position());
                                     skeletonHorse.addTag("GunnerPatroller");
+
+                                    if (level.random.nextInt(3) == 0) {
+                                        ItemStack randomHorseArmor = getRandomHorseArmor(level.random);
+                                        skeletonHorse.setItemSlot(EquipmentSlot.CHEST, randomHorseArmor);
+                                    }
+
                                     this.level().addFreshEntity(skeletonHorse);
                                     skeletonHorse.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 400));
                                     mob.startRiding(skeletonHorse);
@@ -161,6 +180,12 @@ public class RaidEntity extends Entity {
                                     Horse horse = new Horse(EntityType.HORSE, this.level());
                                     horse.setPos(mob.position());
                                     horse.addTag("GunnerPatroller");
+
+                                    if (level.random.nextInt(3) == 0) {
+                                        ItemStack randomHorseArmor = getRandomHorseArmor(level.random);
+                                        horse.setItemSlot(EquipmentSlot.CHEST, randomHorseArmor);
+                                    }
+
                                     this.level().addFreshEntity(horse);
                                     mob.startRiding(horse);
                                 }

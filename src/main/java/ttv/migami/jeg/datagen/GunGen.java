@@ -499,7 +499,7 @@ public class GunGen extends GunProvider
                 .setZoom(Gun.Modules.Zoom.builder()
                         .setFovModifier(0.6F)
                         .setOffset(0.0, 4.735, -1.75))
-                .setBarrel(1.0F, 0.0, 5.5, -2.7773)
+                .setBarrel(1.0F, 0.0, 5.5, -3)
                 .setSpecial(1.0F, -0.8, 5.2, 0)
 
                 .build());

@@ -18,7 +18,7 @@
     "attachments": {
       "barrel": {
         "yOffset": 5.5,
-        "zOffset": -2.7773
+        "zOffset": -3.0
       },
       "special": {
         "xOffset": -0.8,
@@ -32,7 +32,7 @@
     }
   },
   "projectile": {
-    "advantage": "jeg:very_heavy",
+    "advantage": "jeg:heavy",
     "damage": 6.5,
     "ejectsCasing": true,
     "headshotMultiplier": 1.5,

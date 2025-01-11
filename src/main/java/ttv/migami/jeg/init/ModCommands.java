@@ -240,6 +240,9 @@ public class ModCommands {
             }
 
             mob.populateDefaultEquipmentSlots(RandomSource.create(), mob.level().getCurrentDifficultyAt(mob.getOnPos()));
+
+            equipArmorWithRandomMaterial(mob, random);
+
             if (mob.getTags().contains("MobGunner")) {
                 Item gun = faction.getRandomGun(random.nextBoolean());
 
@@ -267,6 +270,26 @@ public class ModCommands {
         }
 
         return mob;
+    }
+
+    private static void equipArmorWithRandomMaterial(Mob mob, Random random) {
+        Item[] helmetMaterials = { Items.LEATHER_HELMET, Items.IRON_HELMET, Items.GOLDEN_HELMET, Items.DIAMOND_HELMET, Items.CHAINMAIL_HELMET };
+        Item[] chestplateMaterials = { Items.LEATHER_CHESTPLATE, Items.IRON_CHESTPLATE, Items.GOLDEN_CHESTPLATE, Items.CHAINMAIL_CHESTPLATE, Items.CHAINMAIL_CHESTPLATE };
+        Item[] leggingsMaterials = { Items.LEATHER_LEGGINGS, Items.IRON_LEGGINGS, Items.GOLDEN_LEGGINGS, Items.DIAMOND_LEGGINGS, Items.CHAINMAIL_LEGGINGS };
+        Item[] bootsMaterials = { Items.LEATHER_BOOTS, Items.IRON_BOOTS, Items.GOLDEN_BOOTS, Items.DIAMOND_BOOTS, Items.CHAINMAIL_BOOTS };
+
+        if (random.nextInt(3) == 0) {
+            mob.setItemSlot(EquipmentSlot.HEAD, new ItemStack(helmetMaterials[random.nextInt(helmetMaterials.length)]));
+        }
+        if (random.nextInt(3) == 0) {
+            mob.setItemSlot(EquipmentSlot.CHEST, new ItemStack(chestplateMaterials[random.nextInt(chestplateMaterials.length)]));
+        }
+        if (random.nextInt(3) == 0) {
+            mob.setItemSlot(EquipmentSlot.LEGS, new ItemStack(leggingsMaterials[random.nextInt(leggingsMaterials.length)]));
+        }
+        if (random.nextInt(3) == 0) {
+            mob.setItemSlot(EquipmentSlot.FEET, new ItemStack(bootsMaterials[random.nextInt(bootsMaterials.length)]));
+        }
     }
 
     private static int executeSimulatePatrol(CommandSourceStack source, String factionName, int size, Player player, boolean forceGuns) {
@@ -390,7 +413,7 @@ public class ModCommands {
         while (spawns < size) {
             spawnPos.setY(level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, spawnPos).getY());
 
-            Mob entity = ModCommands.getFactionMob(level, faction, spawnPos.getCenter(), forceGuns, 3);
+            Mob entity = getFactionMob(level, faction, spawnPos.getCenter(), forceGuns, 3);
             if (spawnDayPatrolMember(level, spawnPos, random, entity, player)) {
                 spawns++;
             }
