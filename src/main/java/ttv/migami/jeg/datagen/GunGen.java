@@ -350,7 +350,7 @@ public class GunGen extends GunProvider
                 .setStock(0.0F, 0.0, 0.0, 0.0)
                 .setUnderBarrel(1.0F, 0.0, 3.6, -2.8)
                 .setMagazine(0.0F, 0.0, 0.0, 0.0)
-                .setSpecial(1.0F, -0.8, 4, -4)
+                .setSpecial(1.0F, -0.8, 4, 2)
 
                 .build());
 
@@ -1170,7 +1170,6 @@ public class GunGen extends GunProvider
                         .setOffset(0.0, 4.2, -3.75))
                 .setScope(1.0F,0.0, 5.195, 4.5)
                 .setBarrel(1.0F, 0.0, 4.125, -5.51)
-                .setStock(0.0F, 0.0, 0.0, 0.0)
                 .setUnderBarrel(0.0F, 0.0, 0.0, 0.0)
 
                 .build());

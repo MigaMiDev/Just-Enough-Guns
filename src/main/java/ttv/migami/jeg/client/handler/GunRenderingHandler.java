@@ -819,6 +819,7 @@ public class GunRenderingHandler {
             if (stack.getItem() instanceof AnimatedGunItem) {
                 if (!display.firstPerson() && !display.equals(ItemDisplayContext.FIXED)) {
                 //if (!display.firstPerson()) {
+                    //if (!display.firstPerson()) {
                     doRender = true;
                 }
             } else {
@@ -842,7 +843,10 @@ public class GunRenderingHandler {
 
                 this.renderingWeapon = stack;
                 this.renderGun(entity, display, model.isEmpty() ? stack : model, poseStack, renderTypeBuffer, light, partialTicks);
-                this.renderAttachments(entity, display, stack, poseStack, renderTypeBuffer, light, partialTicks);
+                // Had to disable it for now :(
+                if (!(stack.getItem() instanceof AnimatedGunItem)) {
+                    this.renderAttachments(entity, display, stack, poseStack, renderTypeBuffer, light, partialTicks);
+                }
                 if (ShootingHandler.get().isShooting() && !GunModifierHelper.isSilencedFire(stack)) {
                     if (stack.getItem() instanceof AnimatedGunItem) {
                         if (!display.firstPerson() && !display.equals(ItemDisplayContext.FIXED)) {
@@ -919,17 +923,24 @@ public class GunRenderingHandler {
 
                         /* Translates the attachment to a standard position by removing the origin */
                         Vec3 origin = PropertyHelper.getModelOrigin(attachmentStack, PropertyHelper.ATTACHMENT_DEFAULT_ORIGIN);
+                        if (stack.getItem() instanceof AnimatedGunItem) {
+                            origin = origin.multiply(1, 0.8, 0.8);
+                        }
                         poseStack.translate(-origin.x * 0.0625, -origin.y * 0.0625, -origin.z * 0.0625);
 
                         /* Translation to the origin on the weapon */
                         Vec3 gunOrigin = PropertyHelper.getModelOrigin(stack, PropertyHelper.GUN_DEFAULT_ORIGIN);
-                        poseStack.translate(gunOrigin.x * 0.0625, gunOrigin.y * 0.0625, gunOrigin.z * 0.0625);
                         if (stack.getItem() instanceof AnimatedGunItem) {
-                            poseStack.translate(0, -0.06, 0.1);
+                            gunOrigin = gunOrigin.multiply(1, 0.8, 0.8);
                         }
+                        poseStack.translate(gunOrigin.x * 0.0625, gunOrigin.y * 0.0625, gunOrigin.z * 0.0625);
+
 
                         /* Translate to the position this attachment mounts on the weapon */
                         Vec3 translation = PropertyHelper.getAttachmentPosition(stack, modifiedGun, type).subtract(gunOrigin);
+                        if (stack.getItem() instanceof AnimatedGunItem) {
+                            translation = translation.multiply(0.8, 0.8, 0.8);
+                        }
                         poseStack.translate(translation.x * 0.0625, translation.y * 0.0625, translation.z * 0.0625);
 
                         /* Scales the attachment. Also translates the delta of the attachment origin to (8, 8, 8) since this is the centered origin for scaling */
@@ -938,9 +949,9 @@ public class GunRenderingHandler {
                         poseStack.translate(center.x, center.y, center.z);
                         poseStack.scale((float) scale.x, (float) scale.y, (float) scale.z);
                         poseStack.translate(-center.x, -center.y, -center.z);
-                        if (stack.getItem() instanceof AnimatedGunItem && type != IAttachment.Type.BARREL) {
+                        /*if (stack.getItem() instanceof AnimatedGunItem && type != IAttachment.Type.BARREL && type != IAttachment.Type.SPECIAL) {
                             poseStack.scale(1.3F, 1.3F, 1.3F);
-                        }
+                        }*/
 
                         if (attachmentStack.getItem() instanceof SwordItem && !(attachmentStack.is(Items.WOODEN_SWORD) ||
                                 attachmentStack.is(Items.STONE_SWORD) ||

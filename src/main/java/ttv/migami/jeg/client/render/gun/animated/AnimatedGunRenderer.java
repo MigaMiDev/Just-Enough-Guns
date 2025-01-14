@@ -237,7 +237,8 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 		this.renderType = transformType;
 
 		if ((this.renderType != ItemDisplayContext.FIRST_PERSON_RIGHT_HAND && !transformType.equals(ItemDisplayContext.FIXED) && !transformType.equals(ItemDisplayContext.GROUND)
-			&& !stack.is(ModItems.FINGER_GUN.get()))) {
+		//if ((this.renderType != ItemDisplayContext.FIRST_PERSON_RIGHT_HAND && !transformType.equals(ItemDisplayContext.GROUND)
+				&& !stack.is(ModItems.FINGER_GUN.get()))) {
 			// Hack to remove transforms created by ItemRenderer#render
 			poseStack.popPose();
 
@@ -424,6 +425,7 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 	public void renderRecursively(PoseStack poseStack, AnimatedGunItem animatable, GeoBone bone, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha)
 	{
 		if (this.renderPerspective != ItemDisplayContext.FIRST_PERSON_RIGHT_HAND && this.renderPerspective != ItemDisplayContext.FIXED && this.renderPerspective != ItemDisplayContext.GROUND
+		//if (this.renderPerspective != ItemDisplayContext.FIRST_PERSON_RIGHT_HAND && this.renderPerspective != ItemDisplayContext.GROUND
 				&& !currentItemStack.is(ModItems.FINGER_GUN.get())) {
 			return;
 		}
