@@ -260,7 +260,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
 
         public JsonObject toJsonObject()
         {
-            Preconditions.checkArgument(this.rate > 0, "Rate must be more than zero");
+            Preconditions.checkArgument(this.rate >= 0, "Rate must be more than zero");
             Preconditions.checkArgument(this.recoilAngle >= 0.0F, "Recoil angle must be more than or equal to zero");
             Preconditions.checkArgument(this.recoilKick >= 0.0F, "Recoil kick must be more than or equal to zero");
             Preconditions.checkArgument(this.recoilDurationOffset >= 0.0F && this.recoilDurationOffset <= 1.0F, "Recoil duration offset must be between 0.0 and 1.0");

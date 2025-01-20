@@ -1,4 +1,4 @@
-package ttv.migami.jeg.common;
+package ttv.migami.jeg.init;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;

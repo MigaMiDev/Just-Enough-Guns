@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import ttv.migami.jeg.Reference;
 import ttv.migami.jeg.common.Gun;
-import ttv.migami.jeg.common.ModTags;
+import ttv.migami.jeg.init.ModTags;
 import ttv.migami.jeg.entity.ai.AIType;
 import ttv.migami.jeg.entity.ai.GunAttackGoal;
 import ttv.migami.jeg.init.ModCommands;

@@ -40,7 +40,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.JustEnoughGuns;
 import ttv.migami.jeg.common.Gun;
-import ttv.migami.jeg.common.ModTags;
 import ttv.migami.jeg.faction.Faction;
 import ttv.migami.jeg.faction.GunnerManager;
 import ttv.migami.jeg.item.GunItem;

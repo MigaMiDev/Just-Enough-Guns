@@ -12,7 +12,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import ttv.migami.jeg.Reference;
-import ttv.migami.jeg.common.ModTags;
+import ttv.migami.jeg.init.ModTags;
 import ttv.migami.jeg.init.ModItems;
 
 import java.util.HashMap;

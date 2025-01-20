@@ -9,6 +9,7 @@ import ttv.migami.jeg.Reference;
 import ttv.migami.jeg.common.*;
 import ttv.migami.jeg.init.ModItems;
 import ttv.migami.jeg.init.ModSounds;
+import ttv.migami.jeg.init.ModTags;
 
 import java.util.concurrent.CompletableFuture;
 

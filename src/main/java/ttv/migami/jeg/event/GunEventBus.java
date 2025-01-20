@@ -44,7 +44,7 @@ import ttv.migami.jeg.Config;
 import ttv.migami.jeg.Reference;
 import ttv.migami.jeg.common.FireMode;
 import ttv.migami.jeg.common.Gun;
-import ttv.migami.jeg.common.ModTags;
+import ttv.migami.jeg.init.ModTags;
 import ttv.migami.jeg.common.network.ServerPlayHandler;
 import ttv.migami.jeg.entity.throwable.ThrowableExplosiveChargeEntity;
 import ttv.migami.jeg.init.*;

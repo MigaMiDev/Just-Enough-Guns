@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.common.Gun;
-import ttv.migami.jeg.common.ModTags;
+import ttv.migami.jeg.init.ModTags;
 import ttv.migami.jeg.init.ModParticleTypes;
 import ttv.migami.jeg.item.GunItem;
 

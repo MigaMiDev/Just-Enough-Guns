@@ -31,6 +31,7 @@ import ttv.migami.jeg.debug.Debug;
 import ttv.migami.jeg.enchantment.EnchantmentTypes;
 import ttv.migami.jeg.init.ModEnchantments;
 import ttv.migami.jeg.init.ModItems;
+import ttv.migami.jeg.init.ModTags;
 import ttv.migami.jeg.util.GunEnchantmentHelper;
 import ttv.migami.jeg.util.GunModifierHelper;
 

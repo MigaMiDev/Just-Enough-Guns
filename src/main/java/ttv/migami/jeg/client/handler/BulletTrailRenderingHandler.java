@@ -128,10 +128,6 @@ public class BulletTrailRenderingHandler
         double bulletZ = position.z + motion.z * deltaTicks;
         poseStack.translate(bulletX - view.x(), bulletY - view.y(), bulletZ - view.z());
 
-        /*poseStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(deltaTicks, entity.yRotO, entity.getYRot()) - 90.0F));
-        poseStack.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(deltaTicks, entity.xRotO, entity.getXRot())));*/
-        //poseStack.mulPose(Axis.YP.rotationDegrees(trail.getYaw()));
-        //poseStack.mulPose(Axis.XP.rotationDegrees(-trail.getPitch() + 90));
         poseStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(deltaTicks, trail.getYaw(), trail.getYaw()) - 90.0F));
         poseStack.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(deltaTicks, trail.getPitch(), trail.getPitch())));
 
@@ -173,8 +169,6 @@ public class BulletTrailRenderingHandler
                 this.vertex(red, green, blue, matrix4f, matrix3f, vertexConsumer, -1 - size, 1, 1, 0.0F, 0.15625F, 0, 1, 0, light);
             }
         }
-
-        //poseStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(deltaTicks, entity.yRotO, entity.getYRot()) - 90.0F));
 
         poseStack.popPose();
     }

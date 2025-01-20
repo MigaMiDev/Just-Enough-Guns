@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 import ttv.migami.jeg.Config;
-import ttv.migami.jeg.common.ModTags;
+import ttv.migami.jeg.init.ModTags;
 import ttv.migami.jeg.entity.throwable.ThrowableExplosiveChargeEntity;
 import ttv.migami.jeg.init.ModEntities;
 import ttv.migami.jeg.init.ModItems;

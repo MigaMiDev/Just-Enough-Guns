@@ -306,7 +306,7 @@ public class GunAttackGoal<T extends PathfinderMob> extends Goal {
             boolean muzzle = gun.getDisplay().getFlash() != null;
             //S2CMessageGunSound messageSound = new S2CMessageGunSound(fireSound, SoundSource.HOSTILE, (float) posX, (float) posY, (float) posZ, volume - 0.5F, pitch, this.shooter.getId(), muzzle, false);
             //PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(this.shooter.level(), posX, posY, posZ, radius), messageSound);
-            this.shooter.level().playSound(null, posX, posY, posZ, SoundEvent.createVariableRangeEvent(fireSound), SoundSource.PLAYERS, volume - 0.5F, pitch);
+            this.shooter.level().playSound(null, posX, posY, posZ, SoundEvent.createVariableRangeEvent(fireSound), SoundSource.HOSTILE, volume - 0.5F, pitch);
         }
     }
 

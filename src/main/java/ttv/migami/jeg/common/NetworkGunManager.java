@@ -64,7 +64,7 @@ public class NetworkGunManager extends SimplePreparableReloadListener<Map<GunIte
         ForgeRegistries.ITEMS.getValues().stream().filter(item -> item instanceof GunItem).forEach(item ->
         {
             ResourceLocation id = ForgeRegistries.ITEMS.getKey(item);
-            if(id != null)
+            if (id != null)
             {
                 List<ResourceLocation> resources = new ArrayList<>(manager.listResources("guns", (fileName) -> fileName.getPath().endsWith(id.getPath() + ".json")).keySet());
                 resources.sort((r1, r2) -> {
@@ -86,10 +86,10 @@ public class NetworkGunManager extends SimplePreparableReloadListener<Map<GunIte
 
                     manager.getResource(resourceLocation).ifPresent(resource ->
                     {
-                        try(Reader reader = new BufferedReader(new InputStreamReader(resource.open(), StandardCharsets.UTF_8)))
+                        try (Reader reader = new BufferedReader(new InputStreamReader(resource.open(), StandardCharsets.UTF_8)))
                         {
                             Gun gun = GsonHelper.fromJson(GSON_INSTANCE, reader, Gun.class);
-                            if(gun != null && Validator.isValidObject(gun))
+                            if (gun != null && Validator.isValidObject(gun))
                             {
                                 map.put((GunItem) item, gun);
                             }
@@ -99,16 +99,16 @@ public class NetworkGunManager extends SimplePreparableReloadListener<Map<GunIte
                                 map.putIfAbsent((GunItem) item, new Gun());
                             }
                         }
-                        catch(InvalidObjectException e)
+                        catch (InvalidObjectException e)
                         {
                             JustEnoughGuns.LOGGER.error("Missing required properties for {}", resourceLocation);
                             e.printStackTrace();
                         }
-                        catch(IOException e)
+                        catch (IOException e)
                         {
                             JustEnoughGuns.LOGGER.error("Couldn't parse data file {}", resourceLocation);
                         }
-                        catch(IllegalAccessException e)
+                        catch (IllegalAccessException e)
                         {
                             e.printStackTrace();
                         }

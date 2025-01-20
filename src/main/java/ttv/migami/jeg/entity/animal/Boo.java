@@ -43,7 +43,7 @@ import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.blockentity.BeehiveBlockEntityAbstract;
-import ttv.migami.jeg.common.ModTags;
+import ttv.migami.jeg.init.ModTags;
 import ttv.migami.jeg.init.ModEntities;
 import ttv.migami.jeg.init.ModParticleTypes;
 

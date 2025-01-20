@@ -37,7 +37,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.Reference;
-import ttv.migami.jeg.common.ModTags;
+import ttv.migami.jeg.init.ModTags;
 import ttv.migami.jeg.entity.throwable.ThrowableExplosiveChargeEntity;
 import ttv.migami.jeg.faction.Faction;
 import ttv.migami.jeg.faction.GunnerManager;

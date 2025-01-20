@@ -28,7 +28,7 @@ import ttv.migami.jeg.client.audio.GunShotSound;
 import ttv.migami.jeg.client.handler.BulletTrailRenderingHandler;
 import ttv.migami.jeg.client.handler.GunRenderingHandler;
 import ttv.migami.jeg.common.Gun;
-import ttv.migami.jeg.common.ModTags;
+import ttv.migami.jeg.init.ModTags;
 import ttv.migami.jeg.common.NetworkGunManager;
 import ttv.migami.jeg.init.ModItems;
 import ttv.migami.jeg.init.ModParticleTypes;

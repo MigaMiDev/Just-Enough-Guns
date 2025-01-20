@@ -7,7 +7,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 import ttv.migami.jeg.Reference;
-import ttv.migami.jeg.common.ModTags;
+import ttv.migami.jeg.init.ModTags;
 import ttv.migami.jeg.init.ModEntities;
 
 import java.util.concurrent.CompletableFuture;
