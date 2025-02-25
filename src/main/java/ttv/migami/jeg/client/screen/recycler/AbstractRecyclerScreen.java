@@ -1,6 +1,7 @@
 package ttv.migami.jeg.client.screen.recycler;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -14,6 +15,8 @@ import ttv.migami.jeg.Config;
 import ttv.migami.jeg.client.util.RenderUtil;
 import ttv.migami.jeg.common.container.recycler.AbstractRecyclerMenu;
 import ttv.migami.jeg.init.ModItems;
+
+import java.util.Arrays;
 
 @OnlyIn(Dist.CLIENT)
 public abstract class AbstractRecyclerScreen<T extends AbstractRecyclerMenu> extends AbstractContainerScreen<T> {
@@ -59,6 +62,13 @@ public abstract class AbstractRecyclerScreen<T extends AbstractRecyclerMenu> ext
             if(RenderUtil.isMouseWithin(mouseX, mouseY, ingotX, ingotY, 16, 16))
             {
                 pGuiGraphics.renderTooltip(this.font, ModItems.GUNMETAL_INGOT.get().getDefaultInstance(), mouseX, mouseY);
+            }
+
+            int coalX = startX + 56;
+            int coalY = startY + 53;
+            if(RenderUtil.isMouseWithin(mouseX, mouseY, coalX, coalY, 16, 16) && this.menu.getSlot(1).getItem().isEmpty())
+            {
+                pGuiGraphics.renderComponentTooltip(this.font, Arrays.asList(Component.translatable("slot.jeg.recycler.fuel").withStyle(ChatFormatting.YELLOW)), mouseX, mouseY);
             }
         }
     }

@@ -143,9 +143,7 @@ public class BlazeProjectileEntity extends ProjectileEntity {
 	@Override
 	protected void onHitEntity(Entity entity, Vec3 hitVec, Vec3 startVec, Vec3 endVec, boolean headshot) {
 		super.onHitEntity(entity, hitVec, startVec, endVec, headshot);
-		
 		entity.setSecondsOnFire(5);
-		
 	}
 	
 	/**

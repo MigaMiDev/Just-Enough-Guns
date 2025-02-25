@@ -3,6 +3,7 @@ package ttv.migami.jeg;
 import com.mrcrayfish.framework.api.FrameworkAPI;
 import com.mrcrayfish.framework.api.client.FrameworkClientAPI;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.PhantomRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -25,6 +26,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import software.bernie.geckolib.GeckoLib;
 import ttv.migami.jeg.block.ScrapBinBlock;
 import ttv.migami.jeg.client.ClientHandler;
 import ttv.migami.jeg.client.CustomGunManager;
@@ -88,6 +90,10 @@ public class JustEnoughGuns {
         bus.addListener(this::onCommonSetup);
         bus.addListener(this::onClientSetup);
         bus.addListener(this::onGatherData);
+
+        // OooOoOh spooky!
+        GeckoLib.initialize();
+
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
             FrameworkClientAPI.registerDataLoader(MetaLoader.getInstance());
             ClientHandler.onRegisterCreativeTab(bus);
@@ -147,6 +153,7 @@ public class JustEnoughGuns {
         EntityRenderers.register(ModEntities.HEALING_TALISMAN.get(), ThrownItemRenderer::new);
         EntityRenderers.register(ModEntities.GHOUL.get(), GhoulRenderer::new);
         EntityRenderers.register(ModEntities.BOO.get(), BooRenderer::new);
+        EntityRenderers.register(ModEntities.TERROR_PHANMTOM.get(), PhantomRenderer::new);
         EntityRenderers.register(ModEntities.SPLASH.get(), SplashRenderer::new);
         EntityRenderers.register(ModEntities.BUBBLE.get(), BubbleRenderer::new);
         event.enqueueWork(ClientHandler::setup);

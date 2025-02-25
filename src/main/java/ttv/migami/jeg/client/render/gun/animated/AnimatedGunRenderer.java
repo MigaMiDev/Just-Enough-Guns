@@ -236,6 +236,10 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 		this.bufferSource = bufferSource;
 		this.renderType = transformType;
 
+		if (stack.is(Items.AIR)) {
+			return;
+		}
+
 		if ((this.renderType != ItemDisplayContext.FIRST_PERSON_RIGHT_HAND && !transformType.equals(ItemDisplayContext.FIXED) && !transformType.equals(ItemDisplayContext.GROUND)
 		//if ((this.renderType != ItemDisplayContext.FIRST_PERSON_RIGHT_HAND && !transformType.equals(ItemDisplayContext.GROUND)
 				&& !stack.is(ModItems.FINGER_GUN.get()))) {

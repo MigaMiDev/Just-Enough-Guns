@@ -278,7 +278,7 @@ public class GunAttackGoal<T extends PathfinderMob> extends Goal {
                 this.shooter.lookAt(EntityAnchorArgument.Anchor.FEET, target.getBoundingBox().getCenter());
             }
 
-            // Bubbles
+            // Emote Bubbles
             if((this.isReloading && heldItem.getTag().getInt("AmmoCount") <= 0) && this.shooter.level() instanceof ServerLevel serverLevel) {
                 serverLevel.sendParticles(ModParticleTypes.BUBBLE_AMMO.get(), this.shooter.getX(), this.shooter.getY() + (this.shooter.getEyeHeight() + 0.9), this.shooter.getZ(), 1, 0, 0, 0, 0);
             }

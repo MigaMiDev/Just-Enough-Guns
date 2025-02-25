@@ -57,7 +57,7 @@
   },
   "reloads": {
     "emptyMagTimer": 20,
-    "maxAmmo": 60,
+    "maxAmmo": 100,
     "reloadTimer": 120,
     "reloadType": "jeg:mag_fed"
   },

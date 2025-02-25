@@ -1494,7 +1494,7 @@ public class GunGen extends GunProvider
                 .setCanBeBlueprinted(false)
 
                 // Reloads
-                .setMaxAmmo(60)
+                .setMaxAmmo(100)
                 .setReloadType(ReloadType.MAG_FED)
                 .setReloadTimer(120)
                 .setEmptyMagTimer(20)

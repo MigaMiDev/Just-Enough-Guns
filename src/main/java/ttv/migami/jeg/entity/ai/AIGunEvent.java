@@ -4,6 +4,7 @@ import com.mrcrayfish.framework.api.network.LevelLocation;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
@@ -14,6 +15,7 @@ import ttv.migami.jeg.Config;
 import ttv.migami.jeg.common.Gun;
 import ttv.migami.jeg.common.ProjectileManager;
 import ttv.migami.jeg.common.SpreadTracker;
+import ttv.migami.jeg.entity.monster.TerrorPhantom;
 import ttv.migami.jeg.entity.projectile.ProjectileEntity;
 import ttv.migami.jeg.init.ModSyncedDataKeys;
 import ttv.migami.jeg.interfaces.IProjectileFactory;
@@ -152,7 +154,20 @@ public class AIGunEvent {
         float a1 = Mth.cos(theta) * r;
         float a2 = Mth.sin(theta) * r;
 
+        if (shooter instanceof TerrorPhantom terrorPhantom) {
+            return getDirectionToTarget(shooter, terrorPhantom.getTarget()).add(vecsideways.scale(a1)).add(vecupwards.scale(a2)).normalize();
+        }
+
         return vecforwards.add(vecsideways.scale(a1)).add(vecupwards.scale(a2)).normalize();
+    }
+
+    public static Vec3 getDirectionToTarget(Entity entity, Entity target) {
+        if (target == null) return Vec3.ZERO;
+
+        Vec3 entityPos = entity.position();
+        Vec3 targetPos = target.position();
+
+        return targetPos.subtract(entityPos).normalize();
     }
 
     /*public static Vec3 getTurretDirection(BasicTurretBlockEntity turret)

@@ -590,6 +590,9 @@ public class ModItems {
     public static final RegistryObject<Item> BOO_SPAWN_HONEYCOMB = REGISTER.register("boo_spawn_honeycomb",
             () -> new ForgeSpawnEggItem(ModEntities.BOO, 0xFFFFFF, 0xFFFFFF, new Item.Properties()));
 
+    public static final RegistryObject<Item> TERROR_PHANTOM_SPAWN_EGG = REGISTER.register("terror_phantom_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.TERROR_PHANMTOM, 0xFFFFFF, 0xFFFFFF, new Item.Properties()));
+
     public static final RegistryObject<Item> SOUL_TREAT = REGISTER.register("soul_treat",
             () -> new SoultreatItem(new Item.Properties()));
 

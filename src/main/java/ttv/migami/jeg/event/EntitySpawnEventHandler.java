@@ -14,7 +14,8 @@ public class EntitySpawnEventHandler {
     public static void onSpecialSpawn(MobSpawnEvent.FinalizeSpawn event) {
         if (event.getEntity() instanceof Skeleton skeleton && Config.COMMON.world.trumpetSpawning.get()) {
             // 5% chance to equip the trumpet instead of a bow
-            if (skeleton.level().random.nextFloat() < 0.05) {
+            float chance = skeleton.level().random.nextFloat();
+            if (chance < 0.05f) {
                 skeleton.addTag("TrumpetBoi");
             }
         }

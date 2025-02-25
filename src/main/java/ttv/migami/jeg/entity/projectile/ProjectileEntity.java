@@ -116,7 +116,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
         } else if (shooter instanceof Player player) {
             this.chargeProgress = ChargeTracker.getChargeProgress(player, weapon);
         } else {
-            this.chargeProgress = 0f;
+            this.chargeProgress = 0.25F;
         }
         if (shooter instanceof Player player) {
             ChargeTracker.clearLastChargeProgress(player.getUUID());
@@ -679,6 +679,11 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
         {
             Entity entity = entityHitResult.getEntity();
             if(entity.getId() == this.shooterId)
+            {
+                return;
+            }
+
+            if (entity.hasPassenger(this.shooter))
             {
                 return;
             }
