@@ -1,6 +1,7 @@
 {
   "values": [
     "minecraft:zombie",
+    "minecraft:drowned",
     "minecraft:skeleton",
     "minecraft:husk",
     "minecraft:zombie_villager",

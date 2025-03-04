@@ -66,6 +66,7 @@ public class JustEnoughGuns {
     public static boolean gunnersLoaded = false;
     public static boolean recruitsLoaded = false;
     public static boolean guardsLoaded = false;
+    public static boolean shoulderSurfingLoaded = false;
     public static final Logger LOGGER = LogManager.getLogger(Reference.MOD_ID);
 
     public JustEnoughGuns() {
@@ -97,6 +98,7 @@ public class JustEnoughGuns {
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
             FrameworkClientAPI.registerDataLoader(MetaLoader.getInstance());
             ClientHandler.onRegisterCreativeTab(bus);
+            ClientHandler.onRegisterGunnersTab(bus);
             bus.addListener(KeyBinds::registerKeyMappings);
             bus.addListener(CrosshairHandler::onConfigReload);
             bus.addListener(ClientHandler::onRegisterReloadListener);
@@ -113,6 +115,7 @@ public class JustEnoughGuns {
         gunnersLoaded = ModList.get().isLoaded("gunners");
         recruitsLoaded = ModList.get().isLoaded("recruits");
         guardsLoaded = ModList.get().isLoaded("guardvillagers");
+        shoulderSurfingLoaded = ModList.get().isLoaded("shouldersurfing");
     }
 
     private void onCommonSetup(FMLCommonSetupEvent event) {

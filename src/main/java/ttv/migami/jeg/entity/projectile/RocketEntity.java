@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.common.Gun;
+import ttv.migami.jeg.faction.raid.RaidEntity;
 import ttv.migami.jeg.init.ModTags;
 import ttv.migami.jeg.init.ModParticleTypes;
 import ttv.migami.jeg.item.GunItem;
@@ -142,6 +143,14 @@ public class RocketEntity extends ProjectileEntity
     @Override
     protected void onHitEntity(Entity entity, Vec3 hitVec, Vec3 startVec, Vec3 endVec, boolean headshot)
     {
+        if (entity instanceof RaidEntity) {
+            return;
+        }
+
+        if (!(entity instanceof LivingEntity)) {
+            return;
+        }
+
         boolean forceNone = !(this.getShooter() instanceof Player);
         if ((!entity.getType().is(ModTags.Entities.HEAVY) && !entity.getType().is(ModTags.Entities.VERY_HEAVY))) {
             if (this.tickCount <= 5 && this.getPassengers().isEmpty() && this.rocketRide) {

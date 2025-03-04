@@ -39,9 +39,6 @@ import ttv.migami.jeg.init.ModSyncedDataKeys;
 import ttv.migami.jeg.item.attachment.IAttachment;
 import ttv.migami.jeg.network.PacketHandler;
 import ttv.migami.jeg.network.message.C2SMessageCasing;
-import ttv.migami.jeg.network.message.C2SMessageGunLoaded;
-import ttv.migami.jeg.network.message.C2SMessageMayStopReloadAnimation;
-import ttv.migami.jeg.network.message.C2SMessageStopReloading;
 import ttv.migami.jeg.util.GunEnchantmentHelper;
 
 import java.util.function.Consumer;
@@ -363,9 +360,9 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
                 .setCustomInstructionKeyframeHandler((customInstructionKeyframeEvent -> {
                     String instruction = customInstructionKeyframeEvent.getKeyframeData().getInstructions();
                     switch(instruction) {
-                        case "reloaded;" -> PacketHandler.getPlayChannel().sendToServer(new C2SMessageGunLoaded());
-                        case "mayEndReload;" -> PacketHandler.getPlayChannel().sendToServer(new C2SMessageMayStopReloadAnimation());
-                        case "finishReloading;" -> PacketHandler.getPlayChannel().sendToServer(new C2SMessageStopReloading());
+                        //case "reloaded;" -> PacketHandler.getPlayChannel().sendToServer(new C2SMessageGunLoaded());
+                        //case "mayEndReload;" -> PacketHandler.getPlayChannel().sendToServer(new C2SMessageMayStopReloadAnimation());
+                        //case "finishReloading;" -> PacketHandler.getPlayChannel().sendToServer(new C2SMessageStopReloading());
 
                         //case "unjam;" -> PacketHandler.INSTANCE.sendToServer(new SpecialAttackPacket(this.getId()));
 

@@ -25,6 +25,7 @@ import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
 import net.minecraftforge.client.event.ScreenEvent;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -281,6 +282,9 @@ public class ClientHandler {
                         flareStack.getOrCreateTag().putBoolean("HasRaid", true);
                         output.accept(flareStack);
                     }
+                    if(registryObject.get() instanceof ForgeSpawnEggItem) {
+                        return;
+                    }
                     output.accept(registryObject.get());
                 });
                 CustomGunManager.fill(output);
@@ -293,6 +297,28 @@ public class ClientHandler {
                 }
             });
         register.register("creative_tab", builder::build);
+        register.register(bus);
+    }
+
+    public static void onRegisterGunnersTab(IEventBus bus)
+    {
+        DeferredRegister<CreativeModeTab> register = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Reference.MOD_ID);
+        CreativeModeTab.Builder builder = CreativeModeTab.builder();
+        builder.title(Component.translatable("itemGroup." + Reference.MOD_ID + ".gunners"));
+        builder.icon(() -> {
+            ItemStack stack = new ItemStack(ModItems.GUNNER_ZOMBIE_SPAWN_EGG.get());
+            return stack;
+        });
+        builder.displayItems((flags, output) ->
+        {
+            ModItems.REGISTER.getEntries().forEach(registryObject ->
+            {
+                if(registryObject.get() instanceof ForgeSpawnEggItem) {
+                    output.accept(registryObject.get());
+                }
+            });
+        });
+        register.register("gunners_tab", builder::build);
         register.register(bus);
     }
 

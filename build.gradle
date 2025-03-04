@@ -108,9 +108,13 @@ dependencies {
     compileOnly fg.deobf('curse.maven:valkyrien-skies-258371:5212232')
     compileOnly fg.deobf('curse.maven:migamis-devil-fruits-996081:5798735')
     compileOnly fg.deobf('curse.maven:yungs-better-nether-fortresses-817651:5193465')
+
     //runtimeOnly fg.deobf('curse.maven:yungs-better-nether-fortresses-817651:5193465')
     //runtimeOnly fg.deobf('curse.maven:yungs-api-421850:5769971')
     //runtimeOnly fg.deobf('curse.maven:migamis-devil-fruits-996081:5798735')
+
+    compileOnly fg.deobf('curse.maven:shoulder-surfing-reloaded-243190:6261573')
+    runtimeOnly fg.deobf('curse.maven:shoulder-surfing-reloaded-243190:6261573')
 
     compileOnly fg.deobf('curse.maven:villager-gunners-973756:5703138')
     compileOnly fg.deobf('curse.maven:guard-villagers-360203:6020730')

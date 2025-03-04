@@ -87,8 +87,9 @@ public class GunGen extends GunProvider
                 // Reloads
                 .setMaxAmmo(8)
                 .setReloadType(ReloadType.MANUAL)
-                .setReloadTimer(160)
-                .setEmptyMagTimer(10)
+                .setReloadAmount(1)
+                .setReloadTimer(45)
+                .setEmptyMagTimer(0)
 
                 // Projectile
                 .setAmmo(ModItems.PISTOL_AMMO.get())
@@ -623,8 +624,8 @@ public class GunGen extends GunProvider
                 // Reloads
                 .setMaxAmmo(30)
                 .setReloadType(ReloadType.MAG_FED)
-                .setReloadTimer(60)
-                .setEmptyMagTimer(10)
+                .setReloadTimer(35)
+                .setEmptyMagTimer(0)
 
                 // Projectile
                 .setAmmo(ModItems.RIFLE_AMMO.get())
@@ -1496,8 +1497,8 @@ public class GunGen extends GunProvider
                 // Reloads
                 .setMaxAmmo(100)
                 .setReloadType(ReloadType.MAG_FED)
-                .setReloadTimer(120)
-                .setEmptyMagTimer(20)
+                .setReloadTimer(115)
+                .setEmptyMagTimer(0)
 
                 // Projectile
                 .setAmmo(ModItems.RIFLE_AMMO.get())

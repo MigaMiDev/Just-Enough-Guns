@@ -1,5 +1,8 @@
 package ttv.migami.jeg.client.handler;
 
+import com.github.exopandora.shouldersurfing.client.ShoulderSurfingCamera;
+import com.github.exopandora.shouldersurfing.client.ShoulderSurfingImpl;
+import com.github.exopandora.shouldersurfing.config.Config;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -42,6 +45,7 @@ public class ShootingHandler
     private int overheatTimer;
     private boolean previouslyPressed = false;
     private boolean overheated = false;
+    private boolean previouslyDecoupled = false;
 
     public static ShootingHandler get()
     {
@@ -155,6 +159,24 @@ public class ShootingHandler
                 Gun gun = gunItem.getModifiedGun(heldItem);
 
                 boolean shooting = (KeyBinds.getShootMapping().isDown() || (ModSyncedDataKeys.BURST_COUNT.getValue(player) > 0 && gun.getGeneral().getFireMode() == FireMode.BURST));
+                if(JustEnoughGuns.shoulderSurfingLoaded)
+                {
+                    ShoulderSurfingCamera camera = ShoulderSurfingImpl.getInstance().getCamera();
+                    if (camera != null && ShoulderSurfingImpl.getInstance().isShoulderSurfing()) {
+                        if (shooting) {
+                            if(Config.CLIENT.isCameraDecoupled()) {
+                                this.previouslyDecoupled = true;
+                                ShoulderSurfingImpl.getInstance().toggleCameraCoupling();
+                                player.setXRot(camera.getXRot());
+                                player.setYRot(camera.getYRot());
+                            }
+                        } else {
+                            if(!Config.CLIENT.isCameraDecoupled() && this.previouslyDecoupled) {
+                                ShoulderSurfingImpl.getInstance().toggleCameraCoupling();
+                            }
+                        }
+                    }
+                }
                 if(JustEnoughGuns.controllableLoaded)
                 {
                     shooting |= ControllerHandler.isShooting();
@@ -278,13 +300,13 @@ public class ShootingHandler
                 {
                     ItemCooldowns tracker = player.getCooldowns();
                     if(gun.getGeneral().getOverheatTimer() != 0 && overheatTimer < gun.getGeneral().getOverheatTimer()) {
-                        if (heldItem.getItem() instanceof AnimatedGunItem animatedGunItem) {
+                        /*if (heldItem.getItem() instanceof AnimatedGunItem animatedGunItem) {
                             final long id = GeoItem.getId(player.getMainHandItem());
                             AnimationController<GeoAnimatable> animationController = animatedGunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("controller");
                             if (animationController != null && animationController.getCurrentAnimation() != null && !animationController.getCurrentAnimation().animation().name().matches("draw")) {
                                 overheatTimer++;
                             }
-                        } else {
+                        } else */{
                             overheatTimer++;
                         }
                         if (overheatTimer >= gun.getGeneral().getOverheatTimer()) {
@@ -311,13 +333,13 @@ public class ShootingHandler
                         if(holdFire < gun.getGeneral().getMaxHoldFire() && !tracker.isOnCooldown(heldItem.getItem())) {
                             ChargeTracker.updateChargeTime(player, heldItem, true);
                             previouslyPressed = true;
-                            if (heldItem.getItem() instanceof AnimatedGunItem animatedGunItem) {
+                            /*if (heldItem.getItem() instanceof AnimatedGunItem animatedGunItem) {
                                 final long id = GeoItem.getId(player.getMainHandItem());
                                 AnimationController<GeoAnimatable> animationController = animatedGunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("controller");
                                 if (animationController != null && animationController.getCurrentAnimation() != null && !animationController.getCurrentAnimation().animation().name().matches("draw")) {
                                     holdFire++;
                                 }
-                            } else {
+                            } else*/ {
                                 holdFire++;
                             }
                         }
@@ -330,7 +352,7 @@ public class ShootingHandler
                                 PacketHandler.getPlayChannel().sendToServer(new C2SMessagePreFireSound(player));
                             }
 
-                            if (heldItem.getItem() instanceof AnimatedGunItem animatedGunItem) {
+                            /*if (heldItem.getItem() instanceof AnimatedGunItem animatedGunItem) {
                                 final long id = GeoItem.getId(player.getMainHandItem());
                                 AnimationController<GeoAnimatable> animationController = animatedGunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("controller");
                                 if (animationController != null && animationController.getCurrentAnimation() != null && !animationController.getCurrentAnimation().animation().name().matches("draw")) {
@@ -339,7 +361,7 @@ public class ShootingHandler
                                         fireTimer++;
                                     }
                                 }
-                            } else {
+                            } else*/ {
                                 fireTimer++;
                                 if (player.isUnderWater()) {
                                     fireTimer++;

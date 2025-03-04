@@ -99,6 +99,8 @@ public class Config
 		public final ForgeConfigSpec.BooleanValue cameraRollEffect;
 		public final ForgeConfigSpec.DoubleValue cameraRollAngle;
 		public final ForgeConfigSpec.BooleanValue restrictCameraRollToWeapons;
+		public final ForgeConfigSpec.BooleanValue forceFirstPersonOnZoomedAim;
+		public final ForgeConfigSpec.DoubleValue firstPersonAimZoomThreshold;
 		public final ForgeConfigSpec.BooleanValue sprintAnimation;
 		public final ForgeConfigSpec.DoubleValue bobbingIntensity;
 
@@ -130,6 +132,8 @@ public class Config
 				this.cameraRollEffect = builder.comment("If enabled, the camera will roll when strafing while holding a gun. This creates a more immersive feeling.").define("cameraRollEffect", true);
 				this.cameraRollAngle = builder.comment("When Camera Roll Effect is enabled, this is the absolute maximum angle the roll on the camera can approach.").defineInRange("cameraRollAngle", 1.5F, 0F, 45F);
 				this.restrictCameraRollToWeapons = builder.comment("When enabled, the Camera Roll Effect is only applied when holding a weapon.").define("restrictCameraRollToWeapons", true);
+				this.forceFirstPersonOnZoomedAim = builder.comment("When enabled, temporarily switches the camera to first person while aiming. Aim zoom must be above firstPersonAimZoomThreshold, and only applies to third person rear camera modes.").define("forceFirstPersonOnZoomedAim", false);
+				this.firstPersonAimZoomThreshold = builder.comment("The zoom threshold at which the camera switches to first person while aiming. Requires forceFirstPersonOnZoomedAim to be set to true.").defineInRange("firstPersonAimZoomThreshold", 0.5, 0.0, 1.0);
 				this.sprintAnimation = builder.comment("Enables the sprinting animation on weapons for better immersion. This only applies to weapons that support a sprinting animation.").define("sprintingAnimation", true);
 				this.bobbingIntensity = builder.comment("The intensity of the custom bobbing animation while holding a gun").defineInRange("bobbingIntensity", 1.0, 0.0, 2.0);
 			}

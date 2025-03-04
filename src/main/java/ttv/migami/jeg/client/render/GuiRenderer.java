@@ -89,6 +89,10 @@ public class GuiRenderer {
                     } else {
                         renderWhileAiming = !AimingHandler.get().isAiming();
                     }
+                    if (AimingHandler.get().getNormalisedAdsProgress() > 0.5 && (!minecraft.options.getCameraType().isFirstPerson()))
+                    {
+                        renderWhileAiming = true;
+                    }
                     if (renderWhileAiming) {
                         // Hold Bar
                         if (gun.getGeneral().getFireTimer() != 0) {

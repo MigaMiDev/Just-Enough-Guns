@@ -24,8 +24,9 @@ public class EntityTagGen extends EntityTypeTagsProvider
     {
         this.tag(ModTags.Entities.NONE);
 
-        this.tag(ModTags.Entities.GUNNER_MOB)
+        this.tag(ModTags.Entities.GUNNER)
                 .add(EntityType.ZOMBIE)
+                .add(EntityType.DROWNED)
                 .add(EntityType.SKELETON)
                 .add(EntityType.HUSK)
                 .add(EntityType.ZOMBIE_VILLAGER)
@@ -53,7 +54,8 @@ public class EntityTagGen extends EntityTypeTagsProvider
                 .add(EntityType.ENDER_DRAGON)
                 .add(EntityType.WARDEN)
                 .add(EntityType.WITHER)
-                .add(EntityType.GIANT);
+                .add(EntityType.GIANT)
+                .add(ModEntities.TERROR_PHANMTOM.get());
 
         this.tag(ModTags.Entities.UNDEAD)
                 .add(EntityType.ZOMBIE)

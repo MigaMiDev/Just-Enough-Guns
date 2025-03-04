@@ -1,6 +1,7 @@
 package ttv.migami.jeg.init;
 
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraftforge.common.ForgeSpawnEggItem;
@@ -584,17 +585,57 @@ public class ModItems {
             () -> new AdvancedBlueprintItem(new Item.Properties().rarity(Rarity.RARE)));
 
     // Mobs
-    public static final RegistryObject<Item> GHOUL_SPAWN_TALISMAN = REGISTER.register("ghoul_spawn_talisman",
-            () -> new ForgeSpawnEggItem(ModEntities.GHOUL, 0xFFFFFF, 0xFFFFFF, new Item.Properties()));
+    public static final RegistryObject<Item> GHOUL_SPAWN_EGG = REGISTER.register("ghoul_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.GHOUL, 0xF9F9F9, 0x00ADFF, new Item.Properties()));
 
-    public static final RegistryObject<Item> BOO_SPAWN_HONEYCOMB = REGISTER.register("boo_spawn_honeycomb",
-            () -> new ForgeSpawnEggItem(ModEntities.BOO, 0xFFFFFF, 0xFFFFFF, new Item.Properties()));
+    public static final RegistryObject<Item> BOO_SPAWN_EGG = REGISTER.register("boo_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.BOO, 0x00ADFF, 0xF9F9F9, new Item.Properties()));
 
     public static final RegistryObject<Item> TERROR_PHANTOM_SPAWN_EGG = REGISTER.register("terror_phantom_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntities.TERROR_PHANMTOM, 0xFFFFFF, 0xFFFFFF, new Item.Properties()));
+            () -> new ForgeSpawnEggItem(ModEntities.TERROR_PHANMTOM, 0x43518A, 0x88FF00, new Item.Properties()));
 
     public static final RegistryObject<Item> SOUL_TREAT = REGISTER.register("soul_treat",
             () -> new SoultreatItem(new Item.Properties()));
+
+    // Gunner Mobs
+    public static final RegistryObject<Item> GUNNER_ZOMBIE_SPAWN_EGG = REGISTER.register("gunner_zombie_spawn_egg",
+            () -> new GunnerSpawnEggItem(() -> EntityType.ZOMBIE, 0x00AFAF, 0x799C65, new Item.Properties()));
+
+    public static final RegistryObject<Item> GUNNER_HUSK_SPAWN_EGG = REGISTER.register("gunner_husk_spawn_egg",
+            () -> new GunnerSpawnEggItem(() -> EntityType.HUSK, 0x797061, 0xE6CC94, new Item.Properties()));
+
+    public static final RegistryObject<Item> GUNNER_DROWNED_SPAWN_EGG = REGISTER.register("gunner_drowned_spawn_egg",
+            () -> new GunnerSpawnEggItem(() -> EntityType.DROWNED, 0x8FF1D7, 0x799C65, new Item.Properties()));
+
+    public static final RegistryObject<Item> GUNNER_ZOMBIE_VILLAGER_SPAWN_EGG = REGISTER.register("gunner_zombie_villager_spawn_egg",
+            () -> new GunnerSpawnEggItem(() -> EntityType.ZOMBIE_VILLAGER, 0x563C33, 0x799C65, new Item.Properties()));
+
+    public static final RegistryObject<Item> GUNNER_SKELETON_SPAWN_EGG = REGISTER.register("gunner_skeleton_spawn_egg",
+            () -> new GunnerSpawnEggItem(() -> EntityType.SKELETON, 0xC1C1C1, 0x494949, new Item.Properties()));
+
+    public static final RegistryObject<Item> GUNNER_STRAY_SPAWN_EGG = REGISTER.register("gunner_stray_spawn_egg",
+            () -> new GunnerSpawnEggItem(() -> EntityType.STRAY, 0x617677, 0xDDEAEA, new Item.Properties()));
+
+    public static final RegistryObject<Item> GUNNER_PILLAGER_SPAWN_EGG = REGISTER.register("gunner_pillager_spawn_egg",
+            () -> new GunnerSpawnEggItem(() -> EntityType.PILLAGER, 0x532F36, 0x959B9B, new Item.Properties()));
+
+    public static final RegistryObject<Item> GUNNER_VINDICATOR_SPAWN_EGG = REGISTER.register("gunner_vindicator_spawn_egg",
+            () -> new GunnerSpawnEggItem(() -> EntityType.VINDICATOR, 0x959B9B, 0x275E61, new Item.Properties()));
+
+    public static final RegistryObject<Item> GUNNER_PIGLIN_SPAWN_EGG = REGISTER.register("gunner_piglin_spawn_egg",
+            () -> new GunnerSpawnEggItem(() -> EntityType.PIGLIN, 0x995F40, 0xF9F3A4, new Item.Properties()));
+
+    public static final RegistryObject<Item> GUNNER_PIGLIN_BRUTE_SPAWN_EGG = REGISTER.register("gunner_piglin_brute_spawn_egg",
+            () -> new GunnerSpawnEggItem(() -> EntityType.PIGLIN_BRUTE, 0x592A10, 0xF9F3A4, new Item.Properties()));
+
+    public static final RegistryObject<Item> GUNNER_ZOMBIFIED_PIGLIN_SPAWN_EGG = REGISTER.register("gunner_zombified_piglin_spawn_egg",
+            () -> new GunnerSpawnEggItem(() -> EntityType.ZOMBIFIED_PIGLIN, 0xEA9393, 0x4C7129, new Item.Properties()));
+
+    public static final RegistryObject<Item> GUNNER_WITHER_SKELETON_SPAWN_EGG = REGISTER.register("gunner_wither_skeleton_spawn_egg",
+            () -> new GunnerSpawnEggItem(() -> EntityType.WITHER_SKELETON, 0x141414, 0x474D4D, new Item.Properties()));
+
+    public static final RegistryObject<Item> GUNNER_GHOUL_SPAWN_EGG = REGISTER.register("gunner_ghoul_spawn_egg",
+            () -> new GunnerSpawnEggItem(() -> ModEntities.GHOUL.get(), 0xF9F9F9, 0x00ADFF, new Item.Properties()));
 
     // Fallbacks
     /*public static final RegistryObject<Item> SCAR_L_FALLBACK = REGISTER.register("scar_l",

@@ -48,7 +48,7 @@ public class GunnerMobSpawner {
             return;
         }
 
-        if (!entity.getType().is(ModTags.Entities.GUNNER_MOB)) {
+        if (!entity.getType().is(ModTags.Entities.GUNNER)) {
             return;
         }
 

@@ -1,9 +1,7 @@
 package ttv.migami.jeg.entity.monster;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
@@ -21,10 +19,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
+import ttv.migami.jeg.entity.ai.EntityHurtByTargetGoal;
 import ttv.migami.jeg.entity.ai.TerrorPhantomGunAttackGoal;
-import ttv.migami.jeg.entity.throwable.ThrowableGrenadeEntity;
 import ttv.migami.jeg.init.ModItems;
-import ttv.migami.jeg.init.ModSounds;
 
 import java.util.EnumSet;
 
@@ -64,6 +61,7 @@ public class TerrorPhantom extends Phantom {
         this.goalSelector.addGoal(2, new PhantomSweepAttackGoal());
         this.goalSelector.addGoal(3, new PhantomCircleAroundAnchorGoal());
         this.targetSelector.addGoal(1, new PhantomAttackPlayerTargetGoal());
+        this.targetSelector.addGoal(1, (new EntityHurtByTargetGoal(this)));
     }
 
     public void tick() {
@@ -77,9 +75,9 @@ public class TerrorPhantom extends Phantom {
             this.horizontalCollision = false;
         }
         //this.noPhysics = this.attackPhase.equals(AttackPhase.SWOOP);
-        this.noPhysics = true;
+        this.noPhysics = this.getTarget() != null;
 
-        if (this.level() instanceof ServerLevel serverLevel) {
+        /*if (this.level() instanceof ServerLevel serverLevel) {
             if (this.tickCount % 20 == 0 && this.attackPhase.equals(AttackPhase.SWOOP)) {
                 BlockPos pos = this.blockPosition();
                 ThrowableGrenadeEntity grenade = new ThrowableGrenadeEntity(this.level(), this, 60);
@@ -87,7 +85,7 @@ public class TerrorPhantom extends Phantom {
                 grenade.setPos(pos.getX(), pos.getY() + 1, pos.getZ());
                 serverLevel.addFreshEntity(grenade);
             }
-        }
+        }*/
     }
 
     @Override

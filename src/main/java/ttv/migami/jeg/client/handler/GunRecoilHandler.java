@@ -1,5 +1,6 @@
 package ttv.migami.jeg.client.handler;
 
+import com.github.exopandora.shouldersurfing.client.ShoulderSurfingImpl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemCooldowns;
@@ -10,6 +11,7 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.common.Gun;
+import ttv.migami.jeg.compat.ShoulderSurfingHelper;
 import ttv.migami.jeg.event.GunFireEvent;
 import ttv.migami.jeg.item.GunItem;
 import ttv.migami.jeg.util.GunModifierHelper;
@@ -95,6 +97,30 @@ public class GunRecoilHandler
 
         float pitch = mc.player.getXRot();
         float yaw = mc.player.getYRot();
+
+        if(ShoulderSurfingHelper.isShoulderSurfing())
+        {
+            ShoulderSurfingImpl instance = ShoulderSurfingImpl.getInstance();
+            pitch = instance.getCamera().getXRot();
+            yaw = instance.getCamera().getYRot();
+
+            if(startProgress < 0.2F)
+            {
+                instance.getCamera().setXRot(pitch - ((endProgress - startProgress) / 0.2F) * this.cameraRecoil);
+                if(recoilRand == 1)
+                    instance.getCamera().setYRot(yaw - ((endProgress - startProgress) / 0.2F) * this.cameraRecoil/2);
+                else
+                    instance.getCamera().setYRot(yaw + ((endProgress - startProgress) / 0.2F) * this.cameraRecoil/2);
+            }
+            else
+            {
+                instance.getCamera().setXRot(pitch + ((endProgress - startProgress) / 0.8F) * this.cameraRecoil);
+                if(recoilRand == 1)
+                    instance.getCamera().setYRot(yaw + ((endProgress - startProgress) / 0.2F) * this.cameraRecoil/2);
+                else
+                    instance.getCamera().setYRot(yaw - ((endProgress - startProgress) / 0.2F) * this.cameraRecoil/2);
+            }
+        }
 
         if(startProgress < 0.2F)
         {

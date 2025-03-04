@@ -96,7 +96,8 @@ public class ReloadTracker
     {
         GunItem gunItem = (GunItem) stack.getItem();
 
-        if(!(gunItem instanceof AnimatedGunItem)) {
+        //if(!(gunItem instanceof AnimatedGunItem)) {
+        {
             if(gun.getReloads().getReloadType() == ReloadType.MAG_FED ||
                     gun.getReloads().getReloadType() == ReloadType.SINGLE_ITEM)
             {
@@ -121,8 +122,6 @@ public class ReloadTracker
                 return deltaTicks > 0 && deltaTicks % interval == 0;
             }
         }
-
-        return false;
     }
 
     public static int ammoInInventory(ItemStack[] ammoStack)
@@ -325,18 +324,19 @@ public class ReloadTracker
                     RELOAD_TRACKER_MAP.remove(player);
                     ModSyncedDataKeys.RELOADING.setValue(player, false);
                     PacketHandler.getPlayChannel().sendToPlayer(() -> (ServerPlayer) player, new S2CMessageSyncReloadKey());
-                    if (player.getInventory().getSelected().getTag() != null) {
+                    /*if (player.getInventory().getSelected().getTag() != null) {
                         if (player.getInventory().getSelected().getItem() instanceof AnimatedGunItem) {
                             player.getInventory().getSelected().getTag().putBoolean("IsReloading", false);
                         }
-                    }
+                    }*/
                     return;
                 }
                 if(tracker.canReload(player))
                 {
                     final Player finalPlayer = player;
                     final Gun gun = tracker.gun;
-                    if (!(player.getInventory().getSelected().getItem() instanceof AnimatedGunItem)) {
+                    //if (!(player.getInventory().getSelected().getItem() instanceof AnimatedGunItem)) {
+                    {
                         if(gun.getReloads().getReloadType() == ReloadType.MAG_FED) {
                             tracker.increaseMagAmmo(player);
                         }
@@ -353,16 +353,16 @@ public class ReloadTracker
                         RELOAD_TRACKER_MAP.remove(player);
                         PacketHandler.getPlayChannel().sendToPlayer(() -> (ServerPlayer) player, new S2CMessageSyncReloadKey());
                         ModSyncedDataKeys.RELOADING.setValue(player, false);
-                        if (player.getInventory().getSelected().getTag() != null) {
+                        /*if (player.getInventory().getSelected().getTag() != null) {
                             if (player.getInventory().getSelected().getItem() instanceof AnimatedGunItem) {
                                 player.getInventory().getSelected().getTag().putBoolean("IsReloading", false);
                             }
-                        }
+                        }*/
 
                         DelayedTask.runAfter(4, () ->
                         {
                             ResourceLocation cockSound = gun.getSounds().getCock();
-                            if(cockSound != null && finalPlayer.isAlive() && !(finalPlayer.getMainHandItem().getItem() instanceof AnimatedGunItem))
+                            if(cockSound != null && finalPlayer.isAlive()) // && !(finalPlayer.getMainHandItem().getItem() instanceof AnimatedGunItem))
                             {
                                 double soundX = finalPlayer.getX();
                                 double soundY = finalPlayer.getY() + 1.0;

@@ -37,7 +37,7 @@ public class ModTags
     public static class Entities
     {
         public static final TagKey<EntityType<?>> NONE = tag("none");
-        public static final TagKey<EntityType<?>> GUNNER_MOB = tag("gunner_mob");
+        public static final TagKey<EntityType<?>> GUNNER = tag("gunner");
         public static final TagKey<EntityType<?>> HEAVY = tag("heavy");
         public static final TagKey<EntityType<?>> VERY_HEAVY = tag("very_heavy");
         public static final TagKey<EntityType<?>> UNDEAD = tag("undead");

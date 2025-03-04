@@ -59,9 +59,9 @@
     "trailLengthMultiplier": 2.0
   },
   "reloads": {
-    "emptyMagTimer": 10,
+    "emptyMagTimer": 0,
     "maxAmmo": 30,
-    "reloadTimer": 60,
+    "reloadTimer": 35,
     "reloadType": "jeg:mag_fed"
   },
   "sounds": {

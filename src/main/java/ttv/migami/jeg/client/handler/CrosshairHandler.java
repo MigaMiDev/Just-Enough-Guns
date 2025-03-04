@@ -2,6 +2,7 @@ package ttv.migami.jeg.client.handler;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -15,6 +16,7 @@ import net.minecraftforge.fml.event.config.ModConfigEvent;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.Reference;
 import ttv.migami.jeg.client.render.crosshair.*;
+import ttv.migami.jeg.compat.ShoulderSurfingHelper;
 import ttv.migami.jeg.event.GunFireEvent;
 import ttv.migami.jeg.item.GunItem;
 
@@ -128,7 +130,7 @@ public class CrosshairHandler
             hitMarker.render(mc, stack, scaledWidth, scaledHeight, event.getPartialTick());
         }
 
-        if(AimingHandler.get().getNormalisedAdsProgress() > 0.5)
+        if(AimingHandler.get().getNormalisedAdsProgress() > 0.5 && (mc.options.getCameraType().isFirstPerson()))
         {
             event.setCanceled(true);
             return;
@@ -145,7 +147,10 @@ public class CrosshairHandler
 
         event.setCanceled(true);
 
-        if(!mc.options.getCameraType().isFirstPerson())
+        //if(!mc.options.getCameraType().isFirstPerson())
+        //    return;
+
+        if(mc.options.getCameraType() != CameraType.FIRST_PERSON && !ShoulderSurfingHelper.isShoulderSurfing())
             return;
 
         if(mc.player.getUseItem().getItem() instanceof ShieldItem)
