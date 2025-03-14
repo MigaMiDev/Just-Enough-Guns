@@ -151,10 +151,10 @@ public class FlareSmokeParticle extends TextureSheetParticle {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static class Provider implements ParticleProvider<SimpleParticleType> {
+    public static class RedProvider implements ParticleProvider<SimpleParticleType> {
         private final SpriteSet sprites;
 
-        public Provider(SpriteSet spriteSet) {
+        public RedProvider(SpriteSet spriteSet) {
             this.sprites = spriteSet;
         }
 
@@ -162,6 +162,22 @@ public class FlareSmokeParticle extends TextureSheetParticle {
             FlareSmokeParticle flareSmokeParticle = new FlareSmokeParticle(level, x,y,z, this.sprites, dx,dy,dz, true);
             flareSmokeParticle.pickSprite(this.sprites);
             flareSmokeParticle.setColor(1.0F, 0.2F, 0.2F);
+            return flareSmokeParticle;
+        }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static class BlueProvider implements ParticleProvider<SimpleParticleType> {
+        private final SpriteSet sprites;
+
+        public BlueProvider(SpriteSet spriteSet) {
+            this.sprites = spriteSet;
+        }
+
+        public Particle createParticle(SimpleParticleType particleType, ClientLevel level, double x, double y, double z, double dx, double dy, double dz) {
+            FlareSmokeParticle flareSmokeParticle = new FlareSmokeParticle(level, x,y,z, this.sprites, dx,dy,dz, true);
+            flareSmokeParticle.pickSprite(this.sprites);
+            flareSmokeParticle.setColor(0.0F, 0.8F, 0.8F);
             return flareSmokeParticle;
         }
     }

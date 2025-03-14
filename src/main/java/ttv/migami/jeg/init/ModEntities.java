@@ -13,7 +13,8 @@ import ttv.migami.jeg.entity.HealingTalismanEntity;
 import ttv.migami.jeg.entity.Splash;
 import ttv.migami.jeg.entity.animal.Boo;
 import ttv.migami.jeg.entity.monster.Ghoul;
-import ttv.migami.jeg.entity.monster.TerrorPhantom;
+import ttv.migami.jeg.entity.monster.phantom.gunner.PhantomGunner;
+import ttv.migami.jeg.entity.monster.phantom.terror.TerrorPhantom;
 import ttv.migami.jeg.entity.projectile.*;
 import ttv.migami.jeg.entity.throwable.*;
 import ttv.migami.jeg.faction.raid.RaidEntity;
@@ -53,7 +54,8 @@ public class ModEntities
     /* Mobs */
     public static final RegistryObject<EntityType<Ghoul>> GHOUL = REGISTER.register("ghoul", () -> EntityType.Builder.of(Ghoul::new, MobCategory.MONSTER).sized(0.6F, 1.95F).build("ghoul"));
     public static final RegistryObject<EntityType<Boo>> BOO = REGISTER.register("boo", () -> EntityType.Builder.of(Boo::new, MobCategory.CREATURE).sized(0.7F, 0.6F).fireImmune().build("boo"));
-    public static final RegistryObject<EntityType<TerrorPhantom>> TERROR_PHANMTOM = REGISTER.register("terror_phantom", () -> EntityType.Builder.of(TerrorPhantom::new, MobCategory.MONSTER).sized(3.0F, 1.0F).fireImmune().build("terror_phantom"));
+    public static final RegistryObject<EntityType<TerrorPhantom>> TERROR_PHANMTOM = REGISTER.register("terror_phantom", () -> EntityType.Builder.of(TerrorPhantom::new, MobCategory.MONSTER).sized(6.0F, 2.0F).fireImmune().build("terror_phantom"));
+    public static final RegistryObject<EntityType<PhantomGunner>> PHANTOM_GUNNER = REGISTER.register("phantom_gunner", () -> EntityType.Builder.of(PhantomGunner::new, MobCategory.MONSTER).sized(4.0F, 1.0F).fireImmune().build("phantom_gunner"));
 
     /* Custom */
     public static final RegistryObject<EntityType<Splash>> SPLASH = REGISTER.register("splash", () -> EntityType.Builder.<Splash>of(Splash::new, MobCategory.MISC).sized(5.0F, 5.0F).noSave().noSummon().fireImmune().build("splash"));

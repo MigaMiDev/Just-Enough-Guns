@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
@@ -39,6 +40,7 @@ import ttv.migami.jeg.init.ModEnchantments;
 import ttv.migami.jeg.init.ModItems;
 import ttv.migami.jeg.init.ModSounds;
 import ttv.migami.jeg.item.GunItem;
+import ttv.migami.jeg.item.ScoreStreakItem;
 
 import java.util.Map;
 import java.util.Objects;
@@ -65,6 +67,16 @@ public class EntityKillEventHandler {
         }
 
         ServerLevel serverLevel = (ServerLevel) event.getEntity().level();
+
+        // Scorestreak
+        if (event.getSource().getEntity() instanceof Player player && (player.getMainHandItem().getItem() instanceof GunItem || event.getSource().is(DamageTypes.EXPLOSION) || event.getSource().is(DamageTypes.PLAYER_EXPLOSION))) {
+            for (int i = 0; i < 9; i++) {
+                ItemStack stack = player.getInventory().getItem(i);
+                if (stack.getItem() instanceof ScoreStreakItem scorestreakItem) {
+                    scorestreakItem.setPoints(stack, (int) (scorestreakItem.getPoints(stack) + (event.getEntity().getMaxHealth() * 2)));
+                }
+            }
+        }
 
         // Drop Raid Flares
         if (entity.getTags().contains("MobGunner")) {
@@ -248,16 +260,20 @@ public class EntityKillEventHandler {
                     if (distance <= 200 * 200) {
 
                         ItemStack mainHandItem = player.getMainHandItem();
-                        if (mainHandItem.getItem() instanceof GunItem) {
-                            Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(mainHandItem);
+                        if (mainHandItem.getItem() instanceof GunItem gunItem) {
+                            Gun modifiedGun = gunItem.getModifiedGun(mainHandItem);
 
-                            int currentWitheredLevel = enchantments.getOrDefault(ModEnchantments.WITHERED.get(), 0);
+                            if (!modifiedGun.getGeneral().isWitheredDisabled()) {
+                                Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(mainHandItem);
 
-                            if (currentWitheredLevel < Config.COMMON.world.maxWitheredLevel.get()) {
-                                enchantments.put(ModEnchantments.WITHERED.get(), currentWitheredLevel + 1);
+                                int currentWitheredLevel = enchantments.getOrDefault(ModEnchantments.WITHERED.get(), 0);
 
-                                EnchantmentHelper.setEnchantments(enchantments, mainHandItem);
-                                enchantedAtLeastOneGun = true;
+                                if (currentWitheredLevel < Config.COMMON.world.maxWitheredLevel.get()) {
+                                    enchantments.put(ModEnchantments.WITHERED.get(), currentWitheredLevel + 1);
+
+                                    EnchantmentHelper.setEnchantments(enchantments, mainHandItem);
+                                    enchantedAtLeastOneGun = true;
+                                }
                             }
                         }
                     }

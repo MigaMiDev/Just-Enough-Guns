@@ -35,6 +35,8 @@ public class GunnerRaidSpawner implements CustomSpawner {
             return 0;
         }
 
+        GunnerRaidData raidData = GunnerRaidData.get(level);
+        this.nextTick = raidData.getNextTick();
         RandomSource random = level.random;
         --this.nextTick;
 
@@ -52,11 +54,9 @@ public class GunnerRaidSpawner implements CustomSpawner {
             this.nextTick += randomIntervalMin + random.nextInt(randomIntervalMax - randomIntervalMin + 1);
         }
 
-        // Adds a chance for the Raid  to spawn in either Daytime or Nighttime
         this.nextTick += random.nextInt(12000);
 
         long dayTime = level.getDayTime() / 24000L;
-
         int minimumDays = Config.COMMON.gunnerMobs.minimumDaysForRaids.get();
         if (dayTime < minimumDays) {
             return 0;
@@ -72,7 +72,6 @@ public class GunnerRaidSpawner implements CustomSpawner {
             return 0;
         }
 
-
         Holder<Biome> biome = level.getBiome(randomPlayer.getOnPos());
         if (biome.is(BiomeTags.WITHOUT_PATROL_SPAWNS)) {
             return 0;
@@ -84,6 +83,8 @@ public class GunnerRaidSpawner implements CustomSpawner {
         ThrowableFlareEntity flare = new ThrowableFlareEntity(level, randomPlayer);
         flare.setPos(randomPlayer.position().add(0, 24, 0));
         level.addFreshEntity(flare);
+
+        raidData.setNextTick(this.nextTick);
 
         return 1;
     }

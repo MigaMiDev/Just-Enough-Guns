@@ -39,7 +39,7 @@
     "trailLengthMultiplier": 0.0
   },
   "reloads": {
-    "emptyMagTimer": 20,
+    "additionalReloadTimer": 20,
     "maxAmmo": 8,
     "reloadItem": "minecraft:water_bucket",
     "reloadTimer": 60,

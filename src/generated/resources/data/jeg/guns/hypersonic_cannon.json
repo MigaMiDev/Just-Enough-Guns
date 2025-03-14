@@ -41,10 +41,10 @@
     "trailLengthMultiplier": 2.0
   },
   "reloads": {
-    "emptyMagTimer": 10,
+    "additionalReloadTimer": 0,
     "maxAmmo": 15,
     "reloadItem": "minecraft:sculk_catalyst",
-    "reloadTimer": 80,
+    "reloadTimer": 60,
     "reloadType": "jeg:single_item"
   },
   "sounds": {

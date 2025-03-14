@@ -139,6 +139,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         @Optional
         private boolean canBeBlueprinted = true;
         private boolean infinityDisabled;
+        private boolean witheredDisabled;
         private boolean canFireUnderwater = false;
 
         @Override
@@ -165,6 +166,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             tag.putFloat("Spread", this.spread);
             tag.putBoolean("CanBeBlueprinted", this.canBeBlueprinted);
             tag.putBoolean("InfinityDisabled", this.infinityDisabled);
+            tag.putBoolean("WitheredDisabled", this.witheredDisabled);
             tag.putBoolean("CanFireUnderwater", this.canFireUnderwater);
             return tag;
         }
@@ -252,6 +254,10 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             {
                 this.infinityDisabled = tag.getBoolean("InfinityDisabled");
             }
+            if(tag.contains("WitheredDisabled", Tag.TAG_ANY_NUMERIC))
+            {
+                this.witheredDisabled = tag.getBoolean("WitheredDisabled");
+            }
             if(tag.contains("CanFireUnderwater", Tag.TAG_ANY_NUMERIC))
             {
                 this.canFireUnderwater = tag.getBoolean("CanFireUnderwater");
@@ -288,6 +294,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             if(this.spread != 0.0F) object.addProperty("spread", this.spread);
             if(!this.canBeBlueprinted) object.addProperty("canBeBlueprinted", this.canBeBlueprinted);
             if(this.infinityDisabled) object.addProperty("infinityDisabled", this.infinityDisabled);
+            if(this.witheredDisabled) object.addProperty("witheredDisabled", this.witheredDisabled);
             if(this.canFireUnderwater) object.addProperty("canFireUnderwater", this.canFireUnderwater);
             return object;
         }
@@ -318,6 +325,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             general.spread = this.spread;
             general.canBeBlueprinted = this.canBeBlueprinted;
             general.infinityDisabled = this.infinityDisabled;
+            general.witheredDisabled = this.witheredDisabled;
             general.canFireUnderwater = this.canFireUnderwater;
             return general;
         }
@@ -485,6 +493,14 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         }
 
         /**
+         * @return If true, the gun will not be able to obtain Withered by killing the Wither.
+         */
+        public boolean isWitheredDisabled()
+        {
+            return this.witheredDisabled;
+        }
+
+        /**
          * @return If true, the gun will be able to fire underwater.
          */
         public boolean canFireUnderwater()
@@ -502,7 +518,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         @Ignored
         private ReloadType reloadType = ReloadType.MANUAL;
         private int reloadTimer = 20;
-        private int emptyMagTimer = 5;
+        private int additionalReloadTimer = 5;
         private int reloadAmount = 1;
 
         @Override
@@ -513,7 +529,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             tag.putInt("MaxAmmo", this.maxAmmo);
             tag.putString("ReloadType", this.reloadType.getId().toString());
             tag.putInt("ReloadTimer", this.reloadTimer);
-            tag.putInt("EmptyMagTimer", this.emptyMagTimer);
+            tag.putInt("AdditionalReloadTimer", this.additionalReloadTimer);
             tag.putInt("ReloadAmount", this.reloadAmount);
             return tag;
         }
@@ -537,9 +553,9 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             {
                 this.reloadTimer = tag.getInt("ReloadTimer");
             }
-            if(tag.contains("EmptyMagTimer", Tag.TAG_ANY_NUMERIC))
+            if(tag.contains("AdditionalReloadTimer", Tag.TAG_ANY_NUMERIC))
             {
-                this.emptyMagTimer = tag.getInt("EmptyMagTimer");
+                this.additionalReloadTimer = tag.getInt("AdditionalReloadTimer");
             }
             if(tag.contains("ReloadAmount", Tag.TAG_ANY_NUMERIC))
             {
@@ -551,14 +567,14 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         {
             Preconditions.checkArgument(this.maxAmmo > 0, "Max ammo must be more than zero");
             Preconditions.checkArgument(this.reloadTimer >= 0, "Reload timer must be more than or equal to zero");
-            Preconditions.checkArgument(this.emptyMagTimer >= 0, "Empty mag additional reload timer must be more than or equal to zero");
+            Preconditions.checkArgument(this.additionalReloadTimer >= 0, "Empty mag additional reload timer must be more than or equal to zero");
             Preconditions.checkArgument(this.reloadAmount >= 1, "Reloading amount must be more than or equal to zero");
             JsonObject object = new JsonObject();
             if(!this.reloadItem.toString().matches(ModItems.SCRAP.getId().toString())) object.addProperty("reloadItem", this.reloadItem.toString());
             object.addProperty("maxAmmo", this.maxAmmo);
             object.addProperty("reloadType", this.reloadType.getId().toString());
             object.addProperty("reloadTimer", this.reloadTimer);
-            object.addProperty("emptyMagTimer", this.emptyMagTimer);
+            object.addProperty("additionalReloadTimer", this.additionalReloadTimer);
             if(this.reloadAmount != 1) object.addProperty("reloadAmount", this.reloadAmount);
             return object;
         }
@@ -570,7 +586,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             reloads.maxAmmo = this.maxAmmo;
             reloads.reloadType = this.reloadType;
             reloads.reloadTimer = this.reloadTimer;
-            reloads.emptyMagTimer = this.emptyMagTimer;
+            reloads.additionalReloadTimer = this.additionalReloadTimer;
             reloads.reloadAmount = this.reloadAmount;
             return reloads;
         }
@@ -589,7 +605,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
 
         public int getReloadTimer() { return this.reloadTimer; }
 
-        public int getEmptyMagTimer() { return this.emptyMagTimer; }
+        public int getAdditionalReloadTimer() { return this.additionalReloadTimer; }
 
         public int getReloadAmount() { return this.reloadAmount; }
     }
@@ -2319,9 +2335,9 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             return this;
         }
 
-        public Builder setEmptyMagTimer(int emptyMagTimer)
+        public Builder setAdditionalReloadTimer(int additionalReloadTimer)
         {
-            this.gun.reloads.emptyMagTimer = emptyMagTimer;
+            this.gun.reloads.additionalReloadTimer = additionalReloadTimer;
             return this;
         }
 
@@ -2388,6 +2404,12 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         public Builder setInfinityDisabled(boolean infinityDisabled)
         {
             this.gun.general.infinityDisabled = infinityDisabled;
+            return this;
+        }
+
+        public Builder setWitheredDisabled(boolean witheredDisabled)
+        {
+            this.gun.general.witheredDisabled = witheredDisabled;
             return this;
         }
 

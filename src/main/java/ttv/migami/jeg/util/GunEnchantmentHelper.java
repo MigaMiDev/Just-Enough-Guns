@@ -67,7 +67,7 @@ public class GunEnchantmentHelper
             modifier = 3;
         }
 
-        int speed = modifiedGun.getReloads().getEmptyMagTimer() + modifiedGun.getReloads().getReloadTimer() * modifier;
+        int speed = modifiedGun.getReloads().getAdditionalReloadTimer() + modifiedGun.getReloads().getReloadTimer() * modifier;
 
         int level = EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.QUICK_HANDS.get(), weapon);
         if(level > 0)

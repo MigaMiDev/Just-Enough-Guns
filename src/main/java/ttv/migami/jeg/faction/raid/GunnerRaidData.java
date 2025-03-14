@@ -1,0 +1,35 @@
+package ttv.migami.jeg.faction.raid;
+
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.saveddata.SavedData;
+
+public class GunnerRaidData extends SavedData {
+    private static final String DATA_NAME = "gunner_raid_data";
+    private int nextTick = 0;
+
+    public static GunnerRaidData load(CompoundTag tag) {
+        GunnerRaidData data = new GunnerRaidData();
+        data.nextTick = tag.getInt("NextRaidTick");
+        return data;
+    }
+
+    @Override
+    public CompoundTag save(CompoundTag tag) {
+        tag.putInt("NextRaidTick", nextTick);
+        return tag;
+    }
+
+    public static GunnerRaidData get(ServerLevel level) {
+        return level.getDataStorage().computeIfAbsent(GunnerRaidData::load, GunnerRaidData::new, DATA_NAME);
+    }
+
+    public int getNextTick() {
+        return nextTick;
+    }
+
+    public void setNextTick(int nextTick) {
+        this.nextTick = nextTick;
+        this.setDirty();
+    }
+}

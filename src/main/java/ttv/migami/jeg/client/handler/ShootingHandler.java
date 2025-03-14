@@ -300,13 +300,13 @@ public class ShootingHandler
                 {
                     ItemCooldowns tracker = player.getCooldowns();
                     if(gun.getGeneral().getOverheatTimer() != 0 && overheatTimer < gun.getGeneral().getOverheatTimer()) {
-                        /*if (heldItem.getItem() instanceof AnimatedGunItem animatedGunItem) {
+                        if (heldItem.getItem() instanceof AnimatedGunItem animatedGunItem) {
                             final long id = GeoItem.getId(player.getMainHandItem());
                             AnimationController<GeoAnimatable> animationController = animatedGunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("controller");
                             if (animationController != null && animationController.getCurrentAnimation() != null && !animationController.getCurrentAnimation().animation().name().matches("draw")) {
                                 overheatTimer++;
                             }
-                        } else */{
+                        } else {
                             overheatTimer++;
                         }
                         if (overheatTimer >= gun.getGeneral().getOverheatTimer()) {

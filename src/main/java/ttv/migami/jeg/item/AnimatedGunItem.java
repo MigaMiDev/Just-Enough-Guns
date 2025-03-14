@@ -208,7 +208,7 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
     }
 
     private void handleJammedState(CompoundTag nbt, AnimationController<GeoAnimatable> animationController, ItemStack stack) {
-        if (GunEnchantmentHelper.getQuickHands(stack) == 2) {
+        if (GunEnchantmentHelper.getQuickHands(stack) >= 2) {
             animationController.setAnimationSpeed(1.75F);
         }
         else if (GunEnchantmentHelper.getQuickHands(stack) == 1) {

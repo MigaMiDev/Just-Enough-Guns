@@ -286,6 +286,10 @@ public class ModItems {
 
     //public static final RegistryObject<Item> GRENADE_LAUNCHER = REGISTER.register("grenade_launcher", () -> new GunItem(new Item.Properties().stacksTo(1)));
 
+    // Score Streaks
+    public static final RegistryObject<ScoreStreakItem> PHANTOM_GUNNER_BAIT = REGISTER.register("phantom_gunner_bait",
+            () -> new PhantomGunnerBaitItem(new Item.Properties().rarity(Rarity.RARE).stacksTo(1), 2000));
+
     /* Projectiles And Throwables */
     public static final RegistryObject<Item> GRENADE = REGISTER.register("grenade",
             () -> new GrenadeItem(new Item.Properties()
@@ -593,6 +597,9 @@ public class ModItems {
 
     public static final RegistryObject<Item> TERROR_PHANTOM_SPAWN_EGG = REGISTER.register("terror_phantom_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.TERROR_PHANMTOM, 0x43518A, 0x88FF00, new Item.Properties()));
+
+    public static final RegistryObject<Item> PHANTOM_GUNNER_SPAWN_EGG = REGISTER.register("phantom_gunner_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.PHANTOM_GUNNER, 0x43518A, 0x88FF00, new Item.Properties()));
 
     public static final RegistryObject<Item> SOUL_TREAT = REGISTER.register("soul_treat",
             () -> new SoultreatItem(new Item.Properties()));

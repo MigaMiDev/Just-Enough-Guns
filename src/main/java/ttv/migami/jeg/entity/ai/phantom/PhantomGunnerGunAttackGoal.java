@@ -1,4 +1,4 @@
-package ttv.migami.jeg.entity.ai;
+package ttv.migami.jeg.entity.ai.phantom;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -11,13 +11,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.common.Gun;
-import ttv.migami.jeg.entity.monster.TerrorPhantom;
+import ttv.migami.jeg.entity.ai.AIGunEvent;
+import ttv.migami.jeg.entity.monster.phantom.gunner.PhantomGunner;
 import ttv.migami.jeg.item.GunItem;
 
 import static ttv.migami.jeg.event.GunEventBus.ejectCasing;
 
-public class TerrorPhantomGunAttackGoal<T extends PathfinderMob> extends Goal {
-    protected final TerrorPhantom shooter;
+public class PhantomGunnerGunAttackGoal<T extends PathfinderMob> extends Goal {
+    protected final PhantomGunner shooter;
     protected int seeTime;
     protected int attackTime;
     protected final float attackRadiusSqr;
@@ -31,7 +32,7 @@ public class TerrorPhantomGunAttackGoal<T extends PathfinderMob> extends Goal {
     protected int burstAmount = 3;
     protected int burstTimer = 20;
 
-    public TerrorPhantomGunAttackGoal(TerrorPhantom shooter, double stopRange, int difficulty) {
+    public PhantomGunnerGunAttackGoal(PhantomGunner shooter, double stopRange, int difficulty) {
         this.shooter = shooter;
         this.attackTime = -1;
         this.attackRadiusSqr = (float) (stopRange * stopRange);
@@ -46,7 +47,7 @@ public class TerrorPhantomGunAttackGoal<T extends PathfinderMob> extends Goal {
 
     @Override
     public boolean canUse() {
-        return this.shooter.getTarget() != null && this.isHoldingGun() && !this.shooter.getTarget().isDeadOrDying();
+        return !this.shooter.isDying() && this.shooter.getTarget() != null && this.isHoldingGun() && !this.shooter.getTarget().isDeadOrDying();
     }
 
     protected boolean isHoldingGun() {
@@ -84,8 +85,10 @@ public class TerrorPhantomGunAttackGoal<T extends PathfinderMob> extends Goal {
             Gun gun = gunItem.getModifiedGun(heldItem);
 
             // Shooting
-            if (this.shooter.getAttackPhase().equals(TerrorPhantom.AttackPhase.SWOOP)) {
-                shoot(target, gun);
+            if (this.shooter.getAttackPhase().equals(PhantomGunner.AttackPhase.SWOOP)) {
+                if (this.shooter.tickCount % 3 == 0) {
+                    shoot(target, gun);
+                }
             }
         }
     }
@@ -106,7 +109,7 @@ public class TerrorPhantomGunAttackGoal<T extends PathfinderMob> extends Goal {
         }
     }
 
-    public static Vec3 getDirectionToTarget(TerrorPhantom entity, Entity target) {
+    public static Vec3 getDirectionToTarget(PhantomGunner entity, Entity target) {
         if (target == null) return Vec3.ZERO;
 
         Vec3 entityPos = entity.position();

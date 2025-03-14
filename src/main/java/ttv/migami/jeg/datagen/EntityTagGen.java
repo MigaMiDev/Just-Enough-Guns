@@ -73,7 +73,9 @@ public class EntityTagGen extends EntityTypeTagsProvider
                 .add(EntityType.ZOMBIFIED_PIGLIN)
                 .add(EntityType.ZOMBIE_VILLAGER)
                 .add(ModEntities.GHOUL.get())
-                .add(ModEntities.BOO.get());
+                .add(ModEntities.BOO.get())
+                .add(ModEntities.TERROR_PHANMTOM.get())
+                .add(ModEntities.PHANTOM_GUNNER.get());
 
         this.tag(ModTags.Entities.GHOST)
                 .add(ModEntities.BOO.get());

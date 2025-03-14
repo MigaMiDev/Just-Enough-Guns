@@ -3,6 +3,7 @@
 	"animations": {
 		"idle": {
 			"loop": true,
+			"animation_length": 0.2083,
 			"bones": {
 				"right_arm": {
 					"rotation": {
@@ -25,7 +26,7 @@
 						"vector": [0, 0, 0]
 					},
 					"position": {
-						"vector": ["easeInOutSine", "easeInOutSine", "easeInOutSine"]
+						"vector": [0, 0, -2]
 					}
 				}
 			}

@@ -841,6 +841,10 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 
         if(this.shooter instanceof Player player && entity instanceof LivingEntity livingEntity)
         {
+            if (livingEntity.hasEffect(ModEffects.BULLET_PROTECTION.get())) {
+                return;
+            }
+
             int hitType = critical ? S2CMessageProjectileHitEntity.HitType.CRITICAL : headshot ? S2CMessageProjectileHitEntity.HitType.HEADSHOT : S2CMessageProjectileHitEntity.HitType.NORMAL;
 
             if (headshot) {

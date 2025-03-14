@@ -49,6 +49,7 @@ public class ReloadTracker
     private final int slot;
     private final ItemStack stack;
     private final Gun gun;
+    private boolean firstReload;
 
     private ReloadTracker(Player player)
     {
@@ -56,6 +57,7 @@ public class ReloadTracker
         this.slot = player.getInventory().selected;
         this.stack = player.getInventory().getSelected();
         this.gun = ((GunItem) stack.getItem()).getModifiedGun(stack);
+        this.firstReload = true;
     }
 
     /**
@@ -101,17 +103,29 @@ public class ReloadTracker
             if(gun.getReloads().getReloadType() == ReloadType.MAG_FED ||
                     gun.getReloads().getReloadType() == ReloadType.SINGLE_ITEM)
             {
+                int quickHandsLevel = player.getMainHandItem().getEnchantmentLevel(ModEnchantments.QUICK_HANDS.get());
+
                 // Extra penalization if the gun is empty
                 if(this.isWeaponEmpty())
                 {
                     int deltaTicks = player.tickCount - this.startTick;
-                    int interval = gun.getReloads().getReloadTimer() + gun.getReloads().getEmptyMagTimer();
+                    int interval = gun.getReloads().getReloadTimer() + gun.getReloads().getAdditionalReloadTimer();
+                    if (quickHandsLevel == 1) {
+                        interval = Math.max(1, Math.round(interval * 0.75F));
+                    } else if (quickHandsLevel >= 2) {
+                        interval = Math.max(1, Math.round(interval * 0.5F));
+                    }
                     return deltaTicks > interval;
                 }
                 else
                 {
                     int deltaTicks = player.tickCount - this.startTick;
                     int interval = gun.getReloads().getReloadTimer();
+                    if (quickHandsLevel == 1) {
+                        interval = Math.max(1, Math.round(interval * 0.75F));
+                    } else if (quickHandsLevel >= 2) {
+                        interval = Math.max(1, Math.round(interval * 0.5F));
+                    }
                     return deltaTicks > interval;
                 }
             }
@@ -119,6 +133,10 @@ public class ReloadTracker
             {
                 int deltaTicks = player.tickCount - this.startTick;
                 int interval = GunEnchantmentHelper.getReloadInterval(this.stack);
+                interval = gun.getReloads().getReloadTimer();
+                if (this.firstReload) {
+                    interval += gun.getReloads().getAdditionalReloadTimer();
+                }
                 return deltaTicks > 0 && deltaTicks % interval == 0;
             }
         }
@@ -345,6 +363,7 @@ public class ReloadTracker
                         }
                         else if(gun.getReloads().getReloadType() == ReloadType.MANUAL) {
                             tracker.increaseAmmo(player);
+                            tracker.firstReload = false;
                         }
                     }
 

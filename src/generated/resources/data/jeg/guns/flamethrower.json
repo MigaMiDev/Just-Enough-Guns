@@ -16,7 +16,8 @@
     "rate": 1,
     "recoilAngle": 0.5,
     "recoilKick": 0.15,
-    "spread": 20.0
+    "spread": 20.0,
+    "witheredDisabled": true
   },
   "modules": {
     "zoom": {
@@ -26,7 +27,7 @@
     }
   },
   "projectile": {
-    "advantage": "jeg:very_heavy",
+    "advantage": "jeg:none",
     "collateral": true,
     "damage": 3.0,
     "headshotMultiplier": 1.5,
@@ -38,10 +39,10 @@
     "trailColor": 16765577
   },
   "reloads": {
-    "emptyMagTimer": 20,
+    "additionalReloadTimer": 30,
     "maxAmmo": 200,
     "reloadItem": "minecraft:lava_bucket",
-    "reloadTimer": 220,
+    "reloadTimer": 120,
     "reloadType": "jeg:single_item"
   },
   "sounds": {

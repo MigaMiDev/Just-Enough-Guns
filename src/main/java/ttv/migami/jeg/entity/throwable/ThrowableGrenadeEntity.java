@@ -1,6 +1,7 @@
 package ttv.migami.jeg.entity.throwable;
 
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -8,6 +9,9 @@ import net.minecraft.world.level.Level;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.init.ModEntities;
 import ttv.migami.jeg.init.ModItems;
+import ttv.migami.jeg.init.ModParticleTypes;
+
+import static ttv.migami.jeg.common.network.ServerPlayHandler.sendParticlesToAll;
 
 /**
  * Author: MrCrayfish
@@ -16,6 +20,7 @@ public class ThrowableGrenadeEntity extends ThrowableItemEntity
 {
     public float rotation;
     public float prevRotation;
+    public boolean terrorPhantomThrown = false;
 
     public ThrowableGrenadeEntity(EntityType<? extends ThrowableItemEntity> entityType, Level worldIn)
     {
@@ -65,6 +70,46 @@ public class ThrowableGrenadeEntity extends ThrowableItemEntity
         if (this.level().isClientSide)
         {
             this.level().addParticle(ParticleTypes.SMOKE, true, this.getX(), this.getY() + 0.25, this.getZ(), 0, 0, 0);
+        }
+        if (this.level() instanceof ServerLevel serverLevel && (this.tickCount > 1)) {
+            if (this.terrorPhantomThrown) {
+                if (this.level().random.nextInt(2) == 0)
+                {
+                    sendParticlesToAll(
+                            serverLevel,
+                            ModParticleTypes.FIRE.get(),
+                            true,
+                            this.getX() - this.getDeltaMovement().x(),
+                            this.getY() - this.getDeltaMovement().y(),
+                            this.getZ() - this.getDeltaMovement().z(),
+                            1,
+                            0, 0, 0,
+                            0
+                    );
+                    sendParticlesToAll(
+                            serverLevel,
+                            ParticleTypes.LAVA,
+                            true,
+                            this.getX() - this.getDeltaMovement().x(),
+                            this.getY() - this.getDeltaMovement().y(),
+                            this.getZ() - this.getDeltaMovement().z(),
+                            1,
+                            0, 0, 0,
+                            0
+                    );
+                    sendParticlesToAll(
+                            serverLevel,
+                            ParticleTypes.FLAME,
+                            true,
+                            this.getX() - this.getDeltaMovement().x(),
+                            this.getY() - this.getDeltaMovement().y(),
+                            this.getZ() - this.getDeltaMovement().z(),
+                            1,
+                            0, 0, 0,
+                            0
+                    );
+                }
+            }
         }
     }
 

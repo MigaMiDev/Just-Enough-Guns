@@ -108,13 +108,27 @@ public class ReloadHandler
                 if(KeyBinds.KEY_RELOAD.isDown() && event.getAction() == GLFW.GLFW_PRESS)
                 {
                     //this.setReloading(!ModSyncedDataKeys.RELOADING.getValue(player));
+                    if (tag != null) {
+                        tag.putBoolean("IsReloading", true);
+                    }
                     this.setReloading(true);
                 }
                 if(KeyBinds.KEY_UNLOAD.consumeClick() && event.getAction() == GLFW.GLFW_PRESS)
                 {
+                    if (tag != null) {
+                        tag.putBoolean("IsReloading", false);
+                    }
                     this.setReloading(false);
                     PacketHandler.getPlayChannel().sendToServer(new C2SMessageUnload());
                 }
+                if(KeyBinds.KEY_MELEE.consumeClick() && event.getAction() == GLFW.GLFW_PRESS)
+                {
+                    if (tag != null) {
+                        tag.putBoolean("IsReloading", false);
+                    }
+                    this.setReloading(false);
+                }
+
             //}
         }
     }

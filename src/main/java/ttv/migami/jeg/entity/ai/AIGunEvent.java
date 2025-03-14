@@ -15,7 +15,8 @@ import ttv.migami.jeg.Config;
 import ttv.migami.jeg.common.Gun;
 import ttv.migami.jeg.common.ProjectileManager;
 import ttv.migami.jeg.common.SpreadTracker;
-import ttv.migami.jeg.entity.monster.TerrorPhantom;
+import ttv.migami.jeg.entity.monster.phantom.gunner.PhantomGunner;
+import ttv.migami.jeg.entity.monster.phantom.terror.TerrorPhantom;
 import ttv.migami.jeg.entity.projectile.ProjectileEntity;
 import ttv.migami.jeg.init.ModSyncedDataKeys;
 import ttv.migami.jeg.interfaces.IProjectileFactory;
@@ -85,6 +86,10 @@ public class AIGunEvent {
             Vec3 dir = getDirection(shooter, itemStack, (GunItem) itemStack.getItem(), modifiedGun, spreadModifier);
             double speedModifier = GunEnchantmentHelper.getProjectileSpeedModifier(itemStack);
             double speed = GunModifierHelper.getModifiedProjectileSpeed(itemStack, projectileEntity.getProjectile().getSpeed() * speedModifier);
+
+            if (shooter instanceof PhantomGunner || shooter instanceof TerrorPhantom) {
+                speed = 6.0F;
+            }
 
             projectileEntity.setDeltaMovement(dir.x * speed, dir.y * speed, dir.z * speed);
             projectileEntity.updateHeading();
@@ -156,6 +161,9 @@ public class AIGunEvent {
 
         if (shooter instanceof TerrorPhantom terrorPhantom) {
             return getDirectionToTarget(shooter, terrorPhantom.getTarget()).add(vecsideways.scale(a1)).add(vecupwards.scale(a2)).normalize();
+        }
+        if (shooter instanceof PhantomGunner phantomGunner) {
+            return getDirectionToTarget(shooter, phantomGunner.getTarget()).add(vecsideways.scale(a1)).add(vecupwards.scale(a2)).normalize();
         }
 
         return vecforwards.add(vecsideways.scale(a1)).add(vecupwards.scale(a2)).normalize();

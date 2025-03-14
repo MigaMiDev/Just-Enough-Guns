@@ -11,7 +11,8 @@ import ttv.migami.jeg.Reference;
 import ttv.migami.jeg.entity.Bubble;
 import ttv.migami.jeg.entity.animal.Boo;
 import ttv.migami.jeg.entity.monster.Ghoul;
-import ttv.migami.jeg.entity.monster.TerrorPhantom;
+import ttv.migami.jeg.entity.monster.phantom.gunner.PhantomGunner;
+import ttv.migami.jeg.entity.monster.phantom.terror.TerrorPhantom;
 import ttv.migami.jeg.init.ModEntities;
 
 @Mod.EventBusSubscriber(modid = Reference.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -22,6 +23,7 @@ public class ModCommonEventBus {
         event.put(ModEntities.GHOUL.get(), Ghoul.createAttributes().build());
         event.put(ModEntities.BOO.get(), Bee.createAttributes().build());
         event.put(ModEntities.TERROR_PHANMTOM.get(), TerrorPhantom.createAttributes().build());
+        event.put(ModEntities.PHANTOM_GUNNER.get(), PhantomGunner.createAttributes().build());
         event.put(ModEntities.BUBBLE.get(), Bubble.createAttributes().build());
     }
 

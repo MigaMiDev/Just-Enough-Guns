@@ -36,7 +36,7 @@
   },
   "projectile": {
     "advantage": "jeg:very_heavy",
-    "damage": 6.0,
+    "damage": 7.5,
     "ejectsCasing": true,
     "headshotMultiplier": 1.5,
     "hideTrail": true,
@@ -49,9 +49,9 @@
     "trailLengthMultiplier": 2.0
   },
   "reloads": {
-    "emptyMagTimer": 10,
+    "additionalReloadTimer": 0,
     "maxAmmo": 20,
-    "reloadTimer": 60,
+    "reloadTimer": 28,
     "reloadType": "jeg:mag_fed"
   },
   "sounds": {

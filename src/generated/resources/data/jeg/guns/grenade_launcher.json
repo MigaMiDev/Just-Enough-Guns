@@ -46,9 +46,9 @@
     "visible": true
   },
   "reloads": {
-    "emptyMagTimer": 10,
+    "additionalReloadTimer": 0,
     "maxAmmo": 1,
-    "reloadTimer": 60,
+    "reloadTimer": 42,
     "reloadType": "jeg:mag_fed"
   },
   "sounds": {
