@@ -24,10 +24,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.animal.horse.SkeletonHorse;
 import net.minecraft.world.entity.animal.horse.ZombieHorse;
-import net.minecraft.world.entity.monster.AbstractSkeleton;
-import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.monster.Skeleton;
-import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.monster.piglin.Piglin;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -40,6 +37,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.JustEnoughGuns;
 import ttv.migami.jeg.common.Gun;
+import ttv.migami.jeg.entity.monster.phantom.gunner.PhantomGunner;
+import ttv.migami.jeg.entity.throwable.ThrowableExplosiveChargeEntity;
 import ttv.migami.jeg.faction.Faction;
 import ttv.migami.jeg.faction.GunnerManager;
 import ttv.migami.jeg.item.GunItem;
@@ -137,6 +136,19 @@ public class ModCommands {
                                                             return executeSimulatePatrol(source, factionName, size, player, false);
                                                         })
                                                 )
+                                        )
+                                )
+                        )
+                        .then(Commands.literal("simulatePhantomSwarm")
+                                .then(Commands.argument("size", IntegerArgumentType.integer(1, 20))
+                                        .then(Commands.argument("player", EntityArgument.player())
+                                                .executes(context -> {
+                                                    int size = IntegerArgumentType.getInteger(context, "size");
+                                                    Player player = EntityArgument.getPlayer(context, "player");
+                                                    CommandSourceStack source = context.getSource();
+
+                                                    return executeSimulatePhantomSwarm(source, size, player);
+                                                })
                                         )
                                 )
                         )
@@ -321,9 +333,34 @@ public class ModCommands {
         spawnPatrol(level, faction, size, player, spawnPos, forceGuns);
 
         MutableComponent factionLang = Component.translatable("faction.jeg." + factionName);
-        source.sendSuccess(() -> Component.nullToEmpty("Spawned a patrol with " + size + " mobs for faction " + factionLang.getString()), true);
+        source.sendSuccess(() -> Component.nullToEmpty("Spawned a Patrol with " + size + " mobs for faction " + factionLang.getString()), true);
         if (!forceGuns)
             source.sendFailure(Component.nullToEmpty("Please note that by not setting 'forceGuns' to true, the chance of them spawning with Guns is entirely determined by your Config Files!"));
+        return 1;
+    }
+
+    private static int executeSimulatePhantomSwarm(CommandSourceStack source, int size, Player player) {
+        if (!source.hasPermission(2)) {
+            source.sendFailure(Component.nullToEmpty("You do not have permission to execute this command"));
+            return 0;
+        }
+
+        ServerLevel level = source.getLevel();
+
+        if (level.getDifficulty() == Difficulty.PEACEFUL) {
+            source.sendFailure(Component.nullToEmpty("Mobs can't spawn in Peaceful!"));
+            return 0;
+        }
+
+        RandomSource random = level.random;
+        BlockPos.MutableBlockPos spawnPos = player.blockPosition().mutable()
+                .move((24 + random.nextInt(24)) * (random.nextBoolean() ? -1 : 1),
+                        0,
+                        (24 + random.nextInt(24)) * (random.nextBoolean() ? -1 : 1));
+
+        spawnPhantomSwarm(level, size, player, spawnPos);
+
+        source.sendSuccess(() -> Component.nullToEmpty("Spawned a Phantom Swarm with " + size + " Phantoms!"), true);
         return 1;
     }
 
@@ -483,6 +520,44 @@ public class ModCommands {
         level.addFreshEntity(entity);
         entity.getNavigation().moveTo(player, 1.2F);
         //entity.setTarget(player);
+
+        return true;
+    }
+
+    public static int spawnPhantomSwarm(ServerLevel level, int size, Player player, BlockPos.MutableBlockPos spawnPos) {
+        RandomSource random = level.random;
+
+        int spawns = 0;
+        while (spawns < size) {
+            spawnPos.setY(player.blockPosition().above(32).getY());
+
+            Phantom phantom = new Phantom(EntityType.PHANTOM, level);
+
+            if (Config.COMMON.gunnerMobs.explosiveMobs.get() && level.random.nextFloat() < 0.2) {
+                ThrowableExplosiveChargeEntity explosiveChargeEntity = new ThrowableExplosiveChargeEntity(ModEntities.THROWABLE_EXPLOSIVE_CHARGE.get(), level);
+                level.addFreshEntity(explosiveChargeEntity);
+                explosiveChargeEntity.startRiding(phantom);
+            } else if (level.random.nextFloat() < 0.5) {
+                phantom = new PhantomGunner(ModEntities.PHANTOM_GUNNER.get(), level);
+            }
+
+            if (spawnPhantom(level, spawnPos, phantom, player)) {
+                spawns++;
+            }
+
+            spawnPos.move(random.nextInt(10) - random.nextInt(10), random.nextInt(10) - random.nextInt(10), random.nextInt(10) - random.nextInt(10));
+        }
+        return spawns;
+    }
+
+    private static boolean spawnPhantom(ServerLevel level, BlockPos pos, Phantom phantom, Player player) {
+        phantom.setPos(pos.getX(), pos.getY(), pos.getZ());
+        level.addFreshEntity(phantom);
+        phantom.setTarget(player);
+        if (level.isDay() && phantom.getType().is(ModTags.Entities.UNDEAD)) {
+            phantom.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 1200, 0, false, true));
+            phantom.extinguishFire();
+        }
 
         return true;
     }

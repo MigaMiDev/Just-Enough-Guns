@@ -61,7 +61,7 @@ public abstract class ThrowableItemEntity extends ThrowableProjectile implements
         return this.item;
     }
 
-    protected void setShouldBounce(boolean shouldBounce)
+    public void setShouldBounce(boolean shouldBounce)
     {
         this.shouldBounce = shouldBounce;
     }

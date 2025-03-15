@@ -1,0 +1,35 @@
+package ttv.migami.jeg.entity.monster.phantom;
+
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.saveddata.SavedData;
+
+public class PhantomSwarmData extends SavedData {
+    private static final String DATA_NAME = "PhantomSwarmData";
+    private boolean phantomSwarm = false;
+
+    public static PhantomSwarmData load(CompoundTag tag) {
+        PhantomSwarmData data = new PhantomSwarmData();
+        data.phantomSwarm = tag.getBoolean("PhantomSwarm");
+        return data;
+    }
+
+    @Override
+    public CompoundTag save(CompoundTag tag) {
+        tag.putBoolean("PhantomSwarm", phantomSwarm);
+        return tag;
+    }
+
+    public static PhantomSwarmData get(ServerLevel level) {
+        return level.getDataStorage().computeIfAbsent(PhantomSwarmData::load, PhantomSwarmData::new, DATA_NAME);
+    }
+
+    public boolean hasPhantomSwarm() {
+        return phantomSwarm;
+    }
+
+    public void setPhantomSwarm(boolean value) {
+        this.phantomSwarm = value;
+        this.setDirty();
+    }
+}

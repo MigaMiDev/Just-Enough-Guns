@@ -51,6 +51,10 @@ public class ModEntities
     public static final RegistryObject<EntityType<ThrowableFlareEntity>> THROWABLE_FLARE = registerBasic("throwable_flare", ThrowableFlareEntity::new);
     public static final RegistryObject<EntityType<ThrowableExplosiveChargeEntity>> THROWABLE_EXPLOSIVE_CHARGE = registerBasic("throwable_explosive_charge", ThrowableExplosiveChargeEntity::new);
 
+    /* Score Streaks */
+    public static final RegistryObject<EntityType<ThrowablePhantomGunnerBaitEntity>> THROWABLE_PHANTOM_GUNNER_BAIT = registerBasic("throwable_phantom_gunner_bait", ThrowablePhantomGunnerBaitEntity::new);
+    public static final RegistryObject<EntityType<ThrowableTerrorPhantomFlareEntity>> THROWABLE_TERROR_PHANTOM_FLARE = registerBasic("throwable_terror_phantom_flare", ThrowableTerrorPhantomFlareEntity::new);
+
     /* Mobs */
     public static final RegistryObject<EntityType<Ghoul>> GHOUL = REGISTER.register("ghoul", () -> EntityType.Builder.of(Ghoul::new, MobCategory.MONSTER).sized(0.6F, 1.95F).build("ghoul"));
     public static final RegistryObject<EntityType<Boo>> BOO = REGISTER.register("boo", () -> EntityType.Builder.of(Boo::new, MobCategory.CREATURE).sized(0.7F, 0.6F).fireImmune().build("boo"));

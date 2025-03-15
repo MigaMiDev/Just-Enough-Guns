@@ -36,7 +36,7 @@
   },
   "projectile": {
     "advantage": "jeg:very_heavy",
-    "damage": 7.5,
+    "damage": 9.0,
     "ejectsCasing": true,
     "headshotMultiplier": 1.5,
     "hideTrail": true,
@@ -45,7 +45,7 @@
     "item": "minecraft:echo_shard",
     "life": 50,
     "size": 0.5,
-    "speed": 5.0,
+    "speed": 6.0,
     "trailLengthMultiplier": 2.0
   },
   "reloads": {

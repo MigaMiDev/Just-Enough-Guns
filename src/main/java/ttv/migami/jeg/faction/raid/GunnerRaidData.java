@@ -5,7 +5,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.saveddata.SavedData;
 
 public class GunnerRaidData extends SavedData {
-    private static final String DATA_NAME = "gunner_raid_data";
+    private static final String DATA_NAME = "GunnerRaidData";
     private int nextTick = 0;
 
     public static GunnerRaidData load(CompoundTag tag) {

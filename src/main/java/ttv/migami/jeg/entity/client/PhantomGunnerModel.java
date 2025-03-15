@@ -18,6 +18,9 @@ public class PhantomGunnerModel extends GeoModel<PhantomGunner> {
 
     @Override
     public ResourceLocation getTextureResource(PhantomGunner animatable) {
+        if (animatable.isPlayerOwned()) {
+            return new ResourceLocation(Reference.MOD_ID, "textures/entity/phantom_gunner/phantom_gunner_friendly.png");
+        }
         return new ResourceLocation(Reference.MOD_ID, "textures/entity/phantom_gunner/phantom_gunner.png");
     }
 

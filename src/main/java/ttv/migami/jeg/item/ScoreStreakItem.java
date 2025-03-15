@@ -52,6 +52,9 @@ public class ScoreStreakItem extends ToolTipItem {
                             .append(Component.literal("/")).withStyle(ChatFormatting.GOLD)
                             .append(Component.literal(String.valueOf(this.maxPoints)).withStyle(ChatFormatting.GOLD))));
         }
+
+        tooltip.add(Component.translatable("info.jeg.tooltip_item" + "." + this.asItem()).withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("info.jeg.tooltip_item.score_streak_item").withStyle(ChatFormatting.GRAY));
     }
 
     @Override

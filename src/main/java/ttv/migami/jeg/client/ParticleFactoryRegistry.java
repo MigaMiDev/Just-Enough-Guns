@@ -6,6 +6,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import ttv.migami.jeg.Reference;
 import ttv.migami.jeg.client.particle.*;
+import ttv.migami.jeg.client.particle.phantom.PhantomGunnerParticle;
 import ttv.migami.jeg.init.ModParticleTypes;
 
 /**
@@ -50,5 +51,8 @@ public class ParticleFactoryRegistry
         event.registerSpriteSet(ModParticleTypes.CONFETTI.get(), ConfettiParticle.Provider::new);
         event.registerSpriteSet(ModParticleTypes.HIT_MARKER.get(), GlintParticle.HitmarkerProvider::new);
         event.registerSpriteSet(ModParticleTypes.POPCORN.get(), PopcornParticle.Provider::new);
+
+        event.registerSpriteSet(ModParticleTypes.PHANTOM_GUNNER.get(), PhantomGunnerParticle.Provider::new);
+
     }
 }

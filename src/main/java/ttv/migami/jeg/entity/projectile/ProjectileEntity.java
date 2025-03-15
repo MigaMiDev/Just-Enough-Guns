@@ -700,6 +700,12 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
             if (this.shooter.getTags().contains("GunnerPatroller") && entity.getTags().contains("GunnerPatroller")) {
                 return;
             }
+            if (this.shooter.getTags().contains("PlayerOwned") && entity.getTags().contains("PlayerOwned")) {
+                return;
+            }
+            if (this.shooter instanceof Player && entity.getTags().contains("PlayerOwned")) {
+                return;
+            }
 
             // Entities of the same type are not allowed to hit each other
             if (this.shooter instanceof PathfinderMob pathfinderMob && pathfinderMob.getType() == entity.getType()) {

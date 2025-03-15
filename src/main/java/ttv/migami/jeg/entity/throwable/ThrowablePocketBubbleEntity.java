@@ -14,9 +14,6 @@ import ttv.migami.jeg.entity.projectile.PocketBubbleEntity;
 import ttv.migami.jeg.init.ModEntities;
 import ttv.migami.jeg.init.ModItems;
 
-/**
- * Author: MrCrayfish
- */
 public class ThrowablePocketBubbleEntity extends ThrowableGrenadeEntity
 {
     public float rotation;

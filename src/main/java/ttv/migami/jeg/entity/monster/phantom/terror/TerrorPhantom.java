@@ -1,6 +1,8 @@
 package ttv.migami.jeg.entity.monster.phantom.terror;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -38,6 +40,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.entity.ai.EntityHurtByTargetGoal;
 import ttv.migami.jeg.entity.ai.phantom.TerrorPhantomGunAttackGoal;
+import ttv.migami.jeg.entity.monster.phantom.PhantomSwarmData;
 import ttv.migami.jeg.entity.monster.phantom.gunner.PhantomGunner;
 import ttv.migami.jeg.entity.throwable.GrenadeEntity;
 import ttv.migami.jeg.entity.throwable.ThrowableExplosiveChargeEntity;
@@ -64,8 +67,16 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
     private static final int DEATH_ANIMATION_DURATION = 200;
     private double forwardSpeed = 0.1;
 
+    private Player player;
+    public boolean playerOwned = false;
+    private int despawnTimer;
+
+    private float vertical = 0;
+    private float speed = 5F;
+
     private static final EntityDataAccessor<Boolean> IS_ROLLING = SynchedEntityData.defineId(TerrorPhantom.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_DYING = SynchedEntityData.defineId(TerrorPhantom.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> IS_OWNED = SynchedEntityData.defineId(TerrorPhantom.class, EntityDataSerializers.BOOLEAN);
 
     public TerrorPhantom(EntityType<? extends Phantom> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -79,7 +90,26 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
 
         this.moveControl = new TerrorPhantom.PhantomMoveControl(this);
 
-        this.bossEvent.setProgress(1.0F);
+        if (!this.isPlayerOwned()) {
+            this.bossEvent.setProgress(1.0F);
+        } else {
+            this.bossEvent.removeAllPlayers();
+        }
+
+        this.despawnTimer = 160;
+    }
+
+    public void setPlayer(Player player) {
+        if (player != null) {
+            this.player = player;
+            this.playerOwned = true;
+            this.setPlayerOwned(true);
+            this.addTag("MiPlayerOwned");
+        }
+    }
+
+    public Player getPlayer() {
+        return this.player;
     }
 
     @Override
@@ -100,6 +130,21 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
             BossEvent.BossBarColor.RED,
             BossEvent.BossBarOverlay.PROGRESS
     );
+
+    private void releaseSwarm(ServerLevel serverLevel) {
+        if (!Config.COMMON.gunnerMobs.phantomSwarm.get()) {
+            return;
+        }
+
+        PhantomSwarmData raidData = PhantomSwarmData.get(serverLevel);
+
+        if (!raidData.hasPhantomSwarm()) {
+            raidData.setPhantomSwarm(true);
+            Component message = Component.translatable("broadcast.jeg.terror_phantom_defeat")
+                    .withStyle(ChatFormatting.DARK_RED).withStyle(ChatFormatting.BOLD);
+            serverLevel.getServer().getPlayerList().broadcastSystemMessage(message, false);
+        }
+    }
 
     private void explode() {
         this.endGrenades(this);
@@ -157,6 +202,34 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
         }
     }
 
+    private void dropGrenade(TerrorPhantom terrorPhantom) {
+        if (terrorPhantom.level() instanceof ServerLevel serverLevel) {
+            BlockPos pos = terrorPhantom.blockPosition();
+            //serverLevel.playSound(terrorPhantom, pos, ModSounds.ITEM_GRENADE_PIN.get(), SoundSource.HOSTILE, 30F, 1F);
+
+            RandomSource random = terrorPhantom.getRandom();
+            int grenadeCount = 2;
+
+            for (int i = 0; i < grenadeCount; i++) {
+                ThrowableGrenadeEntity grenade = new ThrowableGrenadeEntity(terrorPhantom.level(), terrorPhantom, 100);
+
+                grenade.setPos(pos.getX(), pos.getY() + 1, pos.getZ());
+
+                double xVelocity = 0;
+                double yVelocity = -1;
+                double zVelocity = 0;
+
+                grenade.setDeltaMovement(xVelocity, yVelocity, zVelocity);
+                grenade.terrorPhantomThrown = true;
+                grenade.playerOwnedTerrorPhantom = true;
+
+                serverLevel.addFreshEntity(grenade);
+
+                grenade.setShouldBounce(false);
+            }
+        }
+    }
+
     private void endGrenades(TerrorPhantom terrorPhantom) {
         if (terrorPhantom.level() instanceof ServerLevel serverLevel) {
             BlockPos pos = terrorPhantom.blockPosition();
@@ -184,6 +257,30 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
     public void tick() {
         super.tick();
 
+        if (this.isPlayerOwned()) {
+            this.bossEvent.removeAllPlayers();
+            this.despawnTimer--;
+
+            if (this.despawnTimer < 100) {
+                if (this.vertical < 1.0F) {
+                    this.vertical = this.vertical + 0.1F;
+                }
+                if (this.speed < 3.0F) {
+                    this.speed = this.speed + 0.1F;
+                }
+            }
+
+            Vec3 forwardMotion = Vec3.directionFromRotation(this.getXRot(), this.getYRot()).scale(speed);
+            this.setDeltaMovement(forwardMotion.x, this.vertical, forwardMotion.z);
+            if (this.tickCount % 2 == 0 && this.tickCount > 18 && this.despawnTimer > 120) {
+                dropGrenade(this);
+                //dropGrenades(this);
+            }
+            if (this.despawnTimer <= 0) {
+                this.remove(RemovalReason.DISCARDED);
+            }
+        }
+
         if (this.isDying()) {
             this.deathTimer++;
 
@@ -196,6 +293,12 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
 
             if (this.deathTimer >= DEATH_ANIMATION_DURATION || this.horizontalCollision || this.verticalCollision) {
                 this.explode();
+                if (this.level() instanceof ServerLevel serverLevel) {
+                    this.releaseSwarm(serverLevel);
+                    for (int i = 0; i < 25; i++) {
+                        ExperienceOrb.award(serverLevel, this.position().add(0, 100, 0), 100);
+                    }
+                }
                 this.remove(RemovalReason.KILLED);
             }
 
@@ -267,7 +370,7 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
     public void aiStep() {
         super.aiStep();
 
-        if (!this.level().isClientSide) {
+        if (!this.level().isClientSide && !this.isPlayerOwned() && this.tickCount > 20) {
             updateBossBar();
         }
     }
@@ -295,7 +398,7 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
     @Override
     public void startSeenByPlayer(ServerPlayer player) {
         super.startSeenByPlayer(player);
-        if (player.distanceTo(this) <= 128) {
+        if (player.distanceTo(this) <= 128 && !this.isPlayerOwned() && this.tickCount > 20) {
             this.bossEvent.addPlayer(player);
         }
     }
@@ -354,7 +457,7 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
 
     @Override
     public boolean isPersistenceRequired() {
-        return true;
+        return !this.isPlayerOwned();
     }
 
     class PhantomMoveControl extends MoveControl {
@@ -365,6 +468,10 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
         }
 
         public void tick() {
+            if (TerrorPhantom.this.isPlayerOwned()) {
+                return;
+            }
+
             if (TerrorPhantom.this.isDying()) {
                 this.speed = 0.5F;
             } else {
@@ -425,6 +532,9 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
         }
 
         public boolean canUse() {
+            if (TerrorPhantom.this.isPlayerOwned()) {
+                return false;
+            }
             LivingEntity target = TerrorPhantom.this.getTarget();
             return target != null ? TerrorPhantom.this.canAttack(target, TargetingConditions.DEFAULT) : false;
         }
@@ -519,6 +629,8 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
         }
 
         private void setAnchorAboveTarget() {
+            if (TerrorPhantom.this.getTarget() == null) return;
+
             int maxHeight = Math.min(TerrorPhantom.this.getTarget().getBlockY() + 32, TerrorPhantom.this.level().getMaxBuildHeight() - 1);
             int targetHeight = TerrorPhantom.this.getTarget().getBlockY() + 20 + TerrorPhantom.this.random.nextInt(12);
             TerrorPhantom.this.anchorPoint = new BlockPos(
@@ -847,7 +959,7 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
                 int grenadeCount = 1;
 
                 for (int i = 0; i < grenadeCount; i++) {
-                    ThrowableGrenadeEntity grenade = new ThrowableGrenadeEntity(terrorPhantom.level(), terrorPhantom, 30);
+                    ThrowableGrenadeEntity grenade = new ThrowableGrenadeEntity(terrorPhantom.level(), terrorPhantom, 100);
 
                     grenade.setPos(pos.getX(), pos.getY() + 1, pos.getZ());
 
@@ -859,6 +971,8 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
                     grenade.terrorPhantomThrown = true;
 
                     serverLevel.addFreshEntity(grenade);
+
+                    grenade.setShouldBounce(false);
                 }
             }
         }
@@ -993,11 +1107,36 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
         this.entityData.set(IS_DYING, dying);
     }
 
+    public boolean isPlayerOwned() {
+        return this.entityData.get(IS_OWNED);
+    }
+
+    public void setPlayerOwned(boolean isPlayerOwned) {
+        this.entityData.set(IS_OWNED, isPlayerOwned);
+    }
+
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
 
         this.entityData.define(IS_ROLLING, false);
         this.entityData.define(IS_DYING, false);
+        this.entityData.define(IS_OWNED, false);
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag compound) {
+        super.addAdditionalSaveData(compound);
+
+        compound.putBoolean("IsPlayerOwned", this.isPlayerOwned());
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag compound) {
+        super.readAdditionalSaveData(compound);
+
+        if (compound.contains("IsPlayerOwned")) {
+            this.setPlayerOwned(compound.getBoolean("IsPlayerOwned"));
+        }
     }
 }

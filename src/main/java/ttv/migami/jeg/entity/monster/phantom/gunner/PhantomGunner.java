@@ -1,6 +1,7 @@
 package ttv.migami.jeg.entity.monster.phantom.gunner;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -55,9 +56,10 @@ public class PhantomGunner extends Phantom implements GeoEntity {
 
     private Player player;
     public boolean playerOwned = false;
-    private int despawnTimer = 200;
+    private int despawnTimer;
 
     private static final EntityDataAccessor<Boolean> IS_DYING = SynchedEntityData.defineId(PhantomGunner.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> IS_OWNED = SynchedEntityData.defineId(PhantomGunner.class, EntityDataSerializers.BOOLEAN);
 
     public PhantomGunner(EntityType<? extends Phantom> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -71,13 +73,14 @@ public class PhantomGunner extends Phantom implements GeoEntity {
 
         this.moveControl = new PhantomGunner.PhantomMoveControl(this);
 
-        this.despawnTimer = 200;
+        this.despawnTimer = 1200;
     }
 
     public void setPlayer(Player player) {
         if (player != null) {
             this.player = player;
             this.playerOwned = true;
+            this.setPlayerOwned(true);
         }
     }
 
@@ -100,6 +103,7 @@ public class PhantomGunner extends Phantom implements GeoEntity {
     }
 
     private void explode() {
+        GrenadeEntity.createExplosion(this, Config.COMMON.grenades.explosionRadius.get().floatValue(), true);
         if (this.level() instanceof ServerLevel serverLevel) {
             sendParticlesToAll(
                     serverLevel,
@@ -132,13 +136,21 @@ public class PhantomGunner extends Phantom implements GeoEntity {
     public void tick() {
         super.tick();
 
-        if (this.playerOwned) {
+        if (this.isPlayerOwned() && this.getTarget() != null) {
+            if (this.getTarget().getTags().contains("PlayerOwned")) {
+                this.setTarget(null);
+            }
+        }
+
+        if (this.isPlayerOwned() && !this.level().isClientSide) {
             this.despawnTimer--;
             if (this.despawnTimer <= 0) {
-                this.setHealth(0);
+                this.remove(RemovalReason.DISCARDED);
             }
             if (this.player != null) {
                 this.anchorPoint = BlockPos.containing(this.player.position());
+            } else if (this.tickCount >= 60) {
+                this.remove(RemovalReason.DISCARDED);
             }
         }
 
@@ -153,6 +165,7 @@ public class PhantomGunner extends Phantom implements GeoEntity {
             this.setXRot(this.getXRot() + 2f);
 
             if (this.deathTimer >= DEATH_ANIMATION_DURATION || this.horizontalCollision || this.verticalCollision) {
+                this.explode();
                 this.remove(RemovalReason.KILLED);
             }
         }
@@ -182,13 +195,6 @@ public class PhantomGunner extends Phantom implements GeoEntity {
             this.isDying = true;
             this.setDying(true);
         }
-    }
-
-    @Override
-    public void onRemovedFromWorld()
-    {
-        GrenadeEntity.createExplosion(this, Config.COMMON.grenades.explosionRadius.get().floatValue(), true);
-        this.explode();
     }
 
     @Override
@@ -249,7 +255,11 @@ public class PhantomGunner extends Phantom implements GeoEntity {
         }
 
         public void tick() {
-            this.speed = 0.75F;
+            if (PhantomGunner.this.attackPhase.equals(AttackPhase.SWOOP)) {
+                this.speed = 1.0F;
+            } else {
+                this.speed = 0.75F;
+            }
 
             double $$0 = PhantomGunner.this.moveTargetPoint.x - PhantomGunner.this.getX();
             double $$1 = PhantomGunner.this.moveTargetPoint.y - PhantomGunner.this.getY();
@@ -318,7 +328,7 @@ public class PhantomGunner extends Phantom implements GeoEntity {
                 if (this.nextSweepTick <= 0) {
                     PhantomGunner.this.attackPhase = PhantomGunner.AttackPhase.SWOOP;
                     PhantomGunner.this.attackTimer = 80;
-                    this.setAnchorAboveTarget();
+                    this.setAnchorOvershot();
                     this.nextSweepTick = this.adjustedTickDelay((120));
                     PhantomGunner.this.playSound(SoundEvents.PHANTOM_SWOOP, 10.0F, 0.95F + PhantomGunner.this.random.nextFloat() * 0.1F);
                 }
@@ -327,11 +337,36 @@ public class PhantomGunner extends Phantom implements GeoEntity {
         }
 
         private void setAnchorAboveTarget() {
+            if (PhantomGunner.this.getTarget() == null) return;
+
             PhantomGunner.this.anchorPoint = PhantomGunner.this.getTarget().blockPosition().above(20 + PhantomGunner.this.random.nextInt(20));
             if (PhantomGunner.this.anchorPoint.getY() < PhantomGunner.this.level().getSeaLevel()) {
                 PhantomGunner.this.anchorPoint = new BlockPos(PhantomGunner.this.anchorPoint.getX(), PhantomGunner.this.level().getSeaLevel() + 1, PhantomGunner.this.anchorPoint.getZ());
             }
 
+        }
+
+        private void setAnchorOvershot() {
+            if (PhantomGunner.this.getTarget() == null) return;
+
+            LivingEntity target = PhantomGunner.this.getTarget();
+            Vec3 phantomPos = PhantomGunner.this.position();
+            Vec3 targetPos = target.position();
+
+            Vec3 direction = targetPos.subtract(phantomPos).normalize();
+
+            double overshootDistance = 32 + PhantomGunner.this.random.nextInt(6);
+            Vec3 overshotPos = targetPos.add(direction.scale(overshootDistance));
+
+            int targetHeight = target.getBlockY();
+
+            int maxHeight = Math.min(targetHeight + 32, PhantomGunner.this.level().getMaxBuildHeight() - 1);
+            int finalHeight = Math.min(targetHeight, maxHeight);
+            /*if (finalHeight < TerrorPhantom.this.level().getSeaLevel()) {
+                finalHeight = TerrorPhantom.this.level().getSeaLevel() + 1;
+            }*/
+
+            PhantomGunner.this.anchorPoint = new BlockPos((int) overshotPos.x, finalHeight, (int) overshotPos.z);
         }
     }
 
@@ -517,10 +552,35 @@ public class PhantomGunner extends Phantom implements GeoEntity {
         this.entityData.set(IS_DYING, dying);
     }
 
+    public boolean isPlayerOwned() {
+        return this.entityData.get(IS_OWNED);
+    }
+
+    public void setPlayerOwned(boolean isPlayerOwned) {
+        this.entityData.set(IS_OWNED, isPlayerOwned);
+    }
+
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
 
         this.entityData.define(IS_DYING, false);
+        this.entityData.define(IS_OWNED, false);
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag compound) {
+        super.addAdditionalSaveData(compound);
+
+        compound.putBoolean("IsPlayerOwned", this.isPlayerOwned());
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag compound) {
+        super.readAdditionalSaveData(compound);
+
+        if (compound.contains("IsPlayerOwned")) {
+            this.setPlayerOwned(compound.getBoolean("IsPlayerOwned"));
+        }
     }
 }

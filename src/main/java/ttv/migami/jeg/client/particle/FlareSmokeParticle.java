@@ -177,7 +177,7 @@ public class FlareSmokeParticle extends TextureSheetParticle {
         public Particle createParticle(SimpleParticleType particleType, ClientLevel level, double x, double y, double z, double dx, double dy, double dz) {
             FlareSmokeParticle flareSmokeParticle = new FlareSmokeParticle(level, x,y,z, this.sprites, dx,dy,dz, true);
             flareSmokeParticle.pickSprite(this.sprites);
-            flareSmokeParticle.setColor(0.0F, 0.8F, 0.8F);
+            flareSmokeParticle.setColor(0.0F, 0.6F, 0.8F);
             return flareSmokeParticle;
         }
     }

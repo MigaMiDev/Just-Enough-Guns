@@ -51,7 +51,7 @@ public class EntityKillEventHandler {
 
     private static final Random RANDOM = new Random();
     private static final double GRENADE_SPAWN_CHANCE = 0.05; // 5% chance
-    private static final double ECHO_SHARD_SPAWN_CHANCE = 0.2; // 20% chance
+    private static final double ECHO_SHARD_SPAWN_CHANCE = 0.3; // 30% chance
 
     @SubscribeEvent
     public static void onEntityKilled(LivingDeathEvent event) {
@@ -68,12 +68,13 @@ public class EntityKillEventHandler {
 
         ServerLevel serverLevel = (ServerLevel) event.getEntity().level();
 
-        // Scorestreak
+        // Score Streak
         if (event.getSource().getEntity() instanceof Player player && (player.getMainHandItem().getItem() instanceof GunItem || event.getSource().is(DamageTypes.EXPLOSION) || event.getSource().is(DamageTypes.PLAYER_EXPLOSION))) {
             for (int i = 0; i < 9; i++) {
                 ItemStack stack = player.getInventory().getItem(i);
                 if (stack.getItem() instanceof ScoreStreakItem scorestreakItem) {
-                    scorestreakItem.setPoints(stack, (int) (scorestreakItem.getPoints(stack) + (event.getEntity().getMaxHealth() * 2)));
+                    int multiplier = 5 * (entity.getMainHandItem().getEnchantmentLevel(ModEnchantments.RECLAIMED.get()) + 1);
+                    scorestreakItem.setPoints(stack, (int) (scorestreakItem.getPoints(stack) + (event.getEntity().getMaxHealth() * multiplier)));
                 }
             }
         }
@@ -96,6 +97,7 @@ public class EntityKillEventHandler {
             }
         }
 
+        // Drop Ammo from Enemies
         if (entity.getMainHandItem().getItem() instanceof GunItem gunItem && Config.COMMON.gunnerMobs.dropAmmo.get() &&
                 entity.level().getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)) {
             ItemStack entityStack = entity.getMainHandItem();
@@ -113,8 +115,9 @@ public class EntityKillEventHandler {
             }
         }
 
+        // Drop Echo Shards
         if (entity.level().getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT) &&
-                RANDOM.nextDouble() < ECHO_SHARD_SPAWN_CHANCE && Config.COMMON.world.entitiesDropEchoShards.get()) {
+                RANDOM.nextDouble() < (ECHO_SHARD_SPAWN_CHANCE * entity.getMainHandItem().getEnchantmentLevel(ModEnchantments.RECLAIMED.get()) + 1) && Config.COMMON.world.entitiesDropEchoShards.get()) {
             BlockPos pos = entity.blockPosition();
 
             if (killer.getMainHandItem().getItem() instanceof GunItem gunItem) {
@@ -138,6 +141,7 @@ public class EntityKillEventHandler {
             }
         }
 
+        // Creepers drop Grenades
         if ((event.getEntity() instanceof Creeper)) {
             if (RANDOM.nextDouble() < GRENADE_SPAWN_CHANCE && Config.COMMON.world.creepersDropLiveGrenades.get()) {
                 LivingEntity creeper = event.getEntity();
@@ -152,6 +156,7 @@ public class EntityKillEventHandler {
             }
         }
 
+        // Get the Finger Gun
         if (event.getEntity() instanceof EnderDragon dragon) {
             LivingEntity livingEntity = dragon.getKillCredit();
 
@@ -165,6 +170,7 @@ public class EntityKillEventHandler {
             }
         }
 
+        // Get Infinity
         if (Config.COMMON.world.bossEnchants.get()) {
             if (event.getEntity() instanceof EnderDragon dragon) {
                 BlockPos dragonPos = dragon.blockPosition();
@@ -200,6 +206,7 @@ public class EntityKillEventHandler {
                 }
             }
 
+            // Get Withered
             if (event.getEntity() instanceof WitherBoss witherBoss) {
                 // Exit if not in The Nether and bossRequirements is set to true
                 if (serverLevel.dimension() != Level.NETHER && Config.COMMON.world.bossRequirements.get()) {

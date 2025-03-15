@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "jeg:item/terror_phantom_spawn_egg"
+    "layer0": "jeg:item/phantom_gunner_spawn_egg"
   }
 }

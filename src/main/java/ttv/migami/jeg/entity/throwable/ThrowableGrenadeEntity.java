@@ -4,8 +4,11 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.init.ModEntities;
 import ttv.migami.jeg.init.ModItems;
@@ -21,6 +24,7 @@ public class ThrowableGrenadeEntity extends ThrowableItemEntity
     public float rotation;
     public float prevRotation;
     public boolean terrorPhantomThrown = false;
+    public boolean playerOwnedTerrorPhantom = false;
 
     public ThrowableGrenadeEntity(EntityType<? extends ThrowableItemEntity> entityType, Level worldIn)
     {
@@ -116,6 +120,38 @@ public class ThrowableGrenadeEntity extends ThrowableItemEntity
     @Override
     public void onDeath()
     {
-        GrenadeEntity.createExplosion(this, Config.COMMON.grenades.explosionRadius.get().floatValue(), true);
+        if (this.playerOwnedTerrorPhantom) {
+            if (this.level() instanceof ServerLevel serverLevel) {
+                double radius = 10.0;
+                double maxDamage = 80.0;
+                AABB area = new AABB(this.blockPosition()).inflate(radius);
+
+                for (LivingEntity entity : this.level().getEntitiesOfClass(LivingEntity.class, area)) {
+                    if (entity instanceof Player || entity instanceof Villager) {
+                        continue;
+                    }
+
+                    double distance = this.position().distanceTo(entity.position());
+                    if (distance <= radius) {
+                        double damage = maxDamage * (1.0 - (distance / radius));
+                        entity.hurt(entity.damageSources().explosion(this.getOwner(), this.getOwner()), (float) damage);
+                    }
+                }
+
+                sendParticlesToAll(
+                        serverLevel,
+                        ModParticleTypes.BIG_EXPLOSION.get(),
+                        true,
+                        this.getX() - this.getDeltaMovement().x(),
+                        this.getY() - this.getDeltaMovement().y(),
+                        this.getZ() - this.getDeltaMovement().z(),
+                        1,
+                        0, 0, 0,
+                        0
+                );
+            }
+        } else {
+            GrenadeEntity.createExplosion(this, Config.COMMON.grenades.explosionRadius.get().floatValue(), true);
+        }
     }
 }

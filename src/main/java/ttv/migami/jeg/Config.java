@@ -349,6 +349,7 @@ public class Config
 		public final ForgeConfigSpec.IntValue randomRaidIntervalMaxTicks;
 		public final ForgeConfigSpec.IntValue minimumDaysForRaids;
 		public final ForgeConfigSpec.ConfigValue<List<? extends String>> factions;
+		public final ForgeConfigSpec.BooleanValue phantomSwarm;
 
 		public GunnerMobs(ForgeConfigSpec.Builder builder) {
 			builder.comment("Faction and Gun Configuration").push("gunner_config");
@@ -363,6 +364,7 @@ public class Config
 				this.initialChance = builder.comment("This will define the initial chance of mobs spawning with guns. Goes from 0% to 100%").defineInRange("initialChance", 1, 0, 100);
 				this.chanceIncrement = builder.comment("This defines the increment of the chance of mobs spawning with guns per day.").defineInRange("chanceIncrement", 1, 0, 100);
 				this.maxChance = builder.comment("This will define the max chance of mobs spawning with guns.").defineInRange("maxChance", 50, 1, 100);
+				this.phantomSwarm = builder.comment("If enabled, defeating the Terror Phantom will enable the Phantom Swarm.").define("phantomSwarm", true);
 				this.gunnerMobPatrols = builder.comment("If enabled, Factions inside the config will have the same chance to spawn like Pillager Patrols.").define("gunnerMobPatrols", true);
 				this.patrolIntervalDays = builder.comment("Fixed patrol interval in days. Set to 0 to use a random interval instead.").defineInRange("patrolIntervalDays", 5, 0, 30);
 				this.randomIntervalMinTicks = builder.comment("Minimum random interval in ticks if patrolIntervalDays is 0.").defineInRange("randomIntervalMinTicks", 12000, 1, Integer.MAX_VALUE);
@@ -407,6 +409,7 @@ public class Config
 										"|jeg:custom_smg" +
 										"|jeg:holy_shotgun,jeg:blossom_rifle"
 						), o -> o instanceof String);
+
 			}
 			builder.pop();
 		}

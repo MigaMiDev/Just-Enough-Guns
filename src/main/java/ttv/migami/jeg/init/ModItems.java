@@ -287,8 +287,11 @@ public class ModItems {
     //public static final RegistryObject<Item> GRENADE_LAUNCHER = REGISTER.register("grenade_launcher", () -> new GunItem(new Item.Properties().stacksTo(1)));
 
     // Score Streaks
+    public static final RegistryObject<ScoreStreakItem> TERROR_PHANTOM_FLARE = REGISTER.register("terror_phantom_flare",
+            () -> new TerrorPhantomFlareItem(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1), 5000));
+
     public static final RegistryObject<ScoreStreakItem> PHANTOM_GUNNER_BAIT = REGISTER.register("phantom_gunner_bait",
-            () -> new PhantomGunnerBaitItem(new Item.Properties().rarity(Rarity.RARE).stacksTo(1), 2000));
+            () -> new PhantomGunnerBaitItem(new Item.Properties().rarity(Rarity.RARE).stacksTo(1), 3000));
 
     /* Projectiles And Throwables */
     public static final RegistryObject<Item> GRENADE = REGISTER.register("grenade",
@@ -589,17 +592,17 @@ public class ModItems {
             () -> new AdvancedBlueprintItem(new Item.Properties().rarity(Rarity.RARE)));
 
     // Mobs
-    public static final RegistryObject<Item> GHOUL_SPAWN_EGG = REGISTER.register("ghoul_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntities.GHOUL, 0xF9F9F9, 0x00ADFF, new Item.Properties()));
+    public static final RegistryObject<Item> GHOUL_SPAWN_TALISMAN = REGISTER.register("ghoul_spawn_talisman",
+            () -> new ForgeSpawnEggItem(ModEntities.GHOUL, 0xFFFFFF, 0xFFFFFF, new Item.Properties()));
 
-    public static final RegistryObject<Item> BOO_SPAWN_EGG = REGISTER.register("boo_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntities.BOO, 0x00ADFF, 0xF9F9F9, new Item.Properties()));
+    public static final RegistryObject<Item> BOO_SPAWN_HONEYCOMB = REGISTER.register("boo_spawn_honeycomb",
+            () -> new ForgeSpawnEggItem(ModEntities.BOO, 0xFFFFFF, 0xFFFFFF, new Item.Properties()));
 
     public static final RegistryObject<Item> TERROR_PHANTOM_SPAWN_EGG = REGISTER.register("terror_phantom_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntities.TERROR_PHANMTOM, 0x43518A, 0x88FF00, new Item.Properties()));
+            () -> new ForgeSpawnEggItem(ModEntities.TERROR_PHANMTOM, 0xFFFFFF, 0xFFFFFF, new Item.Properties()));
 
     public static final RegistryObject<Item> PHANTOM_GUNNER_SPAWN_EGG = REGISTER.register("phantom_gunner_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntities.PHANTOM_GUNNER, 0x43518A, 0x88FF00, new Item.Properties()));
+            () -> new ForgeSpawnEggItem(ModEntities.PHANTOM_GUNNER, 0xFFFFFF, 0xFFFFFF, new Item.Properties()));
 
     public static final RegistryObject<Item> SOUL_TREAT = REGISTER.register("soul_treat",
             () -> new SoultreatItem(new Item.Properties()));

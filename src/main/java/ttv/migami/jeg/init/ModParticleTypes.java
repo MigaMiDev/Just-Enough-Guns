@@ -65,4 +65,6 @@ public class ModParticleTypes {
     public static final RegistryObject<SimpleParticleType> CONFETTI = REGISTER.register("confetti", () -> new SimpleParticleType(true));
     public static final RegistryObject<SimpleParticleType> HIT_MARKER = REGISTER.register("hit_marker", () -> new SimpleParticleType(true));
     public static final RegistryObject<SimpleParticleType> POPCORN = REGISTER.register("popcorn", () -> new SimpleParticleType(true));
+
+    public static final RegistryObject<SimpleParticleType> PHANTOM_GUNNER = REGISTER.register("phantom_gunner", () -> new SimpleParticleType(true));
 }

@@ -96,7 +96,7 @@ public class GlintParticle extends TextureSheetParticle {
          GlintParticle glint = new GlintParticle(pLevel, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed);
          glint.setColor(1.0F, 1.0F, 1.0F);
          glint.pickSprite(this.sprite);
-         glint.setLifetime(0);
+         glint.setLifetime(pLevel.getRandom().nextInt(5));
          return glint;
       }
    }
