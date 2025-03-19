@@ -18,24 +18,24 @@ import ttv.migami.jeg.init.ModItems;
 import ttv.migami.jeg.init.ModParticleTypes;
 
 @Mod.EventBusSubscriber
-public class ThrowableTerrorPhantomFlareEntity extends ThrowableGrenadeEntity
+public class ThrowableAirStrikeFlareEntity extends ThrowableGrenadeEntity
 {
     private Player player;
     private boolean hasSummoned;
     private Vec3 lookAngle;
 
-    private static final EntityDataAccessor<Vector3f> ANGLE = SynchedEntityData.defineId(ThrowableTerrorPhantomFlareEntity.class, EntityDataSerializers.VECTOR3);
+    private static final EntityDataAccessor<Vector3f> ANGLE = SynchedEntityData.defineId(ThrowableAirStrikeFlareEntity.class, EntityDataSerializers.VECTOR3);
 
-    public ThrowableTerrorPhantomFlareEntity(EntityType<? extends ThrowableGrenadeEntity> entityType, Level world)
+    public ThrowableAirStrikeFlareEntity(EntityType<? extends ThrowableGrenadeEntity> entityType, Level world)
     {
         super(entityType, world);
         this.setMaxLife(200);
     }
 
-    public ThrowableTerrorPhantomFlareEntity(Level world, LivingEntity player, Vec3 lookAngle)
+    public ThrowableAirStrikeFlareEntity(Level world, LivingEntity player, Vec3 lookAngle)
     {
         super(ModEntities.THROWABLE_TERROR_PHANTOM_FLARE.get(), world, player);
-        this.setItem(new ItemStack(ModItems.TERROR_PHANTOM_FLARE.get()));
+        this.setItem(new ItemStack(ModItems.AIR_STRIKE_FLARE.get()));
         this.setMaxLife(200);
         if (player instanceof Player) {
             this.player = (Player) player;

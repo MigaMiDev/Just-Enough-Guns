@@ -287,8 +287,8 @@ public class ModItems {
     //public static final RegistryObject<Item> GRENADE_LAUNCHER = REGISTER.register("grenade_launcher", () -> new GunItem(new Item.Properties().stacksTo(1)));
 
     // Score Streaks
-    public static final RegistryObject<ScoreStreakItem> TERROR_PHANTOM_FLARE = REGISTER.register("terror_phantom_flare",
-            () -> new TerrorPhantomFlareItem(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1), 5000));
+    public static final RegistryObject<ScoreStreakItem> AIR_STRIKE_FLARE = REGISTER.register("air_strike_flare",
+            () -> new AirStrikeFlareItem(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1), 5000));
 
     public static final RegistryObject<ScoreStreakItem> PHANTOM_GUNNER_BAIT = REGISTER.register("phantom_gunner_bait",
             () -> new PhantomGunnerBaitItem(new Item.Properties().rarity(Rarity.RARE).stacksTo(1), 3000));

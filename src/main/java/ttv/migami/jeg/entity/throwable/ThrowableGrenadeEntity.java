@@ -4,8 +4,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.npc.Villager;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -127,7 +126,7 @@ public class ThrowableGrenadeEntity extends ThrowableItemEntity
                 AABB area = new AABB(this.blockPosition()).inflate(radius);
 
                 for (LivingEntity entity : this.level().getEntitiesOfClass(LivingEntity.class, area)) {
-                    if (entity instanceof Player || entity instanceof Villager) {
+                    if (!(entity instanceof Enemy)) {
                         continue;
                     }
 

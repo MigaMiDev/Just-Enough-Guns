@@ -228,7 +228,9 @@ public class GunAttackGoal<T extends PathfinderMob> extends Goal {
                         }
 
                         if (remainingBursts > 0 && --burstIntervalTimer <= 0) {
-                            shoot(target, gun);
+                            if (this.shooter.getMainHandItem().getItem() instanceof GunItem) {
+                                shoot(target, gun);
+                            }
                             remainingBursts--;
                             burstIntervalTimer = 1 + this.shooter.level().random.nextInt(10); // Reset interval for the next burst shot
                         }
@@ -294,7 +296,9 @@ public class GunAttackGoal<T extends PathfinderMob> extends Goal {
         }
         this.attackTime = gun.getGeneral().getRate();
         consumeAmmo(heldItem);
-        ejectCasing(this.shooter.level(), this.shooter);
+        if (this.shooter.getMainHandItem().getItem() instanceof GunItem) {
+            ejectCasing(this.shooter.level(), this.shooter);
+        }
         ResourceLocation fireSound = gun.getSounds().getFire();
         if(fireSound != null) {
             double posX = this.shooter.getX();

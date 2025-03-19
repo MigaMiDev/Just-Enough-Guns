@@ -70,7 +70,8 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
     private Player player;
     public boolean playerOwned = false;
     private int despawnTimer;
-
+    private int bombingTimer = 0;
+    private final static int MAX_BOMBING_TIMER = 20;
     private float vertical = 0;
     private float speed = 5F;
 
@@ -96,7 +97,8 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
             this.bossEvent.removeAllPlayers();
         }
 
-        this.despawnTimer = 160;
+        this.despawnTimer = 200;
+        this.bombingTimer = MAX_BOMBING_TIMER;
     }
 
     public void setPlayer(Player player) {
@@ -261,20 +263,22 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
             this.bossEvent.removeAllPlayers();
             this.despawnTimer--;
 
-            if (this.despawnTimer < 100) {
+            /*if (this.despawnTimer < 100) {
                 if (this.vertical < 1.0F) {
                     this.vertical = this.vertical + 0.1F;
                 }
                 if (this.speed < 3.0F) {
                     this.speed = this.speed + 0.1F;
                 }
-            }
+            }*/
 
             Vec3 forwardMotion = Vec3.directionFromRotation(this.getXRot(), this.getYRot()).scale(speed);
             this.setDeltaMovement(forwardMotion.x, this.vertical, forwardMotion.z);
-            if (this.tickCount % 2 == 0 && this.tickCount > 18 && this.despawnTimer > 120) {
-                dropGrenade(this);
-                //dropGrenades(this);
+            if (this.tickCount > 18) {
+                this.bombingTimer--;
+                if (this.tickCount % 2 == 0 && this.bombingTimer >= 0) {
+                    dropGrenade(this);
+                }
             }
             if (this.despawnTimer <= 0) {
                 this.remove(RemovalReason.DISCARDED);

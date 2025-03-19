@@ -61,9 +61,10 @@ public class ScoreStreakItem extends ToolTipItem {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
 
-        if (getPoints(stack) >= this.maxPoints) {
+        if (getPoints(stack) >= this.maxPoints || player.isCreative()) {
             useScoreStreak(player);
-            setPoints(stack, 0);
+            if (!player.isCreative())
+                setPoints(stack, 0);
             player.awardStat(Stats.ITEM_USED.get(this));
             return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
         }
