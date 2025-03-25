@@ -39,6 +39,7 @@ public class GunnerRaidSpawner implements CustomSpawner {
         this.nextTick = raidData.getNextTick();
         RandomSource random = level.random;
         --this.nextTick;
+        raidData.setNextTick(this.nextTick);
 
         if (this.nextTick > 0) {
             return 0;
@@ -83,8 +84,6 @@ public class GunnerRaidSpawner implements CustomSpawner {
         ThrowableFlareEntity flare = new ThrowableFlareEntity(level, randomPlayer);
         flare.setPos(randomPlayer.position().add(0, 24, 0));
         level.addFreshEntity(flare);
-
-        raidData.setNextTick(this.nextTick);
 
         return 1;
     }

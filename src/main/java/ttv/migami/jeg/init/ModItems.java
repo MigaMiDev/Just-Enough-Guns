@@ -156,46 +156,6 @@ public class ModItems {
                     "service_rifle",
                     ModSounds.CR_RELOAD_MAGAZINE_OUT.get(), ModSounds.SR_RELOAD_MAGAZINE_IN.get(), ModSounds.CR_RELOAD_EJECTOR.get(), ModSounds.CR_EJECTOR_PULL.get(), ModSounds.CR_EJECTOR_RELEASE.get()
             ));
-    public static final RegistryObject<AnimatedGunItem> ROCKET_LAUNCHER = REGISTER.register("rocket_launcher",
-            () -> new AnimatedGunItem(new Item.Properties()
-                    .stacksTo(1)
-                    .durability(32)
-                    .rarity(Rarity.EPIC),
-                    "rocket_launcher",
-                    ModSounds.LID_OPEN.get(), ModSounds.ROCKET_IN.get(), ModSounds.LID_CLOSE.get(), ModSounds.CR_EJECTOR_PULL.get(), ModSounds.CR_EJECTOR_RELEASE.get()
-            ));
-    public static final RegistryObject<AnimatedBowItem> COMPOUND_BOW = REGISTER.register("compound_bow",
-            () -> new AnimatedBowItem(new Item.Properties()
-                    .stacksTo(1)
-                    .durability(128)
-                    .rarity(Rarity.EPIC),
-                    "compound_bow",
-                    ModSounds.CR_RELOAD_MAGAZINE_OUT.get(), ModSounds.BOW_PLACE_ARROW.get(), ModSounds.CR_RELOAD_EJECTOR.get(), ModSounds.BOW_PULL.get(), ModSounds.BOW_STRING.get()
-            ));
-    public static final RegistryObject<AnimatedGunItem> LIGHT_MACHINE_GUN = REGISTER.register("light_machine_gun",
-            () -> new AnimatedGunItem(new Item.Properties()
-                    .stacksTo(1)
-                    .durability(1024)
-                    .rarity(Rarity.EPIC),
-                    "light_machine_gun",
-                    ModSounds.AR_RELOAD_MAGAZINE_IN.get(), ModSounds.AR_RELOAD_MAGAZINE_OUT.get(), ModSounds.AR_RELOAD_EJECTOR.get(), ModSounds.AR_EJECTOR_PULL.get(), ModSounds.AR_EJECTOR_RELEASE.get()
-            ));
-    public static final RegistryObject<AnimatedGunItem> GRENADE_LAUNCHER = REGISTER.register("grenade_launcher",
-            () -> new AnimatedGunItem(new Item.Properties()
-                    .stacksTo(1)
-                    .durability(64)
-                    .rarity(Rarity.EPIC),
-                    "grenade_launcher",
-                    ModSounds.CR_RELOAD_MAGAZINE_IN.get(), ModSounds.CR_RELOAD_MAGAZINE_OUT.get(), ModSounds.CR_RELOAD_EJECTOR.get(), ModSounds.CR_EJECTOR_PULL.get(), ModSounds.CR_EJECTOR_RELEASE.get()
-            ));
-    public static final RegistryObject<AnimatedGunItem> FLAMETHROWER = REGISTER.register("flamethrower",
-            () -> new AnimatedGunItem(new Item.Properties()
-                    .stacksTo(1)
-                    .durability(1024)
-                    .rarity(Rarity.EPIC),
-                    "flamethrower",
-                    SoundEvents.ITEM_FRAME_REMOVE_ITEM, SoundEvents.ITEM_FRAME_REMOVE_ITEM, ModSounds.CR_RELOAD_EJECTOR.get(), SoundEvents.IRON_TRAPDOOR_OPEN, SoundEvents.IRON_TRAPDOOR_CLOSE
-            ));
 
     /* Spectre Tier */
     public static final RegistryObject<GunItem> BLOSSOM_RIFLE = REGISTER.register("blossom_rifle",
@@ -274,6 +234,55 @@ public class ModItems {
                     .rarity(Rarity.EPIC),
                     "hypersonic_cannon",
                     ModSounds.HYPERSONIC_CANNON_CHARGE.get(), SoundEvents.ITEM_PICKUP, SoundEvents.ITEM_FRAME_REMOVE_ITEM, ModSounds.AR_EJECTOR_PULL.get(), ModSounds.AR_EJECTOR_RELEASE.get()
+            ));
+
+    public static final RegistryObject<AnimatedGunItem> ROCKET_LAUNCHER = REGISTER.register("rocket_launcher",
+            () -> new AnimatedGunItem(new Item.Properties()
+                    .stacksTo(1)
+                    .durability(32)
+                    .rarity(Rarity.EPIC),
+                    "rocket_launcher",
+                    ModSounds.LID_OPEN.get(), ModSounds.ROCKET_IN.get(), ModSounds.LID_CLOSE.get(), ModSounds.CR_EJECTOR_PULL.get(), ModSounds.CR_EJECTOR_RELEASE.get()
+            ));
+    public static final RegistryObject<AnimatedBowItem> COMPOUND_BOW = REGISTER.register("compound_bow",
+            () -> new AnimatedBowItem(new Item.Properties()
+                    .stacksTo(1)
+                    .durability(128)
+                    .rarity(Rarity.EPIC),
+                    "compound_bow",
+                    ModSounds.CR_RELOAD_MAGAZINE_OUT.get(), ModSounds.BOW_PLACE_ARROW.get(), ModSounds.CR_RELOAD_EJECTOR.get(), ModSounds.BOW_PULL.get(), ModSounds.BOW_STRING.get()
+            ));
+    public static final RegistryObject<AnimatedGunItem> GRENADE_LAUNCHER = REGISTER.register("grenade_launcher",
+            () -> new AnimatedGunItem(new Item.Properties()
+                    .stacksTo(1)
+                    .durability(64)
+                    .rarity(Rarity.EPIC),
+                    "grenade_launcher",
+                    ModSounds.CR_RELOAD_MAGAZINE_IN.get(), ModSounds.CR_RELOAD_MAGAZINE_OUT.get(), ModSounds.CR_RELOAD_EJECTOR.get(), ModSounds.CR_EJECTOR_PULL.get(), ModSounds.CR_EJECTOR_RELEASE.get()
+            ));
+    public static final RegistryObject<AnimatedGunItem> LIGHT_MACHINE_GUN = REGISTER.register("light_machine_gun",
+            () -> new AnimatedGunItem(new Item.Properties()
+                    .stacksTo(1)
+                    .durability(1024)
+                    .rarity(Rarity.EPIC),
+                    "light_machine_gun",
+                    ModSounds.AR_RELOAD_MAGAZINE_IN.get(), ModSounds.AR_RELOAD_MAGAZINE_OUT.get(), ModSounds.AR_RELOAD_EJECTOR.get(), ModSounds.AR_EJECTOR_PULL.get(), ModSounds.AR_EJECTOR_RELEASE.get()
+            ));
+    public static final RegistryObject<AnimatedGunItem> FLAMETHROWER = REGISTER.register("flamethrower",
+            () -> new AnimatedGunItem(new Item.Properties()
+                    .stacksTo(1)
+                    .durability(1024)
+                    .rarity(Rarity.EPIC),
+                    "flamethrower",
+                    SoundEvents.ITEM_FRAME_REMOVE_ITEM, SoundEvents.ITEM_FRAME_REMOVE_ITEM, ModSounds.CR_RELOAD_EJECTOR.get(), SoundEvents.IRON_TRAPDOOR_OPEN, SoundEvents.IRON_TRAPDOOR_CLOSE
+            ));
+    public static final RegistryObject<AnimatedGunItem> MINIGUN = REGISTER.register("minigun",
+            () -> new AnimatedGunItem(new Item.Properties()
+                    .stacksTo(1)
+                    .durability(2048)
+                    .rarity(Rarity.EPIC),
+                    "minigun",
+                    ModSounds.AR_RELOAD_MAGAZINE_IN.get(), ModSounds.AR_RELOAD_MAGAZINE_OUT.get(), ModSounds.AR_RELOAD_EJECTOR.get(), ModSounds.AR_EJECTOR_PULL.get(), ModSounds.AR_EJECTOR_RELEASE.get()
             ));
 
     public static final RegistryObject<AnimatedGunItem> FINGER_GUN = REGISTER.register("finger_gun",

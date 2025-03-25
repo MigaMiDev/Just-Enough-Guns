@@ -1260,6 +1260,14 @@
       }
     ]
   },
+  "entity.phantom.boost": {
+    "sounds": [
+      {
+        "name": "jeg:entity/phantom/boost",
+        "stream": true
+      }
+    ]
+  },
   "ui.weapon.attach": {
     "subtitle": "subtitle.jeg.attach",
     "sounds": [

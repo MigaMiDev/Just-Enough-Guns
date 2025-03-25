@@ -69,7 +69,7 @@ public class ThrowableAirStrikeFlareEntity extends ThrowableGrenadeEntity
             this.lookAngle = new Vec3(this.getAngle().x(), this.getAngle().y(), this.getAngle().z());
             Vec3 lookDirection = this.lookAngle.normalize();
 
-            Vec3 rightOffset = lookDirection.cross(new Vec3(0, 1, 0)).normalize().scale(4);
+            Vec3 rightOffset = lookDirection.cross(new Vec3(0, 1, 0)).normalize().scale(8);
 
             Vec3 startPos = pos.add(lookDirection.scale(10));
             Vec3 endPos = pos.add(lookDirection.scale(40));
@@ -92,8 +92,8 @@ public class ThrowableAirStrikeFlareEntity extends ThrowableGrenadeEntity
                 if (i % 2 == 0) {
                     for (double j = 0; j <= 1; j += 0.2) {
                         Vec3 midPoint = centerPos.add(horizontalLook.scale(j));
-                        Vec3 midLeft = midPoint.add(rightOffset.scale(-0.4));
-                        Vec3 midRight = midPoint.add(rightOffset.scale(0.4));
+                        Vec3 midLeft = midPoint.add(rightOffset.scale(-0.5));
+                        Vec3 midRight = midPoint.add(rightOffset.scale(0.5));
 
                         this.level().addParticle(ModParticleTypes.ENTITY_LASER.get(), true, midPoint.x, fixedY, midPoint.z, 0, 0, 0);
                         this.level().addParticle(ModParticleTypes.ENTITY_LASER.get(), true, midLeft.x, fixedY, midLeft.z, 0, 0, 0);

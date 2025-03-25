@@ -18,8 +18,8 @@ public class PhantomSwarmData extends SavedData {
 
     @Override
     public CompoundTag save(CompoundTag tag) {
-        tag.putBoolean("PhantomSwarm", phantomSwarm);
-        tag.putInt("NextRaidTick", nextTick);
+        tag.putBoolean("PhantomSwarm", this.phantomSwarm);
+        tag.putInt("NextRaidTick", this.nextTick);
         return tag;
     }
 
@@ -28,7 +28,7 @@ public class PhantomSwarmData extends SavedData {
     }
 
     public boolean hasPhantomSwarm() {
-        return phantomSwarm;
+        return this.phantomSwarm;
     }
 
     public void setPhantomSwarm(boolean value) {
@@ -37,7 +37,7 @@ public class PhantomSwarmData extends SavedData {
     }
 
     public int getNextTick() {
-        return nextTick;
+        return this.nextTick;
     }
 
     public void setNextTick(int nextTick) {

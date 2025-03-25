@@ -100,7 +100,7 @@ public class ReloadTracker
 
         //if(!(gunItem instanceof AnimatedGunItem)) {
         {
-            if(gun.getReloads().getReloadType() == ReloadType.MAG_FED ||
+            if(gun.getReloads().getReloadType() == ReloadType.MAG_FED || gun.getReloads().getReloadType() == ReloadType.INVENTORY_FED ||
                     gun.getReloads().getReloadType() == ReloadType.SINGLE_ITEM)
             {
                 int quickHandsLevel = player.getMainHandItem().getEnchantmentLevel(ModEnchantments.QUICK_HANDS.get());
@@ -364,6 +364,8 @@ public class ReloadTracker
                         else if(gun.getReloads().getReloadType() == ReloadType.MANUAL) {
                             tracker.increaseAmmo(player);
                             tracker.firstReload = false;
+                        } else if(gun.getReloads().getReloadType() == ReloadType.INVENTORY_FED) {
+                            tracker.increaseAmmo(player);
                         }
                     }
 

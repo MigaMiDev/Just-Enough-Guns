@@ -25,7 +25,7 @@ public class PhantomSwarmSpawner implements CustomSpawner {
     //private int nextTick = (24000 * 5) + 12000;
     private int nextTick;
 
-    private final int MAX_SWARM_PARTICLE_TICK = 1200;
+    private final int MAX_SWARM_PARTICLE_TICK = 1200 * 5;
     private int swarmParticleTick = MAX_SWARM_PARTICLE_TICK;
 
     public PhantomSwarmSpawner() {
@@ -53,6 +53,7 @@ public class PhantomSwarmSpawner implements CustomSpawner {
 
         RandomSource random = level.random;
         --this.nextTick;
+        raidData.setNextTick(this.nextTick);
 
         int playerCount2 = level.players().size();
         if (playerCount2 < 1) {
@@ -117,8 +118,6 @@ public class PhantomSwarmSpawner implements CustomSpawner {
             return 0;
         }
 
-        raidData.setNextTick(this.nextTick);
-
         int patrolCount = 4 + random.nextInt(4);
         return ModCommands.spawnPhantomSwarm(level, patrolCount, randomPlayer, spawnPos);
     }
@@ -177,7 +176,7 @@ public class PhantomSwarmSpawner implements CustomSpawner {
         BlockPos.MutableBlockPos spawnPos = player.blockPosition().mutable()
                 .move((0 + random.nextInt(175)) * (random.nextBoolean() ? -1 : 1),
                         0,
-                        (80 + random.nextInt(64)) * (-1));
+                        (100 + random.nextInt(64)) * (-1));
 
         Vec3 betterPos = new Vec3(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
 
@@ -202,16 +201,58 @@ public class PhantomSwarmSpawner implements CustomSpawner {
             double speedX = (betterPos.x - pos.x) * 0.1;
             double speedZ = (betterPos.z - pos.z) * 0.1;
 
-            for (ServerPlayer players : level.players()) {
-                level.sendParticles(
-                    players,
+            level.sendParticles(
+                    player,
                     ModParticleTypes.PHANTOM_GUNNER_SWARM.get(),
                     true,
                     pos.x, pos.y, pos.z,
                     1,
                     speedX, 0, speedZ,
                     1
-            );}
+            );
+        }
+    }
+
+    public static void spawnSecondLayerPhantomGunnerSwarm(ServerLevel level, ServerPlayer player) {
+        RandomSource random = level.getRandom();
+
+        BlockPos.MutableBlockPos spawnPos = player.blockPosition().mutable()
+                .move((0 + random.nextInt(175)) * (random.nextBoolean() ? -1 : 1),
+                        0,
+                        (100 + random.nextInt(64)) * (-1));
+
+        Vec3 betterPos = new Vec3(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
+
+        Vec3 spawnCenter = betterPos.add(0, 170, 0);
+
+
+        int numParticles = 2 + random.nextInt(2);
+        double spacing = 10;
+        List<Vec3> formationPositions = new ArrayList<>();
+
+        for (int i = 0; i < numParticles; i++) {
+            int row = i / 2;
+            int side = (i % 2 == 0) ? 1 : -1;
+
+            double xOffset = row * spacing * side;
+            double zOffset = row * spacing;
+
+            formationPositions.add(spawnCenter.add(xOffset, 0, zOffset));
+        }
+
+        for (Vec3 pos : formationPositions) {
+            double speedX = (betterPos.x - pos.x) * 0.1;
+            double speedZ = (betterPos.z - pos.z) * 0.1;
+
+            level.sendParticles(
+                    player,
+                    ModParticleTypes.SECOND_LAYER_PHANTOM_GUNNER_SWARM.get(),
+                    true,
+                    pos.x, pos.y, pos.z,
+                    1,
+                    speedX, 0, speedZ,
+                    1
+            );
         }
     }
 }

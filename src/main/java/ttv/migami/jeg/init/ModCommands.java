@@ -533,12 +533,12 @@ public class ModCommands {
 
             Phantom phantom = new Phantom(EntityType.PHANTOM, level);
 
-            if (Config.COMMON.gunnerMobs.explosiveMobs.get() && level.random.nextFloat() < 0.2) {
+            if (level.random.nextFloat() < 0.4) {
+                phantom = new PhantomGunner(ModEntities.PHANTOM_GUNNER.get(), level);
+            } else if (Config.COMMON.gunnerMobs.explosiveMobs.get() && level.random.nextFloat() < 0.2) {
                 ThrowableExplosiveChargeEntity explosiveChargeEntity = new ThrowableExplosiveChargeEntity(ModEntities.THROWABLE_EXPLOSIVE_CHARGE.get(), level);
                 level.addFreshEntity(explosiveChargeEntity);
                 explosiveChargeEntity.startRiding(phantom);
-            } else if (level.random.nextFloat() < 0.5) {
-                phantom = new PhantomGunner(ModEntities.PHANTOM_GUNNER.get(), level);
             }
 
             if (spawnPhantom(level, spawnPos, phantom, player)) {

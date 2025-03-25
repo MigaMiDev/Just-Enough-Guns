@@ -1451,7 +1451,7 @@ public class GunGen extends GunProvider
                 // Reloads
                 .setMaxAmmo(1)
                 .setReloadType(ReloadType.INVENTORY_FED)
-                .setReloadTimer(20)
+                .setReloadTimer(16)
                 .setAdditionalReloadTimer(0)
 
                 // Projectile
@@ -1623,6 +1623,56 @@ public class GunGen extends GunProvider
                 .setZoom(Gun.Modules.Zoom.builder()
                         .setFovModifier(0.6F)
                         .setOffset(0.0, 5.71, -1.75))
+
+                .build());
+
+        this.addGun(new ResourceLocation(Reference.MOD_ID, "minigun"), Gun.Builder.create()
+
+                // General
+                .setFireMode(FireMode.AUTOMATIC)
+                .setFireRate(1)
+                .setGripType(GripType.TWO_HANDED)
+                .setRecoilKick(0.15F)
+                .setRecoilAngle(0.8F)
+                .setAlwaysSpread(false)
+                .setSpread(10.0F)
+                .setShooterPushback(-0.075F)
+                .setOverheatTimer(200)
+                .setCanBeBlueprinted(false)
+                .setProjectileAmount(3)
+                .setInfinityDisabled(true)
+                .setWitheredDisabled(true)
+
+                // Reloads
+                .setMaxAmmo(1)
+                .setReloadType(ReloadType.INVENTORY_FED)
+                .setReloadTimer(20)
+                .setAdditionalReloadTimer(0)
+
+                // Projectile
+                .setAmmo(ModItems.PISTOL_AMMO.get())
+                .setEjectsCasing(true)
+                .setProjectileVisible(false)
+                .setDamage(4.0F)
+                .setAdvantage(ModTags.Entities.HEAVY.location())
+                .setProjectileSize(0.05F)
+                .setProjectileSpeed(13F)
+                .setProjectileLife(80)
+                .setProjectileTrailLengthMultiplier(2)
+                .setProjectileTrailColor(0xFFFF00 | 0xFF000000)
+                .setProjectileAffectedByGravity(false)
+                .setReduceDamageOverLife(true)
+
+                // Sounds
+                .setFireSound(ModSounds.LIGHT_MACHINE_GUN_FIRE.get())
+                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
+                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setSilencedFireSound(ModSounds.LIGHT_MACHINE_GUN_SILENCED_FIRE.get())
+                .setEnchantedFireSound(ModSounds.LIGHT_MACHINE_GUN_ENCHANTED_FIRE.get())
+
+                // Attachments
+                .setMuzzleFlash(1.0, 0.0, -1.1, -13)
+                .setSpecial(1.0F, 0, 1.2, 4)
 
                 .build());
 

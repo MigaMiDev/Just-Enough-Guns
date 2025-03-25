@@ -21,6 +21,8 @@ public class PhantomGunnerParticle extends TextureSheetParticle {
     private static final Vector3f TRANSFORM_VECTOR = new Vector3f(-1.0F, -1.0F, 0.0F);
     private static final float MAGICAL_X_ROT = 1.0472F;
 
+    private int layerY = 175;
+
     protected PhantomGunnerParticle(ClientLevel level, double x, double y, double z, double pXSpeed, double pYSpeed, double pZSpeed) {
         super(level, x, y, z);
         this.friction = 1;
@@ -41,7 +43,7 @@ public class PhantomGunnerParticle extends TextureSheetParticle {
     private void renderRotatedParticle(VertexConsumer pConsumer, Camera pCamera, float pPartialTick, Consumer<Quaternionf> pQuaternion) {
         Vec3 vec3 = pCamera.getPosition();
         float f = (float)(Mth.lerp((double)pPartialTick, this.xo, this.x) - vec3.x());
-        float f1 = (float)(175.0 + vec3.y());
+        float f1 = (float)(this.layerY + vec3.y());
         float f2 = (float)(Mth.lerp((double)pPartialTick, this.zo, this.z) - vec3.z());
 
         float motionX = (float) this.xd;
@@ -125,6 +127,24 @@ public class PhantomGunnerParticle extends TextureSheetParticle {
             PhantomGunnerParticle phantomGunnerParticle = new PhantomGunnerParticle(pLevel, pX, pY, pZ, 0, 0, 1);
             phantomGunnerParticle.pickSprite(this.sprite);
             phantomGunnerParticle.setLifetime(300);
+            //phantomGunnerParticle.setColor(225, 225, 255);
+            return phantomGunnerParticle;
+        }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static class SecondLayerSwarmProvider implements ParticleProvider<SimpleParticleType> {
+        private final SpriteSet sprite;
+
+        public SecondLayerSwarmProvider(SpriteSet pSprites) {
+            this.sprite = pSprites;
+        }
+
+        public Particle createParticle(SimpleParticleType pType, ClientLevel pLevel, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed) {
+            PhantomGunnerParticle phantomGunnerParticle = new PhantomGunnerParticle(pLevel, pX, pY, pZ, 0, 0, 1);
+            phantomGunnerParticle.pickSprite(this.sprite);
+            phantomGunnerParticle.setLifetime(300);
+            phantomGunnerParticle.layerY = 225;
             //phantomGunnerParticle.setColor(225, 225, 255);
             return phantomGunnerParticle;
         }

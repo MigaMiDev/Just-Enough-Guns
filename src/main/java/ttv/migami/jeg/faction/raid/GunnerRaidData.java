@@ -16,7 +16,7 @@ public class GunnerRaidData extends SavedData {
 
     @Override
     public CompoundTag save(CompoundTag tag) {
-        tag.putInt("NextRaidTick", nextTick);
+        tag.putInt("NextRaidTick", this.nextTick);
         return tag;
     }
 
@@ -25,7 +25,7 @@ public class GunnerRaidData extends SavedData {
     }
 
     public int getNextTick() {
-        return nextTick;
+        return this.nextTick;
     }
 
     public void setNextTick(int nextTick) {

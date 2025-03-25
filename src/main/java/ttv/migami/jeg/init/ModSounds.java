@@ -163,6 +163,7 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> ENTITY_GHOUL_HURT = register("entity.ghoul.hurt");
     public static final RegistryObject<SoundEvent> ENTITY_PHANTOM_FLY = register("entity.phantom.fly");
     public static final RegistryObject<SoundEvent> ENTITY_PHANTOM_DIVE = register("entity.phantom.dive");
+    public static final RegistryObject<SoundEvent> ENTITY_PHANTOM_BOOST = register("entity.phantom.boost");
 
     /* Event Sounds */
     public static final RegistryObject<SoundEvent> EVENT_PHANTOM_SWARM = register("event.phantom.distant");

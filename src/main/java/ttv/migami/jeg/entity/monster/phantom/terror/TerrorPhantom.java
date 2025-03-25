@@ -2,6 +2,7 @@ package ttv.migami.jeg.entity.monster.phantom.terror;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -11,6 +12,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -56,6 +58,7 @@ import java.util.List;
 
 import static ttv.migami.jeg.common.network.ServerPlayHandler.sendParticlesToAll;
 import static ttv.migami.jeg.entity.monster.phantom.PhantomSwarmSpawner.spawnPhantomGunnerSwarm;
+import static ttv.migami.jeg.entity.monster.phantom.PhantomSwarmSpawner.spawnSecondLayerPhantomGunnerSwarm;
 
 public class TerrorPhantom extends Phantom implements GeoEntity {
     private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -64,6 +67,7 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
     BlockPos anchorPoint;
     AttackPhase attackPhase;
     private boolean isHalfHealth = false;
+    private boolean isAngry = false;
 
     private boolean isDying = false;
     private int deathTimer = 0;
@@ -81,8 +85,11 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
     private final int MAX_SWARM_PARTICLE_TICK = 7;
     private int swarmParticleTick = MAX_SWARM_PARTICLE_TICK;
 
+    private final int MAX_SWARM_SPAWN_TICK = 300;
+    private int swarmSpawnTick = MAX_SWARM_SPAWN_TICK;
+
     @Nullable
-    private TerrorPhantomFlySoundInstance activeSound;
+    private AbstractTickableSoundInstance activeSound;
 
     private static final EntityDataAccessor<Boolean> IS_ROLLING = SynchedEntityData.defineId(TerrorPhantom.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_DYING = SynchedEntityData.defineId(TerrorPhantom.class, EntityDataSerializers.BOOLEAN);
@@ -115,7 +122,7 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
             this.player = player;
             this.playerOwned = true;
             this.setPlayerOwned(true);
-            this.addTag("MiPlayerOwned");
+            this.addTag("   PlayerOwned");
         }
     }
 
@@ -241,6 +248,34 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
         }
     }
 
+    private void dropGrenadesSideways(TerrorPhantom terrorPhantom) {
+        if (terrorPhantom.level() instanceof ServerLevel serverLevel) {
+            BlockPos pos = terrorPhantom.blockPosition();
+
+            Vec3 lookVec = terrorPhantom.getLookAngle();
+
+            Vec3 leftVec = new Vec3(-lookVec.z, 0, lookVec.x).normalize().scale(0.5);
+            Vec3 rightVec = new Vec3(lookVec.z, 0, -lookVec.x).normalize().scale(0.5);
+
+            throwGrenade(serverLevel, terrorPhantom, pos, leftVec);
+            throwGrenade(serverLevel, terrorPhantom, pos, rightVec);
+        }
+    }
+
+    private void throwGrenade(ServerLevel serverLevel, TerrorPhantom terrorPhantom, BlockPos pos, Vec3 offset) {
+        ThrowableGrenadeEntity grenade = new ThrowableGrenadeEntity(terrorPhantom.level(), terrorPhantom, 100);
+
+        grenade.setPos(pos.getX() + offset.x, pos.getY() + 1, pos.getZ() + offset.z);
+
+        grenade.setDeltaMovement(offset.x, -0.5, offset.z);
+
+        grenade.terrorPhantomThrown = true;
+        grenade.playerOwnedTerrorPhantom = true;
+        grenade.setShouldBounce(false);
+
+        serverLevel.addFreshEntity(grenade);
+    }
+
     private void endGrenades(TerrorPhantom terrorPhantom) {
         if (terrorPhantom.level() instanceof ServerLevel serverLevel) {
             BlockPos pos = terrorPhantom.blockPosition();
@@ -268,9 +303,13 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
     public void tick() {
         super.tick();
 
-        if (this.level().isClientSide) {
+        if (this.level().isClientSide && this.tickCount > 10) {
             if (this.activeSound == null) {
-                this.activeSound = new TerrorPhantomFlySoundInstance(this, SoundSource.HOSTILE);
+                if (this.isPlayerOwned()) {
+                    this.activeSound = new TerrorPhantomBoostSoundInstance(this, SoundSource.HOSTILE);
+                } else {
+                    this.activeSound = new TerrorPhantomFlySoundInstance(this, SoundSource.HOSTILE);
+                }
                 Minecraft.getInstance().getSoundManager().play(this.activeSound);
             }
             if (this.isDying()) {
@@ -297,6 +336,7 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
                 this.bombingTimer--;
                 if (this.tickCount % 2 == 0 && this.bombingTimer >= 0) {
                     dropGrenade(this);
+                    dropGrenadesSideways(this);
                 }
             }
             if (this.despawnTimer <= 0) {
@@ -348,6 +388,7 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
         }
 
         this.isHalfHealth = TerrorPhantom.this.getHealth() <= TerrorPhantom.this.getMaxHealth() / 2;
+        this.isAngry = TerrorPhantom.this.getHealth() <= (TerrorPhantom.this.getMaxHealth() / 2) + 50;
 
         if (this.getPhantomSize() != 6) {
             this.setPhantomSize(6);
@@ -368,9 +409,20 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
             if (this.attackTimer <= 0) {
                 this.attackPhase = TerrorPhantom.AttackPhase.CIRCLE;
             }
-            if (this.isHalfHealth && this.getTarget() instanceof ServerPlayer serverPlayer && --this.swarmParticleTick == 0) {
-                spawnPhantomGunnerSwarm(serverLevel, serverPlayer);
+            if (this.isAngry && --this.swarmParticleTick <= 0) {
+                for (ServerPlayer players : serverLevel.players()) {
+                    spawnPhantomGunnerSwarm(serverLevel, players);
+                    spawnSecondLayerPhantomGunnerSwarm(serverLevel, players);
+                }
                 this.swarmParticleTick = MAX_SWARM_PARTICLE_TICK;
+            }
+            if (this.isHalfHealth && --this.swarmSpawnTick <= 0 && this.getTarget() instanceof Player player) {
+                BlockPos.MutableBlockPos spawnPos = this.getTarget().blockPosition().mutable()
+                        .move((24 + random.nextInt(24)) * (random.nextBoolean() ? -1 : 1),
+                                0,
+                                (24 + random.nextInt(24)) * (random.nextBoolean() ? -1 : 1));
+                ModCommands.spawnPhantomSwarm(serverLevel, 1 + serverLevel.random.nextInt(1), player, spawnPos);
+                this.swarmSpawnTick = MAX_SWARM_SPAWN_TICK;
             }
         }
 
@@ -443,8 +495,21 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
     }
 
     @Override
+    protected void playHurtSound(DamageSource pSource) {
+        SoundEvent soundevent = this.getHurtSound(pSource);
+        if (soundevent != null && this.tickCount % 40 == 0) {
+            this.playSound(soundevent, this.getSoundVolume(), this.getVoicePitch());
+        }
+    }
+
+    @Override
     public float getVoicePitch() {
         return (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 0.1F;
+    }
+
+    @Override
+    protected float getSoundVolume() {
+        return 1000F;
     }
 
     public static AttributeSupplier.Builder createAttributes()
@@ -563,7 +628,7 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
                 return false;
             }
             LivingEntity target = TerrorPhantom.this.getTarget();
-            return target != null ? TerrorPhantom.this.canAttack(target, TargetingConditions.DEFAULT) : false;
+            return target != null ? TerrorPhantom.this.canAttack(target, TargetingConditions.forCombat().ignoreLineOfSight()) : false;
         }
 
         public void start() {
@@ -1066,9 +1131,7 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
             }
 
             this.angle += this.clockwise * 15.0F * 0.017453292F;
-            if (TerrorPhantom.this.getTarget() != null) {
-                TerrorPhantom.this.moveTargetPoint = Vec3.atLowerCornerOf(TerrorPhantom.this.anchorPoint).add((double)(this.distance * Mth.cos(this.angle)), 24, (double)(this.distance * Mth.sin(this.angle)));
-            }
+            TerrorPhantom.this.moveTargetPoint = Vec3.atLowerCornerOf(TerrorPhantom.this.anchorPoint).add((double)(this.distance * Mth.cos(this.angle)), 24, (double)(this.distance * Mth.sin(this.angle)));
         }
     }
 
@@ -1091,7 +1154,7 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
 
                     while(var2.hasNext()) {
                         Player player = (Player)var2.next();
-                        if (TerrorPhantom.this.canAttack(player, TargetingConditions.DEFAULT)) {
+                        if (TerrorPhantom.this.canAttack(player, TargetingConditions.forCombat().ignoreLineOfSight())) {
                             TerrorPhantom.this.setTarget(player);
                             return true;
                         }
@@ -1104,7 +1167,7 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
 
         public boolean canContinueToUse() {
             LivingEntity $$0 = TerrorPhantom.this.getTarget();
-            return $$0 != null ? TerrorPhantom.this.canAttack($$0, TargetingConditions.DEFAULT) : false;
+            return $$0 != null ? TerrorPhantom.this.canAttack($$0, TargetingConditions.forCombat().ignoreLineOfSight()) : false;
         }
     }
 

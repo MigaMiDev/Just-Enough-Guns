@@ -54,6 +54,7 @@ public class ParticleFactoryRegistry
 
         event.registerSpriteSet(ModParticleTypes.PHANTOM_GUNNER.get(), PhantomGunnerParticle.Provider::new);
         event.registerSpriteSet(ModParticleTypes.PHANTOM_GUNNER_SWARM.get(), PhantomGunnerParticle.SwarmProvider::new);
+        event.registerSpriteSet(ModParticleTypes.SECOND_LAYER_PHANTOM_GUNNER_SWARM.get(), PhantomGunnerParticle.SecondLayerSwarmProvider::new);
 
     }
 }

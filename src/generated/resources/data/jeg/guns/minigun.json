@@ -1,0 +1,57 @@
+{
+  "display": {
+    "flash": {
+      "size": 1.0,
+      "yOffset": -1.1,
+      "zOffset": -13.0
+    }
+  },
+  "general": {
+    "canBeBlueprinted": false,
+    "fireMode": "jeg:automatic",
+    "gripType": "jeg:two_handed",
+    "infinityDisabled": true,
+    "overheatTimer": 200,
+    "projectileAmount": 3,
+    "rate": 1,
+    "recoilAngle": 0.8,
+    "recoilKick": 0.15,
+    "shooterPushback": -0.075,
+    "spread": 10.0,
+    "witheredDisabled": true
+  },
+  "modules": {
+    "attachments": {
+      "special": {
+        "yOffset": 1.2,
+        "zOffset": 4.0
+      }
+    }
+  },
+  "projectile": {
+    "advantage": "jeg:heavy",
+    "damage": 4.0,
+    "damageReduceOverLife": true,
+    "ejectsCasing": true,
+    "headshotMultiplier": 1.5,
+    "item": "jeg:pistol_ammo",
+    "life": 80,
+    "size": 0.05,
+    "speed": 13.0,
+    "trailColor": -256,
+    "trailLengthMultiplier": 2.0
+  },
+  "reloads": {
+    "additionalReloadTimer": 0,
+    "maxAmmo": 1,
+    "reloadTimer": 40,
+    "reloadType": "jeg:inventory_fed"
+  },
+  "sounds": {
+    "cock": "jeg:item.pistol.cock",
+    "enchantedFire": "jeg:item.light_machine_gun.enchanted_fire",
+    "fire": "jeg:item.light_machine_gun.fire",
+    "reload": "jeg:item.pistol.reload",
+    "silencedFire": "jeg:item.light_machine_gun.silenced_fire"
+  }
+}

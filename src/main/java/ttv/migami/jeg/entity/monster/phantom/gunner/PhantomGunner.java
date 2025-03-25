@@ -105,7 +105,7 @@ public class PhantomGunner extends Phantom implements GeoEntity {
 
         // Player Owned
         //this.targetSelector.addGoal(1, new PlayerHurtTargetGoal(this));
-        this.targetSelector.addGoal(7, new NearestAttackableTargetGoal<>(this, Mob.class, 5, true, false, (livingEntity) -> livingEntity instanceof Enemy && !(livingEntity instanceof Creeper) && !(livingEntity instanceof EnderMan)));
+        this.targetSelector.addGoal(7, new NearestAttackableTargetGoal<>(this, Mob.class, 5, true, false, (livingEntity) -> livingEntity instanceof Enemy && !(livingEntity instanceof PhantomGunner) && !(livingEntity instanceof Creeper) && !(livingEntity instanceof EnderMan)));
     }
 
     private void explode() {
@@ -325,7 +325,7 @@ public class PhantomGunner extends Phantom implements GeoEntity {
             }
 
             LivingEntity $$0 = PhantomGunner.this.getTarget();
-            return $$0 != null ? PhantomGunner.this.canAttack($$0, TargetingConditions.DEFAULT) : false;
+            return $$0 != null ? PhantomGunner.this.canAttack($$0, TargetingConditions.forCombat().ignoreLineOfSight()) : false;
         }
 
         public void start() {
@@ -504,9 +504,7 @@ public class PhantomGunner extends Phantom implements GeoEntity {
             }
 
             this.angle += this.clockwise * 15.0F * 0.017453292F;
-            if (PhantomGunner.this.getTarget() != null || PhantomGunner.this.getPlayer() != null) {
-                PhantomGunner.this.moveTargetPoint = Vec3.atLowerCornerOf(PhantomGunner.this.anchorPoint).add((double)(this.distance * Mth.cos(this.angle)), 24, (double)(this.distance * Mth.sin(this.angle)));
-            }
+            PhantomGunner.this.moveTargetPoint = Vec3.atLowerCornerOf(PhantomGunner.this.anchorPoint).add((double)(this.distance * Mth.cos(this.angle)), 24, (double)(this.distance * Mth.sin(this.angle)));
         }
     }
 
@@ -533,7 +531,7 @@ public class PhantomGunner extends Phantom implements GeoEntity {
 
                     while(var2.hasNext()) {
                         Player $$1 = (Player)var2.next();
-                        if (PhantomGunner.this.canAttack($$1, TargetingConditions.DEFAULT)) {
+                        if (PhantomGunner.this.canAttack($$1, TargetingConditions.forCombat().ignoreLineOfSight())) {
                             PhantomGunner.this.setTarget($$1);
                             return true;
                         }
@@ -546,7 +544,7 @@ public class PhantomGunner extends Phantom implements GeoEntity {
 
         public boolean canContinueToUse() {
             LivingEntity $$0 = PhantomGunner.this.getTarget();
-            return $$0 != null ? PhantomGunner.this.canAttack($$0, TargetingConditions.DEFAULT) : false;
+            return $$0 != null ? PhantomGunner.this.canAttack($$0, TargetingConditions.forCombat().ignoreLineOfSight()) : false;
         }
     }
 
