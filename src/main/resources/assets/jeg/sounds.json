@@ -1244,11 +1244,35 @@
       }
     ]
   },
+  "entity.phantom.fly": {
+    "sounds": [
+      {
+        "name": "jeg:entity/phantom/fly",
+        "stream": true
+      }
+    ]
+  },
+  "entity.phantom.dive": {
+    "sounds": [
+      {
+        "name": "jeg:entity/phantom/dive",
+        "stream": true
+      }
+    ]
+  },
   "ui.weapon.attach": {
     "subtitle": "subtitle.jeg.attach",
     "sounds": [
       {
         "name": "jeg:ui/weapon/attach"
+      }
+    ]
+  },
+
+  "event.phantom.distant": {
+    "sounds": [
+      {
+        "name": "jeg:event/phantom/distant"
       }
     ]
   }

@@ -2,6 +2,8 @@ package ttv.migami.jeg.entity.throwable;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Enemy;
@@ -124,7 +126,7 @@ public class ThrowableGrenadeEntity extends ThrowableItemEntity
                 double radius = 10.0;
                 double maxDamage = 80.0;
                 AABB area = new AABB(this.blockPosition()).inflate(radius);
-
+                serverLevel.playSound(this, this.blockPosition(), SoundEvents.GENERIC_EXPLODE, SoundSource.HOSTILE, 5.0F, 1.0F);
                 for (LivingEntity entity : this.level().getEntitiesOfClass(LivingEntity.class, area)) {
                     if (!(entity instanceof Enemy)) {
                         continue;

@@ -53,6 +53,7 @@ public class ParticleFactoryRegistry
         event.registerSpriteSet(ModParticleTypes.POPCORN.get(), PopcornParticle.Provider::new);
 
         event.registerSpriteSet(ModParticleTypes.PHANTOM_GUNNER.get(), PhantomGunnerParticle.Provider::new);
+        event.registerSpriteSet(ModParticleTypes.PHANTOM_GUNNER_SWARM.get(), PhantomGunnerParticle.SwarmProvider::new);
 
     }
 }

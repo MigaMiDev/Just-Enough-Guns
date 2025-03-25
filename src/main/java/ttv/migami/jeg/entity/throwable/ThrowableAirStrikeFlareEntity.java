@@ -74,7 +74,7 @@ public class ThrowableAirStrikeFlareEntity extends ThrowableGrenadeEntity
             Vec3 startPos = pos.add(lookDirection.scale(10));
             Vec3 endPos = pos.add(lookDirection.scale(40));
 
-            int numSteps = 100;
+            int numSteps = 50;
             double fixedY = pos.y + 0.2;
 
             for (int i = 0; i <= numSteps; i++) {
@@ -102,8 +102,8 @@ public class ThrowableAirStrikeFlareEntity extends ThrowableGrenadeEntity
                         Vec3 outerLeft = midPoint.add(rightOffset.scale(-1.05));
                         Vec3 outerRight = midPoint.add(rightOffset.scale(1.05));
 
-                        this.level().addParticle(ModParticleTypes.ENTITY_LASER.get(), true, outerLeft.x, fixedY, outerLeft.z, 0, 0, 0);
-                        this.level().addParticle(ModParticleTypes.ENTITY_LASER.get(), true, outerRight.x, fixedY, outerRight.z, 0, 0, 0);
+                        //this.level().addParticle(ModParticleTypes.ENTITY_LASER.get(), true, outerLeft.x, fixedY, outerLeft.z, 0, 0, 0);
+                        //this.level().addParticle(ModParticleTypes.ENTITY_LASER.get(), true, outerRight.x, fixedY, outerRight.z, 0, 0, 0);
                     }
                 }
             }

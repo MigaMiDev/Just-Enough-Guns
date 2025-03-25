@@ -7,16 +7,19 @@ import net.minecraft.world.level.saveddata.SavedData;
 public class PhantomSwarmData extends SavedData {
     private static final String DATA_NAME = "PhantomSwarmData";
     private boolean phantomSwarm = false;
+    private int nextTick = 0;
 
     public static PhantomSwarmData load(CompoundTag tag) {
         PhantomSwarmData data = new PhantomSwarmData();
         data.phantomSwarm = tag.getBoolean("PhantomSwarm");
+        data.nextTick = tag.getInt("NextRaidTick");
         return data;
     }
 
     @Override
     public CompoundTag save(CompoundTag tag) {
         tag.putBoolean("PhantomSwarm", phantomSwarm);
+        tag.putInt("NextRaidTick", nextTick);
         return tag;
     }
 
@@ -30,6 +33,15 @@ public class PhantomSwarmData extends SavedData {
 
     public void setPhantomSwarm(boolean value) {
         this.phantomSwarm = value;
+        this.setDirty();
+    }
+
+    public int getNextTick() {
+        return nextTick;
+    }
+
+    public void setNextTick(int nextTick) {
+        this.nextTick = nextTick;
         this.setDirty();
     }
 }

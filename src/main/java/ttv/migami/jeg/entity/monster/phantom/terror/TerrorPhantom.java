@@ -1,6 +1,7 @@
 package ttv.migami.jeg.entity.monster.phantom.terror;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -48,11 +49,13 @@ import ttv.migami.jeg.entity.throwable.ThrowableGrenadeEntity;
 import ttv.migami.jeg.entity.throwable.ThrowableMolotovCocktailEntity;
 import ttv.migami.jeg.init.*;
 
+import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 
 import static ttv.migami.jeg.common.network.ServerPlayHandler.sendParticlesToAll;
+import static ttv.migami.jeg.entity.monster.phantom.PhantomSwarmSpawner.spawnPhantomGunnerSwarm;
 
 public class TerrorPhantom extends Phantom implements GeoEntity {
     private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -74,6 +77,12 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
     private final static int MAX_BOMBING_TIMER = 20;
     private float vertical = 0;
     private float speed = 5F;
+
+    private final int MAX_SWARM_PARTICLE_TICK = 7;
+    private int swarmParticleTick = MAX_SWARM_PARTICLE_TICK;
+
+    @Nullable
+    private TerrorPhantomFlySoundInstance activeSound;
 
     private static final EntityDataAccessor<Boolean> IS_ROLLING = SynchedEntityData.defineId(TerrorPhantom.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_DYING = SynchedEntityData.defineId(TerrorPhantom.class, EntityDataSerializers.BOOLEAN);
@@ -259,6 +268,16 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
     public void tick() {
         super.tick();
 
+        if (this.level().isClientSide) {
+            if (this.activeSound == null) {
+                this.activeSound = new TerrorPhantomFlySoundInstance(this, SoundSource.HOSTILE);
+                Minecraft.getInstance().getSoundManager().play(this.activeSound);
+            }
+            if (this.isDying()) {
+                Minecraft.getInstance().getSoundManager().play(new TerrorPhantomDiveSoundInstance(this, SoundSource.HOSTILE));
+            }
+        }
+
         if (this.isPlayerOwned()) {
             this.bossEvent.removeAllPlayers();
             this.despawnTimer--;
@@ -348,6 +367,10 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
             this.attackTimer--;
             if (this.attackTimer <= 0) {
                 this.attackPhase = TerrorPhantom.AttackPhase.CIRCLE;
+            }
+            if (this.isHalfHealth && this.getTarget() instanceof ServerPlayer serverPlayer && --this.swarmParticleTick == 0) {
+                spawnPhantomGunnerSwarm(serverLevel, serverPlayer);
+                this.swarmParticleTick = MAX_SWARM_PARTICLE_TICK;
             }
         }
 

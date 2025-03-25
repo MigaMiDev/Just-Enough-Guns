@@ -24,6 +24,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -701,6 +702,9 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
                 return;
             }
             if (this.shooter.getTags().contains("PlayerOwned") && entity.getTags().contains("PlayerOwned")) {
+                return;
+            }
+            if (this.shooter.getTags().contains("PlayerOwned") && !(entity instanceof Enemy)) {
                 return;
             }
             if (this.shooter instanceof Player && entity.getTags().contains("PlayerOwned")) {

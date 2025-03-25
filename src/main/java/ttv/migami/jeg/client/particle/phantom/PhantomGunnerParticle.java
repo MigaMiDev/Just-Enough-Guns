@@ -4,6 +4,8 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
+import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
@@ -19,8 +21,13 @@ public class PhantomGunnerParticle extends TextureSheetParticle {
     private static final Vector3f TRANSFORM_VECTOR = new Vector3f(-1.0F, -1.0F, 0.0F);
     private static final float MAGICAL_X_ROT = 1.0472F;
 
-    protected PhantomGunnerParticle(ClientLevel level, double x, double y, double z) {
+    protected PhantomGunnerParticle(ClientLevel level, double x, double y, double z, double pXSpeed, double pYSpeed, double pZSpeed) {
         super(level, x, y, z);
+        this.friction = 1;
+        this.setParticleSpeed(pXSpeed, 0, pZSpeed);
+        this.xd = pXSpeed;
+        this.yd = 0;
+        this.zd = pZSpeed;
     }
 
     @Override
@@ -36,15 +43,22 @@ public class PhantomGunnerParticle extends TextureSheetParticle {
         float f = (float)(Mth.lerp((double)pPartialTick, this.xo, this.x) - vec3.x());
         float f1 = (float)(175.0 + vec3.y());
         float f2 = (float)(Mth.lerp((double)pPartialTick, this.zo, this.z) - vec3.z());
-        Quaternionf quaternionf = (new Quaternionf()).setAngleAxis(0.0F, ROTATION_VECTOR.x(), ROTATION_VECTOR.y(), ROTATION_VECTOR.z());
+
+        float motionX = (float) this.xd;
+        float motionZ = (float) this.zd;
+        float yaw = (float) Math.atan2(motionZ, motionX);
+
+        Quaternionf quaternionf = new Quaternionf().rotationY(-yaw);
         pQuaternion.accept(quaternionf);
         quaternionf.transform(TRANSFORM_VECTOR);
+
         Vector3f[] avector3f = new Vector3f[]{
-                new Vector3f(-24F, -24F, 24F),
-                new Vector3f(-24F, 24F, 24F),
-                new Vector3f(24F, 24F, 24F),
-                new Vector3f(24F, -24F, 24F)
+                new Vector3f(-100F, -100F, 100F),
+                new Vector3f(-100F, 100F, 100F),
+                new Vector3f(100F, 100F, 100F),
+                new Vector3f(100F, -100F, 100F)
         };
+
         float f3 = this.getQuadSize(pPartialTick);
 
         for (int i = 0; i < 4; ++i) {
@@ -73,6 +87,11 @@ public class PhantomGunnerParticle extends TextureSheetParticle {
         pConsumer.vertex((double)pVertex.x(), (double)pVertex.y(), (double)pVertex.z()).uv(pU, pV).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(pPackedLight).endVertex();
     }
 
+    protected int getLightColor(float pPartialTick) {
+        BlockPos blockpos = BlockPos.containing(this.x, this.y, this.z);
+        return this.level.hasChunkAt(blockpos) ? LevelRenderer.getLightColor(this.level, blockpos) : 0;
+    }
+
     @Override
     public ParticleRenderType getRenderType() {
         return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
@@ -87,9 +106,26 @@ public class PhantomGunnerParticle extends TextureSheetParticle {
         }
 
         public Particle createParticle(SimpleParticleType pType, ClientLevel pLevel, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed) {
-            PhantomGunnerParticle phantomGunnerParticle = new PhantomGunnerParticle(pLevel, pX, pY, pZ);
+            PhantomGunnerParticle phantomGunnerParticle = new PhantomGunnerParticle(pLevel, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed);
             phantomGunnerParticle.pickSprite(this.sprite);
-            phantomGunnerParticle.setLifetime(100);
+            phantomGunnerParticle.setLifetime(200);
+            return phantomGunnerParticle;
+        }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static class SwarmProvider implements ParticleProvider<SimpleParticleType> {
+        private final SpriteSet sprite;
+
+        public SwarmProvider(SpriteSet pSprites) {
+            this.sprite = pSprites;
+        }
+
+        public Particle createParticle(SimpleParticleType pType, ClientLevel pLevel, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed) {
+            PhantomGunnerParticle phantomGunnerParticle = new PhantomGunnerParticle(pLevel, pX, pY, pZ, 0, 0, 1);
+            phantomGunnerParticle.pickSprite(this.sprite);
+            phantomGunnerParticle.setLifetime(300);
+            //phantomGunnerParticle.setColor(225, 225, 255);
             return phantomGunnerParticle;
         }
     }

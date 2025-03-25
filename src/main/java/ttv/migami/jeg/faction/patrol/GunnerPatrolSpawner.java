@@ -16,8 +16,9 @@ import ttv.migami.jeg.faction.GunnerManager;
 import ttv.migami.jeg.init.ModCommands;
 
 public class GunnerPatrolSpawner implements CustomSpawner {
+    //private int nextTick = 24000 * 5;
     private int nextTick;
-
+    
     public GunnerPatrolSpawner() {
     }
 
@@ -93,7 +94,7 @@ public class GunnerPatrolSpawner implements CustomSpawner {
             return 0;
         }
 
-        int patrolCount = 1 + random.nextInt(6);
+        int patrolCount = 2 + random.nextInt(5);
         return ModCommands.spawnPatrol(level, faction, patrolCount, randomPlayer, spawnPos, false);
     }
 }
