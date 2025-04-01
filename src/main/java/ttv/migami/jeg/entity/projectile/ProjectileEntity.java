@@ -50,6 +50,8 @@ import ttv.migami.jeg.JustEnoughGuns;
 import ttv.migami.jeg.client.medal.MedalType;
 import ttv.migami.jeg.common.*;
 import ttv.migami.jeg.common.Gun.Projectile;
+import ttv.migami.jeg.entity.monster.phantom.gunner.PhantomGunner;
+import ttv.migami.jeg.entity.monster.phantom.terror.TerrorPhantom;
 import ttv.migami.jeg.event.GunProjectileHitEvent;
 import ttv.migami.jeg.event.KillEffectEvent;
 import ttv.migami.jeg.init.*;
@@ -701,13 +703,27 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
             if (this.shooter.getTags().contains("GunnerPatroller") && entity.getTags().contains("GunnerPatroller")) {
                 return;
             }
+            if (entity instanceof TerrorPhantom terrorPhantom && terrorPhantom.isPlayerOwned()) {
+                return;
+            }
+            if (this.shooter instanceof PhantomGunner phantomGunner) {
+                if (phantomGunner.isPlayerOwned() && phantomGunner.getPlayer() != null) {
+                    if (phantomGunner.getPlayer() == this.shooter) {
+                        return;
+                    }
+                }
+            }
+            if (entity instanceof PhantomGunner phantomGunner) {
+                if (phantomGunner.isPlayerOwned() && phantomGunner.getPlayer() != null) {
+                    if (phantomGunner.getPlayer() == this.shooter) {
+                        return;
+                    }
+                }
+            }
             if (this.shooter.getTags().contains("PlayerOwned") && entity.getTags().contains("PlayerOwned")) {
                 return;
             }
-            if (this.shooter.getTags().contains("PlayerOwned") && !(entity instanceof Enemy)) {
-                return;
-            }
-            if (this.shooter instanceof Player && entity.getTags().contains("PlayerOwned")) {
+            if (this.shooter.getTags().contains("PlayerOwned") && !(entity instanceof Enemy) && !(entity instanceof Player)) {
                 return;
             }
 

@@ -126,12 +126,10 @@ public class GunEnchantmentHelper
         return damage;
     }
 
-    public static float getWitheredDamage(ItemStack weapon, float damage)
-    {
+    public static float getWitheredDamage(ItemStack weapon, float damage) {
         int level = EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.WITHERED.get(), weapon);
-        if(level > 0)
-        {
-            return damage + (2 * level);
+        if (level > 0) {
+            return damage * (float) Math.pow(1.15, level);
         }
         return damage;
     }

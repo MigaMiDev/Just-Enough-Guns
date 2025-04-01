@@ -5,7 +5,7 @@
 			"loop": true
 		},
 		"idle": {
-			"animation_length": 22.9583,
+			"loop": true,
 			"bones": {
 				"root": {
 					"position": {
@@ -40,9 +40,6 @@
 				"left_wing": {
 					"rotation": {
 						"vector": ["Math.sin(query.anim_time * 300) * 15", "Math.sin(query.anim_time * 300) * -15", "Math.sin(query.anim_time * 300) * -30"]
-					},
-					"position": {
-						"vector": [0, 0, 0]
 					}
 				},
 				"left_wing_tip": {

@@ -124,7 +124,7 @@ public class AIGunEvent {
 
         if(gunSpread == 0F)
         {
-            return getVectorFromRotation(shooter.getXRot(), shooter.getYRot());
+            return getVectorFromRotation(shooter.getViewXRot(1F), shooter.getViewYRot(1F));
         }
 
         if(shooter instanceof Player)

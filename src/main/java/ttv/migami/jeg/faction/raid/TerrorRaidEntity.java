@@ -3,15 +3,12 @@ package ttv.migami.jeg.faction.raid;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.BossEvent;
@@ -19,12 +16,13 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.animal.horse.SkeletonHorse;
 import net.minecraft.world.entity.animal.horse.ZombieHorse;
-import net.minecraft.world.entity.monster.*;
+import net.minecraft.world.entity.monster.AbstractSkeleton;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.monster.Phantom;
+import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -37,23 +35,20 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.Reference;
-import ttv.migami.jeg.init.ModTags;
+import ttv.migami.jeg.entity.monster.phantom.terror.TerrorPhantom;
 import ttv.migami.jeg.entity.throwable.ThrowableExplosiveChargeEntity;
-import ttv.migami.jeg.faction.Faction;
-import ttv.migami.jeg.faction.GunnerManager;
-import ttv.migami.jeg.init.ModCommands;
-import ttv.migami.jeg.init.ModEntities;
-import ttv.migami.jeg.init.ModParticleTypes;
+import ttv.migami.jeg.faction.jeg.FactionData;
+import ttv.migami.jeg.faction.jeg.FactionDataManager;
+import ttv.migami.jeg.init.*;
 
 import java.util.HashSet;
 import java.util.List;
 
-public class RaidEntity extends Entity {
+public class TerrorRaidEntity extends Entity {
     private final ServerBossEvent bossBar;
     private final HashSet<LivingEntity> activeMobs = new HashSet<>();
     private final HashSet<LivingEntity> spawnedMobs = new HashSet<>();
     private final HashSet<Player> activePlayers = new HashSet<>();
-    private Faction faction;
     private boolean forceGuns = true;
     private int totalWaves = 3;
     private int maxCooldown = 200;
@@ -74,22 +69,20 @@ public class RaidEntity extends Entity {
     private int despawnTicks = MAX_DESPAWN_TICKS;
     private boolean result = true;
     private int resultPrize = 1;
+    private boolean summonBoss = true;
 
     private static final int MAX_ACTIVE_MOBS = 10;
-    private static int TOTAL_WAVE_MOBS = 20;
-    private static final int MAX_DESPAWN_TICKS = 600;
+    private int totalWaveMobs = 40;
+    private static final int MAX_DESPAWN_TICKS = 200;
 
     private static final int ACTIVE_RADIUS = 64;
 
-    public RaidEntity(EntityType<? extends Entity> type, Level level) {
+    public TerrorRaidEntity(EntityType<? extends Entity> type, Level level) {
         super(type, level);
         this.noPhysics = true;
         this.setInvisible(true);
 
-        GunnerManager gunnerManager = GunnerManager.getInstance();
-        this.faction = gunnerManager.getFactionByName(gunnerManager.getRandomFactionName());
-
-        MutableComponent factionLang = Component.translatable("faction.jeg." + this.faction.getName());
+        MutableComponent factionLang = Component.translatable("faction.jeg.terror_armada");
         this.bossBar = new ServerBossEvent(
                 Component.translatable(factionLang.getString() + " active raid!"),
                 BossEvent.BossBarColor.RED,
@@ -98,16 +91,15 @@ public class RaidEntity extends Entity {
         this.bossBar.setVisible(true);
     }
 
-    public RaidEntity(EntityType<? extends Entity> type, Level level, Faction faction, boolean forceGuns, int waves, int waveSize) {
+    public TerrorRaidEntity(EntityType<? extends Entity> type, Level level, boolean forceGuns, int waves, int waveSize) {
         super(type, level);
         this.noPhysics = true;
         this.setInvisible(true);
 
-        this.faction = faction;
         this.forceGuns = forceGuns;
         this.totalWaves = waves;
 
-        MutableComponent factionLang = Component.translatable("faction.jeg." + faction.getName());
+        MutableComponent factionLang = Component.translatable("faction.jeg.terror_armada");
         MutableComponent raidLang = Component.translatable("raid.jeg");
         this.bossBar = new ServerBossEvent(
                 Component.translatable(factionLang.getString() + " " + raidLang.getString()),
@@ -133,13 +125,39 @@ public class RaidEntity extends Entity {
                         (12 + random.nextInt(12)) * (random.nextBoolean() ? -1 : 1));
 
         if (level.hasChunksAt(spawnPos.getX() - 10, spawnPos.getZ() - 10, spawnPos.getX() + 10, spawnPos.getZ() + 10)) {
-            if (activeMobs.size() < MAX_ACTIVE_MOBS && spawnedMobs.size() < TOTAL_WAVE_MOBS) {
+            if (activeMobs.size() < MAX_ACTIVE_MOBS && spawnedMobs.size() < this.totalWaveMobs) {
                 int mobsToSpawn = this.random.nextInt(2, 3);
                 for (int i = 0; i < mobsToSpawn; i++) {
                     if (activeMobs.size() >= MAX_ACTIVE_MOBS) {
                         break;
                     }
-                    LivingEntity mob = ModCommands.getFactionMob(level, faction, startPos, forceGuns, spread);
+
+                    FactionData factionData = null;
+                    if (this.currentWave == 1) {
+                        factionData = FactionDataManager.getTerrorArmadaWave1();
+                    } else if (this.currentWave == 2) {
+                        factionData = FactionDataManager.getTerrorArmadaWave2();
+                    } else if (this.currentWave == 3) {
+                        factionData = FactionDataManager.getTerrorArmadaWave3();
+                    }
+
+                    if (factionData == null) {
+                        return;
+                    }
+
+                    if (!this.activePlayers.isEmpty() && this.currentWave == 3 && this.random.nextFloat() < 0.4F) {
+                        for (int flock = 0; flock < 1; flock++) {
+                            Player swarmPlayer = this.activePlayers.stream().findAny().get();
+                            BlockPos.MutableBlockPos phantomPos = swarmPlayer.blockPosition().mutable()
+                                    .move((24 + random.nextInt(24)) * (random.nextBoolean() ? -1 : 1),
+                                            0,
+                                            (24 + random.nextInt(24)) * (random.nextBoolean() ? -1 : 1));
+
+                            ModCommands.spawnPhantomSwarm(level, 1, swarmPlayer, phantomPos);
+                        }
+                    }
+
+                    LivingEntity mob = ModCommands.getFactionMob(level, factionData, startPos, forceGuns, spread);
                     if (mob != null) {
                         if (ModCommands.spawnRaider(level, mob, null, spawnPos, this.position(), true)) {
                             activeMobs.add(mob);
@@ -176,18 +194,6 @@ public class RaidEntity extends Entity {
                                     this.level().addFreshEntity(skeletonHorse);
                                     skeletonHorse.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 400));
                                     mob.startRiding(skeletonHorse);
-                                } else {
-                                    Horse horse = new Horse(EntityType.HORSE, this.level());
-                                    horse.setPos(mob.position());
-                                    horse.addTag("GunnerPatroller");
-
-                                    if (level.random.nextInt(3) == 0) {
-                                        ItemStack randomHorseArmor = getRandomHorseArmor(level.random);
-                                        horse.setItemSlot(EquipmentSlot.CHEST, randomHorseArmor);
-                                    }
-
-                                    this.level().addFreshEntity(horse);
-                                    mob.startRiding(horse);
                                 }
                             }
 
@@ -205,82 +211,37 @@ public class RaidEntity extends Entity {
                                             annoyingBoy.setTarget(this.activePlayers.stream().findAny().get());
                                         }
                                     } else {
-                                        if (this.level().random.nextBoolean()) {
-                                            Phantom annoyingBoy = new Phantom(EntityType.PHANTOM, this.level());
-                                            annoyingBoy.setPos(mob.position());
-                                            activeMobs.add(annoyingBoy);
-                                            spawnedMobs.add(annoyingBoy);
-                                            annoyingBoy.addTag("GunnerPatroller");
-                                            this.level().addFreshEntity(annoyingBoy);
-
-                                            ThrowableExplosiveChargeEntity explosiveChargeEntity = new ThrowableExplosiveChargeEntity(ModEntities.THROWABLE_EXPLOSIVE_CHARGE.get(), level);
-                                            this.level().addFreshEntity(explosiveChargeEntity);
-                                            explosiveChargeEntity.startRiding(annoyingBoy);
-
-                                            if (!this.activePlayers.isEmpty()) {
-                                                annoyingBoy.setTarget(this.activePlayers.stream().findAny().get());
-                                            }
-                                        } else {
-                                            Silverfish annoyingBoy = new Silverfish(EntityType.SILVERFISH, this.level());
-                                            annoyingBoy.setPos(mob.position());
-                                            annoyingBoy.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 200, 0));
-                                            activeMobs.add(annoyingBoy);
-                                            spawnedMobs.add(annoyingBoy);
-                                            annoyingBoy.addTag("GunnerPatroller");
-                                            this.level().addFreshEntity(annoyingBoy);
-
-                                            ThrowableExplosiveChargeEntity explosiveChargeEntity = new ThrowableExplosiveChargeEntity(ModEntities.THROWABLE_EXPLOSIVE_CHARGE.get(), level);
-                                            this.level().addFreshEntity(explosiveChargeEntity);
-                                            explosiveChargeEntity.startRiding(annoyingBoy);
-
-                                            if (!this.activePlayers.isEmpty()) {
-                                                annoyingBoy.setTarget(this.activePlayers.stream().findAny().get());
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            if (Config.COMMON.gunnerMobs.raidSupportMobs.get()) {
-                                if (this.level().random.nextFloat() < 0.3) {
-                                    if (mob.getType().is(ModTags.Entities.UNDEAD)) {
                                         Phantom annoyingBoy = new Phantom(EntityType.PHANTOM, this.level());
-                                        annoyingBoy.setPos(mob.position().add(0, 10, 0));
+                                        annoyingBoy.setPos(mob.position());
                                         activeMobs.add(annoyingBoy);
                                         spawnedMobs.add(annoyingBoy);
                                         annoyingBoy.addTag("GunnerPatroller");
-                                        if (level.isDay() && annoyingBoy.getType().is(ModTags.Entities.UNDEAD)) {
-                                            annoyingBoy.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 1200, 0, false, true));
-                                            annoyingBoy.extinguishFire();
-                                        }
                                         this.level().addFreshEntity(annoyingBoy);
+
+                                        ThrowableExplosiveChargeEntity explosiveChargeEntity = new ThrowableExplosiveChargeEntity(ModEntities.THROWABLE_EXPLOSIVE_CHARGE.get(), level);
+                                        this.level().addFreshEntity(explosiveChargeEntity);
+                                        explosiveChargeEntity.startRiding(annoyingBoy);
+
                                         if (!this.activePlayers.isEmpty()) {
                                             annoyingBoy.setTarget(this.activePlayers.stream().findAny().get());
                                         }
                                     }
                                 }
-                                if (this.level().random.nextFloat() < 0.2) {
-                                    if (mob instanceof AbstractIllager) {
-                                        if (this.level().random.nextBoolean()) {
-                                            Witch annoyingBoy = new Witch(EntityType.WITCH, this.level());
-                                            annoyingBoy.setPos(mob.position());
-                                            activeMobs.add(annoyingBoy);
-                                            spawnedMobs.add(annoyingBoy);
-                                            annoyingBoy.addTag("GunnerPatroller");
-                                            this.level().addFreshEntity(annoyingBoy);
-                                            if (!this.activePlayers.isEmpty()) {
-                                                annoyingBoy.setTarget(this.activePlayers.stream().findAny().get());
-                                            }
-                                        } else {
-                                            Evoker annoyingBoy = new Evoker(EntityType.EVOKER, this.level());
-                                            annoyingBoy.setPos(mob.position());
-                                            activeMobs.add(annoyingBoy);
-                                            spawnedMobs.add(annoyingBoy);
-                                            annoyingBoy.addTag("GunnerPatroller");
-                                            this.level().addFreshEntity(annoyingBoy);
-                                            if (!this.activePlayers.isEmpty()) {
-                                                annoyingBoy.setTarget(this.activePlayers.stream().findAny().get());
-                                            }
-                                        }
+                            }
+                            if (this.level().random.nextFloat() < 0.5) {
+                                if (mob.getType().is(ModTags.Entities.UNDEAD)) {
+                                    Phantom annoyingBoy = new Phantom(EntityType.PHANTOM, this.level());
+                                    annoyingBoy.setPos(mob.position().add(0, 10, 0));
+                                    activeMobs.add(annoyingBoy);
+                                    spawnedMobs.add(annoyingBoy);
+                                    annoyingBoy.addTag("GunnerPatroller");
+                                    if (level.isDay() && annoyingBoy.getType().is(ModTags.Entities.UNDEAD)) {
+                                        annoyingBoy.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 1200, 0, false, true));
+                                        annoyingBoy.extinguishFire();
+                                    }
+                                    this.level().addFreshEntity(annoyingBoy);
+                                    if (!this.activePlayers.isEmpty()) {
+                                        annoyingBoy.setTarget(this.activePlayers.stream().findAny().get());
                                     }
                                 }
                             }
@@ -290,7 +251,7 @@ public class RaidEntity extends Entity {
             }
         }
 
-        if (activeMobs.size() >= MAX_ACTIVE_MOBS || spawnedMobs.size() >= TOTAL_WAVE_MOBS) {
+        if (activeMobs.size() >= MAX_ACTIVE_MOBS || spawnedMobs.size() >= this.totalWaveMobs) {
             this.isSpawningMobs = false;
         }
     }
@@ -312,19 +273,10 @@ public class RaidEntity extends Entity {
     public void playHorn () {
         int x = this.level().random.nextInt(-25, 25);
         int z = this.level().random.nextInt(-25, 25);
-        this.level().playSound(null, BlockPos.containing(this.position().add(x, 32, z)), SoundEvents.GOAT_HORN_SOUND_VARIANTS.get(0).get(), SoundSource.HOSTILE, 1000F, 1);
-    }
-
-    public void playCelebrationHorn () {
-        int x = this.level().random.nextInt(-25, 25);
-        int z = this.level().random.nextInt(-25, 25);
-        SoundEvent sound;
-        if (this.level().random.nextBoolean()) {
-            sound = SoundEvents.GOAT_HORN_SOUND_VARIANTS.get(0).get();
-        } else {
-            sound = SoundEvents.GOAT_HORN_SOUND_VARIANTS.get(1).get();
+        this.level().playSound(null, BlockPos.containing(this.position().add(x, 32, z)), ModSounds.DARK_HORN.get(), SoundSource.HOSTILE, 1000F, 1);
+        for (LivingEntity entity : getActivePlayers()) {
+            entity.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 100, 0, false, false));
         }
-        this.level().playSound(null, BlockPos.containing(this.position().add(x, 32, z)), sound, SoundSource.HOSTILE, 1000F, 1);
     }
 
     public boolean isWaveComplete() {
@@ -332,7 +284,7 @@ public class RaidEntity extends Entity {
             return false;
         }
 
-        return activeMobs.isEmpty() && spawnedMobs.size() >= TOTAL_WAVE_MOBS;
+        return activeMobs.isEmpty() && spawnedMobs.size() >= this.totalWaveMobs;
     }
 
     public boolean isFinished() {
@@ -362,11 +314,11 @@ public class RaidEntity extends Entity {
             return;
         }
 
-        int remainingMobs = TOTAL_WAVE_MOBS - spawnedMobs.size();
+        int remainingMobs = this.totalWaveMobs - spawnedMobs.size();
 
-        float progress = (float) remainingMobs / TOTAL_WAVE_MOBS;
+        float progress = (float) remainingMobs / this.totalWaveMobs;
         this.bossBar.setProgress(progress);
-        MutableComponent factionLang = Component.translatable("faction.jeg." + faction.getName());
+        MutableComponent factionLang = Component.translatable("faction.jeg.terror_armada");
         MutableComponent raidLang = Component.translatable("raid.jeg");
         MutableComponent waveLang = Component.translatable("raid.jeg.wave");
         this.bossBar.setName(Component.translatable(factionLang.getString() + " " + raidLang.getString() + " | " + waveLang.getString() + " : " + this.currentWave + "/" + this.totalWaves));
@@ -408,46 +360,6 @@ public class RaidEntity extends Entity {
         }
     }
 
-    private void victoryReward(Player player, ServerLevel serverLevel) {
-        ResourceLocation lootTableID;
-        lootTableID = new ResourceLocation(Reference.MOD_ID, "factions/raids/generic_raid_victory_reward");
-        LootTable lootTable = serverLevel.getServer().getLootData().getLootTable(lootTableID);
-        LootParams lootParams = new LootParams.Builder(serverLevel)
-                .withParameter(LootContextParams.THIS_ENTITY, player)
-                .withParameter(LootContextParams.ORIGIN, player.position())
-                .create(LootContextParamSets.CHEST);
-
-        // Roll the loot table 1 time
-        for (int i = 0; i < 1; i++) {
-            List<ItemStack> loot = lootTable.getRandomItems(lootParams);
-
-            for (ItemStack itemStack : loot) {
-                if (!player.getInventory().add(itemStack)) {
-                    player.drop(itemStack, false);
-                }
-            }
-        }
-
-        ResourceLocation lootTableID2;
-        lootTableID2 = new ResourceLocation(Reference.MOD_ID, "factions/raids/" + this.faction.getName() + "/victory_reward");
-        LootTable lootTable2 = serverLevel.getServer().getLootData().getLootTable(lootTableID2);
-        LootParams lootParams2 = new LootParams.Builder(serverLevel)
-                .withParameter(LootContextParams.THIS_ENTITY, player)
-                .withParameter(LootContextParams.ORIGIN, player.position())
-                .create(LootContextParamSets.CHEST);
-
-        // Roll the loot table 1 time
-        for (int i = 0; i < 1; i++) {
-            List<ItemStack> loot = lootTable2.getRandomItems(lootParams2);
-
-            for (ItemStack itemStack : loot) {
-                if (!player.getInventory().add(itemStack)) {
-                    player.drop(itemStack, false);
-                }
-            }
-        }
-    }
-
     @Override
     public void tick() {
         super.tick();
@@ -463,13 +375,6 @@ public class RaidEntity extends Entity {
             updateBossBar();
             updatePlayers();
 
-            /*JustEnoughGuns.LOGGER.atInfo().log("isFinished: " + isFinished);
-            JustEnoughGuns.LOGGER.atInfo().log("isSpawningMobs: " + isSpawningMobs);
-            JustEnoughGuns.LOGGER.atInfo().log("inWave: " + inWave);
-            JustEnoughGuns.LOGGER.atInfo().log("spawningWave: " + spawningWave);
-            JustEnoughGuns.LOGGER.atInfo().log("activeMobs: " + activeMobs.size());
-            JustEnoughGuns.LOGGER.atInfo().log("spawnedMobs: " + spawnedMobs.size());*/
-
             if (this.getActivePlayers().isEmpty() || this.level().getDifficulty().equals(Difficulty.PEACEFUL)) {
                 this.isFinished = true;
                 this.defeat = true;
@@ -477,13 +382,6 @@ public class RaidEntity extends Entity {
 
             if (this.currentWave >= this.totalWaves && this.isWaveComplete()) {
                 this.isFinished = true;
-            }
-
-            if (this.breakTime > 0 && this.currentWave != 0) {
-                if (this.tickCount % 5 == 0) {
-                    FireworkRocketEntity firework = new FireworkRocketEntity(this.level(), getFireworkStack(this.random.nextBoolean(), false, this.random.nextInt(0, 3), 3), this.getX() + this.random.nextInt(-32, 32), this.getY() + this.random.nextInt(0, 3 ), this.getZ() + this.random.nextInt(-32, 32), false);
-                    this.level().addFreshEntity(firework);
-                }
             }
 
             if (this.justFinishedWave) {
@@ -530,12 +428,12 @@ public class RaidEntity extends Entity {
                         this.breakTime = this.maxBreakTime;
                     }
                 } else {
-                    if (activeMobs.size() < MAX_ACTIVE_MOBS && spawnedMobs.size() < TOTAL_WAVE_MOBS) {
+                    if (activeMobs.size() < MAX_ACTIVE_MOBS && spawnedMobs.size() < this.totalWaveMobs) {
                         this.isSpawningMobs = true;
                     }
                 }
 
-                if (getActiveMobs().size() < 10 && spawnedMobs.size() > TOTAL_WAVE_MOBS - (TOTAL_WAVE_MOBS / 5)) {
+                if (getActiveMobs().size() < 10 && spawnedMobs.size() > this.totalWaveMobs - (this.totalWaveMobs / 5)) {
                     for (LivingEntity entity : getActiveMobs()) {
                         entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, -1, 0, false, false));
                     }
@@ -553,42 +451,44 @@ public class RaidEntity extends Entity {
                 this.activeMobs.clear();
             }
             if (this.isFinished) {
-                if (this.resultPrize > 0) {
+                if (this.resultPrize > 0 && this.summonBoss) {
                     if (this.victory) {
-                        Component message = Component.translatable("broadcast.jeg.raid.victory", Component.translatable("faction.jeg." + this.faction.getName())).withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.GOLD);
+                        Component message = Component.translatable("broadcast.jeg.terror_armada.victory").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.BLUE);
                         ((ServerLevel) this.level()).getServer().getPlayerList().broadcastSystemMessage(message, false);
-                        for (Player player : this.activePlayers) {
-                            this.victoryReward(player, (ServerLevel) player.level());
-                        }
                         this.resultPrize--;
                     }
                     if (this.defeat) {
                         for (LivingEntity entity : getActiveMobs()) {
                             entity.removeEffect(MobEffects.GLOWING);
                         }
-                        Component message2 = Component.translatable("broadcast.jeg.raid.no_players", Component.translatable("faction.jeg." + this.faction.getName())).withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
+                        Component message2 = Component.translatable("broadcast.jeg.raid.no_players", Component.translatable("faction.jeg.terror_armada")).withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
                         ((ServerLevel) this.level()).getServer().getPlayerList().broadcastSystemMessage(message2, false);
-                        Component message = Component.translatable("broadcast.jeg.raid.defeat", Component.translatable("faction.jeg." + this.faction.getName())).withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
+                        Component message = Component.translatable("broadcast.jeg.raid.defeat", Component.translatable("faction.jeg.terror_armada")).withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
                         ((ServerLevel) this.level()).getServer().getPlayerList().broadcastSystemMessage(message, false);
                         this.resultPrize--;
                     }
                 }
-                if (this.victory) {
-                    if (this.tickCount % 5 == 0) {
-                        FireworkRocketEntity firework = new FireworkRocketEntity(this.level(), getFireworkStack(this.random.nextBoolean(), false, this.random.nextInt(0, 3), 3), this.getX() + this.random.nextInt(-64, 64), this.getY() + this.random.nextInt(0, 3 ), this.getZ() + this.random.nextInt(-64, 64), false);
-                        this.level().addFreshEntity(firework);
-                    }
-                }
-                if (this.defeat) {
-                    if (this.tickCount % 80 == 0) {
-                        this.playCelebrationHorn();
-                    }
-                }
-
-                ((ServerLevel) this.level()).setWeatherParameters(12000, 0, false, false);
 
                 this.despawnTicks--;
+                if (this.despawnTicks == 100 && this.summonBoss) {
+                    this.playHorn();
+                }
                 if (this.despawnTicks < 0) {
+                    if (this.summonBoss) {
+                        LightningBolt lightningBolt = new LightningBolt(EntityType.LIGHTNING_BOLT, this.level());
+                        lightningBolt.setPos(this.getPosition(1F).add(0, 64, 32));
+                        this.level().addFreshEntity(lightningBolt);
+
+                        ((ServerLevel) this.level()).setWeatherParameters(12000, 0, false, false);
+
+                        TerrorPhantom boss = new TerrorPhantom(ModEntities.TERROR_PHANMTOM.get(), this.level());
+                        boss.setPos(this.getPosition(1F).add(0, 32, 32));
+                        this.level().addFreshEntity(boss);
+                        /*if (!this.activePlayers.isEmpty()) {
+                            boss.setTarget(this.activePlayers.stream().findAny().get());
+                        }*/
+                    }
+
                     this.bossBar.setVisible(false);
                     this.bossBar.removeAllPlayers();
                     this.discard();
@@ -601,9 +501,9 @@ public class RaidEntity extends Entity {
     @Override
     public void onRemovedFromWorld() {
         if (!this.victory && !this.defeat && this.level() instanceof ServerLevel serverLevel) {
-            Component message2 = Component.translatable("broadcast.jeg.raid.no_players", Component.translatable("faction.jeg." + this.faction.getName())).withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
+            Component message2 = Component.translatable("broadcast.jeg.raid.no_players", Component.translatable("faction.jeg.terror_armada")).withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
             serverLevel.getServer().getPlayerList().broadcastSystemMessage(message2, false);
-            Component message = Component.translatable("broadcast.jeg.raid.defeat", Component.translatable("faction.jeg." + this.faction.getName())).withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
+            Component message = Component.translatable("broadcast.jeg.raid.defeat", Component.translatable("faction.jeg.terror_armada")).withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
             serverLevel.getServer().getPlayerList().broadcastSystemMessage(message, false);
         }
     }
@@ -623,85 +523,25 @@ public class RaidEntity extends Entity {
 
     }
 
-    public static void summonRaidEntity(ServerLevel level, Faction faction, Vec3 startPos, boolean forceGuns) {
-        RaidEntity raidEntity = new RaidEntity(ModEntities.RAID_ENTITY.get(), level);
+    public static void summonTerrorRaidEntity(ServerLevel level, Vec3 startPos, boolean forceGuns, boolean defeat) {
+        TerrorRaidEntity raidEntity = new TerrorRaidEntity(ModEntities.TERROR_RAID_ENTITY.get(), level);
         raidEntity.setPos(startPos);
-        raidEntity.faction = faction;
-        if (raidEntity.level().random.nextFloat() < 0.3) {
-            level.setWeatherParameters(0, 12000, true, true);
-        }
+        level.setWeatherParameters(0, 12000, true, true);
         level.addFreshEntity(raidEntity);
-        Component message = Component.translatable("broadcast.jeg.raid", Component.translatable("faction.jeg." + raidEntity.faction.getName()), BlockPos.containing(startPos)).withStyle(ChatFormatting.RED).withStyle(ChatFormatting.BOLD);
-        level.getServer().getPlayerList().broadcastSystemMessage(message, false);
+        if (!defeat) {
+            Component message = Component.translatable("broadcast.jeg.raid", Component.translatable("faction.jeg.terror_armada"), BlockPos.containing(startPos)).withStyle(ChatFormatting.RED).withStyle(ChatFormatting.BOLD);
+            level.getServer().getPlayerList().broadcastSystemMessage(message, false);
+        }
+        if (defeat) {
+            raidEntity.totalWaves = 1;
+            raidEntity.summonBoss = false;
+            raidEntity.totalWaveMobs = 20;
+            raidEntity.maxCooldown = 20;
+        }
     }
 
     public ServerBossEvent getBossBar() {
         return this.bossBar;
-    }
-
-    private static ItemStack getFireworkStack(Boolean pFlicker, Boolean pTrail, int pType, int pFlight) {
-        ItemStack fireworkStack = new ItemStack(Items.FIREWORK_ROCKET);
-        CompoundTag fireworkTag = new CompoundTag();
-
-        ListTag explosionList = new ListTag();
-        CompoundTag explosion = new CompoundTag();
-
-        explosion.putBoolean("Flicker", pFlicker);
-        explosion.putBoolean("Trail", pTrail);
-        /*
-         * Set the type of explosion (0-4 for different shapes)
-         * 0 - Small
-         * 1 - Large
-         * 2 - Star
-         * 3 - Creeper
-         * 4 - Burst
-         */
-        explosion.putByte("Type", (byte) pType);
-        explosion.putIntArray("Colors", new int[]{getRandomColor(), getRandomColor()});
-        explosionList.add(explosion);
-        fireworkTag.putByte("Flight", (byte) pFlight);
-        fireworkTag.put("Explosions", explosionList);
-
-        CompoundTag fireworkItemTag = new CompoundTag();
-        fireworkItemTag.put("Fireworks", fireworkTag);
-        fireworkStack.setTag(fireworkItemTag);
-
-        return fireworkStack;
-    }
-
-    private static ItemStack getColoredFireworkStack(Boolean pFlicker, Boolean pTrail, int pType, int pFlight, int pColor1, int pColor2) {
-        ItemStack fireworkStack = new ItemStack(Items.FIREWORK_ROCKET);
-        CompoundTag fireworkTag = new CompoundTag();
-
-        ListTag explosionList = new ListTag();
-        CompoundTag explosion = new CompoundTag();
-
-        explosion.putBoolean("Flicker", pFlicker);
-        explosion.putBoolean("Trail", pTrail);
-        /*
-         * Set the type of explosion (0-4 for different shapes)
-         * 0 - Small
-         * 1 - Large
-         * 2 - Star
-         * 3 - Creeper
-         * 4 - Burst
-         */
-        explosion.putByte("Type", (byte) pType);
-        explosion.putIntArray("Colors", new int[]{pColor1, pColor2});
-        explosionList.add(explosion);
-        fireworkTag.putByte("Flight", (byte) pFlight);
-        fireworkTag.put("Explosions", explosionList);
-
-        CompoundTag fireworkItemTag = new CompoundTag();
-        fireworkItemTag.put("Fireworks", fireworkTag);
-        fireworkStack.setTag(fireworkItemTag);
-
-        return fireworkStack;
-    }
-
-    private static int getRandomColor() {
-        RandomSource rand = RandomSource.create();
-        return rand.nextInt(0xFFFFFF);
     }
 
     private void summonParticleRing() {

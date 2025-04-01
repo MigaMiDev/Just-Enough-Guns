@@ -31,7 +31,7 @@
   "reloads": {
     "additionalReloadTimer": 0,
     "maxAmmo": 1,
-    "reloadTimer": 20,
+    "reloadTimer": 16,
     "reloadType": "jeg:inventory_fed"
   },
   "sounds": {

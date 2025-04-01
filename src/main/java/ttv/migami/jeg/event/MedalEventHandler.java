@@ -73,7 +73,7 @@ public class MedalEventHandler {
         if (entity.getTags().contains("EliteGunner"))
             PacketHandler.getPlayChannel().sendToPlayer(() -> (ServerPlayer) player, new S2CMessageSendMedal(MedalType.COMBAT_KINGSLAYER.ordinal()));
 
-        if (player.getMainHandItem().getTag().getInt("AmmoCount") <= 1 && !player.isCreative())
+        if (player.getMainHandItem().getTag().getInt("AmmoCount") < 1 && !player.isCreative())
             PacketHandler.getPlayChannel().sendToPlayer(() -> (ServerPlayer) player, new S2CMessageSendMedal(MedalType.COMBAT_JUST_ENOUGH_AMMO.ordinal()));
     }
 }

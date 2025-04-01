@@ -41,13 +41,16 @@ import ttv.migami.jeg.entity.monster.phantom.gunner.PhantomGunner;
 import ttv.migami.jeg.entity.throwable.ThrowableExplosiveChargeEntity;
 import ttv.migami.jeg.faction.Faction;
 import ttv.migami.jeg.faction.GunnerManager;
+import ttv.migami.jeg.faction.jeg.FactionData;
+import ttv.migami.jeg.faction.jeg.FactionDataManager;
+import ttv.migami.jeg.faction.raid.RaidEntity;
+import ttv.migami.jeg.faction.raid.TerrorRaidEntity;
 import ttv.migami.jeg.item.GunItem;
 
 import java.util.List;
 import java.util.Random;
 
 import static ttv.migami.jeg.faction.GunMobValues.*;
-import static ttv.migami.jeg.faction.raid.RaidEntity.summonRaidEntity;
 
 public class ModCommands {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
@@ -175,6 +178,17 @@ public class ModCommands {
                                         )
                                 )
                         )
+                        .then(Commands.literal("startTerrorRaid")
+                                .then(Commands.argument("pos", Vec3Argument.vec3())
+                                        .executes(context -> {
+                                            CommandSourceStack source = context.getSource();
+                                            Vec3 pos = Vec3Argument.getVec3(context, "pos");
+                                            executeStartTerrorRaid(source, pos);
+
+                                            return 1;
+                                        })
+                                )
+                        )
                         .then(Commands.literal("spawnTrumpetBoi")
                                 .then(Commands.argument("pos", Vec3Argument.vec3())
                                         .executes(context -> {
@@ -224,6 +238,69 @@ public class ModCommands {
         if (!forceGuns)
             source.sendFailure(Component.nullToEmpty("Please note that by not setting 'forceGuns' to true, the chance of them spawning with Guns is entirely determined by your Config Files!"));
         return 1;
+    }
+
+    public static Mob getFactionMob(ServerLevel level, FactionData factionData, Vec3 startPos, boolean forceGuns, int spread) {
+        Random random = new Random();
+
+        String mobName = factionData.getMobList().get(random.nextInt(factionData.getMobList().size()));
+        EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(mobName));
+
+        if (entityType == null) {
+            return null;
+        }
+
+        Mob mob = (Mob) entityType.create(level);
+        if (mob != null) {
+            double offsetX = (random.nextDouble() - 0.5) * spread;
+            double offsetZ = (random.nextDouble() - 0.5) * spread;
+            mob.setPos(startPos.x + offsetX, startPos.y, startPos.z + offsetZ);
+
+            long totalDayTime = mob.level().getDayTime();
+            int currentDay = (int) (totalDayTime / 24000L);
+            int currentChance = Math.min(initialChance + (currentDay * chanceIncrement), maxChance);
+
+            if (mob.getRandom().nextInt(100) < currentChance || forceGuns) {
+                mob.addTag("MobGunner");
+            }
+
+            mob.populateDefaultEquipmentSlots(RandomSource.create(), mob.level().getCurrentDifficultyAt(mob.blockPosition()));
+            equipArmorWithRandomMaterial(mob, random);
+
+            if (mob.getTags().contains("MobGunner")) {
+                Item gun = factionData.getRandomGun(random.nextBoolean());
+
+                boolean elite = (mob.getRandom().nextFloat() < eliteChance && elitesEnabled);
+                if (elite) {
+                    mob.addTag("EliteGunner");
+                    gun = factionData.getEliteGun();
+                    if (factionData == FactionDataManager.getTerrorArmadaWave1() || factionData == FactionDataManager.getTerrorArmadaWave2() || factionData == FactionDataManager.getTerrorArmadaWave3()) {
+                        mob.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.JACK_O_LANTERN));
+                    } else {
+                        mob.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.TURTLE_HELMET));
+                    }
+                    mob.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, -1, 2, false, true));
+                    mob.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, -1, 1, false, false));
+                } else if (mob.getRandom().nextFloat() < 0.8F) {
+                    mob.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.CARVED_PUMPKIN));
+                }
+
+                ItemStack modifiedGun = new ItemStack(gun);
+                mob.setItemSlot(EquipmentSlot.MAINHAND, modifiedGun);
+                if (modifiedGun.getTag() != null && modifiedGun.getItem() instanceof GunItem gunItem) {
+                    Gun gunModified = gunItem.getModifiedGun(modifiedGun);
+                    modifiedGun.getTag().putInt("AmmoCount", mob.getRandom().nextInt(gunModified.getReloads().getMaxAmmo()));
+                }
+            } else {
+                if (mob instanceof Piglin piglin) {
+                    piglin.setItemSlot(EquipmentSlot.MAINHAND, piglin.getRandom().nextFloat() < 0.5f
+                            ? new ItemStack(Items.CROSSBOW)
+                            : new ItemStack(Items.GOLDEN_SWORD));
+                }
+            }
+        }
+
+        return mob;
     }
 
     public static Mob getFactionMob(ServerLevel level, Faction faction, Vec3 startPos, boolean forceGuns, int spread) {
@@ -407,12 +484,47 @@ public class ModCommands {
 
         int x = level.random.nextInt(-50, 50);
         int z = level.random.nextInt(-50, 50);
-        summonRaidEntity(level, faction, pos, true);
+        RaidEntity.summonRaidEntity(level, faction, pos, true);
 
         level.playSound(null, BlockPos.containing(pos.add(x, 32, z)), SoundEvents.GOAT_HORN_SOUND_VARIANTS.get(2).get(), SoundSource.HOSTILE, 1000F, 1);
     }
 
-    public static boolean spawnRaider(ServerLevel level, Faction faction, LivingEntity entity, Player player, BlockPos.MutableBlockPos spawnPos, Vec3 targetPos, boolean forceGuns) {
+    private static int executeStartTerrorRaid(CommandSourceStack source, Vec3 pos) {
+        if (!source.hasPermission(2)) {
+            source.sendFailure(Component.nullToEmpty("You do not have permission to execute this command"));
+            return 0;
+        }
+
+        ServerLevel level = source.getLevel();
+
+        if (level.getDifficulty() == Difficulty.PEACEFUL) {
+            source.sendFailure(Component.nullToEmpty("Raids, can't be started on Peaceful, dummy."));
+            return 0;
+        }
+
+        startTerrorRaid(level, pos, true, false);
+
+        MutableComponent factionLang = Component.translatable("faction.jeg.terror_armada");
+        source.sendSuccess(() -> Component.nullToEmpty("Started a Raid for the Faction " + factionLang.getString() + ", good luck!"), true);
+        return 1;
+    }
+
+    public static void startTerrorRaid(ServerLevel level, Vec3 pos, boolean forceGun, boolean defeat) {
+        if (level.getDifficulty().equals(Difficulty.PEACEFUL)) {
+            Component message = Component.translatable("broadcast.jeg.raid.peaceful").withStyle(ChatFormatting.WHITE);
+            level.getServer().getPlayerList().broadcastSystemMessage(message, true);
+
+            return;
+        }
+
+        int x = level.random.nextInt(-50, 50);
+        int z = level.random.nextInt(-50, 50);
+        TerrorRaidEntity.summonTerrorRaidEntity(level, pos, true, defeat);
+
+        level.playSound(null, BlockPos.containing(pos.add(x, 32, z)), ModSounds.DARK_HORN.get(), SoundSource.HOSTILE, 1000F, 1);
+    }
+
+    public static boolean spawnRaider(ServerLevel level, LivingEntity entity, Player player, BlockPos.MutableBlockPos spawnPos, Vec3 targetPos, boolean forceGuns) {
         RandomSource random = level.random;
         spawnPos.setY(level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, spawnPos).getY());
 

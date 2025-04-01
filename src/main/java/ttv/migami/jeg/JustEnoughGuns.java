@@ -35,6 +35,7 @@ import ttv.migami.jeg.client.handler.CrosshairHandler;
 import ttv.migami.jeg.client.render.entity.BooRenderer;
 import ttv.migami.jeg.client.render.entity.GhoulRenderer;
 import ttv.migami.jeg.client.render.entity.RaidEntityRenderer;
+import ttv.migami.jeg.client.render.entity.TerrorRaidEntityRenderer;
 import ttv.migami.jeg.common.BoundingBoxManager;
 import ttv.migami.jeg.common.NetworkGunManager;
 import ttv.migami.jeg.common.ProjectileManager;
@@ -154,6 +155,7 @@ public class JustEnoughGuns {
 
     private void onClientSetup(FMLClientSetupEvent event) {
         EntityRenderers.register(ModEntities.RAID_ENTITY.get(), RaidEntityRenderer::new);
+        EntityRenderers.register(ModEntities.TERROR_RAID_ENTITY.get(), TerrorRaidEntityRenderer::new);
         EntityRenderers.register(ModEntities.HEALING_TALISMAN.get(), ThrownItemRenderer::new);
         EntityRenderers.register(ModEntities.GHOUL.get(), GhoulRenderer::new);
         EntityRenderers.register(ModEntities.BOO.get(), BooRenderer::new);

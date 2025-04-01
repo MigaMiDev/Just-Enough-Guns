@@ -4,11 +4,13 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -34,6 +36,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.BarrelBlock;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BarrelBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -41,14 +47,12 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 import ttv.migami.jeg.Config;
+import ttv.migami.jeg.Reference;
 import ttv.migami.jeg.entity.ai.EntityHurtByTargetGoal;
 import ttv.migami.jeg.entity.ai.phantom.TerrorPhantomGunAttackGoal;
 import ttv.migami.jeg.entity.monster.phantom.PhantomSwarmData;
 import ttv.migami.jeg.entity.monster.phantom.gunner.PhantomGunner;
-import ttv.migami.jeg.entity.throwable.GrenadeEntity;
-import ttv.migami.jeg.entity.throwable.ThrowableExplosiveChargeEntity;
-import ttv.migami.jeg.entity.throwable.ThrowableGrenadeEntity;
-import ttv.migami.jeg.entity.throwable.ThrowableMolotovCocktailEntity;
+import ttv.migami.jeg.entity.throwable.*;
 import ttv.migami.jeg.init.*;
 
 import javax.annotation.Nullable;
@@ -87,6 +91,9 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
 
     private final int MAX_SWARM_SPAWN_TICK = 300;
     private int swarmSpawnTick = MAX_SWARM_SPAWN_TICK;
+
+    private ResourceLocation lootTable1 = new ResourceLocation(Reference.MOD_ID, "entities/phantom/terror/terror_phantom_supply");
+    private ResourceLocation lootTable2 = new ResourceLocation(Reference.MOD_ID, "entities/phantom/terror/terror_phantom_reward");
 
     @Nullable
     private AbstractTickableSoundInstance activeSound;
@@ -168,6 +175,11 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
         this.endGrenades(this);
         GrenadeEntity.createExplosion(this, Config.COMMON.grenades.explosionRadius.get().floatValue(), true);
         if (this.level() instanceof ServerLevel serverLevel) {
+            this.spawnLootBarrels(serverLevel, this.getOnPos(), lootTable1, lootTable2);
+            ThrowableFlareEntity flare = new ThrowableFlareEntity(serverLevel, this);
+            serverLevel.addFreshEntity(flare);
+            ModCommands.startTerrorRaid(serverLevel, this.position(), true, true);
+
             sendParticlesToAll(
                     serverLevel,
                     ModParticleTypes.BIG_EXPLOSION.get(),
@@ -429,6 +441,29 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
         if (this.getHealth() <= 0) {
             this.isDying = true;
             this.setDying(true);
+        }
+    }
+
+    public void spawnLootBarrels(ServerLevel world, BlockPos pos, ResourceLocation lootTable1, ResourceLocation lootTable2) {
+        BlockPos chestPos1 = findGroundPosition(world, pos);
+        BlockPos chestPos2 = findGroundPosition(world, pos.offset(2, 0, 2));
+
+        this.placeBarrelWithLoot(world, chestPos1, lootTable1);
+        this.placeBarrelWithLoot(world, chestPos2, lootTable2);
+    }
+
+    private static BlockPos findGroundPosition(Level world, BlockPos pos) {
+        while (!world.getBlockState(pos).isSolid() && pos.getY() > world.getMinBuildHeight()) {
+            pos = pos.below();
+        }
+        return pos.above();
+    }
+
+    private void placeBarrelWithLoot(ServerLevel world, BlockPos pos, ResourceLocation lootTable) {
+        world.setBlock(pos, Blocks.BARREL.defaultBlockState().setValue(BarrelBlock.FACING, Direction.getRandom(this.random)), 3);
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        if (blockEntity instanceof BarrelBlockEntity chest) {
+            chest.setLootTable(lootTable, world.getRandom().nextLong());
         }
     }
 

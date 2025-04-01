@@ -30,9 +30,6 @@ public class PlayerHurtTargetGoal extends TargetGoal {
                 return false;
             } else {
                 this.ownerLastHurt = livingentity.getLastHurtMob();
-                if (this.ownerLastHurt instanceof Mob) {
-                    return false;
-                }
                 if (this.ownerLastHurt != null && this.ownerLastHurt.isDeadOrDying()) {
                     return false;
                 }

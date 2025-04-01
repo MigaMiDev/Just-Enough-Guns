@@ -9,7 +9,9 @@
   "general": {
     "fireMode": "jeg:semi_automatic",
     "gripType": "jeg:one_handed",
-    "rate": 1
+    "infinityDisabled": true,
+    "rate": 1,
+    "witheredDisabled": true
   },
   "modules": {
     "zoom": {
@@ -31,10 +33,10 @@
     "trailLengthMultiplier": 0.0
   },
   "reloads": {
-    "additionalReloadTimer": 10,
-    "maxAmmo": 7,
-    "reloadTimer": 30,
-    "reloadType": "jeg:mag_fed"
+    "additionalReloadTimer": 0,
+    "maxAmmo": 1,
+    "reloadTimer": 20,
+    "reloadType": "jeg:inventory_fed"
   },
   "sounds": {
     "cock": "jeg:item.pistol.cock",

@@ -18,6 +18,7 @@ import ttv.migami.jeg.entity.monster.phantom.terror.TerrorPhantom;
 import ttv.migami.jeg.entity.projectile.*;
 import ttv.migami.jeg.entity.throwable.*;
 import ttv.migami.jeg.faction.raid.RaidEntity;
+import ttv.migami.jeg.faction.raid.TerrorRaidEntity;
 
 import java.util.function.BiFunction;
 
@@ -29,6 +30,7 @@ public class ModEntities
     public static final DeferredRegister<EntityType<?>> REGISTER = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, Reference.MOD_ID);
 
     public static final RegistryObject<EntityType<RaidEntity>> RAID_ENTITY = REGISTER.register("raid_entity", () -> EntityType.Builder.<RaidEntity>of(RaidEntity::new, MobCategory.MISC).sized(3.0F, 3.0F).noSummon().noSave().fireImmune().build("raid_entity"));
+    public static final RegistryObject<EntityType<TerrorRaidEntity>> TERROR_RAID_ENTITY = REGISTER.register("terror_raid_entity", () -> EntityType.Builder.<TerrorRaidEntity>of(TerrorRaidEntity::new, MobCategory.MISC).sized(3.0F, 3.0F).noSummon().noSave().fireImmune().build("terror_raid_entity"));
 
     public static final RegistryObject<EntityType<ArrowProjectileEntity>> ARROW_PROJECTILE = registerProjectile("arrow_projectile", ArrowProjectileEntity::new);
     public static final RegistryObject<EntityType<FlameProjectileEntity>> FLAME_PROJECTILE = registerProjectile("flame_projectile", FlameProjectileEntity::new);

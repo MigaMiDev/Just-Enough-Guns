@@ -33,7 +33,9 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.entity.ai.EntityHurtByTargetGoal;
 import ttv.migami.jeg.entity.ai.owned.NearestAttackableTargetGoal;
+import ttv.migami.jeg.entity.ai.owned.PlayerHurtTargetGoal;
 import ttv.migami.jeg.entity.ai.phantom.PhantomGunnerGunAttackGoal;
+import ttv.migami.jeg.entity.monster.phantom.terror.TerrorPhantom;
 import ttv.migami.jeg.entity.throwable.GrenadeEntity;
 import ttv.migami.jeg.init.ModItems;
 import ttv.migami.jeg.init.ModParticleTypes;
@@ -104,8 +106,8 @@ public class PhantomGunner extends Phantom implements GeoEntity {
         this.targetSelector.addGoal(1, (new EntityHurtByTargetGoal(this)));
 
         // Player Owned
-        //this.targetSelector.addGoal(1, new PlayerHurtTargetGoal(this));
-        this.targetSelector.addGoal(7, new NearestAttackableTargetGoal<>(this, Mob.class, 5, true, false, (livingEntity) -> livingEntity instanceof Enemy && !(livingEntity instanceof PhantomGunner) && !(livingEntity instanceof Creeper) && !(livingEntity instanceof EnderMan)));
+        this.targetSelector.addGoal(1, new PlayerHurtTargetGoal(this));
+        this.targetSelector.addGoal(7, new NearestAttackableTargetGoal<>(this, Mob.class, 5, true, true, (livingEntity) -> livingEntity instanceof Enemy && !(livingEntity instanceof Creeper) && !(livingEntity instanceof PhantomGunner) && !(livingEntity instanceof TerrorPhantom) && !(livingEntity instanceof EnderMan)));
     }
 
     private void explode() {
@@ -516,7 +518,7 @@ public class PhantomGunner extends Phantom implements GeoEntity {
         }
 
         public boolean canUse() {
-            if (PhantomGunner.this.playerOwned) {
+            if (PhantomGunner.this.isPlayerOwned() || PhantomGunner.this.playerOwned) {
                 return false;
             }
 

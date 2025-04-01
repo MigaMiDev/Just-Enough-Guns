@@ -9,7 +9,7 @@
   "general": {
     "canBeBlueprinted": false,
     "fireMode": "jeg:automatic",
-    "gripType": "jeg:two_handed",
+    "gripType": "jeg:mini_gun",
     "infinityDisabled": true,
     "overheatTimer": 200,
     "projectileAmount": 3,
@@ -30,7 +30,7 @@
   },
   "projectile": {
     "advantage": "jeg:heavy",
-    "damage": 4.0,
+    "damage": 5.0,
     "damageReduceOverLife": true,
     "ejectsCasing": true,
     "headshotMultiplier": 1.5,
@@ -44,7 +44,7 @@
   "reloads": {
     "additionalReloadTimer": 0,
     "maxAmmo": 1,
-    "reloadTimer": 40,
+    "reloadTimer": 18,
     "reloadType": "jeg:inventory_fed"
   },
   "sounds": {

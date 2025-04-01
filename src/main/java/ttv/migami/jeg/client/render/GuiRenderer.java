@@ -24,6 +24,7 @@ import ttv.migami.jeg.common.Gun;
 import ttv.migami.jeg.common.ReloadType;
 import ttv.migami.jeg.init.ModEnchantments;
 import ttv.migami.jeg.init.ModItems;
+import ttv.migami.jeg.init.ModSyncedDataKeys;
 import ttv.migami.jeg.item.GunItem;
 import ttv.migami.jeg.item.TelescopicScopeItem;
 import ttv.migami.jeg.item.attachment.IAttachment;
@@ -193,21 +194,27 @@ public class GuiRenderer {
 
                 String ammoText = String.format("%03d", ammoCount);
 
+                if (ModSyncedDataKeys.RELOADING.getValue(player)) {
+                    ammoText = "Reloading";
+                }
+
                 guiGraphics.drawString(Minecraft.getInstance().font, ammoText, 0, 0, 0xFFFFFF, true);
                 guiGraphics.pose().popPose();
 
-                String inventoryAmmo = String.format("%04d", ammoStack.length);
-                if (gun.getReloads().getReloadType().equals(ReloadType.SINGLE_ITEM)) {
-                    inventoryAmmo = String.format("%04d", ammoStack.length * gun.getReloads().getMaxAmmo());
-                } else {
-                    inventoryAmmo = String.format("%04d", getTotalAmmoCount(ammoStack));
-                }
-                if (player.isCreative() || heldItem.getEnchantmentLevel(ModEnchantments.INFINITY.get()) != 0 ||
-                        heldItem.getTag().getBoolean("IgnoreAmmo")) {
-                    inventoryAmmo = "9999";
-                }
-                guiGraphics.drawString(Minecraft.getInstance().font, inventoryAmmo, startX + 38, startY, 0x878787, true);
+                if (!ModSyncedDataKeys.RELOADING.getValue(player)) {
+                    String inventoryAmmo = String.format("%04d", ammoStack.length);
+                    if (gun.getReloads().getReloadType().equals(ReloadType.SINGLE_ITEM)) {
+                        inventoryAmmo = String.format("%04d", ammoStack.length * gun.getReloads().getMaxAmmo());
+                    } else {
+                        inventoryAmmo = String.format("%04d", getTotalAmmoCount(ammoStack));
+                    }
+                    if (player.isCreative() || heldItem.getEnchantmentLevel(ModEnchantments.INFINITY.get()) != 0 ||
+                            heldItem.getTag().getBoolean("IgnoreAmmo")) {
+                        inventoryAmmo = "9999";
+                    }
+                    guiGraphics.drawString(Minecraft.getInstance().font, inventoryAmmo, startX + 38, startY, 0x878787, true);
 
+                }
 
                 /*ResourceLocation ammoTexture = AMMO;
                 int segmentWidth = 3;

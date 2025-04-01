@@ -49,6 +49,8 @@ import ttv.migami.jeg.JustEnoughGuns;
 import ttv.migami.jeg.common.*;
 import ttv.migami.jeg.common.container.*;
 import ttv.migami.jeg.crafting.workbench.*;
+import ttv.migami.jeg.entity.monster.phantom.gunner.PhantomGunner;
+import ttv.migami.jeg.entity.monster.phantom.terror.TerrorPhantom;
 import ttv.migami.jeg.entity.projectile.ProjectileEntity;
 import ttv.migami.jeg.event.BurstFireEvent;
 import ttv.migami.jeg.event.GunFireEvent;
@@ -73,7 +75,7 @@ public class ServerPlayHandler
     //private static final Predicate<LivingEntity> HOSTILE_ENTITIES = entity -> entity.getSoundSource() == SoundSource.HOSTILE && !(entity instanceof NeutralMob) && !Config.COMMON.aggroMobs.exemptEntities.get().contains(EntityType.getKey(entity.getType()).toString());
     private static final Predicate<LivingEntity> HOSTILE_ENTITIES = entity ->
             (entity.getSoundSource() == SoundSource.HOSTILE || entity.getType() == EntityType.PIGLIN || entity.getType() == EntityType.ZOMBIFIED_PIGLIN) &&
-                    !Config.COMMON.aggroMobs.exemptEntities.get().contains(EntityType.getKey(entity.getType()).toString());
+                    !Config.COMMON.aggroMobs.exemptEntities.get().contains(EntityType.getKey(entity.getType()).toString()) && entity.getType() != EntityType.ENDERMAN && !(entity instanceof TerrorPhantom) && !(entity instanceof PhantomGunner);
     private static final Predicate<LivingEntity> FLEEING_ENTITIES = entity ->
             Config.COMMON.fleeingMobs.fleeingEntities.get().contains(EntityType.getKey(entity.getType()).toString());
 

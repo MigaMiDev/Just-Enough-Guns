@@ -36,16 +36,17 @@ public class GunGen extends GunProvider
                 .setRecoilAngle(0)
                 .setAlwaysSpread(false)
                 .setSpread(0)
+                .setWitheredDisabled(true)
+                .setInfinityDisabled(true)
 
                 // Reloads
-                .setMaxAmmo(7)
-                .setReloadType(ReloadType.MAG_FED)
-                .setReloadTimer(30)
-                .setAdditionalReloadTimer(10)
+                .setMaxAmmo(1)
+                .setReloadType(ReloadType.INVENTORY_FED)
+                .setReloadTimer(20)
+                .setAdditionalReloadTimer(0)
 
                 // Projectile
                 .setAmmo(Items.AIR)
-                .setEjectsCasing(true)
                 .setProjectileVisible(false)
                 .setDamage(0.0F)
                 .setProjectileSize(0.05F)
@@ -1631,7 +1632,7 @@ public class GunGen extends GunProvider
                 // General
                 .setFireMode(FireMode.AUTOMATIC)
                 .setFireRate(1)
-                .setGripType(GripType.TWO_HANDED)
+                .setGripType(GripType.MINI_GUN)
                 .setRecoilKick(0.15F)
                 .setRecoilAngle(0.8F)
                 .setAlwaysSpread(false)
@@ -1646,14 +1647,14 @@ public class GunGen extends GunProvider
                 // Reloads
                 .setMaxAmmo(1)
                 .setReloadType(ReloadType.INVENTORY_FED)
-                .setReloadTimer(20)
+                .setReloadTimer(18)
                 .setAdditionalReloadTimer(0)
 
                 // Projectile
                 .setAmmo(ModItems.PISTOL_AMMO.get())
                 .setEjectsCasing(true)
                 .setProjectileVisible(false)
-                .setDamage(4.0F)
+                .setDamage(5.0F)
                 .setAdvantage(ModTags.Entities.HEAVY.location())
                 .setProjectileSize(0.05F)
                 .setProjectileSpeed(13F)

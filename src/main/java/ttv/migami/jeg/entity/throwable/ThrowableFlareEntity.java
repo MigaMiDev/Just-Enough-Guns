@@ -7,7 +7,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.common.Mod;
-import ttv.migami.jeg.JustEnoughGuns;
 import ttv.migami.jeg.faction.Faction;
 import ttv.migami.jeg.faction.GunnerManager;
 import ttv.migami.jeg.init.ModCommands;
@@ -27,31 +26,31 @@ public class ThrowableFlareEntity extends ThrowableGrenadeEntity
         this.setMaxLife(this.hasRaid ? 3200 : 620);
     }
 
-    public ThrowableFlareEntity(EntityType<? extends ThrowableGrenadeEntity> entityType, Level world, LivingEntity player)
+    public ThrowableFlareEntity(EntityType<? extends ThrowableGrenadeEntity> entityType, Level world, LivingEntity livingEntity)
     {
-        super(entityType, world, player);
+        super(entityType, world, livingEntity);
         this.setItem(new ItemStack(ModItems.FLARE.get()));
         this.setMaxLife(this.hasRaid ? 3200 : 620);
     }
 
-    public ThrowableFlareEntity(Level world, LivingEntity player)
+    public ThrowableFlareEntity(Level world, LivingEntity livingEntity)
     {
-        super(ModEntities.THROWABLE_FLARE.get(), world, player);
+        super(ModEntities.THROWABLE_FLARE.get(), world, livingEntity);
         this.setItem(new ItemStack(ModItems.FLARE.get()));
         this.setMaxLife(this.hasRaid ? 3200 : 620);
     }
 
-    public ThrowableFlareEntity(Level world, LivingEntity player, boolean hasRaid)
+    public ThrowableFlareEntity(Level world, LivingEntity livingEntity, boolean hasRaid)
     {
-        super(ModEntities.THROWABLE_FLARE.get(), world, player);
+        super(ModEntities.THROWABLE_FLARE.get(), world, livingEntity);
         this.setItem(new ItemStack(ModItems.FLARE.get()));
         this.hasRaid = hasRaid;
         this.setMaxLife(3200);
     }
 
-    public ThrowableFlareEntity(Level world, LivingEntity player, boolean hasRaid, String raid)
+    public ThrowableFlareEntity(Level world, LivingEntity livingEntity, boolean hasRaid, String raid)
     {
-        super(ModEntities.THROWABLE_FLARE.get(), world, player);
+        super(ModEntities.THROWABLE_FLARE.get(), world, livingEntity);
         this.setItem(new ItemStack(ModItems.FLARE.get()));
         this.hasRaid = hasRaid;
         this.raidName = raid;
