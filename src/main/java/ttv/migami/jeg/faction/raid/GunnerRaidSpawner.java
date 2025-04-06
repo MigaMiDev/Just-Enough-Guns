@@ -56,6 +56,7 @@ public class GunnerRaidSpawner implements CustomSpawner {
         }
 
         this.nextTick += random.nextInt(12000);
+        raidData.setNextTick(this.nextTick);
 
         long dayTime = level.getDayTime() / 24000L;
         int minimumDays = Config.COMMON.gunnerMobs.minimumDaysForRaids.get();

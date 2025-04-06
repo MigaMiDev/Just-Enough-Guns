@@ -2,6 +2,7 @@ package ttv.migami.jeg.client.handler;
 
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -26,6 +27,7 @@ import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animation.AnimationController;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.JustEnoughGuns;
+import ttv.migami.jeg.animations.GunAnimations;
 import ttv.migami.jeg.client.KeyBinds;
 import ttv.migami.jeg.client.util.PropertyHelper;
 import ttv.migami.jeg.common.GripType;
@@ -146,6 +148,11 @@ public class AimingHandler
                 PacketHandler.getPlayChannel().sendToServer(new C2SMessageAim(true));
                 this.aiming = true;
             }
+
+            if (getNormalisedAdsProgress() > 0.0 && getNormalisedAdsProgress() <= 0.2) {
+                player.playSound(SoundEvents.SPYGLASS_USE, 1.0F, 1.0F);
+            }
+
             if (Config.CLIENT.display.forceFirstPersonOnZoomedAim.get() && getNormalisedAdsProgress() >= 0.2 && getNormalisedAdsProgress() <= 0.95)
             {
                 if (!this.doTempFirstPerson && modifiedGun!=null)
@@ -167,6 +174,9 @@ public class AimingHandler
         }
         else
         {
+            if (getNormalisedAdsProgress() > 0.8 && getNormalisedAdsProgress() < 1) {
+                player.playSound(SoundEvents.SPYGLASS_USE, 1.0F, 0.8F);
+            }
             if (this.doTempFirstPerson && getNormalisedAdsProgress()<=0.3)
                 resetPOV = true;
             if(this.aiming)
@@ -176,6 +186,8 @@ public class AimingHandler
                 this.aiming = false;
             }
         }
+
+        JustEnoughGuns.LOGGER.atInfo().log(getNormalisedAdsProgress());
 
         if (this.doTempFirstPerson)
         {
@@ -274,15 +286,15 @@ public class AimingHandler
 
         if(mc.player.getMainHandItem().getItem() instanceof AnimatedGunItem gunItem) {
             final long id = GeoItem.getId(heldItem);
-            AnimationController<GeoAnimatable> animationController = gunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("controller");
+            AnimationController<GeoAnimatable> animationController = gunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("Controller");
 
             if(animationController != null && animationController.getCurrentAnimation() != null &&
-                    (animationController.getCurrentAnimation().animation().name().matches("draw") ||
-                            animationController.getCurrentAnimation().animation().name().matches("reload") ||
-                            animationController.getCurrentAnimation().animation().name().matches("reload_start") ||
-                            animationController.getCurrentAnimation().animation().name().matches("reload_loop") ||
-                            animationController.getCurrentAnimation().animation().name().matches("reload_stop") ||
-                            animationController.getCurrentAnimation().animation().name().matches("jam")))
+                    (GunAnimations.isAnimationPlaying(animationController, "draw") ||
+                            GunAnimations.isAnimationPlaying(animationController, "reload") ||
+                            GunAnimations.isAnimationPlaying(animationController, "reload_start") ||
+                            GunAnimations.isAnimationPlaying(animationController, "reload_loop") ||
+                            GunAnimations.isAnimationPlaying(animationController, "reload_stop") ||
+                            GunAnimations.isAnimationPlaying(animationController, "jam")))
                 return false;
         }
 

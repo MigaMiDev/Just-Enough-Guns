@@ -7,7 +7,6 @@ import net.minecraftforge.eventbus.api.Cancelable;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animation.AnimationController;
-import ttv.migami.jeg.init.ModSyncedDataKeys;
 import ttv.migami.jeg.item.AnimatedGunItem;
 
 /**
@@ -52,12 +51,6 @@ public class GunFireEvent extends PlayerEvent
         public Pre(Player player, ItemStack stack)
         {
             super(player, stack);
-
-            /*if(stack.getItem() instanceof AnimatedGunItem animatedGunItem) {
-                if (animatedGunItem.getDrawTick() < 1) {
-                    this.setCanceled(true);
-                }
-            }*/
         }
     }
 
@@ -73,18 +66,12 @@ public class GunFireEvent extends PlayerEvent
             super(player, stack);
 
             if (stack.getTag() != null) {
-                if (stack.getItem() instanceof AnimatedGunItem gunItem) {
-                    stack.getTag().remove("IsReloading");
-                    stack.getTag().remove("IsFinishingReloading");
+                if (stack.getItem() instanceof AnimatedGunItem animatedGunItem) {
+                    animatedGunItem.resetTags(stack.getTag());
+                    stack.getTag().putBoolean("IsShooting", true);
                     final long id = GeoItem.getId(stack);
-                    AnimationController<GeoAnimatable> animationController = gunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("controller");
+                    AnimationController<GeoAnimatable> animationController = animatedGunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("Controller");
                     animationController.forceAnimationReset();
-                    if (ModSyncedDataKeys.AIMING.getValue(player)) {
-                        animationController.tryTriggerAnimation("aim_shoot");
-                    }
-                    else {
-                        animationController.tryTriggerAnimation("shoot");
-                    }
                 }
             }
         }

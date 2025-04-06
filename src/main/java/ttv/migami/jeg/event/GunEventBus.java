@@ -37,18 +37,13 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import software.bernie.geckolib.animatable.GeoItem;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
-import software.bernie.geckolib.core.animation.AnimationController;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.Reference;
 import ttv.migami.jeg.common.FireMode;
 import ttv.migami.jeg.common.Gun;
-import ttv.migami.jeg.init.ModTags;
 import ttv.migami.jeg.common.network.ServerPlayHandler;
 import ttv.migami.jeg.entity.throwable.ThrowableExplosiveChargeEntity;
 import ttv.migami.jeg.init.*;
-import ttv.migami.jeg.item.AnimatedGunItem;
 import ttv.migami.jeg.item.GunItem;
 import ttv.migami.jeg.item.attachment.IAttachment;
 import ttv.migami.jeg.util.GunEnchantmentHelper;
@@ -154,14 +149,9 @@ public class GunEventBus {
                 event.setCanceled(true);
             }
 
-            if (heldItem.getItem() instanceof AnimatedGunItem animatedGunItem) {
-                final long id = GeoItem.getId(heldItem);
-                AnimationController<GeoAnimatable> animationController = animatedGunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("controller");
-
-                if (heldItem.getTag() != null && animationController.getCurrentAnimation() != null) {
-                    if (animationController.getCurrentAnimation().animation().name().matches("draw")) {
-                        event.setCanceled(true);
-                    }
+            if (heldItem.getTag() != null) {
+                if (heldItem.getTag().getBoolean("IsDrawing")) {
+                    event.setCanceled(true);
                 }
             }
 
@@ -252,9 +242,7 @@ public class GunEventBus {
             if (gun.getProjectile().ejectsCasing() && tag != null)
             {
                 if (tag.getInt("AmmoCount") >= 1 || player.getAbilities().instabuild) {
-                    if (!(gunItem instanceof AnimatedGunItem)) {
-                        ejectCasing(level, player);
-                    }
+                    ejectCasing(level, player);
                     if (gunItem == ModItems.ROCKET_LAUNCHER.get()) {
                         firingSmoke(level, player);
                     }

@@ -105,4 +105,8 @@ public class ScoreStreakItem extends ToolTipItem {
     public int getBarColor(ItemStack stack) {
         return Mth.hsvToRgb(Math.max(0.0F, (float) getPoints(stack) / this.maxPoints) * 0.33F, 1.0F, 1.0F);
     }
+
+    public boolean isFoil(ItemStack stack) {
+        return true;
+    }
 }

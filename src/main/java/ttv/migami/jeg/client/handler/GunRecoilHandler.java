@@ -116,9 +116,9 @@ public class GunRecoilHandler
             {
                 instance.getCamera().setXRot(pitch + ((endProgress - startProgress) / 0.8F) * this.cameraRecoil);
                 if(recoilRand == 1)
-                    instance.getCamera().setYRot(yaw + ((endProgress - startProgress) / 0.2F) * this.cameraRecoil/2);
+                    instance.getCamera().setYRot(yaw + ((endProgress - startProgress) / 0.8F) * this.cameraRecoil/2);
                 else
-                    instance.getCamera().setYRot(yaw - ((endProgress - startProgress) / 0.2F) * this.cameraRecoil/2);
+                    instance.getCamera().setYRot(yaw - ((endProgress - startProgress) / 0.8F) * this.cameraRecoil/2);
             }
         }
 

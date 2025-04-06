@@ -86,6 +86,7 @@ public class PhantomSwarmSpawner implements CustomSpawner {
 
         // Adds a chance for the Patrol to spawn in either Daytime or Nighttime
         this.nextTick += random.nextInt(12000);
+        raidData.setNextTick(this.nextTick);
 
         long dayTime = level.getDayTime() / 24000L;
 

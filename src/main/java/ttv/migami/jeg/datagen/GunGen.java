@@ -230,8 +230,8 @@ public class GunGen extends GunProvider
                 // Reloads
                 .setMaxAmmo(2)
                 .setReloadType(ReloadType.MANUAL)
-                .setReloadTimer(20)
-                .setAdditionalReloadTimer(38)
+                .setReloadTimer(37)
+                .setAdditionalReloadTimer(13)
 
                 // Projectile
                 .setAmmo(ModItems.HANDMADE_SHELL.get())
@@ -423,7 +423,7 @@ public class GunGen extends GunProvider
                 .setMaxAmmo(6)
                 .setReloadType(ReloadType.MANUAL)
                 .setReloadTimer(18)
-                .setAdditionalReloadTimer(7)
+                .setAdditionalReloadTimer(6)
 
                 // Projectile
                 .setAmmo(ModItems.SHOTGUN_SHELL.get())
@@ -1246,7 +1246,7 @@ public class GunGen extends GunProvider
                 // Reloads
                 .setMaxAmmo(8)
                 .setReloadType(ReloadType.MANUAL)
-                .setReloadTimer(18)
+                .setReloadTimer(16)
                 .setAdditionalReloadTimer(10)
 
                 // Projectile
@@ -1654,7 +1654,7 @@ public class GunGen extends GunProvider
                 .setAmmo(ModItems.PISTOL_AMMO.get())
                 .setEjectsCasing(true)
                 .setProjectileVisible(false)
-                .setDamage(5.0F)
+                .setDamage(4.0F)
                 .setAdvantage(ModTags.Entities.HEAVY.location())
                 .setProjectileSize(0.05F)
                 .setProjectileSpeed(13F)

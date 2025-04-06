@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -16,6 +17,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.SimpleMenuProvider;
@@ -750,5 +752,70 @@ public class ServerPlayHandler
 
     public static void burnPlayer(ServerPlayer player) {
         player.setSecondsOnFire(5);
+    }
+
+    public static ItemStack getFireworkStack(Boolean pFlicker, Boolean pTrail, int pType, int pFlight) {
+        ItemStack fireworkStack = new ItemStack(Items.FIREWORK_ROCKET);
+        CompoundTag fireworkTag = new CompoundTag();
+
+        ListTag explosionList = new ListTag();
+        CompoundTag explosion = new CompoundTag();
+
+        explosion.putBoolean("Flicker", pFlicker);
+        explosion.putBoolean("Trail", pTrail);
+        /*
+         * Set the type of explosion (0-4 for different shapes)
+         * 0 - Small
+         * 1 - Large
+         * 2 - Star
+         * 3 - Creeper
+         * 4 - Burst
+         */
+        explosion.putByte("Type", (byte) pType);
+        explosion.putIntArray("Colors", new int[]{getRandomColor(), getRandomColor()});
+        explosionList.add(explosion);
+        fireworkTag.putByte("Flight", (byte) pFlight);
+        fireworkTag.put("Explosions", explosionList);
+
+        CompoundTag fireworkItemTag = new CompoundTag();
+        fireworkItemTag.put("Fireworks", fireworkTag);
+        fireworkStack.setTag(fireworkItemTag);
+
+        return fireworkStack;
+    }
+
+    public static ItemStack getColoredFireworkStack(Boolean pFlicker, Boolean pTrail, int pType, int pFlight, int pColor1, int pColor2) {
+        ItemStack fireworkStack = new ItemStack(Items.FIREWORK_ROCKET);
+        CompoundTag fireworkTag = new CompoundTag();
+
+        ListTag explosionList = new ListTag();
+        CompoundTag explosion = new CompoundTag();
+
+        explosion.putBoolean("Flicker", pFlicker);
+        explosion.putBoolean("Trail", pTrail);
+        /*
+         * Set the type of explosion (0-4 for different shapes)
+         * 0 - Small
+         * 1 - Large
+         * 2 - Star
+         * 3 - Creeper
+         * 4 - Burst
+         */
+        explosion.putByte("Type", (byte) pType);
+        explosion.putIntArray("Colors", new int[]{pColor1, pColor2});
+        explosionList.add(explosion);
+        fireworkTag.putByte("Flight", (byte) pFlight);
+        fireworkTag.put("Explosions", explosionList);
+
+        CompoundTag fireworkItemTag = new CompoundTag();
+        fireworkItemTag.put("Fireworks", fireworkTag);
+        fireworkStack.setTag(fireworkItemTag);
+
+        return fireworkStack;
+    }
+
+    public static int getRandomColor() {
+        RandomSource rand = RandomSource.create();
+        return rand.nextInt(0xFFFFFF);
     }
 }

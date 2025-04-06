@@ -6,7 +6,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -22,13 +21,12 @@ import net.minecraftforge.registries.ForgeRegistries;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.Reference;
 import ttv.migami.jeg.init.ModEnchantments;
+import ttv.migami.jeg.init.ModItems;
 import ttv.migami.jeg.init.ModSyncedDataKeys;
 import ttv.migami.jeg.item.AnimatedGunItem;
 import ttv.migami.jeg.item.GunItem;
 import ttv.migami.jeg.network.PacketHandler;
 import ttv.migami.jeg.network.message.S2CMessageGunSound;
-import ttv.migami.jeg.network.message.S2CMessageStopReloadAnimation;
-import ttv.migami.jeg.network.message.S2CMessageSyncReloadKey;
 import ttv.migami.jeg.util.GunEnchantmentHelper;
 import ttv.migami.jeg.util.GunModifierHelper;
 
@@ -280,6 +278,10 @@ public class ReloadTracker
                 amount = Math.min(amount, maxAmmo - tag.getInt("AmmoCount"));
                 tag.putInt("AmmoCount", tag.getInt("AmmoCount") + amount);
 
+                if (ammo.is(ModItems.TERROR_ARMADA_FLARE.get())) {
+                    player.displayClientMessage(Component.translatable("chat.jeg.raid_flare_loaded").withStyle(ChatFormatting.RED), true);
+                    tag.putBoolean("HasTerrorRaid", true);
+                }
                 if (ammo.getTag() != null) {
                     if (ammo.getTag().getBoolean("HasRaid")) {
                         if (ammo.getTag().contains("Raid")) {
@@ -341,12 +343,9 @@ public class ReloadTracker
                 {
                     RELOAD_TRACKER_MAP.remove(player);
                     ModSyncedDataKeys.RELOADING.setValue(player, false);
-                    PacketHandler.getPlayChannel().sendToPlayer(() -> (ServerPlayer) player, new S2CMessageSyncReloadKey());
-                    /*if (player.getInventory().getSelected().getTag() != null) {
-                        if (player.getInventory().getSelected().getItem() instanceof AnimatedGunItem) {
-                            player.getInventory().getSelected().getTag().putBoolean("IsReloading", false);
-                        }
-                    }*/
+                    if (tag != null) {
+                        tag.putBoolean("IsFinishingReloading", true);
+                    }
                     return;
                 }
                 if(tracker.canReload(player))
@@ -372,13 +371,10 @@ public class ReloadTracker
                     if(tracker.isWeaponFull() || tracker.hasNoAmmo(player))
                     {
                         RELOAD_TRACKER_MAP.remove(player);
-                        PacketHandler.getPlayChannel().sendToPlayer(() -> (ServerPlayer) player, new S2CMessageSyncReloadKey());
                         ModSyncedDataKeys.RELOADING.setValue(player, false);
-                        /*if (player.getInventory().getSelected().getTag() != null) {
-                            if (player.getInventory().getSelected().getItem() instanceof AnimatedGunItem) {
-                                player.getInventory().getSelected().getTag().putBoolean("IsReloading", false);
-                            }
-                        }*/
+                        if (tag != null) {
+                            tag.putBoolean("IsFinishingReloading", true);
+                        }
 
                         DelayedTask.runAfter(4, () ->
                         {
@@ -392,61 +388,12 @@ public class ReloadTracker
                                 S2CMessageGunSound messageSound = new S2CMessageGunSound(cockSound, SoundSource.PLAYERS, (float) soundX, (float) soundY, (float) soundZ, 1.0F, 1.0F, finalPlayer.getId(), false, true);
                                 PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(finalPlayer.level(), soundX, soundY, soundZ, radius), messageSound);
                             }
-                            PacketHandler.getPlayChannel().sendToPlayer(() -> (ServerPlayer) player, new S2CMessageSyncReloadKey());
                         });
                     }
                 }
             }
             else if(RELOAD_TRACKER_MAP.containsKey(player)) {
                 RELOAD_TRACKER_MAP.remove(player);
-            }
-        }
-    }
-
-    public static void stopReloading(Player player) {
-        if(player.getMainHandItem().getItem() instanceof AnimatedGunItem gunItem)
-        {
-            if (player.getMainHandItem().getTag() != null) {
-                player.getInventory().getSelected().getTag().putBoolean("IsFinishingReloading", false);
-                player.getMainHandItem().getTag().putBoolean("IsReloading", false);
-            }
-            ModSyncedDataKeys.RELOADING.setValue(player, false);
-            PacketHandler.getPlayChannel().sendToPlayer(() -> (ServerPlayer) player, new S2CMessageSyncReloadKey());
-        }
-    }
-
-    public static void mayStopReloading(Player player) {
-        if(player.getMainHandItem().getItem() instanceof AnimatedGunItem gunItem) {
-            Gun gun = gunItem.getModifiedGun(player.getMainHandItem());
-            if(player.getMainHandItem().getTag() != null && player.getMainHandItem().getTag().getInt("AmmoCount") == GunModifierHelper.getModifiedAmmoCapacity(player.getMainHandItem(), gun) || Gun.findAmmo(player, gun.getProjectile().getItem()).stack().isEmpty())
-            {
-                if(gun.getReloads().getReloadType() == ReloadType.MANUAL) {
-                    PacketHandler.getPlayChannel().sendToPlayer(() -> (ServerPlayer) player, new S2CMessageStopReloadAnimation());
-                }
-            }
-        }
-    }
-
-    public static void loaded(Player player) {
-        ReloadTracker tracker = RELOAD_TRACKER_MAP.get(player);
-        final Gun gun = tracker.gun;
-        if(gun.getReloads().getReloadType() == ReloadType.MAG_FED) {
-            tracker.increaseMagAmmo(player);
-        }
-        else if(gun.getReloads().getReloadType() == ReloadType.SINGLE_ITEM) {
-            tracker.reloadItem(player);
-        }
-        else if(gun.getReloads().getReloadType() == ReloadType.MANUAL) {
-            tracker.increaseAmmo(player);
-        }
-        else if(gun.getReloads().getReloadType() == ReloadType.INVENTORY_FED) {
-            tracker.increaseAmmo(player);
-        }
-        if (tracker.isWeaponFull() || tracker.hasNoAmmo(player)) {
-            if (player.getInventory().getSelected().getTag() != null) {
-                player.getInventory().getSelected().getTag().putBoolean("IsFinishingReloading", true);
-                ModSyncedDataKeys.RELOADING.setValue(player, false);
-                PacketHandler.getPlayChannel().sendToPlayer(() -> (ServerPlayer) player, new S2CMessageSyncReloadKey());
             }
         }
     }

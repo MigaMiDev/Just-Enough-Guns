@@ -12,40 +12,29 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.cache.AnimatableIdCache;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.keyframe.event.ParticleKeyframeEvent;
 import software.bernie.geckolib.core.keyframe.event.SoundKeyframeEvent;
-import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
-import ttv.migami.jeg.Config;
+import software.bernie.geckolib.util.GeckoLibUtil;
 import ttv.migami.jeg.Reference;
 import ttv.migami.jeg.animations.GunAnimations;
 import ttv.migami.jeg.client.render.gun.animated.AnimatedGunRenderer;
-import ttv.migami.jeg.common.Gun;
-import ttv.migami.jeg.common.ReloadType;
 import ttv.migami.jeg.init.ModItems;
 import ttv.migami.jeg.init.ModSounds;
 import ttv.migami.jeg.init.ModSyncedDataKeys;
-import ttv.migami.jeg.item.attachment.IAttachment;
-import ttv.migami.jeg.network.PacketHandler;
-import ttv.migami.jeg.network.message.C2SMessageCasing;
-import ttv.migami.jeg.util.GunEnchantmentHelper;
 
 import java.util.function.Consumer;
 
 public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
-    private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
-    //private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    //private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     private final String gunID;
     private final SoundEvent reloadSoundMagOut;
@@ -55,8 +44,8 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
     private final SoundEvent ejectorSoundRelease;
 
     private int drawTick = 0;
-    private boolean drawn = false;
     private int heartBeat = 60;
+    private int shootTick = 0;
 
     public AnimatedGunItem(Properties properties, String path,
                            SoundEvent reloadSoundMagOut, SoundEvent reloadSoundMagIn, SoundEvent reloadSoundEnd, SoundEvent ejectorSoundPull, SoundEvent ejectorSoundRelease) {
@@ -68,10 +57,6 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
         this.reloadSoundEnd = reloadSoundEnd;
         this.ejectorSoundPull = ejectorSoundPull;
         this.ejectorSoundRelease = ejectorSoundRelease;
-    }
-
-    public int getDrawTick() {
-        return this.drawTick;
     }
 
     @Override
@@ -88,7 +73,6 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
             nbtCompound.putLong(ID_NBT_KEY, AnimatableIdCache.getFreeId((ServerLevel) world));
         }
         final long id = GeoItem.getId(stack);
-        AnimationController<GeoAnimatable> animationController = getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("controller");
 
         if (stack.getItem() == ModItems.FINGER_GUN.get() && !stack.getTag().getBoolean("IgnoreAmmo")){
             stack.getOrCreateTag().putBoolean("IgnoreAmmo", true);
@@ -106,92 +90,60 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
                 }
             }
 
-            updateBooleanTag(nbtCompound, "IsDrawing", nbtCompound.getBoolean("IsDrawn"));
-
-            if (nbtCompound.getBoolean("IsDrawing") && nbtCompound.getInt("DrawnTick") < 15) {
-                this.drawTick++;
-                nbtCompound.putInt("DrawnTick", this.drawTick);
-                if (stack.is(ModItems.ROCKET_LAUNCHER.get())) {
-                    player.displayClientMessage(Component.translatable("chat.jeg.rocket_ride").withStyle(ChatFormatting.WHITE), true);
-                }
-                if (stack.is(ModItems.FLAMETHROWER.get())) {
-                    player.displayClientMessage(Component.translatable("chat.jeg.flamethrower").withStyle(ChatFormatting.WHITE), true);
-                }
-            }
-
-            //if (stack == player.getMainHandItem()) {
             if (id == GeoItem.getId(player.getMainHandItem())) {
+                if (!nbtCompound.getBoolean("IsDrawing") && nbtCompound.getInt("DrawnTick") < 15) {
+                    nbtCompound.putBoolean("IsDrawing", true);
+                }
 
-                if (!nbtCompound.getBoolean("IsDrawn")) {
-                    nbtCompound.putBoolean("IsDrawn", true);
+                if (nbtCompound.getBoolean("IsShooting") && nbtCompound.getInt("ShootingTick") < 5) {
+                    this.shootTick++;
+                    nbtCompound.putInt("ShootingTick", this.shootTick);
+                }
+
+                if (nbtCompound.getInt("ShootingTick") >= 5) {
+                    nbtCompound.remove("IsShooting");
+                    this.shootTick = 0;
+                }
+
+                if (nbtCompound.getBoolean("IsDrawing") && nbtCompound.getInt("DrawnTick") < 15) {
+                    this.drawTick++;
+                    nbtCompound.putInt("DrawnTick", this.drawTick);
+                    if (stack.is(ModItems.ROCKET_LAUNCHER.get())) {
+                        player.displayClientMessage(Component.translatable("chat.jeg.rocket_ride").withStyle(ChatFormatting.WHITE), true);
+                    }
+                    if (stack.is(ModItems.FLAMETHROWER.get())) {
+                        player.displayClientMessage(Component.translatable("chat.jeg.flamethrower").withStyle(ChatFormatting.WHITE), true);
+                    }
+                }
+
+                if (nbtCompound.getInt("DrawnTick") >= 15) {
+                    nbtCompound.putBoolean("IsDrawing", false);
                 }
 
                 boolean isSprinting = player.isSprinting();
-
                 boolean isAiming = ModSyncedDataKeys.AIMING.getValue(player);
                 updateBooleanTag(nbtCompound, "IsAiming", isAiming);
-
                 updateBooleanTag(nbtCompound, "IsRunning", isSprinting);
-
-                if (nbtCompound.getBoolean("IsDrawing") && nbtCompound.getInt("DrawnTick") < 15
-                && Config.COMMON.gameplay.drawAnimation.get()) {
-                    handleDrawingState(nbtCompound, animationController, stack);
-                }
-
-                // Jam Animations
-                /*if (nbtCompound.getBoolean("IsJammed") && !isAnimationPlaying(animationController, "draw")
-                        && Config.COMMON.gameplay.gunJamming.get()) {
-                    handleJammedState(nbtCompound, animationController, stack);
-                }*/
-
-                if (nbtCompound.getInt("DrawnTick") >= 15 &&
-                        !isAnimationPlaying(animationController, "draw") &&
-                        !isAnimationPlaying(animationController, "jam") &&
-                        !isAnimationPlaying(animationController, "melee") &&
-                        !isAnimationPlaying(animationController, "bayonet") &&
-                        !isAnimationPlaying(animationController, "hold_fire") &&
-                        !isAnimationPlaying(animationController, "hold") &&
-                        !isAnimationPlaying(animationController, "shoot") &&
-                        !isAnimationPlaying(animationController, "aim_shoot")) {
-                    if ((nbtCompound.getBoolean("IsReloading") || nbtCompound.getBoolean("IsFinishingReloading")) &&
-                            !isAnimationPlaying(animationController, "reload_stop")) {
-                        handleReloadingState(nbtCompound, animationController, stack);
-                    } else if (nbtCompound.getBoolean("IsAiming")) {
-                        handleAimingState(nbtCompound, animationController);
-                    } else if (nbtCompound.getBoolean("IsRunning") &&
-                            !isAnimationPlaying(animationController, "inspect") &&
-                            !isAnimationPlaying(animationController, "reload_stop")) {
-                        handleRunningState(animationController, isAiming, player);
-                    } else if (!isAnimationPlaying(animationController, "inspect") &&
-                            !isAnimationPlaying(animationController, "melee") &&
-                            !isAnimationPlaying(animationController, "bayonet") &&
-                            !isAnimationPlaying(animationController, "shoot") &&
-                            !isAnimationPlaying(animationController, "aim_shoot") &&
-                            !isAnimationPlaying(animationController, "hold_fire") &&
-                            !isAnimationPlaying(animationController, "hold") &&
-                            //!isAnimationPlaying(animationController, "reload") &&
-                            //!isAnimationPlaying(animationController, "reload_start") &&
-                            //!isAnimationPlaying(animationController, "reload_loop") &&
-                            !isAnimationPlaying(animationController, "reload_stop")) {
-                        animationController.tryTriggerAnimation("idle");
-                    }
-
-                    if (!selected) {
-                        animationController.tryTriggerAnimation("idle");
-                    }
-                }
             }
-            else if (GeoItem.getId(player.getMainHandItem()) != id) {
-                if (nbtCompound.getBoolean("IsDrawn")) {
-                    nbtCompound.remove("IsDrawn");
-                    nbtCompound.remove("DrawnTick");
-                    nbtCompound.remove("IsReloading");
-                    nbtCompound.remove("IsFinishingReloading");
-                    this.drawTick = 0;
-                }
-                animationController.tryTriggerAnimation("idle");
+            else if (GeoItem.getId(player.getMainHandItem()) != id || player.isDeadOrDying()) {
+                nbtCompound.putBoolean("IsDrawing", true);
+                this.resetTags(nbtCompound);
+                this.drawTick = 0;
+                this.shootTick = 0;
             }
         }
+    }
+
+    public void resetTags(CompoundTag compoundTag) {
+        compoundTag.remove("IsDrawing");
+        compoundTag.remove("IsDrawn");
+        compoundTag.remove("DrawnTick");
+        compoundTag.remove("IsShooting");
+        compoundTag.remove("IsReloading");
+        compoundTag.remove("IsFinishingReloading");
+        compoundTag.remove("IsInspecting");
+        compoundTag.remove("IsAiming");
+        compoundTag.remove("IsRunning");
     }
 
     private boolean isAnimationPlaying(AnimationController<GeoAnimatable> animationController, String animationName) {
@@ -207,86 +159,7 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
         }
     }
 
-    private void handleJammedState(CompoundTag nbt, AnimationController<GeoAnimatable> animationController, ItemStack stack) {
-        if (GunEnchantmentHelper.getQuickHands(stack) >= 2) {
-            animationController.setAnimationSpeed(1.75F);
-        }
-        else if (GunEnchantmentHelper.getQuickHands(stack) == 1) {
-            animationController.setAnimationSpeed(1.25F);
-        }
-        if (GunEnchantmentHelper.getQuickHands(stack) == 0) {
-            animationController.setAnimationSpeed(1.0D);
-        }
-        if (nbt.getBoolean("IsJammed") && !isAnimationPlaying(animationController, "draw")) {
-            animationController.tryTriggerAnimation("jam");
-        }
-
-        nbt.remove("IsShooting");
-        nbt.remove("IsInspecting");
-    }
-
-    private void handleDrawingState(CompoundTag nbt, AnimationController<GeoAnimatable> animationController, ItemStack stack) {
-        if (GunEnchantmentHelper.getQuickHands(stack) == 2) {
-            animationController.setAnimationSpeed(1.75F);
-        }
-        else if (GunEnchantmentHelper.getQuickHands(stack) == 1) {
-            animationController.setAnimationSpeed(1.25F);
-        }
-        if (GunEnchantmentHelper.getQuickHands(stack) == 0) {
-            animationController.setAnimationSpeed(1.0D);
-        }
-        if (nbt.getInt("DrawnTick") < 15) {
-            animationController.tryTriggerAnimation("draw");
-        }
-
-        nbt.remove("IsShooting");
-        nbt.remove("IsInspecting");
-    }
-
-    private void handleReloadingState(CompoundTag nbt, AnimationController<GeoAnimatable> animationController, ItemStack stack) {
-        Gun modifiedGun = ((GunItem) stack.getItem()).getModifiedGun(stack);
-        if (GunEnchantmentHelper.getQuickHands(stack) == 2) {
-            animationController.setAnimationSpeed(1.75F);
-        }
-        else if (GunEnchantmentHelper.getQuickHands(stack) == 1) {
-            animationController.setAnimationSpeed(1.25F);
-        }
-        if (GunEnchantmentHelper.getQuickHands(stack) == 0) {
-            animationController.setAnimationSpeed(1.0D);
-        }
-
-        if (modifiedGun.getReloads().getReloadType() == ReloadType.MANUAL) {
-            animationController.tryTriggerAnimation("reload_start");
-        }
-        else {
-            if (stack.getItem() == ModItems.INFANTRY_RIFLE.get() && Gun.hasAttachmentEquipped(stack, IAttachment.Type.MAGAZINE)) {
-                animationController.tryTriggerAnimation("reload_alt");
-            }
-            else {
-                animationController.tryTriggerAnimation("reload");
-            }
-        }
-        nbt.remove("IsShooting");
-        nbt.remove("IsInspecting");
-    }
-
-    private void handleAimingState(CompoundTag nbt, AnimationController<GeoAnimatable> animationController) {
-        animationController.setAnimationSpeed(1.0D);
-        nbt.remove("IsInspecting");
-        animationController.tryTriggerAnimation("idle");
-    }
-
-    private void handleRunningState(AnimationController<GeoAnimatable> animationController, boolean isAiming, Player player) {
-        animationController.setAnimationSpeed(1.0D);
-        if (!isAiming) {
-            if (!(Gun.getAttachment(IAttachment.Type.BARREL, player.getMainHandItem()).getItem() instanceof SwordItem))
-                animationController.tryTriggerAnimation("sprint");
-            else
-                animationController.tryTriggerAnimation("idle");
-        }
-    }
-
-    private void soundListener(SoundKeyframeEvent<AnimatedGunItem> gunItemSoundKeyframeEvent)
+    private void soundListener(SoundKeyframeEvent<GeoAnimatable> gunItemSoundKeyframeEvent)
     {
         Player player = ClientUtils.getClientPlayer();
         if (player != null)
@@ -301,23 +174,6 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
                 case "ejector_pull" -> player.playSound(this.ejectorSoundPull, 1, 1);
                 case "ejector_release" -> player.playSound(this.ejectorSoundRelease, 1, 1);
                 case "jammed" -> player.playSound(SoundEvents.ANVIL_LAND, 0.8F, 1.5F);
-            }
-        }
-    }
-
-    private void particleListener(ParticleKeyframeEvent<AnimatedGunItem> gunItemParticleKeyframeEvent)
-    {
-        Player player = ClientUtils.getClientPlayer();
-
-        if (player != null)
-        {
-            if (player.getMainHandItem().getItem() instanceof AnimatedGunItem) {
-                ItemStack itemStack = player.getMainHandItem();
-
-                switch (gunItemParticleKeyframeEvent.getKeyframeData().getEffect())
-                {
-                    case "eject_casing" -> PacketHandler.getPlayChannel().sendToServer(new C2SMessageCasing());
-                }
             }
         }
     }
@@ -342,69 +198,9 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
         });
     }
 
-    private PlayState predicate(AnimationState<AnimatedGunItem> event)
-    {
-        if (event.getController().getCurrentAnimation() == null || event.getController().getAnimationState() == AnimationController.State.STOPPED)
-        {
-            event.getController().tryTriggerAnimation("idle");
-        }
-
-        return PlayState.CONTINUE;
-    }
-
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        AnimationController<AnimatedGunItem> controller = new AnimationController<>(this, "controller", 0, this::predicate)
-                .setSoundKeyframeHandler(this::soundListener)
-                .setParticleKeyframeHandler(this::particleListener)
-                .setCustomInstructionKeyframeHandler((customInstructionKeyframeEvent -> {
-                    String instruction = customInstructionKeyframeEvent.getKeyframeData().getInstructions();
-                    switch(instruction) {
-                        //case "reloaded;" -> PacketHandler.getPlayChannel().sendToServer(new C2SMessageGunLoaded());
-                        //case "mayEndReload;" -> PacketHandler.getPlayChannel().sendToServer(new C2SMessageMayStopReloadAnimation());
-                        //case "finishReloading;" -> PacketHandler.getPlayChannel().sendToServer(new C2SMessageStopReloading());
-
-                        //case "unjam;" -> PacketHandler.INSTANCE.sendToServer(new SpecialAttackPacket(this.getId()));
-
-                        //case "finishUnjamming;" -> PacketHandler.INSTANCE.sendToServer(new UltimateAttackPacket(this.getId()));
-                    }
-                }))
-
-                .triggerableAnim("idle", GunAnimations.IDLE)
-                .triggerableAnim("shoot", GunAnimations.SHOOT)
-                .triggerableAnim("aim_shoot", GunAnimations.AIM_SHOOT)
-                .triggerableAnim("hold_fire", GunAnimations.HOLD_FIRE)
-                .triggerableAnim("hold", GunAnimations.HOLD)
-                .triggerableAnim("reload", GunAnimations.RELOAD)
-                .triggerableAnim("reload_alt", GunAnimations.RELOAD_ALT)
-                .triggerableAnim("reload_start", GunAnimations.RELOAD_START)
-                .triggerableAnim("reload_loop", GunAnimations.RELOAD_LOOP)
-                .triggerableAnim("reload_stop", GunAnimations.RELOAD_STOP)
-                .triggerableAnim("sprint", GunAnimations.SPRINT)
-                .triggerableAnim("melee", GunAnimations.MELEE)
-                .triggerableAnim("bayonet", GunAnimations.BAYONET)
-                .triggerableAnim("draw", GunAnimations.DRAW)
-                .triggerableAnim("inspect", GunAnimations.INSPECT)
-                .triggerableAnim("jam", GunAnimations.JAM);
-
-        controllers.add(controller);
-
-        /*controllers.add(new AnimationController<>(this, "controller", 1, state -> {
-            ItemDisplayContext context = state.getData(DataTickets.ITEM_RENDER_PERSPECTIVE);
-
-            if (context == ItemDisplayContext.FIRST_PERSON_RIGHT_HAND) {
-                return PlayState.CONTINUE;
-            }
-            else {
-                return PlayState.STOP;
-            }
-
-        })
-                .triggerableAnim("idle", GunAnimations.IDLE)
-                .triggerableAnim("shoot", GunAnimations.SHOOT)
-                .triggerableAnim("reload", GunAnimations.RELOAD)
-                .triggerableAnim("sprint", GunAnimations.SPRINT)
-        );*/
+        controllers.add(GunAnimations.genericIdleController(this).setSoundKeyframeHandler(this::soundListener));
     }
 
     @Override

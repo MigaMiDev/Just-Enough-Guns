@@ -31,8 +31,36 @@ public class PhantomGunnerRenderer extends GeoEntityRenderer<PhantomGunner> {
         if (this.currentTick < 0 || this.currentTick != animatable.tickCount) {
             this.currentTick = animatable.tickCount;
 
+            if (animatable.getHealth() <= animatable.getMaxHealth() / 2) {
+                this.model.getBone("right_wing_tip").ifPresent(wing -> {
+                    RandomSource rand = animatable.getRandom();
+                    Vector3d wingPos = wing.getWorldPosition();
+
+                    animatable.getCommandSenderWorld().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE,
+                            wingPos.x(),
+                            wingPos.y(),
+                            wingPos.z(),
+                            0,
+                            0,
+                            0);
+                });
+            }
+
             if (animatable.isDying()) {
                 this.model.getBone("left_wing_tip").ifPresent(wing -> {
+                    RandomSource rand = animatable.getRandom();
+                    Vector3d wingPos = wing.getWorldPosition();
+
+                    animatable.getCommandSenderWorld().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE,
+                            wingPos.x(),
+                            wingPos.y(),
+                            wingPos.z(),
+                            0,
+                            0,
+                            0);
+                });
+
+                this.model.getBone("right_wing_tip").ifPresent(wing -> {
                     RandomSource rand = animatable.getRandom();
                     Vector3d wingPos = wing.getWorldPosition();
 

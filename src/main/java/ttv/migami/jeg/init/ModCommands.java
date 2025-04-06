@@ -662,6 +662,24 @@ public class ModCommands {
         return spawns;
     }
 
+    public static int spawnPhantomGunnerSquad(ServerLevel level, int size, Player player, BlockPos.MutableBlockPos spawnPos) {
+        RandomSource random = level.random;
+
+        int spawns = 0;
+        while (spawns < size) {
+            spawnPos.setY(player.blockPosition().above(32).getY());
+
+            Phantom phantom = phantom = new PhantomGunner(ModEntities.PHANTOM_GUNNER.get(), level);
+
+            if (spawnPhantom(level, spawnPos, phantom, player)) {
+                spawns++;
+            }
+
+            spawnPos.move(random.nextInt(10) - random.nextInt(10), random.nextInt(10) - random.nextInt(10), random.nextInt(10) - random.nextInt(10));
+        }
+        return spawns;
+    }
+
     private static boolean spawnPhantom(ServerLevel level, BlockPos pos, Phantom phantom, Player player) {
         phantom.setPos(pos.getX(), pos.getY(), pos.getZ());
         level.addFreshEntity(phantom);

@@ -57,7 +57,7 @@
   "reloads": {
     "additionalReloadTimer": 10,
     "maxAmmo": 8,
-    "reloadTimer": 18,
+    "reloadTimer": 16,
     "reloadType": "jeg:manual"
   },
   "sounds": {

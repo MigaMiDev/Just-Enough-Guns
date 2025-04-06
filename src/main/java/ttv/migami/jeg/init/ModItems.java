@@ -341,6 +341,12 @@ public class ModItems {
                     .stacksTo(16)
                     , 72000
             ));
+    public static final RegistryObject<Item> TERROR_ARMADA_FLARE = REGISTER.register("terror_armada_flare",
+            () -> new FlareItem(new Item.Properties()
+                    .stacksTo(1).rarity(Rarity.EPIC)
+                    , 72000
+            ));
+
 
     /* Ammo */
     public static final RegistryObject<Item> RIFLE_AMMO = REGISTER.register("rifle_ammo",

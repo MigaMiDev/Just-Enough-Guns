@@ -32,6 +32,7 @@ import static ttv.migami.jeg.common.network.ServerPlayHandler.sendParticlesToAll
 public class FlareProjectileEntity extends ProjectileEntity {
     private boolean hasRaid = false;
     private String raid = null;
+    private boolean terrorRaid = false;
 
     private static final Predicate<BlockState> IGNORE_LEAVES = input -> input != null && Config.COMMON.gameplay.ignoreLeaves.get() && input.getBlock() instanceof LeavesBlock;
 
@@ -41,7 +42,10 @@ public class FlareProjectileEntity extends ProjectileEntity {
 
 	public FlareProjectileEntity(EntityType<? extends ProjectileEntity> entityType, Level worldIn, LivingEntity shooter, ItemStack stack, GunItem item, Gun modifiedGun) {
 		super(entityType, worldIn, shooter, stack, item, modifiedGun);
-        if (stack.getTag() != null && stack.getTag().getBoolean("HasRaid")) {
+        if (stack.getTag() != null && stack.getTag().getBoolean("HasTerrorRaid")) {
+            this.terrorRaid = true;
+            stack.getTag().putBoolean("HasRaid", false);
+        } else if (stack.getTag() != null && stack.getTag().getBoolean("HasRaid")) {
             this.hasRaid = true;
             if (stack.getTag().contains("Raid")) {
                 this.raid = stack.getTag().getString("Raid");
@@ -54,33 +58,53 @@ public class FlareProjectileEntity extends ProjectileEntity {
 	@Override
 	protected void onProjectileTick() {
         if (!this.level().isClientSide) {
-            if (this.tickCount > 80 && hasRaid) {
-                GunnerManager gunnerManager = GunnerManager.getInstance();
-                Faction faction;
-                if (this.raid != null) {
-                    faction = gunnerManager.getFactionByName(this.raid);
+            if (this.tickCount > 80) {
+                if (this.hasRaid) {
+                    GunnerManager gunnerManager = GunnerManager.getInstance();
+                    Faction faction;
+                    if (this.raid != null) {
+                        faction = gunnerManager.getFactionByName(this.raid);
 
-                    ModCommands.startRaid((ServerLevel) this.level(), faction, this.shooter.position(), true);
-                } else {
-                    faction = gunnerManager.getFactionByName(gunnerManager.getRandomFactionName());
+                        ModCommands.startRaid((ServerLevel) this.level(), faction, this.shooter.position(), true);
+                    } else {
+                        faction = gunnerManager.getFactionByName(gunnerManager.getRandomFactionName());
 
-                    ModCommands.startRaid((ServerLevel) this.level(), faction, this.shooter.position(), true);
+                        ModCommands.startRaid((ServerLevel) this.level(), faction, this.shooter.position(), true);
+                    }
+                    this.hasRaid = false;
                 }
-                this.hasRaid = false;
+                if (this.terrorRaid) {
+                    ModCommands.startTerrorRaid((ServerLevel) this.level(), this.shooter.position(), true, false);
+                    this.terrorRaid = false;
+                }
             }
         }
         if (this.level() instanceof ServerLevel serverLevel && (this.tickCount > 1 && this.tickCount < this.life)) {
-            sendParticlesToAll(
-                    serverLevel,
-                    ModParticleTypes.FLARE_SMOKE.get(),
-                    true,
-                    this.getX() - this.getDeltaMovement().x(),
-                    this.getY() - this.getDeltaMovement().y(),
-                    this.getZ() - this.getDeltaMovement().z(),
-                    1,
-                    0, 0, 0,
-                    0
-            );
+            if (this.terrorRaid) {
+                sendParticlesToAll(
+                        serverLevel,
+                        ModParticleTypes.BLUE_FLARE.get(),
+                        true,
+                        this.getX() - this.getDeltaMovement().x(),
+                        this.getY() - this.getDeltaMovement().y(),
+                        this.getZ() - this.getDeltaMovement().z(),
+                        1,
+                        0, 0, 0,
+                        0
+                );
+            } else {
+                sendParticlesToAll(
+                        serverLevel,
+                        ModParticleTypes.FLARE_SMOKE.get(),
+                        true,
+                        this.getX() - this.getDeltaMovement().x(),
+                        this.getY() - this.getDeltaMovement().y(),
+                        this.getZ() - this.getDeltaMovement().z(),
+                        1,
+                        0, 0, 0,
+                        0
+                );
+            }
             sendParticlesToAll(
                     serverLevel,
                     ModParticleTypes.FIRE.get(),

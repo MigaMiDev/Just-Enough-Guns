@@ -12,6 +12,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import ttv.migami.jeg.entity.throwable.ThrowableFlareEntity;
 import ttv.migami.jeg.entity.throwable.ThrowableGrenadeEntity;
+import ttv.migami.jeg.init.ModItems;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -28,7 +29,9 @@ public class FlareItem extends GrenadeItem
 
     @Override
     public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
-        if (pStack.hasTag() && pStack.getTag().getBoolean("HasRaid")) {
+        if (pStack.is(ModItems.TERROR_ARMADA_FLARE.get())) {
+            pStack.setHoverName(Component.translatable("item.jeg.terror_armada_flare").withStyle(style -> style.withColor(ChatFormatting.BLUE).withItalic(false)));
+        } else if (pStack.hasTag() && pStack.getTag().getBoolean("HasRaid")) {
             pStack.setHoverName(Component.translatable("item.jeg.raid_flare").withStyle(style -> style.withColor(ChatFormatting.RED).withItalic(false)));
         } else if (!pStack.hasCustomHoverName()) {
             pStack.resetHoverName();
@@ -39,7 +42,12 @@ public class FlareItem extends GrenadeItem
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flag) {
         CompoundTag tagCompound = stack.getTag();
 
-        if (stack.hasTag() && stack.getTag().getBoolean("HasRaid")) {
+        if (stack.is(ModItems.TERROR_ARMADA_FLARE.get())) {
+            tooltip.add(Component.translatable("info.jeg.raid_flare").withStyle(ChatFormatting.RED).withStyle(ChatFormatting.BOLD));
+            tooltip.add(Component.literal(""));
+            tooltip.add(Component.translatable("info.jeg.flare_raid").withStyle(ChatFormatting.GRAY)
+                    .append(Component.translatable("faction.jeg.terror_armada").withStyle(ChatFormatting.BLUE)));
+        } else if (stack.hasTag() && stack.getTag().getBoolean("HasRaid")) {
             String factionName;
             if (tagCompound != null && tagCompound.contains("Raid")) {
                 factionName = tagCompound.getString("Raid");
@@ -56,7 +64,9 @@ public class FlareItem extends GrenadeItem
     @Override
     public ThrowableGrenadeEntity create(ItemStack stack, Level world, LivingEntity entity, int timeLeft)
     {
-        if (stack.hasTag() && stack.getTag().getBoolean("HasRaid")) {
+        if (stack.is(ModItems.TERROR_ARMADA_FLARE.get())) {
+            return new ThrowableFlareEntity(world, entity, false, true);
+        } else if (stack.hasTag() && stack.getTag().getBoolean("HasRaid")) {
             if (!stack.getTag().getString("Raid").isEmpty()) {
                 return new ThrowableFlareEntity(world, entity, true, stack.getTag().getString("Raid"));
             } else {

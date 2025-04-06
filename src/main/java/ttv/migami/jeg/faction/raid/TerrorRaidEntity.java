@@ -72,7 +72,7 @@ public class TerrorRaidEntity extends Entity {
     private boolean summonBoss = true;
 
     private static final int MAX_ACTIVE_MOBS = 10;
-    private int totalWaveMobs = 40;
+    private int totalWaveMobs = 20;
     private static final int MAX_DESPAWN_TICKS = 200;
 
     private static final int ACTIVE_RADIUS = 64;
@@ -145,7 +145,7 @@ public class TerrorRaidEntity extends Entity {
                         return;
                     }
 
-                    if (!this.activePlayers.isEmpty() && this.currentWave == 3 && this.random.nextFloat() < 0.4F) {
+                    if (!this.activePlayers.isEmpty() && this.currentWave == 2 && this.random.nextFloat() < 0.4F) {
                         for (int flock = 0; flock < 1; flock++) {
                             Player swarmPlayer = this.activePlayers.stream().findAny().get();
                             BlockPos.MutableBlockPos phantomPos = swarmPlayer.blockPosition().mutable()
@@ -154,6 +154,18 @@ public class TerrorRaidEntity extends Entity {
                                             (24 + random.nextInt(24)) * (random.nextBoolean() ? -1 : 1));
 
                             ModCommands.spawnPhantomSwarm(level, 1, swarmPlayer, phantomPos);
+                        }
+                    }
+
+                    if (!this.activePlayers.isEmpty() && this.currentWave == 3 && this.random.nextFloat() < 0.3F) {
+                        for (int flock = 0; flock < 1; flock++) {
+                            Player swarmPlayer = this.activePlayers.stream().findAny().get();
+                            BlockPos.MutableBlockPos phantomPos = swarmPlayer.blockPosition().mutable()
+                                    .move((24 + random.nextInt(24)) * (random.nextBoolean() ? -1 : 1),
+                                            0,
+                                            (24 + random.nextInt(24)) * (random.nextBoolean() ? -1 : 1));
+
+                            ModCommands.spawnPhantomGunnerSquad(level, 2, swarmPlayer, phantomPos);
                         }
                     }
 
@@ -433,9 +445,9 @@ public class TerrorRaidEntity extends Entity {
                     }
                 }
 
-                if (getActiveMobs().size() < 10 && spawnedMobs.size() > this.totalWaveMobs - (this.totalWaveMobs / 5)) {
+                if (getActiveMobs().size() < 10 && spawnedMobs.size() > this.totalWaveMobs - (this.totalWaveMobs / 5) && this.summonBoss) {
                     for (LivingEntity entity : getActiveMobs()) {
-                        entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, -1, 0, false, false));
+                        entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 20 * 180, 0, false, false));
                     }
                 }
             }
@@ -526,11 +538,11 @@ public class TerrorRaidEntity extends Entity {
     public static void summonTerrorRaidEntity(ServerLevel level, Vec3 startPos, boolean forceGuns, boolean defeat) {
         TerrorRaidEntity raidEntity = new TerrorRaidEntity(ModEntities.TERROR_RAID_ENTITY.get(), level);
         raidEntity.setPos(startPos);
-        level.setWeatherParameters(0, 12000, true, true);
         level.addFreshEntity(raidEntity);
         if (!defeat) {
             Component message = Component.translatable("broadcast.jeg.raid", Component.translatable("faction.jeg.terror_armada"), BlockPos.containing(startPos)).withStyle(ChatFormatting.RED).withStyle(ChatFormatting.BOLD);
             level.getServer().getPlayerList().broadcastSystemMessage(message, false);
+            level.setWeatherParameters(0, 12000, true, true);
         }
         if (defeat) {
             raidEntity.totalWaves = 1;

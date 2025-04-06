@@ -32,11 +32,6 @@
 						"vector": ["Math.cos(query.anim_time * 300) * 6", 0, 0]
 					}
 				},
-				"left_minigun": {
-					"rotation": {
-						"vector": ["22.5 + Math.cos(query.anim_time * 300) * -5", 0, 0]
-					}
-				},
 				"left_wing": {
 					"rotation": {
 						"vector": ["Math.sin(query.anim_time * 300) * 15", "Math.sin(query.anim_time * 300) * -15", "Math.sin(query.anim_time * 300) * -30"]
@@ -94,7 +89,12 @@
 				},
 				"right_minigun": {
 					"rotation": {
-						"vector": ["22.5 + Math.cos(query.anim_time * 300) * -5", 0, 0]
+						"vector": [16.24074, -6.60796, -0.94387]
+					}
+				},
+				"left_minigun": {
+					"rotation": {
+						"vector": [16.24074, 6.60796, 0.94387]
 					}
 				}
 			}
@@ -140,11 +140,6 @@
 				"jaw": {
 					"rotation": {
 						"vector": ["Math.cos(query.anim_time * 300) * 6", 0, 0]
-					}
-				},
-				"left_minigun": {
-					"rotation": {
-						"vector": ["22.5 + Math.cos(query.anim_time * 300) * -5", 0, 0]
 					}
 				},
 				"left_wing": {
@@ -280,7 +275,12 @@
 				},
 				"right_minigun": {
 					"rotation": {
-						"vector": ["22.5 + Math.cos(query.anim_time * 300) * -5", 0, 0]
+						"vector": [16.24074, -6.60796, -0.94387]
+					}
+				},
+				"left_minigun": {
+					"rotation": {
+						"vector": [16.24074, 6.60796, 0.94387]
 					}
 				}
 			}
@@ -364,6 +364,16 @@
 				"dying_rotation": {
 					"rotation": {
 						"vector": [45, 0, 0]
+					}
+				},
+				"right_minigun": {
+					"rotation": {
+						"vector": [16.24074, -6.60796, -0.94387]
+					}
+				},
+				"left_minigun": {
+					"rotation": {
+						"vector": [16.24074, 6.60796, 0.94387]
 					}
 				}
 			}

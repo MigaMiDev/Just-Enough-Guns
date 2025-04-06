@@ -19,6 +19,7 @@ public class ThrowableFlareEntity extends ThrowableGrenadeEntity
 {
     private boolean hasRaid = false;
     private String raidName = null;
+    private boolean terrorRaid = false;
 
     public ThrowableFlareEntity(EntityType<? extends ThrowableGrenadeEntity> entityType, Level world)
     {
@@ -48,6 +49,14 @@ public class ThrowableFlareEntity extends ThrowableGrenadeEntity
         this.setMaxLife(3200);
     }
 
+    public ThrowableFlareEntity(Level world, LivingEntity livingEntity, boolean hasRaid, boolean terrorRaid)
+    {
+        super(ModEntities.THROWABLE_FLARE.get(), world, livingEntity);
+        this.setItem(new ItemStack(ModItems.TERROR_ARMADA_FLARE.get()));
+        this.terrorRaid = terrorRaid;
+        this.setMaxLife(3200);
+    }
+
     public ThrowableFlareEntity(Level world, LivingEntity livingEntity, boolean hasRaid, String raid)
     {
         super(ModEntities.THROWABLE_FLARE.get(), world, livingEntity);
@@ -60,21 +69,35 @@ public class ThrowableFlareEntity extends ThrowableGrenadeEntity
     @Override
     public void particleTick() {
         if (!this.level().isClientSide) {
-            if (this.tickCount > 100 && this.hasRaid) {
-                GunnerManager gunnerManager = GunnerManager.getInstance();
-                Faction faction = gunnerManager.getFactionByName(gunnerManager.getRandomFactionName());
-                if (this.raidName != null) {
-                    faction = gunnerManager.getFactionByName(this.raidName);
+            if (this.tickCount > 100) {
+                if (this.hasRaid) {
+                    GunnerManager gunnerManager = GunnerManager.getInstance();
+                    Faction faction = gunnerManager.getFactionByName(gunnerManager.getRandomFactionName());
+                    if (this.raidName != null) {
+                        faction = gunnerManager.getFactionByName(this.raidName);
+                    }
+                    ModCommands.startRaid((ServerLevel) this.level(), faction, this.position(), true);
+                    this.hasRaid = false;
                 }
-                ModCommands.startRaid((ServerLevel) this.level(), faction, this.position(), true);
-                this.hasRaid = false;
+                if (this.terrorRaid) {
+                    ModCommands.startTerrorRaid((ServerLevel) this.level(), this.position(), true, false);
+                    this.terrorRaid = false;
+                }
             }
         }
         if(this.level().isClientSide && this.tickCount > 20) {
-            for(int i = 0; i < 2; i++) {
-                this.level().addParticle(ModParticleTypes.FLARE.get(), true, this.getX() - (this.getDeltaMovement().x() / i), this.getY() - (this.getDeltaMovement().y() / i), this.getZ() - (this.getDeltaMovement().z() / i), 0, 0, 0);
-                this.level().addParticle(ParticleTypes.LAVA, true, this.getX() - (this.getDeltaMovement().x() / i), this.getY() - (this.getDeltaMovement().y() / i), this.getZ() - (this.getDeltaMovement().z() / i), 0, 0, 0);
-                this.level().addParticle(ModParticleTypes.FIRE.get(), true, this.getX() - (this.getDeltaMovement().x() / i), this.getY() - (this.getDeltaMovement().y() / i), this.getZ() - (this.getDeltaMovement().z() / i), 0, 0, 0);
+            if (this.terrorRaid) {
+                for(int i = 0; i < 2; i++) {
+                    this.level().addParticle(ModParticleTypes.BLUE_FLARE.get(), true, this.getX() - (this.getDeltaMovement().x() / i), this.getY() - (this.getDeltaMovement().y() / i), this.getZ() - (this.getDeltaMovement().z() / i), 0, 0, 0);
+                    this.level().addParticle(ParticleTypes.LAVA, true, this.getX() - (this.getDeltaMovement().x() / i), this.getY() - (this.getDeltaMovement().y() / i), this.getZ() - (this.getDeltaMovement().z() / i), 0, 0, 0);
+                    this.level().addParticle(ModParticleTypes.FIRE.get(), true, this.getX() - (this.getDeltaMovement().x() / i), this.getY() - (this.getDeltaMovement().y() / i), this.getZ() - (this.getDeltaMovement().z() / i), 0, 0, 0);
+                }
+            } else {
+                for(int i = 0; i < 2; i++) {
+                    this.level().addParticle(ModParticleTypes.FLARE.get(), true, this.getX() - (this.getDeltaMovement().x() / i), this.getY() - (this.getDeltaMovement().y() / i), this.getZ() - (this.getDeltaMovement().z() / i), 0, 0, 0);
+                    this.level().addParticle(ParticleTypes.LAVA, true, this.getX() - (this.getDeltaMovement().x() / i), this.getY() - (this.getDeltaMovement().y() / i), this.getZ() - (this.getDeltaMovement().z() / i), 0, 0, 0);
+                    this.level().addParticle(ModParticleTypes.FIRE.get(), true, this.getX() - (this.getDeltaMovement().x() / i), this.getY() - (this.getDeltaMovement().y() / i), this.getZ() - (this.getDeltaMovement().z() / i), 0, 0, 0);
+                }
             }
         }
     }

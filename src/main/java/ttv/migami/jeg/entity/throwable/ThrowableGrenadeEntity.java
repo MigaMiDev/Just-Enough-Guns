@@ -7,6 +7,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -128,7 +129,7 @@ public class ThrowableGrenadeEntity extends ThrowableItemEntity
                 AABB area = new AABB(this.blockPosition()).inflate(radius);
                 serverLevel.playSound(this, this.blockPosition(), SoundEvents.GENERIC_EXPLODE, SoundSource.HOSTILE, 5.0F, 1.0F);
                 for (LivingEntity entity : this.level().getEntitiesOfClass(LivingEntity.class, area)) {
-                    if (!(entity instanceof Enemy)) {
+                    if (!(entity instanceof Enemy) && !(entity instanceof Player)) {
                         continue;
                     }
 

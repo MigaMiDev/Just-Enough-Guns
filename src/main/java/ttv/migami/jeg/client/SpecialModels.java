@@ -192,6 +192,8 @@ public enum SpecialModels {
 
     COMBAT_PISTOL("gun/combat_pistol"),
 
+    MINIGUN("gun/minigun"),
+
     BUBBLE_CANNON("gun/bubble_cannon"),
     BUBBLE_CANNON_MAIN("bubble_cannon/main"),
 

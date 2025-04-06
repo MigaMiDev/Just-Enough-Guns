@@ -307,7 +307,7 @@ public class Config
 			{
 				//this.scrapOreWeight = builder.comment("Controls the veins per chunk of the Scrap Ore").defineInRange("scrapOreWeight", 15, 0, 99);
 				this.bossEnchants = builder.comment("If enabled, killing bosses while holding a Gun/Firearm, will enchant the gun with their respective enchantment").define("bossEnchants", true);
-				this.maxWitheredLevel = builder.comment("The max level of Withered by killing the Wither. The maximum cap is 99, have fun.").defineInRange("maxWitheredLevel", 3, 1, 99);
+				this.maxWitheredLevel = builder.comment("The max level of Withered by killing the Wither. The maximum cap is 99, have fun.").defineInRange("maxWitheredLevel", 2, 1, 99);
 				this.bossRequirements = builder.comment("If enabled, boss enchanments will only be granted if their requirements are met").define("bossRequirements", true);
 				this.booSpawning = builder.comment("If disabled, Boos will not generate.").define("booSpawning", true);
 				this.ghoulSpawning = builder.comment("If disabled, Ghouls will not generate.").define("ghoulSpawning", true);

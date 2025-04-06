@@ -33,6 +33,7 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Phantom;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -60,6 +61,7 @@ import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 
+import static ttv.migami.jeg.common.network.ServerPlayHandler.getFireworkStack;
 import static ttv.migami.jeg.common.network.ServerPlayHandler.sendParticlesToAll;
 import static ttv.migami.jeg.entity.monster.phantom.PhantomSwarmSpawner.spawnPhantomGunnerSwarm;
 import static ttv.migami.jeg.entity.monster.phantom.PhantomSwarmSpawner.spawnSecondLayerPhantomGunnerSwarm;
@@ -381,7 +383,15 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
                 dropGrenades(this);
             }
 
+            if (this.tickCount % 5 == 0) {
+                FireworkRocketEntity firework = new FireworkRocketEntity(this.level(), getFireworkStack(this.random.nextBoolean(), false, this.random.nextInt(0, 3), this.random.nextInt(0, 3)), this.getX() + this.random.nextInt(-32, 32), this.getY() + this.random.nextInt(0, 3 ), this.getZ() + this.random.nextInt(-10, 10), false);
+                this.level().addFreshEntity(firework);
+            }
+
             if (this.level() instanceof ServerLevel serverLevel) {
+                if (this.tickCount % 15 == 0) {
+                    serverLevel.playSound(this, this.getOnPos(), SoundEvents.FIREWORK_ROCKET_LAUNCH, SoundSource.HOSTILE, 10.0F, 0.8F + this.random.nextFloat());
+                }
                 if (this.tickCount % 8 == 0) {
                     sendParticlesToAll(
                             serverLevel,

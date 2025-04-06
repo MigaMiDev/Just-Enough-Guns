@@ -194,14 +194,19 @@ public class GuiRenderer {
 
                 String ammoText = String.format("%03d", ammoCount);
 
-                if (ModSyncedDataKeys.RELOADING.getValue(player)) {
+                if (ModSyncedDataKeys.RELOADING.getValue(player) && !player.isCrouching()) {
                     ammoText = "Reloading";
                 }
 
                 guiGraphics.drawString(Minecraft.getInstance().font, ammoText, 0, 0, 0xFFFFFF, true);
                 guiGraphics.pose().popPose();
 
-                if (!ModSyncedDataKeys.RELOADING.getValue(player)) {
+                boolean showReserve = true;
+                if (ModSyncedDataKeys.RELOADING.getValue(player)) {
+                    showReserve = player.isCrouching();
+                }
+
+                if (showReserve) {
                     String inventoryAmmo = String.format("%04d", ammoStack.length);
                     if (gun.getReloads().getReloadType().equals(ReloadType.SINGLE_ITEM)) {
                         inventoryAmmo = String.format("%04d", ammoStack.length * gun.getReloads().getMaxAmmo());

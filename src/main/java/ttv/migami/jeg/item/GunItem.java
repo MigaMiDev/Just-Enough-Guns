@@ -7,14 +7,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -26,7 +21,10 @@ import ttv.migami.jeg.Config;
 import ttv.migami.jeg.JustEnoughGuns;
 import ttv.migami.jeg.client.GunItemStackRenderer;
 import ttv.migami.jeg.client.KeyBinds;
-import ttv.migami.jeg.common.*;
+import ttv.migami.jeg.common.FireMode;
+import ttv.migami.jeg.common.Gun;
+import ttv.migami.jeg.common.NetworkGunManager;
+import ttv.migami.jeg.common.ReloadType;
 import ttv.migami.jeg.debug.Debug;
 import ttv.migami.jeg.enchantment.EnchantmentTypes;
 import ttv.migami.jeg.init.ModEnchantments;
@@ -46,7 +44,6 @@ import static ttv.migami.jeg.JustEnoughGuns.devilFruitsLoaded;
 
 public class GunItem extends Item implements IColored, IMeta {
     private final WeakHashMap<CompoundTag, Gun> modifiedGunCache = new WeakHashMap<>();
-    private boolean scoping = false;
     private Gun gun = new Gun();
 
     public GunItem(Item.Properties properties) {
@@ -313,33 +310,5 @@ public class GunItem extends Item implements IColored, IMeta {
 
     public boolean isValidRepairItem(ItemStack pToRepair, ItemStack pRepair) {
         return pRepair.is(ModItems.REPAIR_KIT.get());
-    }
-
-    // Telescopic Zoom
-    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
-        if (pUsedHand.equals(InteractionHand.MAIN_HAND))
-        {
-            if (!this.scoping) {
-                pPlayer.playSound(SoundEvents.SPYGLASS_USE, 1.0F, 1.0F);
-                pPlayer.awardStat(Stats.ITEM_USED.get(this));
-            }
-            this.scoping = true;
-            return InteractionResultHolder.pass(pPlayer.getMainHandItem());
-        }
-        return InteractionResultHolder.pass(pPlayer.getOffhandItem());
-    }
-
-    public ItemStack finishUsingItem(ItemStack pStack, Level pLevel, LivingEntity pLivingEntity) {
-        this.scoping = false;
-        return pStack;
-    }
-
-    public void releaseUsing(ItemStack pStack, Level pLevel, LivingEntity pLivingEntity, int pTimeCharged) {
-        this.scoping = false;
-        this.stopUsing(pLivingEntity);
-    }
-
-    private void stopUsing(LivingEntity pUser) {
-        pUser.playSound(SoundEvents.SPYGLASS_STOP_USING, 1.0F, 1.0F);
     }
 }
