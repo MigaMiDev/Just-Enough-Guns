@@ -8,6 +8,7 @@
   },
   "general": {
     "canBeBlueprinted": false,
+    "drawTimer": 30,
     "fireMode": "jeg:automatic",
     "gripType": "jeg:mini_gun",
     "infinityDisabled": true,

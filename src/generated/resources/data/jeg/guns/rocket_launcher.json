@@ -9,6 +9,7 @@
   "general": {
     "alwaysSpread": true,
     "canBeBlueprinted": false,
+    "drawTimer": 40,
     "fireMode": "jeg:semi_automatic",
     "fireTimer": 7,
     "gripType": "jeg:bazooka",

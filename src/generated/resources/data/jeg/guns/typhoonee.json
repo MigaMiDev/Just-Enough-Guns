@@ -9,6 +9,7 @@
   "general": {
     "canFireUnderwater": true,
     "customFiring": true,
+    "drawTimer": 20,
     "fireMode": "jeg:pulse",
     "fireTimer": 15,
     "gripType": "jeg:two_handed",

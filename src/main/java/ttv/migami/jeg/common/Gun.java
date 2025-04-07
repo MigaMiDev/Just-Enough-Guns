@@ -116,6 +116,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         private int maxHoldFire;
         @Optional
         private int overheatTimer;
+        private int drawTimer = 20;
         private boolean silenced;
         private boolean customFiring;
         @Ignored
@@ -153,6 +154,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             tag.putInt("FireTimer", this.fireTimer);
             tag.putInt("MaxHoldFire", this.maxHoldFire);
             tag.putInt("OverheatTimer", this.overheatTimer);
+            tag.putInt("DrawTimer", this.drawTimer);
             tag.putBoolean("Silenced", this.silenced);
             tag.putBoolean("CustomFiring", this.customFiring);
             tag.putString("GripType", this.gripType.getId().toString());
@@ -201,6 +203,10 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             if(tag.contains("OverheatTimer", Tag.TAG_ANY_NUMERIC))
             {
                 this.overheatTimer = tag.getInt("OverheatTimer");
+            }
+            if(tag.contains("DrawTimer", Tag.TAG_ANY_NUMERIC))
+            {
+                this.drawTimer = tag.getInt("DrawTimer");
             }
             if(tag.contains("Silenced", Tag.TAG_ANY_NUMERIC))
             {
@@ -281,6 +287,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             if(this.fireTimer != 0) object.addProperty("fireTimer", this.fireTimer);
             if(this.maxHoldFire != 0) object.addProperty("maxHoldFire", this.maxHoldFire);
             if(this.overheatTimer != 0) object.addProperty("overheatTimer", this.overheatTimer);
+            if(this.drawTimer != 0) object.addProperty("drawTimer", this.drawTimer);
             if(this.silenced) object.addProperty("silenced", true);
             if(this.customFiring) object.addProperty("customFiring", true);
             object.addProperty("gripType", this.gripType.getId().toString());
@@ -312,6 +319,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             general.fireTimer = this.fireTimer;
             general.maxHoldFire = this.maxHoldFire;
             general.overheatTimer = this.overheatTimer;
+            general.drawTimer = this.drawTimer;
             general.silenced = this.silenced;
             general.customFiring = this.customFiring;
             general.gripType = this.gripType;
@@ -384,6 +392,14 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         public int getOverheatTimer()
         {
             return this.overheatTimer;
+        }
+
+        /**
+         * @return The delay in ticks for the gun to be drawn
+         */
+        public int getDrawTimer()
+        {
+            return this.drawTimer;
         }
 
         /**
@@ -2290,6 +2306,12 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         public Builder setOverheatTimer(int overheatTimer)
         {
             this.gun.general.overheatTimer = overheatTimer;
+            return this;
+        }
+
+        public Builder setDrawTimer(int drawTimer)
+        {
+            this.gun.general.drawTimer = drawTimer;
             return this;
         }
 

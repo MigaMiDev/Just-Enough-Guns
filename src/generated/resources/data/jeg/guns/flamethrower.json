@@ -9,6 +9,7 @@
   "general": {
     "alwaysSpread": true,
     "canBeBlueprinted": false,
+    "drawTimer": 25,
     "fireMode": "jeg:automatic",
     "gripType": "jeg:two_handed",
     "overheatTimer": 150,

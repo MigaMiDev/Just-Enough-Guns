@@ -8,6 +8,7 @@
   },
   "general": {
     "alwaysSpread": true,
+    "drawTimer": 20,
     "fireMode": "jeg:semi_automatic",
     "gripType": "jeg:two_handed",
     "projectileAmount": 10,

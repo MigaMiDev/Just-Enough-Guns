@@ -1,6 +1,7 @@
 {
   "general": {
     "canBeBlueprinted": false,
+    "drawTimer": 10,
     "fireMode": "jeg:release_fire",
     "gripType": "jeg:two_handed",
     "maxHoldFire": 20,

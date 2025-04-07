@@ -91,7 +91,7 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
             }
 
             if (id == GeoItem.getId(player.getMainHandItem())) {
-                if (!nbtCompound.getBoolean("IsDrawing") && nbtCompound.getInt("DrawnTick") < 15) {
+                if (!nbtCompound.getBoolean("IsDrawing") && nbtCompound.getInt("DrawnTick") < getModifiedGun(player.getMainHandItem()).getGeneral().getDrawTimer()) {
                     nbtCompound.putBoolean("IsDrawing", true);
                 }
 

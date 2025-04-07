@@ -10,6 +10,7 @@
     "burstAmount": 3,
     "burstDelay": 6,
     "canBeBlueprinted": false,
+    "drawTimer": 25,
     "fireMode": "jeg:burst",
     "gripType": "jeg:two_handed",
     "overheatTimer": 100,

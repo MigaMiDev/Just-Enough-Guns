@@ -38,6 +38,7 @@ public class GunGen extends GunProvider
                 .setSpread(0)
                 .setWitheredDisabled(true)
                 .setInfinityDisabled(true)
+                .setDrawTimer(0)
 
                 // Reloads
                 .setMaxAmmo(1)
@@ -84,6 +85,7 @@ public class GunGen extends GunProvider
                 .setRecoilAngle(4.0F)
                 .setAlwaysSpread(false)
                 .setSpread(3.0F)
+                .setDrawTimer(20)
 
                 // Reloads
                 .setMaxAmmo(8)
@@ -134,6 +136,7 @@ public class GunGen extends GunProvider
                 .setSpread(15.0F)
                 .setProjectileAmount(18)
                 .setShooterPushback(-0.4F)
+                .setDrawTimer(22)
 
                 // Reloads
                 .setMaxAmmo(1)
@@ -177,6 +180,7 @@ public class GunGen extends GunProvider
                 .setRecoilAngle(1.0F)
                 .setAlwaysSpread(true)
                 .setSpread(4.0F)
+                .setDrawTimer(20)
 
                 // Reloads
                 .setMaxAmmo(24)
@@ -226,6 +230,7 @@ public class GunGen extends GunProvider
                 .setAlwaysSpread(true)
                 .setSpread(25.0F)
                 .setProjectileAmount(22)
+                .setDrawTimer(15)
 
                 // Reloads
                 .setMaxAmmo(2)
@@ -271,6 +276,7 @@ public class GunGen extends GunProvider
                 .setRecoilAngle(2.0F)
                 .setAlwaysSpread(false)
                 .setSpread(2.5F)
+                .setDrawTimer(10)
 
                 // Reloads
                 .setMaxAmmo(10)
@@ -317,6 +323,7 @@ public class GunGen extends GunProvider
                 .setRecoilAngle(3.0F)
                 .setAlwaysSpread(false)
                 .setSpread(3.0F)
+                .setDrawTimer(20)
 
                 // Reloads
                 .setMaxAmmo(16)
@@ -367,6 +374,7 @@ public class GunGen extends GunProvider
                 .setRecoilAngle(2.7F)
                 .setAlwaysSpread(true)
                 .setSpread(4.0F)
+                .setDrawTimer(28)
 
                 // Reloads
                 .setMaxAmmo(30)
@@ -418,6 +426,7 @@ public class GunGen extends GunProvider
                 .setAlwaysSpread(true)
                 .setSpread(10.0F)
                 .setProjectileAmount(12)
+                .setDrawTimer(22)
 
                 // Reloads
                 .setMaxAmmo(6)
@@ -470,7 +479,7 @@ public class GunGen extends GunProvider
                 .setRecoilAngle(2.0F)
                 .setAlwaysSpread(false)
                 .setSpread(1.5F)
-
+                .setDrawTimer(10)
 
                 // Reloads
                 .setMaxAmmo(15)
@@ -518,6 +527,7 @@ public class GunGen extends GunProvider
                 .setRecoilAngle(4.0F)
                 .setAlwaysSpread(true)
                 .setSpread(0.25F)
+                .setDrawTimer(35)
 
                 // Reloads
                 .setMaxAmmo(4)
@@ -570,6 +580,7 @@ public class GunGen extends GunProvider
                 .setRecoilAngle(2.0F)
                 .setAlwaysSpread(true)
                 .setSpread(2.0F)
+                .setDrawTimer(20)
 
                 // Reloads
                 .setMaxAmmo(30)
@@ -621,6 +632,7 @@ public class GunGen extends GunProvider
                 .setRecoilAngle(4.0F)
                 .setAlwaysSpread(true)
                 .setSpread(3.0F)
+                .setDrawTimer(20)
 
                 // Reloads
                 .setMaxAmmo(30)
@@ -673,6 +685,7 @@ public class GunGen extends GunProvider
                 .setAlwaysSpread(false)
                 .setSpread(3.0F)
                 .setInfinityDisabled(true)
+                .setDrawTimer(10)
 
                 // Reloads
                 .setMaxAmmo(1)
@@ -974,6 +987,7 @@ public class GunGen extends GunProvider
                 .setSpread(4.0F)
                 .setCanBeBlueprinted(false)
                 .setOverheatTimer(100)
+                .setDrawTimer(20)
 
                 // Reloads
                 .setMaxAmmo(40)
@@ -1030,6 +1044,7 @@ public class GunGen extends GunProvider
                 .setSpread(2.0F)
                 .setCanBeBlueprinted(false)
                 .setOverheatTimer(100)
+                .setDrawTimer(25)
 
                 // Reloads
                 .setMaxAmmo(30)
@@ -1083,6 +1098,7 @@ public class GunGen extends GunProvider
                 .setSpread(4.0F)
                 .setCanBeBlueprinted(false)
                 .setCanFireUnderwater(true)
+                .setDrawTimer(20)
 
                 // Reloads
                 .setMaxAmmo(20)
@@ -1136,6 +1152,7 @@ public class GunGen extends GunProvider
                 .setProjectileAmount(6)
                 .setCanBeBlueprinted(false)
                 .setCanFireUnderwater(true)
+                .setDrawTimer(20)
 
                 // Reloads
                 .setMaxAmmo(6)
@@ -1192,6 +1209,7 @@ public class GunGen extends GunProvider
                 .setInfinityDisabled(true)
                 .setCanFireUnderwater(true)
                 .setShooterPushback(-1F)
+                .setDrawTimer(10)
 
                 // Reloads
                 .setMaxAmmo(15)
@@ -1242,6 +1260,7 @@ public class GunGen extends GunProvider
                 .setAlwaysSpread(true)
                 .setSpread(8.0F)
                 .setProjectileAmount(12)
+                .setDrawTimer(20)
 
                 // Reloads
                 .setMaxAmmo(8)
@@ -1295,6 +1314,7 @@ public class GunGen extends GunProvider
                 .setRecoilAngle(3.0F)
                 .setAlwaysSpread(false)
                 .setSpread(3.0F)
+                .setDrawTimer(17)
 
                 // Reloads
                 .setMaxAmmo(8)
@@ -1344,6 +1364,7 @@ public class GunGen extends GunProvider
                 .setRecoilAngle(4.0F)
                 .setAlwaysSpread(true)
                 .setSpread(3.0F)
+                .setDrawTimer(20)
 
                 // Reloads
                 .setMaxAmmo(30)
@@ -1399,6 +1420,7 @@ public class GunGen extends GunProvider
                 .setInfinityDisabled(true)
                 .setCanBeBlueprinted(false)
                 .setShooterPushback(-1F)
+                .setDrawTimer(40)
 
                 // Reloads
                 .setMaxAmmo(1)
@@ -1448,6 +1470,7 @@ public class GunGen extends GunProvider
                 .setMaxHoldFire(20)
                 .setSilenced(true)
                 .setCanBeBlueprinted(false)
+                .setDrawTimer(10)
 
                 // Reloads
                 .setMaxAmmo(1)
@@ -1494,6 +1517,7 @@ public class GunGen extends GunProvider
                 .setShooterPushback(-0.1F)
                 .setOverheatTimer(100)
                 .setCanBeBlueprinted(false)
+                .setDrawTimer(40)
 
                 // Reloads
                 .setMaxAmmo(100)
@@ -1544,6 +1568,7 @@ public class GunGen extends GunProvider
                 .setAlwaysSpread(true)
                 .setSpread(2.0F)
                 .setCanBeBlueprinted(false)
+                .setDrawTimer(20)
 
                 // Reloads
                 .setMaxAmmo(1)
@@ -1593,6 +1618,7 @@ public class GunGen extends GunProvider
                 .setCanBeBlueprinted(false)
                 .setProjectileAmount(3)
                 .setWitheredDisabled(true)
+                .setDrawTimer(25)
 
                 // Reloads
                 .setMaxAmmo(200)
@@ -1643,6 +1669,7 @@ public class GunGen extends GunProvider
                 .setProjectileAmount(3)
                 .setInfinityDisabled(true)
                 .setWitheredDisabled(true)
+                .setDrawTimer(30)
 
                 // Reloads
                 .setMaxAmmo(1)

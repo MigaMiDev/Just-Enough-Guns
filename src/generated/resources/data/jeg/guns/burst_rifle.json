@@ -10,6 +10,7 @@
     "alwaysSpread": true,
     "burstAmount": 3,
     "burstDelay": 6,
+    "drawTimer": 20,
     "fireMode": "jeg:burst",
     "gripType": "jeg:two_handed",
     "rate": 2,

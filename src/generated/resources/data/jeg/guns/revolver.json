@@ -7,6 +7,7 @@
     }
   },
   "general": {
+    "drawTimer": 20,
     "fireMode": "jeg:semi_automatic",
     "gripType": "jeg:one_handed",
     "rate": 3,
