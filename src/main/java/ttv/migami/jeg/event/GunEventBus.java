@@ -44,6 +44,7 @@ import ttv.migami.jeg.common.Gun;
 import ttv.migami.jeg.common.network.ServerPlayHandler;
 import ttv.migami.jeg.entity.throwable.ThrowableExplosiveChargeEntity;
 import ttv.migami.jeg.init.*;
+import ttv.migami.jeg.item.AnimatedGunItem;
 import ttv.migami.jeg.item.GunItem;
 import ttv.migami.jeg.item.attachment.IAttachment;
 import ttv.migami.jeg.util.GunEnchantmentHelper;
@@ -242,7 +243,9 @@ public class GunEventBus {
             if (gun.getProjectile().ejectsCasing() && tag != null)
             {
                 if (tag.getInt("AmmoCount") >= 1 || player.getAbilities().instabuild) {
-                    ejectCasing(level, player);
+                    if (!(gunItem instanceof AnimatedGunItem)) {
+                        ejectCasing(level, player);
+                    }
                     if (gunItem == ModItems.ROCKET_LAUNCHER.get()) {
                         firingSmoke(level, player);
                     }

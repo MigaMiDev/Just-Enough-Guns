@@ -3,10 +3,8 @@ package ttv.migami.jeg.item;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
@@ -15,7 +13,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import software.bernie.geckolib.animatable.GeoItem;
-import software.bernie.geckolib.cache.AnimatableIdCache;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -43,9 +40,7 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
     private final SoundEvent ejectorSoundPull;
     private final SoundEvent ejectorSoundRelease;
 
-    private int drawTick = 0;
     private int heartBeat = 60;
-    private int shootTick = 0;
 
     public AnimatedGunItem(Properties properties, String path,
                            SoundEvent reloadSoundMagOut, SoundEvent reloadSoundMagIn, SoundEvent reloadSoundEnd, SoundEvent ejectorSoundPull, SoundEvent ejectorSoundRelease) {
@@ -67,11 +62,6 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
             return;
         }
 
-        CompoundTag nbtCompound = stack.getOrCreateTag();
-
-        if (!nbtCompound.contains(ID_NBT_KEY, Tag.TAG_ANY_NUMERIC) && world instanceof ServerLevel) {
-            nbtCompound.putLong(ID_NBT_KEY, AnimatableIdCache.getFreeId((ServerLevel) world));
-        }
         final long id = GeoItem.getId(stack);
 
         if (stack.getItem() == ModItems.FINGER_GUN.get() && !stack.getTag().getBoolean("IgnoreAmmo")){
@@ -90,24 +80,30 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
                 }
             }
 
-            if (id == GeoItem.getId(player.getMainHandItem())) {
-                if (!nbtCompound.getBoolean("IsDrawing") && nbtCompound.getInt("DrawnTick") < getModifiedGun(player.getMainHandItem()).getGeneral().getDrawTimer()) {
-                    nbtCompound.putBoolean("IsDrawing", true);
-                }
+            if (stack == player.getMainHandItem()) {
+                CompoundTag nbtCompound = stack.getOrCreateTag();
 
                 if (nbtCompound.getBoolean("IsShooting") && nbtCompound.getInt("ShootingTick") < 5) {
-                    this.shootTick++;
-                    nbtCompound.putInt("ShootingTick", this.shootTick);
+                    nbtCompound.putInt("ShootingTick", nbtCompound.getInt("ShootingTick") + 1);
                 }
 
                 if (nbtCompound.getInt("ShootingTick") >= 5) {
                     nbtCompound.remove("IsShooting");
-                    this.shootTick = 0;
+                    nbtCompound.remove("ShootingTick");
                 }
 
-                if (nbtCompound.getBoolean("IsDrawing") && nbtCompound.getInt("DrawnTick") < 15) {
-                    this.drawTick++;
-                    nbtCompound.putInt("DrawnTick", this.drawTick);
+                int drawTick = getModifiedGun(player.getMainHandItem()).getGeneral().getDrawTimer();
+
+                if (nbtCompound.getInt("DrawnTick") >= drawTick) {
+                    nbtCompound.putBoolean("IsDrawing", false);
+                }
+
+                if (!nbtCompound.getBoolean("IsDrawing") && nbtCompound.getInt("DrawnTick") < drawTick) {
+                    nbtCompound.putBoolean("IsDrawing", true);
+                }
+
+                if (nbtCompound.getBoolean("IsDrawing") && nbtCompound.getInt("DrawnTick") < drawTick) {
+                    nbtCompound.putInt("DrawnTick", nbtCompound.getInt("DrawnTick") + 1);
                     if (stack.is(ModItems.ROCKET_LAUNCHER.get())) {
                         player.displayClientMessage(Component.translatable("chat.jeg.rocket_ride").withStyle(ChatFormatting.WHITE), true);
                     }
@@ -116,28 +112,42 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
                     }
                 }
 
-                if (nbtCompound.getInt("DrawnTick") >= 15) {
-                    nbtCompound.putBoolean("IsDrawing", false);
-                }
-
                 boolean isSprinting = player.isSprinting();
                 boolean isAiming = ModSyncedDataKeys.AIMING.getValue(player);
                 updateBooleanTag(nbtCompound, "IsAiming", isAiming);
                 updateBooleanTag(nbtCompound, "IsRunning", isSprinting);
             }
-            else if (GeoItem.getId(player.getMainHandItem()) != id || player.isDeadOrDying()) {
-                nbtCompound.putBoolean("IsDrawing", true);
-                this.resetTags(nbtCompound);
-                this.drawTick = 0;
-                this.shootTick = 0;
+            else {
+                if (stack.getTag() == null) {
+                    return;
+                }
+                if (stack == player.getMainHandItem()) {
+                    return;
+                }
+                this.resetTags(stack);
             }
         }
     }
 
+    public void resetTags(ItemStack itemStack) {
+        CompoundTag compoundTag = itemStack.getTag();
+
+        if (compoundTag == null) {
+            return;
+        }
+
+        compoundTag.remove("IsDrawing");
+        compoundTag.remove("DrawnTick");
+        compoundTag.remove("IsShooting");
+        compoundTag.remove("IsReloading");
+        compoundTag.remove("IsFinishingReloading");
+        compoundTag.remove("IsInspecting");
+        compoundTag.remove("IsAiming");
+        compoundTag.remove("IsRunning");
+    }
+
     public void resetTags(CompoundTag compoundTag) {
         compoundTag.remove("IsDrawing");
-        compoundTag.remove("IsDrawn");
-        compoundTag.remove("DrawnTick");
         compoundTag.remove("IsShooting");
         compoundTag.remove("IsReloading");
         compoundTag.remove("IsFinishingReloading");

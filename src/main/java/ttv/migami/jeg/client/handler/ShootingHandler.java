@@ -263,7 +263,7 @@ public class ShootingHandler
                 if (!KeyBinds.getShootMapping().isDown() && gun.getGeneral().getFireMode() == FireMode.RELEASE_FIRE) {
                     if (heldItem.getItem() instanceof AnimatedGunItem animatedGunItem) {
                         final long id = GeoItem.getId(player.getMainHandItem());
-                        AnimationController<GeoAnimatable> animationController = animatedGunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("controller");
+                        AnimationController<GeoAnimatable> animationController = animatedGunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("Controller");
 
                         if (animationController != null && animationController.getCurrentAnimation() != null
                                 && animationController.getCurrentAnimation().animation().name().matches("hold_fire")) {
@@ -302,7 +302,7 @@ public class ShootingHandler
                     if(gun.getGeneral().getOverheatTimer() != 0 && overheatTimer < gun.getGeneral().getOverheatTimer()) {
                         if (heldItem.getItem() instanceof AnimatedGunItem animatedGunItem) {
                             final long id = GeoItem.getId(player.getMainHandItem());
-                            AnimationController<GeoAnimatable> animationController = animatedGunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("controller");
+                            AnimationController<GeoAnimatable> animationController = animatedGunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("Controller");
                             if (animationController != null && animationController.getCurrentAnimation() != null && !animationController.getCurrentAnimation().animation().name().matches("draw")) {
                                 overheatTimer++;
                             }
@@ -321,7 +321,7 @@ public class ShootingHandler
                     }
                     if (gun.getGeneral().getFireMode() == FireMode.RELEASE_FIRE && heldItem.getItem() instanceof AnimatedGunItem animatedGunItem && !tracker.isOnCooldown(heldItem.getItem())) {
                         final long id = GeoItem.getId(player.getMainHandItem());
-                        AnimationController<GeoAnimatable> animationController = animatedGunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("controller");
+                        AnimationController<GeoAnimatable> animationController = animatedGunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("Controller");
 
                         if (animationController != null && animationController.getCurrentAnimation() != null && !animationController.getCurrentAnimation().animation().name().matches("draw")
                                 && !animationController.getCurrentAnimation().animation().name().matches("reload")) {
@@ -473,30 +473,6 @@ public class ShootingHandler
                 PacketHandler.getPlayChannel().sendToServer(new C2SMessageShoot(player));
                 MinecraftForge.EVENT_BUS.post(new GunFireEvent.Post(player, heldItem));
                 ModSyncedDataKeys.RELOADING.setValue(player, false);
-            }
-        }
-    }
-
-    public static void playFireAnimation() {
-        Player player = Minecraft.getInstance().player;
-        if(player == null)
-            return;
-
-        ItemStack stack = player.getMainHandItem();
-
-        if (stack.getTag() != null) {
-            if (stack.getItem() instanceof AnimatedGunItem animatedGunItem) {
-                stack.getTag().remove("IsReloading");
-                stack.getTag().remove("IsFinishingReloading");
-                final long id = GeoItem.getId(stack);
-                AnimationController<GeoAnimatable> animationController = animatedGunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("controller");
-                animationController.forceAnimationReset();
-                if (ModSyncedDataKeys.AIMING.getValue(player)) {
-                    animationController.tryTriggerAnimation("aim_shoot");
-                }
-                else {
-                    animationController.tryTriggerAnimation("shoot");
-                }
             }
         }
     }

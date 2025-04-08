@@ -9,6 +9,8 @@ import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
+import ttv.migami.jeg.common.ReloadType;
+import ttv.migami.jeg.init.ModSyncedDataKeys;
 import ttv.migami.jeg.item.AnimatedGunItem;
 
 public final class GunAnimations {
@@ -36,7 +38,7 @@ public final class GunAnimations {
             if (gunStack.getItem() != animatable)
                 return state.setAndContinue(IDLE);
 
-            if (!(gunStack.getItem() instanceof AnimatedGunItem))
+            if (!(gunStack.getItem() instanceof AnimatedGunItem animatedGunItem))
                 return state.setAndContinue(IDLE);
 
             if (state.getController().getCurrentAnimation() == null)
@@ -55,13 +57,30 @@ public final class GunAnimations {
                     } else {
                         return state.setAndContinue(SHOOT);
                     }
-                } else if (tag.getBoolean("IsDrawing") ||
-                        (GunAnimations.isAnimationPlaying(state.getController(), "draw") &&
-                                !state.getController().hasAnimationFinished())) {
-                    return state.setAndContinue(DRAW);
                 } else {
-                    if (tag.getBoolean("IsRunning") && !tag.getBoolean("IsAiming")) {
-                        return state.setAndContinue(SPRINT);
+                    if ((!ModSyncedDataKeys.RELOADING.getValue(player) &&
+                            GunAnimations.isAnimationPlaying(state.getController(), "reload_loop")) ||
+                            GunAnimations.isAnimationPlaying(state.getController(), "reload_stop")) {
+                        return  state.setAndContinue(RELOAD_STOP);
+                    }
+                    if (ModSyncedDataKeys.RELOADING.getValue(player) ||
+                            ((GunAnimations.isAnimationPlaying(state.getController(), "reload") ||
+                                    GunAnimations.isAnimationPlaying(state.getController(), "reload_start")) &&
+                                    !state.getController().hasAnimationFinished())) {
+                        if (animatedGunItem.getModifiedGun(gunStack).getReloads().getReloadType().equals(ReloadType.MANUAL)) {
+                            return state.setAndContinue(RELOAD_START);
+                        }
+                        return state.setAndContinue(RELOAD);
+                    }
+
+                    if (tag.getBoolean("IsDrawing") ||
+                            (GunAnimations.isAnimationPlaying(state.getController(), "draw") &&
+                                    !state.getController().hasAnimationFinished())) {
+                        return state.setAndContinue(DRAW);
+                    } else {
+                        if (tag.getBoolean("IsRunning") && !tag.getBoolean("IsAiming")) {
+                            return state.setAndContinue(SPRINT);
+                        }
                     }
                 }
             }

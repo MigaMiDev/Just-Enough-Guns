@@ -187,8 +187,6 @@ public class AimingHandler
             }
         }
 
-        JustEnoughGuns.LOGGER.atInfo().log(getNormalisedAdsProgress());
-
         if (this.doTempFirstPerson)
         {
             if (mc.options.getCameraType() != CameraType.FIRST_PERSON)
