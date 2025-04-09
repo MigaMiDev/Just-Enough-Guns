@@ -30,6 +30,7 @@ public class PhantomGunnerParticle extends TextureSheetParticle {
         this.xd = pXSpeed;
         this.yd = 0;
         this.zd = pZSpeed;
+        this.alpha = 1.0F;
     }
 
     @Override
@@ -96,7 +97,7 @@ public class PhantomGunnerParticle extends TextureSheetParticle {
 
     @Override
     public ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
+        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
     @OnlyIn(Dist.CLIENT)

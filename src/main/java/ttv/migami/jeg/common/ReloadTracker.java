@@ -389,9 +389,9 @@ public class ReloadTracker
 
         if (player.level() instanceof ServerLevel serverLevel) {
             if (isFirstPerson) {
-                serverLevel.playSound(player, player.getOnPos(), sound, SoundSource.PLAYERS, 3, 1);
+                serverLevel.playSound(player, player.getOnPos(), sound, SoundSource.PLAYERS, 1, 1);
             } else {
-                serverLevel.playSound(null, player.getOnPos(), sound, SoundSource.PLAYERS, 3, 1);
+                serverLevel.playSound(null, player.getOnPos(), sound, SoundSource.PLAYERS, 1, 1);
             }
         }
     }

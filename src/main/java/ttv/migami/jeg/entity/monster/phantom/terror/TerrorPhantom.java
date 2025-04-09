@@ -1,8 +1,6 @@
 package ttv.migami.jeg.entity.monster.phantom.terror;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -49,6 +47,7 @@ import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.Reference;
+import ttv.migami.jeg.client.handler.SoundHandler;
 import ttv.migami.jeg.entity.ai.EntityHurtByTargetGoal;
 import ttv.migami.jeg.entity.ai.phantom.TerrorPhantomGunAttackGoal;
 import ttv.migami.jeg.entity.monster.phantom.PhantomSwarmData;
@@ -56,7 +55,6 @@ import ttv.migami.jeg.entity.monster.phantom.gunner.PhantomGunner;
 import ttv.migami.jeg.entity.throwable.*;
 import ttv.migami.jeg.init.*;
 
-import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
@@ -95,11 +93,10 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
     private final int MAX_SWARM_SPAWN_TICK = 300;
     private int swarmSpawnTick = MAX_SWARM_SPAWN_TICK;
 
+    private boolean makeSound = true;
+
     private ResourceLocation lootTable1 = new ResourceLocation(Reference.MOD_ID, "entities/phantom/terror/terror_phantom_supply");
     private ResourceLocation lootTable2 = new ResourceLocation(Reference.MOD_ID, "entities/phantom/terror/terror_phantom_reward");
-
-    @Nullable
-    private AbstractTickableSoundInstance activeSound;
 
     private static final EntityDataAccessor<Boolean> IS_ROLLING = SynchedEntityData.defineId(TerrorPhantom.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_DYING = SynchedEntityData.defineId(TerrorPhantom.class, EntityDataSerializers.BOOLEAN);
@@ -110,12 +107,12 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
 
         this.moveTargetPoint = Vec3.ZERO;
         this.anchorPoint = BlockPos.ZERO;
-        this.attackPhase = TerrorPhantom.AttackPhase.CIRCLE;
+        this.attackPhase = AttackPhase.CIRCLE;
         this.xpReward = 100;
 
         this.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ModItems.LIGHT_MACHINE_GUN.get()));
 
-        this.moveControl = new TerrorPhantom.PhantomMoveControl(this);
+        this.moveControl = new PhantomMoveControl(this);
 
         if (!this.isPlayerOwned()) {
             this.bossEvent.setProgress(1.0F);
@@ -321,17 +318,17 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
     public void tick() {
         super.tick();
 
-        if (this.level().isClientSide && this.tickCount > 10) {
-            if (this.activeSound == null) {
+        if (this.level().isClientSide) {
+            if (this.makeSound) {
                 if (this.isPlayerOwned()) {
-                    this.activeSound = new TerrorPhantomBoostSoundInstance(this, SoundSource.HOSTILE);
+                    SoundHandler.playTerrorPhantomBoostSound(this);
                 } else {
-                    this.activeSound = new TerrorPhantomFlySoundInstance(this, SoundSource.HOSTILE);
+                    SoundHandler.playTerrorPhantomFlySound(this);
                 }
-                Minecraft.getInstance().getSoundManager().play(this.activeSound);
+                this.makeSound = false;
             }
             if (this.isDying()) {
-                Minecraft.getInstance().getSoundManager().play(new TerrorPhantomDiveSoundInstance(this, SoundSource.HOSTILE));
+                SoundHandler.playTerrorPhantomDiveSound(this);
             }
         }
 
@@ -421,7 +418,7 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
         }
 
         if (!this.isDying()) {
-            if (this.attackPhase.equals(TerrorPhantom.AttackPhase.SWOOP)) {
+            if (this.attackPhase.equals(AttackPhase.SWOOP)) {
                 this.horizontalCollision = false;
             }
             //this.noPhysics = this.attackPhase.equals(AttackPhase.SWOOP);
@@ -433,7 +430,7 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
         if (this.level() instanceof ServerLevel serverLevel) {
             this.attackTimer--;
             if (this.attackTimer <= 0) {
-                this.attackPhase = TerrorPhantom.AttackPhase.CIRCLE;
+                this.attackPhase = AttackPhase.CIRCLE;
             }
             if (this.isAngry && --this.swarmParticleTick <= 0) {
                 for (ServerPlayer players : serverLevel.players()) {
@@ -538,7 +535,7 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
     }
 
     @Override
-    public void remove(Entity.RemovalReason reason) {
+    public void remove(RemovalReason reason) {
         super.remove(reason);
         this.bossEvent.removeAllPlayers();
     }
@@ -682,7 +679,7 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
 
         public void start() {
             this.nextSweepTick = this.adjustedTickDelay(10);
-            TerrorPhantom.this.attackPhase = TerrorPhantom.AttackPhase.CIRCLE;
+            TerrorPhantom.this.attackPhase = AttackPhase.CIRCLE;
             this.setAnchorAboveTarget();
             this.turnsUntilBombing = 0;
             this.bombingTurns = 3;
@@ -693,7 +690,7 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
         }
 
         public void tick() {
-            if (TerrorPhantom.this.attackPhase == TerrorPhantom.AttackPhase.CIRCLE) {
+            if (TerrorPhantom.this.attackPhase == AttackPhase.CIRCLE) {
                 --this.nextSweepTick;
 
                 if (this.bombingTurns <= 0) {
@@ -734,7 +731,7 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
         }
 
         private void doSwoop() {
-            TerrorPhantom.this.attackPhase = TerrorPhantom.AttackPhase.SWOOP;
+            TerrorPhantom.this.attackPhase = AttackPhase.SWOOP;
             TerrorPhantom.this.attackTimer = 80;
             this.setAnchorAboveTarget();
             this.nextSweepTick = this.adjustedTickDelay((100));
@@ -743,7 +740,7 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
 
         private void doRoll() {
             TerrorPhantom.this.setRolling(true);
-            TerrorPhantom.this.attackPhase = TerrorPhantom.AttackPhase.ROLL;
+            TerrorPhantom.this.attackPhase = AttackPhase.ROLL;
             TerrorPhantom.this.attackTimer = 100;
             this.setAnchorOvershot();
             this.nextSweepTick = this.adjustedTickDelay((200));
@@ -815,7 +812,7 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
         }
 
         public boolean canUse() {
-            return !TerrorPhantom.this.isDying() && TerrorPhantom.this.getTarget() != null && TerrorPhantom.this.attackPhase == TerrorPhantom.AttackPhase.SWOOP;
+            return !TerrorPhantom.this.isDying() && TerrorPhantom.this.getTarget() != null && TerrorPhantom.this.attackPhase == AttackPhase.SWOOP;
         }
 
         public boolean canContinueToUse() {
@@ -844,7 +841,7 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
         }
 
         public void stop() {
-            TerrorPhantom.this.attackPhase = TerrorPhantom.AttackPhase.CIRCLE;
+            TerrorPhantom.this.attackPhase = AttackPhase.CIRCLE;
         }
 
         public void tick() {
@@ -853,7 +850,7 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
                 TerrorPhantom.this.moveTargetPoint = new Vec3($$0.getX(), $$0.getY(8), $$0.getZ());
                 if (TerrorPhantom.this.getBoundingBox().inflate(0.20000000298023224).intersects($$0.getBoundingBox())) {
                     TerrorPhantom.this.doHurtTarget($$0);
-                    TerrorPhantom.this.attackPhase = TerrorPhantom.AttackPhase.CIRCLE;
+                    TerrorPhantom.this.attackPhase = AttackPhase.CIRCLE;
                     if (!TerrorPhantom.this.isSilent()) {
                         TerrorPhantom.this.level().levelEvent(1039, TerrorPhantom.this.blockPosition(), 0);
                     }
@@ -906,7 +903,7 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
 
         public void stop() {
             TerrorPhantom.this.setRolling(false);
-            TerrorPhantom.this.attackPhase = TerrorPhantom.AttackPhase.CIRCLE;
+            TerrorPhantom.this.attackPhase = AttackPhase.CIRCLE;
         }
 
         public void tick() {
@@ -1064,7 +1061,7 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
         }
 
         public void stop() {
-            TerrorPhantom.this.attackPhase = TerrorPhantom.AttackPhase.CIRCLE;
+            TerrorPhantom.this.attackPhase = AttackPhase.CIRCLE;
         }
 
         public void tick() {
@@ -1130,7 +1127,7 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
         }
 
         public boolean canUse() {
-            return !TerrorPhantom.this.isDying() && (TerrorPhantom.this.getTarget() == null || (TerrorPhantom.this.attackPhase == TerrorPhantom.AttackPhase.CIRCLE || TerrorPhantom.this.attackPhase == AttackPhase.SWARM));
+            return !TerrorPhantom.this.isDying() && (TerrorPhantom.this.getTarget() == null || (TerrorPhantom.this.attackPhase == AttackPhase.CIRCLE || TerrorPhantom.this.attackPhase == AttackPhase.SWARM));
         }
 
         public void start() {

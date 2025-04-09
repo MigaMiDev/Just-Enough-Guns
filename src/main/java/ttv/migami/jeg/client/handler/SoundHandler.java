@@ -1,6 +1,7 @@
 package ttv.migami.jeg.client.handler;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.client.resources.sounds.Sound;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.resources.sounds.TickableSoundInstance;
@@ -18,6 +19,13 @@ import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.Reference;
 import ttv.migami.jeg.client.audio.StunRingingSound;
+import ttv.migami.jeg.entity.monster.phantom.gunner.PhantomGunner;
+import ttv.migami.jeg.entity.monster.phantom.gunner.PhantomGunnerDiveSoundInstance;
+import ttv.migami.jeg.entity.monster.phantom.gunner.PhantomGunnerFlySoundInstance;
+import ttv.migami.jeg.entity.monster.phantom.terror.TerrorPhantom;
+import ttv.migami.jeg.entity.monster.phantom.terror.TerrorPhantomBoostSoundInstance;
+import ttv.migami.jeg.entity.monster.phantom.terror.TerrorPhantomDiveSoundInstance;
+import ttv.migami.jeg.entity.monster.phantom.terror.TerrorPhantomFlySoundInstance;
 import ttv.migami.jeg.init.ModEffects;
 
 import javax.annotation.Nullable;
@@ -272,5 +280,33 @@ public class SoundHandler
         {
             return parent.getAttenuation();
         }
+    }
+
+    private static void playTerrorPhantomSound(AbstractTickableSoundInstance soundInstance) {
+        Minecraft.getInstance().getSoundManager().play(soundInstance);
+    }
+
+    public static void playTerrorPhantomFlySound(TerrorPhantom entity) {
+        playTerrorPhantomSound(new TerrorPhantomFlySoundInstance(entity, SoundSource.PLAYERS));
+    }
+
+    public static void playTerrorPhantomBoostSound(TerrorPhantom entity) {
+        playTerrorPhantomSound(new TerrorPhantomBoostSoundInstance(entity, SoundSource.PLAYERS));
+    }
+
+    public static void playTerrorPhantomDiveSound(TerrorPhantom entity) {
+        playTerrorPhantomSound(new TerrorPhantomDiveSoundInstance(entity, SoundSource.PLAYERS));
+    }
+
+    private static void playPhantomGunnerSound(AbstractTickableSoundInstance soundInstance) {
+        Minecraft.getInstance().getSoundManager().play(soundInstance);
+    }
+
+    public static void playPhantomGunnerFlySound(PhantomGunner entity) {
+        playPhantomGunnerSound(new PhantomGunnerFlySoundInstance(entity, SoundSource.PLAYERS));
+    }
+
+    public static void playPhantomGunnerDiveSound(PhantomGunner entity) {
+        playPhantomGunnerSound(new PhantomGunnerDiveSoundInstance(entity, SoundSource.PLAYERS));
     }
 }

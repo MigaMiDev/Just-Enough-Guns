@@ -7,7 +7,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import ttv.migami.jeg.init.ModSounds;
 
-@OnlyIn(Dist.CLIENT)
 public class PhantomGunnerFlySoundInstance extends AbstractTickableSoundInstance {
     private final PhantomGunner entity;
 

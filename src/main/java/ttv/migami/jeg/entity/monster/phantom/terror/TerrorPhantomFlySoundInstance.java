@@ -3,11 +3,8 @@ package ttv.migami.jeg.entity.monster.phantom.terror;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.sounds.SoundSource;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import ttv.migami.jeg.init.ModSounds;
 
-@OnlyIn(Dist.CLIENT)
 public class TerrorPhantomFlySoundInstance extends AbstractTickableSoundInstance {
     private final TerrorPhantom entity;
 

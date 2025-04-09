@@ -1,6 +1,5 @@
 package ttv.migami.jeg.entity.monster.phantom.gunner;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -8,7 +7,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -31,6 +29,7 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 import ttv.migami.jeg.Config;
+import ttv.migami.jeg.client.handler.SoundHandler;
 import ttv.migami.jeg.entity.ai.EntityHurtByTargetGoal;
 import ttv.migami.jeg.entity.ai.owned.NearestAttackableTargetGoal;
 import ttv.migami.jeg.entity.ai.owned.PlayerHurtTargetGoal;
@@ -40,7 +39,6 @@ import ttv.migami.jeg.entity.throwable.GrenadeEntity;
 import ttv.migami.jeg.init.ModItems;
 import ttv.migami.jeg.init.ModParticleTypes;
 
-import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
@@ -63,8 +61,7 @@ public class PhantomGunner extends Phantom implements GeoEntity {
     public boolean playerOwned = false;
     private int despawnTimer;
 
-    @Nullable
-    private PhantomGunnerFlySoundInstance activeSound;
+    private boolean makeSound = true;
 
     private static final EntityDataAccessor<Boolean> IS_DYING = SynchedEntityData.defineId(PhantomGunner.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_OWNED = SynchedEntityData.defineId(PhantomGunner.class, EntityDataSerializers.BOOLEAN);
@@ -145,12 +142,12 @@ public class PhantomGunner extends Phantom implements GeoEntity {
         super.tick();
 
         if (this.level().isClientSide) {
-            if (this.activeSound == null) {
-                this.activeSound = new PhantomGunnerFlySoundInstance(this, SoundSource.HOSTILE);
-                Minecraft.getInstance().getSoundManager().play(this.activeSound);
+            if (this.makeSound) {
+                SoundHandler.playPhantomGunnerFlySound(this);
+                this.makeSound = false;
             }
             if (this.isDying()) {
-                Minecraft.getInstance().getSoundManager().play(new PhantomGunnerDiveSoundInstance(this, SoundSource.HOSTILE));
+                SoundHandler.playPhantomGunnerDiveSound(this);
             }
         }
 
