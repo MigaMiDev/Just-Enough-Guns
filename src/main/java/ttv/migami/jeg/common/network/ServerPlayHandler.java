@@ -665,6 +665,19 @@ public class ServerPlayHandler
     /**
      * @param player
      */
+    public static void handleReloadPerspective(ServerPlayer player, boolean firstPerson) {
+        ItemStack stack = player.getMainHandItem();
+
+        if (stack.getItem() instanceof GunItem) {
+            if (stack.getTag() != null) {
+                stack.getTag().putBoolean("IsFirstPersonReload", firstPerson);
+            }
+        }
+    }
+
+    /**
+     * @param player
+     */
     public static void handleInspectGun(ServerPlayer player) {
         ItemStack stack = player.getMainHandItem();
 

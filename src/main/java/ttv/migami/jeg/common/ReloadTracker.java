@@ -1,11 +1,13 @@
 package ttv.migami.jeg.common;
 
-import com.mrcrayfish.framework.api.network.LevelLocation;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -18,15 +20,11 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
-import ttv.migami.jeg.Config;
 import ttv.migami.jeg.Reference;
 import ttv.migami.jeg.init.ModEnchantments;
 import ttv.migami.jeg.init.ModItems;
 import ttv.migami.jeg.init.ModSyncedDataKeys;
-import ttv.migami.jeg.item.AnimatedGunItem;
 import ttv.migami.jeg.item.GunItem;
-import ttv.migami.jeg.network.PacketHandler;
-import ttv.migami.jeg.network.message.S2CMessageGunSound;
 import ttv.migami.jeg.util.GunEnchantmentHelper;
 import ttv.migami.jeg.util.GunModifierHelper;
 
@@ -96,41 +94,50 @@ public class ReloadTracker
     {
         GunItem gunItem = (GunItem) stack.getItem();
 
-        //if(!(gunItem instanceof AnimatedGunItem)) {
         {
+            int deltaTicks = player.tickCount - this.startTick;
+            if (deltaTicks == 4) {
+                ResourceLocation reloadSound = this.gun.getSounds().getReloadStart();
+                playReloadSound(reloadSound, player);
+            }
+            int interval = GunEnchantmentHelper.getReloadInterval(this.stack);
+
             if(gun.getReloads().getReloadType() == ReloadType.MAG_FED || gun.getReloads().getReloadType() == ReloadType.INVENTORY_FED ||
                     gun.getReloads().getReloadType() == ReloadType.SINGLE_ITEM)
             {
                 int quickHandsLevel = player.getMainHandItem().getEnchantmentLevel(ModEnchantments.QUICK_HANDS.get());
 
-                // Extra penalization if the gun is empty
                 if(this.isWeaponEmpty())
                 {
-                    int deltaTicks = player.tickCount - this.startTick;
-                    int interval = gun.getReloads().getReloadTimer() + gun.getReloads().getAdditionalReloadTimer();
-                    if (quickHandsLevel == 1) {
-                        interval = Math.max(1, Math.round(interval * 0.75F));
-                    } else if (quickHandsLevel >= 2) {
-                        interval = Math.max(1, Math.round(interval * 0.5F));
-                    }
-                    return deltaTicks > interval;
+                    interval = gun.getReloads().getReloadTimer() + gun.getReloads().getAdditionalReloadTimer();
                 }
                 else
                 {
-                    int deltaTicks = player.tickCount - this.startTick;
-                    int interval = gun.getReloads().getReloadTimer();
-                    if (quickHandsLevel == 1) {
-                        interval = Math.max(1, Math.round(interval * 0.75F));
-                    } else if (quickHandsLevel >= 2) {
-                        interval = Math.max(1, Math.round(interval * 0.5F));
-                    }
-                    return deltaTicks > interval;
+                    interval = gun.getReloads().getReloadTimer();
                 }
+
+                if (quickHandsLevel == 1) {
+                    interval = Math.max(1, Math.round(interval * 0.75F));
+                } else if (quickHandsLevel >= 2) {
+                    interval = Math.max(1, Math.round(interval * 0.5F));
+                }
+
+                if (gun.getReloads().getReloadType() != ReloadType.INVENTORY_FED) {
+                    if (deltaTicks == interval / 2) {
+                        ResourceLocation reloadSound = this.gun.getSounds().getReloadLoad();
+                        playReloadSound(reloadSound, player);
+                    }
+
+                    if (deltaTicks == interval - 5) {
+                        ResourceLocation reloadSound = this.gun.getSounds().getEjectorPull();
+                        playReloadSound(reloadSound, player);
+                    }
+                }
+
+                return deltaTicks > interval;
             }
             else
             {
-                int deltaTicks = player.tickCount - this.startTick;
-                int interval = GunEnchantmentHelper.getReloadInterval(this.stack);
                 interval = gun.getReloads().getReloadTimer();
                 if (this.firstReload) {
                     interval += gun.getReloads().getAdditionalReloadTimer();
@@ -193,16 +200,8 @@ public class ReloadTracker
             }
         }
 
-        ResourceLocation reloadSound = this.gun.getSounds().getReload();
-        if(reloadSound != null && !(player.getMainHandItem().getItem() instanceof AnimatedGunItem))
-        {
-            double radius = Config.SERVER.reloadMaxDistance.get();
-            double soundX = player.getX();
-            double soundY = player.getY() + 1.0;
-            double soundZ = player.getZ();
-            S2CMessageGunSound message = new S2CMessageGunSound(reloadSound, SoundSource.PLAYERS, (float) soundX, (float) soundY, (float) soundZ, 1.0F, 1.0F, player.getId(), false, true);
-            PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(player.level(), soundX, soundY, soundZ, radius), message);
-        }
+        ResourceLocation reloadSound = this.gun.getSounds().getEjectorRelease();
+        playReloadSound(reloadSound, player);
     }
 
     private void reloadItem(Player player) {
@@ -238,16 +237,8 @@ public class ReloadTracker
             }
         }
 
-        ResourceLocation reloadSound = this.gun.getSounds().getReload();
-        if(reloadSound != null && !(player.getMainHandItem().getItem() instanceof AnimatedGunItem))
-        {
-            double radius = Config.SERVER.reloadMaxDistance.get();
-            double soundX = player.getX();
-            double soundY = player.getY() + 1.0;
-            double soundZ = player.getZ();
-            S2CMessageGunSound message = new S2CMessageGunSound(reloadSound, SoundSource.PLAYERS, (float) soundX, (float) soundY, (float) soundZ, 1.0F, 1.0F, player.getId(), false, true);
-            PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(player.level(), soundX, soundY, soundZ, radius), message);
-        }
+        ResourceLocation reloadSound = this.gun.getSounds().getReloadLoad();
+        playReloadSound(reloadSound, player);
     }
 
     public static void inventoryFeed(Player player, Gun gun) {
@@ -295,6 +286,9 @@ public class ReloadTracker
             }
             ammo.shrink(amount);
 
+            ResourceLocation reloadSound = gun.getSounds().getReloadLoad();
+            playReloadSound(reloadSound, player);
+
             // Trigger that the container changed
             Container container = context.container();
             if(container != null)
@@ -303,16 +297,8 @@ public class ReloadTracker
             }
         }
 
-        ResourceLocation reloadSound = this.gun.getSounds().getReload();
-        if(reloadSound != null && !(player.getMainHandItem().getItem() instanceof AnimatedGunItem))
-        {
-            double radius = Config.SERVER.reloadMaxDistance.get();
-            double soundX = player.getX();
-            double soundY = player.getY() + 1.0;
-            double soundZ = player.getZ();
-            S2CMessageGunSound message = new S2CMessageGunSound(reloadSound, SoundSource.PLAYERS, (float) soundX, (float) soundY, (float) soundZ, 1.0F, 1.0F, player.getId(), false, true);
-            PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(player.level(), soundX, soundY, soundZ, radius), message);
-        }
+        ResourceLocation reloadSound = this.gun.getSounds().getReloadLoad();
+        playReloadSound(reloadSound, player);
     }
 
     @SubscribeEvent
@@ -330,10 +316,6 @@ public class ReloadTracker
                     if(!(player.getInventory().getSelected().getItem() instanceof GunItem))
                     {
                         ModSyncedDataKeys.RELOADING.setValue(player, false);
-                        if (player.getInventory().getSelected().getTag() != null) {
-                            player.getInventory().getSelected().getTag().putBoolean("IsFinishingReloading", false);
-                            player.getInventory().getSelected().getTag().putBoolean("IsReloading", false);
-                        }
                         return;
                     }
                     RELOAD_TRACKER_MAP.put(player, new ReloadTracker(player));
@@ -343,16 +325,12 @@ public class ReloadTracker
                 {
                     RELOAD_TRACKER_MAP.remove(player);
                     ModSyncedDataKeys.RELOADING.setValue(player, false);
-                    if (tag != null) {
-                        tag.putBoolean("IsFinishingReloading", true);
-                    }
                     return;
                 }
                 if(tracker.canReload(player))
                 {
                     final Player finalPlayer = player;
                     final Gun gun = tracker.gun;
-                    //if (!(player.getInventory().getSelected().getItem() instanceof AnimatedGunItem)) {
                     {
                         if(gun.getReloads().getReloadType() == ReloadType.MAG_FED) {
                             tracker.increaseMagAmmo(player);
@@ -372,28 +350,48 @@ public class ReloadTracker
                     {
                         RELOAD_TRACKER_MAP.remove(player);
                         ModSyncedDataKeys.RELOADING.setValue(player, false);
-                        if (tag != null) {
-                            tag.putBoolean("IsFinishingReloading", true);
-                        }
-
-                        DelayedTask.runAfter(4, () ->
-                        {
-                            ResourceLocation cockSound = gun.getSounds().getCock();
-                            if(cockSound != null && finalPlayer.isAlive()) // && !(finalPlayer.getMainHandItem().getItem() instanceof AnimatedGunItem))
-                            {
-                                double soundX = finalPlayer.getX();
-                                double soundY = finalPlayer.getY() + 1.0;
-                                double soundZ = finalPlayer.getZ();
-                                double radius = Config.SERVER.reloadMaxDistance.get();
-                                S2CMessageGunSound messageSound = new S2CMessageGunSound(cockSound, SoundSource.PLAYERS, (float) soundX, (float) soundY, (float) soundZ, 1.0F, 1.0F, finalPlayer.getId(), false, true);
-                                PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(finalPlayer.level(), soundX, soundY, soundZ, radius), messageSound);
-                            }
-                        });
                     }
                 }
             }
             else if(RELOAD_TRACKER_MAP.containsKey(player)) {
                 RELOAD_TRACKER_MAP.remove(player);
+            }
+        }
+    }
+
+    private static void playReloadSound(ResourceLocation location, Player player) {
+        if (location == null) {
+            return;
+        }
+
+        ItemStack heldItem = player.getMainHandItem();
+        if (!(heldItem.getItem() instanceof GunItem gunItem)) {
+            return;
+        }
+
+        /*double radius = Config.SERVER.reloadMaxDistance.get();
+        double soundX = player.getX();
+        double soundY = player.getY() + 1.0;
+        double soundZ = player.getZ();
+
+        S2CMessageGunSound message = new S2CMessageGunSound(location, SoundSource.PLAYERS, (float) soundX, (float) soundY, (float) soundZ, 1.0F, 1.0F, player.getId(), false, true);
+        PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(player.level(), soundX, soundY, soundZ, radius), message);*/
+
+        Gun gun = gunItem.getModifiedGun(player.getMainHandItem());
+        SoundEvent sound = BuiltInRegistries.SOUND_EVENT.get(location);
+
+        if (sound == null) {
+            return;
+        }
+
+        CompoundTag nbt = heldItem.getTag();
+        boolean isFirstPerson = nbt != null && nbt.getBoolean("IsFirstPersonReload");
+
+        if (player.level() instanceof ServerLevel serverLevel) {
+            if (isFirstPerson) {
+                serverLevel.playSound(player, player.getOnPos(), sound, SoundSource.PLAYERS, 3, 1);
+            } else {
+                serverLevel.playSound(null, player.getOnPos(), sound, SoundSource.PLAYERS, 3, 1);
             }
         }
     }

@@ -47,10 +47,10 @@
     "reloadType": "jeg:single_item"
   },
   "sounds": {
-    "cock": "jeg:item.pistol.cock",
     "enchantedFire": "jeg:item.typhoonee.fire",
     "fire": "jeg:item.typhoonee.fire",
     "preFire": "jeg:item.typhoonee.prefire",
-    "reload": "jeg:item.pistol.reload"
+    "reloadLoad": "jeg:item.pistol.cock",
+    "reloadStart": "jeg:item.pistol.reload"
   }
 }

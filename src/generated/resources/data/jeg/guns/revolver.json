@@ -50,10 +50,13 @@
     "reloadType": "jeg:manual"
   },
   "sounds": {
-    "cock": "jeg:item.pistol.cock",
+    "ejectorPull": "minecraft:block.iron_trapdoor.open",
+    "ejectorRelease": "minecraft:block.iron_trapdoor.close",
     "enchantedFire": "jeg:item.revolver.enchanted_fire",
     "fire": "jeg:item.revolver.fire",
-    "reload": "jeg:item.pistol.reload",
+    "reloadEnd": "jeg:item.revolver.chamber_spin",
+    "reloadLoad": "jeg:item.revolver.reload_bullet_in",
+    "reloadStart": "jeg:item.revolver.reload_bullets_out",
     "silencedFire": "jeg:item.revolver.silenced_fire"
   }
 }

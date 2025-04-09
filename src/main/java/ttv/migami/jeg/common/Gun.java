@@ -961,10 +961,19 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         private ResourceLocation fire;
         @Optional
         @Nullable
-        private ResourceLocation reload;
+        private ResourceLocation reloadStart;
         @Optional
         @Nullable
-        private ResourceLocation cock;
+        private ResourceLocation reloadLoad;
+        @Optional
+        @Nullable
+        private ResourceLocation reloadEnd;
+        @Optional
+        @Nullable
+        private ResourceLocation ejectorPull;
+        @Optional
+        @Nullable
+        private ResourceLocation ejectorRelease;
         @Optional
         @Nullable
         private ResourceLocation silencedFire;
@@ -983,13 +992,25 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             {
                 tag.putString("Fire", this.fire.toString());
             }
-            if(this.reload != null)
+            if(this.reloadStart != null)
             {
-                tag.putString("Reloads", this.reload.toString());
+                tag.putString("ReloadStart", this.reloadStart.toString());
             }
-            if(this.cock != null)
+            if(this.reloadLoad != null)
             {
-                tag.putString("Cock", this.cock.toString());
+                tag.putString("ReloadLoad", this.reloadLoad.toString());
+            }
+            if(this.reloadEnd != null)
+            {
+                tag.putString("ReloadEnd", this.reloadEnd.toString());
+            }
+            if(this.ejectorPull != null)
+            {
+                tag.putString("EjectorPull", this.ejectorPull.toString());
+            }
+            if(this.ejectorRelease != null)
+            {
+                tag.putString("EjectorRelease", this.ejectorRelease.toString());
             }
             if(this.silencedFire != null)
             {
@@ -1013,13 +1034,25 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             {
                 this.fire = this.createSound(tag, "Fire");
             }
-            if(tag.contains("Reloads", Tag.TAG_STRING))
+            if(tag.contains("ReloadStart", Tag.TAG_STRING))
             {
-                this.reload = this.createSound(tag, "Reloads");
+                this.reloadStart = this.createSound(tag, "ReloadStart");
             }
-            if(tag.contains("Cock", Tag.TAG_STRING))
+            if(tag.contains("ReloadLoad", Tag.TAG_STRING))
             {
-                this.cock = this.createSound(tag, "Cock");
+                this.reloadLoad = this.createSound(tag, "ReloadLoad");
+            }
+            if(tag.contains("ReloadEnd", Tag.TAG_STRING))
+            {
+                this.reloadEnd = this.createSound(tag, "ReloadEnd");
+            }
+            if(tag.contains("EjectorPull", Tag.TAG_STRING))
+            {
+                this.ejectorPull = this.createSound(tag, "EjectorPull");
+            }
+            if(tag.contains("EjectorRelease", Tag.TAG_STRING))
+            {
+                this.ejectorRelease = this.createSound(tag, "EjectorRelease");
             }
             if(tag.contains("SilencedFire", Tag.TAG_STRING))
             {
@@ -1042,13 +1075,25 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             {
                 object.addProperty("fire", this.fire.toString());
             }
-            if(this.reload != null)
+            if(this.reloadStart != null)
             {
-                object.addProperty("reload", this.reload.toString());
+                object.addProperty("reloadStart", this.reloadStart.toString());
             }
-            if(this.cock != null)
+            if(this.reloadLoad != null)
             {
-                object.addProperty("cock", this.cock.toString());
+                object.addProperty("reloadLoad", this.reloadLoad.toString());
+            }
+            if(this.reloadEnd != null)
+            {
+                object.addProperty("reloadEnd", this.reloadEnd.toString());
+            }
+            if(this.ejectorPull != null)
+            {
+                object.addProperty("ejectorPull", this.ejectorPull.toString());
+            }
+            if(this.ejectorRelease != null)
+            {
+                object.addProperty("ejectorRelease", this.ejectorRelease.toString());
             }
             if(this.silencedFire != null)
             {
@@ -1069,8 +1114,11 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         {
             Sounds sounds = new Sounds();
             sounds.fire = this.fire;
-            sounds.reload = this.reload;
-            sounds.cock = this.cock;
+            sounds.reloadStart = this.reloadStart;
+            sounds.reloadLoad = this.reloadLoad;
+            sounds.reloadEnd = this.reloadEnd;
+            sounds.ejectorPull = this.ejectorPull;
+            sounds.ejectorRelease = this.ejectorRelease;
             sounds.silencedFire = this.silencedFire;
             sounds.enchantedFire = this.enchantedFire;
             sounds.preFire = this.preFire;
@@ -1097,18 +1145,45 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
          * @return The registry iid of the sound event when reloading this weapon
          */
         @Nullable
-        public ResourceLocation getReload()
+        public ResourceLocation getReloadStart()
         {
-            return this.reload;
+            return this.reloadStart;
+        }
+
+        /**
+         * @return The registry iid of the sound event when loading this weapon
+         */
+        @Nullable
+        public ResourceLocation getReloadLoad()
+        {
+            return this.reloadLoad;
+        }
+
+        /**
+         * @return The registry iid of the sound event when ending the reload
+         */
+        @Nullable
+        public ResourceLocation getReloadEnd()
+        {
+            return this.reloadEnd;
         }
 
         /**
          * @return The registry iid of the sound event when cocking this weapon
          */
         @Nullable
-        public ResourceLocation getCock()
+        public ResourceLocation getEjectorPull()
         {
-            return this.cock;
+            return this.ejectorPull;
+        }
+
+        /**
+         * @return The registry iid of the sound event when releasing the ejector
+         */
+        @Nullable
+        public ResourceLocation getEjectorRelease()
+        {
+            return this.ejectorRelease;
         }
 
         /**
@@ -2555,15 +2630,33 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             return this;
         }
 
-        public Builder setReloadSound(SoundEvent sound)
+        public Builder setReloadStart(SoundEvent sound)
         {
-            this.gun.sounds.reload = ForgeRegistries.SOUND_EVENTS.getKey(sound);
+            this.gun.sounds.reloadStart = ForgeRegistries.SOUND_EVENTS.getKey(sound);
             return this;
         }
 
-        public Builder setCockSound(SoundEvent sound)
+        public Builder setReloadLoadSound(SoundEvent sound)
         {
-            this.gun.sounds.cock = ForgeRegistries.SOUND_EVENTS.getKey(sound);
+            this.gun.sounds.reloadLoad = ForgeRegistries.SOUND_EVENTS.getKey(sound);
+            return this;
+        }
+
+        public Builder setReloadEndSound(SoundEvent sound)
+        {
+            this.gun.sounds.reloadEnd = ForgeRegistries.SOUND_EVENTS.getKey(sound);
+            return this;
+        }
+
+        public Builder setEjectorPullSound(SoundEvent sound)
+        {
+            this.gun.sounds.ejectorPull = ForgeRegistries.SOUND_EVENTS.getKey(sound);
+            return this;
+        }
+
+        public Builder setEjectorReleaseSound(SoundEvent sound)
+        {
+            this.gun.sounds.ejectorRelease = ForgeRegistries.SOUND_EVENTS.getKey(sound);
             return this;
         }
 

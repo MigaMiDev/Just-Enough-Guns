@@ -47,8 +47,11 @@
     "reloadType": "jeg:single_item"
   },
   "sounds": {
-    "cock": "jeg:item.pistol.cock",
+    "ejectorPull": "minecraft:block.iron_trapdoor.open",
+    "ejectorRelease": "minecraft:block.iron_trapdoor.close",
     "fire": "minecraft:item.firecharge.use",
-    "reload": "jeg:item.pistol.reload"
+    "reloadEnd": "jeg:item.combat_rifle.reload_ejector",
+    "reloadLoad": "minecraft:entity.item_frame.remove_item",
+    "reloadStart": "minecraft:entity.item_frame.remove_item"
   }
 }

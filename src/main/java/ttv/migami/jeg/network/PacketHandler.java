@@ -28,6 +28,7 @@ public class PacketHandler
                 .registerPlayMessage(S2CMessageBlood.class, MessageDirection.PLAY_CLIENT_BOUND)
                 .registerPlayMessage(S2CMessageExplosiveAmmo.class, MessageDirection.PLAY_CLIENT_BOUND)
                 .registerPlayMessage(C2SMessageShooting.class, MessageDirection.PLAY_SERVER_BOUND)
+                .registerPlayMessage(C2SMessageFirstPersonReload.class, MessageDirection.PLAY_SERVER_BOUND)
                 .registerPlayMessage(S2CMessageGunSound.class, MessageDirection.PLAY_CLIENT_BOUND)
                 .registerPlayMessage(S2CMessageProjectileHitBlock.class, MessageDirection.PLAY_CLIENT_BOUND)
                 .registerPlayMessage(S2CMessageLaser.class, MessageDirection.PLAY_CLIENT_BOUND)

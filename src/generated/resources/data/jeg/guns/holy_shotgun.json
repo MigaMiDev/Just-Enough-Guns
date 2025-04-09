@@ -53,16 +53,16 @@
     "trailLengthMultiplier": 2.0
   },
   "reloads": {
-    "additionalReloadTimer": 0,
+    "additionalReloadTimer": 10,
     "maxAmmo": 8,
-    "reloadTimer": 100,
+    "reloadTimer": 16,
     "reloadType": "jeg:manual"
   },
   "sounds": {
-    "cock": "jeg:item.pistol.cock",
     "enchantedFire": "jeg:item.holy_shotgun.enchanted_fire",
     "fire": "jeg:item.holy_shotgun.fire",
-    "reload": "jeg:item.pistol.reload",
+    "reloadLoad": "jeg:item.pistol.cock",
+    "reloadStart": "jeg:item.pistol.reload",
     "silencedFire": "jeg:item.holy_shotgun.silenced_fire"
   }
 }

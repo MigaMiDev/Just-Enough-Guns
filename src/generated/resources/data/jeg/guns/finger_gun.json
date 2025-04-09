@@ -39,10 +39,10 @@
     "reloadType": "jeg:inventory_fed"
   },
   "sounds": {
-    "cock": "jeg:item.pistol.cock",
     "enchantedFire": "jeg:item.finger_gun",
     "fire": "jeg:item.finger_gun",
-    "reload": "jeg:item.pistol.reload",
+    "reloadLoad": "jeg:item.pistol.cock",
+    "reloadStart": "jeg:item.pistol.reload",
     "silencedFire": "jeg:item.finger_gun"
   }
 }

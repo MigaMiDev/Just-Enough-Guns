@@ -61,8 +61,8 @@ public class GunGen extends GunProvider
 
                 // Sounds
                 .setFireSound(ModSounds.FINGER_GUN_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setReloadStart(ModSounds.ITEM_PISTOL_RELOAD.get())
+                .setReloadLoadSound(ModSounds.ITEM_PISTOL_COCK.get())
                 .setSilencedFireSound(ModSounds.FINGER_GUN_FIRE.get())
                 .setEnchantedFireSound(ModSounds.FINGER_GUN_FIRE.get())
 
@@ -108,8 +108,11 @@ public class GunGen extends GunProvider
 
                 // Sounds
                 .setFireSound(ModSounds.REVOLVER_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setReloadStart(ModSounds.REV_RELOAD_BULLETS_OUT.get())
+                .setReloadLoadSound(ModSounds.REV_RELOAD_BULLET_IN.get())
+                .setReloadEndSound(ModSounds.REV_CHAMBER_SPIN.get())
+                .setEjectorPullSound(SoundEvents.IRON_TRAPDOOR_OPEN)
+                .setEjectorReleaseSound(SoundEvents.IRON_TRAPDOOR_CLOSE)
                 .setSilencedFireSound(ModSounds.REVOLVER_SILENCED_FIRE.get())
                 .setEnchantedFireSound(ModSounds.REVOLVER_ENCHANTED_FIRE.get())
 
@@ -157,8 +160,11 @@ public class GunGen extends GunProvider
 
                 // Sounds
                 .setFireSound(ModSounds.WATERPIPE_SHOTGUN_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setReloadStart(SoundEvents.ITEM_FRAME_REMOVE_ITEM)
+                .setReloadLoadSound(ModSounds.PS_SHELL.get())
+                .setReloadEndSound(ModSounds.PS_PUMP.get())
+                .setEjectorPullSound(ModSounds.PS_PUMP_PULL.get())
+                .setEjectorReleaseSound(ModSounds.PS_PUMP_RELEASE.get())
                 .setEnchantedFireSound(ModSounds.WATERPIPE_SHOTGUN_ENCHANTED_FIRE.get())
 
                 // Attachments
@@ -202,8 +208,11 @@ public class GunGen extends GunProvider
 
                 // Sounds
                 .setFireSound(ModSounds.CUSTOM_SMG_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setReloadStart(ModSounds.CR_RELOAD_MAGAZINE_OUT.get())
+                .setReloadLoadSound(ModSounds.SR_RELOAD_MAGAZINE_IN.get())
+                .setReloadEndSound(ModSounds.CR_RELOAD_EJECTOR.get())
+                .setEjectorPullSound(ModSounds.CR_EJECTOR_PULL.get())
+                .setEjectorReleaseSound(ModSounds.CR_EJECTOR_RELEASE.get())
                 .setSilencedFireSound(ModSounds.CUSTOM_SMG_SILENCED_FIRE.get())
                 .setEnchantedFireSound(ModSounds.CUSTOM_SMG_ENCHANTED_FIRE.get())
 
@@ -252,8 +261,11 @@ public class GunGen extends GunProvider
 
                 // Sounds
                 .setFireSound(ModSounds.DOUBLE_BARREL_SHOTGUN_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setReloadStart(SoundEvents.ITEM_FRAME_REMOVE_ITEM)
+                .setReloadLoadSound(ModSounds.PS_SHELL.get())
+                .setReloadEndSound(ModSounds.PS_PUMP.get())
+                .setEjectorPullSound(ModSounds.PS_PUMP_PULL.get())
+                .setEjectorReleaseSound(ModSounds.PS_PUMP_RELEASE.get())
                 .setEnchantedFireSound(ModSounds.DOUBLE_BARREL_SHOTGUN_ENCHANTED_FIRE.get())
 
                 // Attachments
@@ -298,8 +310,11 @@ public class GunGen extends GunProvider
 
                 // Sounds
                 .setFireSound(ModSounds.SEMI_AUTO_PISTOL_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setReloadStart(ModSounds.PISTOL_MAG_OUT.get())
+                .setReloadLoadSound(ModSounds.PISTOL_MAG_IN.get())
+                .setReloadEndSound(ModSounds.REV_CHAMBER_SPIN.get())
+                .setEjectorPullSound(ModSounds.PISTOL_EJECTOR_PULL.get())
+                .setEjectorReleaseSound(ModSounds.PISTOL_EJECTOR_RELEASE.get())
                 .setSilencedFireSound(ModSounds.SEMI_AUTO_PISTOL_SILENCED_FIRE.get())
                 .setEnchantedFireSound(ModSounds.SEMI_AUTO_PISTOL_ENCHANTED_FIRE.get())
 
@@ -345,8 +360,11 @@ public class GunGen extends GunProvider
 
                 // Sounds
                 .setFireSound(ModSounds.SEMI_AUTO_RIFLE_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setReloadStart(ModSounds.CR_RELOAD_MAGAZINE_OUT.get())
+                .setReloadLoadSound(ModSounds.SR_RELOAD_MAGAZINE_IN.get())
+                .setReloadEndSound(ModSounds.AR_RELOAD_EJECTOR.get())
+                .setEjectorPullSound(ModSounds.AR_EJECTOR_PULL.get())
+                .setEjectorReleaseSound(ModSounds.AR_EJECTOR_RELEASE.get())
                 .setSilencedFireSound(ModSounds.SEMI_AUTO_RIFLE_SILENCED_FIRE.get())
                 .setEnchantedFireSound(ModSounds.SEMI_AUTO_RIFLE_ENCHANTED_FIRE.get())
 
@@ -396,8 +414,11 @@ public class GunGen extends GunProvider
 
                 // Sounds
                 .setFireSound(ModSounds.ASSAULT_RIFLE_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setReloadStart(ModSounds.AR_RELOAD_MAGAZINE_IN.get()) // NOTE: This seems reversed!
+                .setReloadLoadSound(ModSounds.AR_RELOAD_MAGAZINE_OUT.get()) // Consider flipping these two
+                .setReloadEndSound(ModSounds.AR_RELOAD_EJECTOR.get())
+                .setEjectorPullSound(ModSounds.AR_EJECTOR_PULL.get())
+                .setEjectorReleaseSound(ModSounds.AR_EJECTOR_RELEASE.get())
                 .setSilencedFireSound(ModSounds.ASSAULT_RIFLE_SILENCED_FIRE.get())
                 .setEnchantedFireSound(ModSounds.ASSAULT_RIFLE_ENCHANTED_FIRE.get())
 
@@ -450,8 +471,11 @@ public class GunGen extends GunProvider
 
                 // Sounds
                 .setFireSound(ModSounds.PUMP_SHOTGUN_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setReloadStart(ModSounds.PS_SHELL.get())
+                .setReloadLoadSound(ModSounds.PS_SHELL.get())
+                .setReloadEndSound(ModSounds.PS_PUMP.get())
+                .setEjectorPullSound(ModSounds.PS_PUMP_PULL.get())
+                .setEjectorReleaseSound(ModSounds.PS_PUMP_RELEASE.get())
                 .setSilencedFireSound(ModSounds.PUMP_SHOTGUN_SILENCED_FIRE.get())
                 .setEnchantedFireSound(ModSounds.PUMP_SHOTGUN_ENCHANTED_FIRE.get())
 
@@ -502,8 +526,11 @@ public class GunGen extends GunProvider
 
                 // Sounds
                 .setFireSound(ModSounds.COMBAT_PISTOL_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setReloadStart(ModSounds.PISTOL_MAG_OUT.get())
+                .setReloadLoadSound(ModSounds.PISTOL_MAG_IN.get())
+                .setReloadEndSound(ModSounds.REV_CHAMBER_SPIN.get())
+                .setEjectorPullSound(ModSounds.PISTOL_EJECTOR_PULL.get())
+                .setEjectorReleaseSound(ModSounds.PISTOL_EJECTOR_RELEASE.get())
                 .setSilencedFireSound(ModSounds.COMBAT_PISTOL_SILENCED_FIRE.get())
                 .setEnchantedFireSound(ModSounds.COMBAT_PISTOL_ENCHANTED_FIRE.get())
 
@@ -514,57 +541,6 @@ public class GunGen extends GunProvider
                         .setOffset(0.0, 5.135, -1.75))
                 .setBarrel(1.0F, 0.0, 5.5, -3.2)
                 .setSpecial(1.0F, -0.8, 5.2, 0)
-
-                .build());
-
-        this.addGun(new ResourceLocation(Reference.MOD_ID, "bolt_action_rifle"), Gun.Builder.create()
-
-                // General
-                .setFireMode(FireMode.SEMI_AUTO)
-                .setFireRate(28)
-                .setGripType(GripType.TWO_HANDED)
-                .setRecoilKick(0.25F)
-                .setRecoilAngle(4.0F)
-                .setAlwaysSpread(true)
-                .setSpread(0.25F)
-                .setDrawTimer(30)
-
-                // Reloads
-                .setMaxAmmo(4)
-                .setReloadType(ReloadType.MANUAL)
-                .setReloadTimer(20)
-                .setAdditionalReloadTimer(20)
-
-                // Projectile
-                .setAmmo(ModItems.RIFLE_AMMO.get())
-                .setEjectsCasing(true)
-                .setProjectileVisible(false)
-                .setDamage(21F)
-                .setHeadshotMultiplier(1.5F)
-                .setAdvantage(ModTags.Entities.VERY_HEAVY.location())
-                .setProjectileSize(0.05F)
-                .setProjectileSpeed(24F)
-                .setProjectileLife(60)
-                .setProjectileTrailLengthMultiplier(2)
-                .setProjectileTrailColor(0xFFFF00 | 0xFF000000)
-                .setProjectileAffectedByGravity(true)
-                .setHitsRubberFruit(true)
-
-                // Sounds
-                .setFireSound(ModSounds.BOLT_ACTION_RIFLE_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
-                .setSilencedFireSound(ModSounds.BOLT_ACTION_RIFLE_SILENCED_FIRE.get())
-                .setEnchantedFireSound(ModSounds.BOLT_ACTION_RIFLE_ENCHANTED_FIRE.get())
-
-                // Attachments
-                .setMuzzleFlash(0.8, 0, 4.915, -15.155)
-                .setZoom(Gun.Modules.Zoom.builder()
-                        .setFovModifier(0.6F)
-                        .setOffset(0.0, 4.35, -1.25))
-                .setBarrel(1.0F, 0.0, 4.905, -14.5)
-                .setScope(1.0F, 0.0, 5.0, -4.40)
-                .setSpecial(1.0F, -1, 4, -7)
 
                 .build());
 
@@ -603,8 +579,11 @@ public class GunGen extends GunProvider
 
                 // Sounds
                 .setFireSound(ModSounds.BURST_RIFLE_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setReloadStart(ModSounds.CR_RELOAD_MAGAZINE_OUT.get())
+                .setReloadLoadSound(ModSounds.CR_RELOAD_MAGAZINE_IN.get())
+                .setReloadEndSound(ModSounds.CR_RELOAD_EJECTOR.get())
+                .setEjectorPullSound(ModSounds.CR_EJECTOR_PULL.get())
+                .setEjectorReleaseSound(ModSounds.CR_EJECTOR_RELEASE.get())
                 .setSilencedFireSound(ModSounds.BURST_RIFLE_SILENCED_FIRE.get())
                 .setEnchantedFireSound(ModSounds.BURST_RIFLE_ENCHANTED_FIRE.get())
 
@@ -655,8 +634,11 @@ public class GunGen extends GunProvider
 
                 // Sounds
                 .setFireSound(ModSounds.COMBAT_RIFLE_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setReloadStart(ModSounds.CR_RELOAD_MAGAZINE_OUT.get())
+                .setReloadLoadSound(ModSounds.CR_RELOAD_MAGAZINE_IN.get())
+                .setReloadEndSound(ModSounds.CR_RELOAD_EJECTOR.get())
+                .setEjectorPullSound(ModSounds.CR_EJECTOR_PULL.get())
+                .setEjectorReleaseSound(ModSounds.CR_EJECTOR_RELEASE.get())
                 .setSilencedFireSound(ModSounds.COMBAT_RIFLE_SILENCED_FIRE.get())
                 .setEnchantedFireSound(ModSounds.COMBAT_RIFLE_ENCHANTED_FIRE.get())
 
@@ -671,6 +653,60 @@ public class GunGen extends GunProvider
                 .setUnderBarrel(0.0F, 0.0, 0.0, 0.0)
                 .setMagazine(0.0F, 0.0, 0.0, 0.0)
                 .setSpecial(1.0F, -1.2, 4.63, -1.8)
+
+                .build());
+
+        this.addGun(new ResourceLocation(Reference.MOD_ID, "bolt_action_rifle"), Gun.Builder.create()
+
+                // General
+                .setFireMode(FireMode.SEMI_AUTO)
+                .setFireRate(28)
+                .setGripType(GripType.TWO_HANDED)
+                .setRecoilKick(0.25F)
+                .setRecoilAngle(4.0F)
+                .setAlwaysSpread(true)
+                .setSpread(0.25F)
+                .setDrawTimer(30)
+
+                // Reloads
+                .setMaxAmmo(4)
+                .setReloadType(ReloadType.MANUAL)
+                .setReloadTimer(20)
+                .setAdditionalReloadTimer(20)
+
+                // Projectile
+                .setAmmo(ModItems.RIFLE_AMMO.get())
+                .setEjectsCasing(true)
+                .setProjectileVisible(false)
+                .setDamage(21F)
+                .setHeadshotMultiplier(1.5F)
+                .setAdvantage(ModTags.Entities.VERY_HEAVY.location())
+                .setProjectileSize(0.05F)
+                .setProjectileSpeed(24F)
+                .setProjectileLife(60)
+                .setProjectileTrailLengthMultiplier(2)
+                .setProjectileTrailColor(0xFFFF00 | 0xFF000000)
+                .setProjectileAffectedByGravity(true)
+                .setHitsRubberFruit(true)
+
+                // Sounds
+                .setFireSound(ModSounds.BOLT_ACTION_RIFLE_FIRE.get())
+                .setReloadStart(ModSounds.BULLET_IN.get())
+                .setReloadLoadSound(ModSounds.BULLET_IN.get())
+                .setReloadEndSound(ModSounds.BULLET_IN.get())
+                .setEjectorPullSound(ModSounds.BOLT_PULL.get())
+                .setEjectorReleaseSound(ModSounds.BOLT_RELEASE.get())
+                .setSilencedFireSound(ModSounds.BOLT_ACTION_RIFLE_SILENCED_FIRE.get())
+                .setEnchantedFireSound(ModSounds.BOLT_ACTION_RIFLE_ENCHANTED_FIRE.get())
+
+                // Attachments
+                .setMuzzleFlash(0.8, 0, 4.915, -15.155)
+                .setZoom(Gun.Modules.Zoom.builder()
+                        .setFovModifier(0.6F)
+                        .setOffset(0.0, 4.35, -1.25))
+                .setBarrel(1.0F, 0.0, 4.905, -14.5)
+                .setScope(1.0F, 0.0, 5.0, -4.40)
+                .setSpecial(1.0F, -1, 4, -7)
 
                 .build());
 
@@ -707,8 +743,11 @@ public class GunGen extends GunProvider
 
                 // Sounds
                 .setFireSound(ModSounds.FLARE_GUN_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setReloadStart(ModSounds.PS_SHELL.get())
+                .setReloadLoadSound(ModSounds.PS_SHELL.get())
+                .setReloadEndSound(ModSounds.REV_CHAMBER_SPIN.get())
+                .setEjectorPullSound(SoundEvents.IRON_TRAPDOOR_OPEN)
+                .setEjectorReleaseSound(SoundEvents.IRON_TRAPDOOR_CLOSE)
                 .setSilencedFireSound(ModSounds.FLARE_GUN_FIRE.get())
                 .setEnchantedFireSound(ModSounds.FLARE_GUN_FIRE.get())
 
@@ -754,8 +793,8 @@ public class GunGen extends GunProvider
 
                 // Sounds
                 .setFireSound(ModSounds.BLOSSOM_RIFLE_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setReloadStart(ModSounds.ITEM_PISTOL_RELOAD.get())
+                .setReloadLoadSound(ModSounds.ITEM_PISTOL_COCK.get())
                 .setSilencedFireSound(ModSounds.BLOSSOM_RIFLE_SILENCED_FIRE.get())
                 .setEnchantedFireSound(ModSounds.BLOSSOM_RIFLE_ENCHANTED_FIRE.get())
 
@@ -787,8 +826,8 @@ public class GunGen extends GunProvider
                 // Reloads
                 .setMaxAmmo(8)
                 .setReloadType(ReloadType.MANUAL)
-                .setReloadTimer(100)
-                .setAdditionalReloadTimer(0)
+                .setReloadTimer(16)
+                .setAdditionalReloadTimer(10)
 
                 // Projectile
                 .setAmmo(ModItems.SPECTRE_ROUND.get())
@@ -807,8 +846,8 @@ public class GunGen extends GunProvider
 
                 // Sounds
                 .setFireSound(ModSounds.HOLY_SHOTGUN_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setReloadStart(ModSounds.ITEM_PISTOL_RELOAD.get())
+                .setReloadLoadSound(ModSounds.ITEM_PISTOL_COCK.get())
                 .setSilencedFireSound(ModSounds.HOLY_SHOTGUN_SILENCED_FIRE.get())
                 .setEnchantedFireSound(ModSounds.HOLY_SHOTGUN_ENCHANTED_FIRE.get())
 
@@ -841,8 +880,8 @@ public class GunGen extends GunProvider
                 // Reloads
                 .setMaxAmmo(6)
                 .setReloadType(ReloadType.MANUAL)
-                .setReloadTimer(100)
-                .setAdditionalReloadTimer(0)
+                .setReloadTimer(16)
+                .setAdditionalReloadTimer(10)
 
                 // Projectile
                 .setAmmo(ModItems.WATER_BOMB.get())
@@ -862,8 +901,8 @@ public class GunGen extends GunProvider
 
                 // Sounds
                 .setFireSound(ModSounds.TYPHOONEE_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setReloadStart(ModSounds.ITEM_PISTOL_RELOAD.get())
+                .setReloadLoadSound(ModSounds.ITEM_PISTOL_COCK.get())
                 .setEnchantedFireSound(ModSounds.TYPHOONEE_FIRE.get())
                 .setPreFireSound(ModSounds.TYPHOONEE_PREFIRE.get())
 
@@ -915,8 +954,8 @@ public class GunGen extends GunProvider
 
                 // Sounds
                 .setFireSound(ModSounds.TYPHOONEE_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setReloadStart(ModSounds.ITEM_PISTOL_RELOAD.get())
+                .setReloadLoadSound(ModSounds.ITEM_PISTOL_COCK.get())
                 .setEnchantedFireSound(ModSounds.TYPHOONEE_FIRE.get())
                 .setPreFireSound(ModSounds.TYPHOONEE_PREFIRE.get())
 
@@ -974,7 +1013,174 @@ public class GunGen extends GunProvider
 
                 .build());*/
 
-        /* Fire Tier */
+        /* Blue print */
+        this.addGun(new ResourceLocation(Reference.MOD_ID, "repeating_shotgun"), Gun.Builder.create()
+
+                // General
+                .setFireMode(FireMode.SEMI_AUTO)
+                .setFireRate(22)
+                .setGripType(GripType.TWO_HANDED)
+                .setRecoilKick(0.5F)
+                .setRecoilAngle(10.0F)
+                .setAlwaysSpread(true)
+                .setSpread(8.0F)
+                .setProjectileAmount(12)
+                .setDrawTimer(20)
+
+                // Reloads
+                .setMaxAmmo(8)
+                .setReloadType(ReloadType.MANUAL)
+                .setReloadTimer(16)
+                .setAdditionalReloadTimer(10)
+
+                // Projectile
+                .setAmmo(ModItems.SHOTGUN_SHELL.get())
+                .setEjectsCasing(true)
+                .setProjectileVisible(false)
+                .setDamage(25F)
+                .setAdvantage(ModTags.Entities.VERY_HEAVY.location())
+                .setReduceDamageOverLife(true)
+                .setProjectileSize(0.05F)
+                .setProjectileSpeed(6F)
+                .setProjectileLife(10)
+                .setProjectileTrailLengthMultiplier(2)
+                .setProjectileTrailColor(0xFFFF00 | 0xFF000000)
+                .setProjectileAffectedByGravity(false)
+
+                // Sounds
+                .setFireSound(ModSounds.REPEATING_SHOTGUN_FIRE.get())
+                .setReloadStart(ModSounds.PS_PUMP_PULL.get())
+                .setReloadLoadSound(ModSounds.PS_SHELL.get())
+                .setReloadEndSound(ModSounds.PS_PUMP.get())
+                .setEjectorPullSound(ModSounds.PS_PUMP_PULL.get())
+                .setEjectorReleaseSound(ModSounds.PS_PUMP_RELEASE.get())
+                .setSilencedFireSound(ModSounds.PUMP_SHOTGUN_SILENCED_FIRE.get())
+                .setEnchantedFireSound(ModSounds.REPEATING_SHOTGUN_ENCHANTED_FIRE.get())
+
+                // Attachments
+                .setMuzzleFlash(0.8, 0.0, 4.645, -10.635)
+                /*.setZoom(Gun.Modules.Zoom.builder()
+                        .setFovModifier(0.6F)
+                        .setOffset(0.0, 3.92, -1.25))*/
+                .setZoom(Gun.Modules.Zoom.builder()
+                        .setFovModifier(0.6F)
+                        .setOffset(0.0, 3.75, -1.75))
+                .setScope(1.0F, 0.0, 4.9, 0)
+                .setBarrel(1.0F, 0.0, 4.65, -10)
+                .setUnderBarrel(1.0F, 0.0, 3, 0.45)
+                .setSpecial(1.0F, -0.8, 4, -5)
+
+                .build());
+
+
+        this.addGun(new ResourceLocation(Reference.MOD_ID, "infantry_rifle"), Gun.Builder.create()
+
+                // General
+                .setFireMode(FireMode.SEMI_AUTO)
+                .setFireRate(3)
+                .setGripType(GripType.TWO_HANDED)
+                .setRecoilKick(0.15F)
+                .setRecoilAngle(3.0F)
+                .setAlwaysSpread(false)
+                .setSpread(3.0F)
+                .setDrawTimer(17)
+
+                // Reloads
+                .setMaxAmmo(8)
+                .setReloadType(ReloadType.MAG_FED)
+                .setReloadTimer(18)
+                .setAdditionalReloadTimer(15)
+
+                // Projectile
+                .setAmmo(ModItems.RIFLE_AMMO.get())
+                .setEjectsCasing(true)
+                .setProjectileVisible(false)
+                .setDamage(10.5F)
+                .setAdvantage(ModTags.Entities.VERY_HEAVY.location())
+                .setProjectileSize(0.05F)
+                .setProjectileSpeed(12F)
+                .setProjectileLife(60)
+                .setProjectileTrailLengthMultiplier(2)
+                .setProjectileTrailColor(0xFFFF00 | 0xFF000000)
+                .setProjectileAffectedByGravity(true)
+
+                // Sounds
+                .setFireSound(ModSounds.INFANTRY_RIFLE_FIRE.get())
+                .setReloadStart(ModSounds.AR_RELOAD_MAGAZINE_OUT.get())
+                .setReloadLoadSound(ModSounds.IR_CLIP_IN.get())
+                .setReloadEndSound(ModSounds.IR_EJECTOR.get())
+                .setEjectorPullSound(ModSounds.IR_EJECTOR_PULL.get())
+                .setEjectorReleaseSound(ModSounds.IR_EJECTOR_RELEASE.get())
+                .setSilencedFireSound(ModSounds.INFANTRY_RIFLE_SILENCED_FIRE.get())
+                .setEnchantedFireSound(ModSounds.INFANTRY_RIFLE_ENCHANTED_FIRE.get())
+
+                // Attachments
+                .setMuzzleFlash(0.8, 0, 4.495, -9.655)
+                .setZoom(Gun.Modules.Zoom.builder()
+                        .setFovModifier(0.6F)
+                        .setOffset(0.0, 3.8, 1.75))
+                .setScope(1.0F, 0.0, 4.97, -0.715)
+                .setBarrel(1.0F, 0.0, 4.5, -9.6)
+                .setMagazine(0.0F, 0.0, 0.0, 0.0)
+                .setSpecial(1.0F, -1, 4.3, -6)
+
+                .build());
+
+        this.addGun(new ResourceLocation(Reference.MOD_ID, "service_rifle"), Gun.Builder.create()
+
+                // General
+                .setFireMode(FireMode.AUTOMATIC)
+                .setFireRate(3)
+                .setGripType(GripType.TWO_HANDED)
+                .setRecoilKick(0.25F)
+                .setRecoilAngle(4.0F)
+                .setAlwaysSpread(true)
+                .setSpread(3.0F)
+                .setDrawTimer(20)
+
+                // Reloads
+                .setMaxAmmo(30)
+                .setReloadType(ReloadType.MAG_FED)
+                .setReloadTimer(32)
+                .setAdditionalReloadTimer(8)
+
+                // Projectile
+                .setAmmo(ModItems.RIFLE_AMMO.get())
+                .setEjectsCasing(true)
+                .setProjectileVisible(false)
+                .setDamage(7.25F)
+                .setAdvantage(ModTags.Entities.HEAVY.location())
+                .setProjectileSize(0.05F)
+                .setProjectileSpeed(16F)
+                .setProjectileLife(80)
+                .setProjectileTrailLengthMultiplier(2)
+                .setProjectileTrailColor(0xFFFF00 | 0xFF000000)
+                .setProjectileAffectedByGravity(false)
+
+                // Sounds
+                .setFireSound(ModSounds.SERVICE_RIFLE_FIRE.get())
+                .setReloadStart(ModSounds.CR_RELOAD_MAGAZINE_OUT.get())
+                .setReloadLoadSound(ModSounds.SR_RELOAD_MAGAZINE_IN.get())
+                .setReloadEndSound(ModSounds.CR_RELOAD_EJECTOR.get())
+                .setEjectorPullSound(ModSounds.CR_EJECTOR_PULL.get())
+                .setEjectorReleaseSound(ModSounds.CR_EJECTOR_RELEASE.get())
+                .setSilencedFireSound(ModSounds.COMBAT_RIFLE_SILENCED_FIRE.get())
+                .setEnchantedFireSound(ModSounds.SERVICE_RIFLE_ENCHANTED_FIRE.get())
+
+                // Attachments
+                .setMuzzleFlash(0.8, 0.0, 4.68, -9.145)
+                .setZoom(Gun.Modules.Zoom.builder()
+                        .setFovModifier(0.6F)
+                        .setOffset(0.0, 5.2, -1.75))
+                .setScope(1.0F, 0.0, 5.305, 4.5)
+                .setBarrel(1.0F, 0.0, 4.685, -8.5)
+                .setStock(0.0F, 0.0, 0.0, 0.0)
+                .setUnderBarrel(1.0F, 0.0, 3.3, -1.0)
+                .setMagazine(0.0F, 0.0, 0.0, 0.0)
+                .setSpecial(1.0F, -1.2, 4.7, -3.5)
+
+                .build());
+
         this.addGun(new ResourceLocation(Reference.MOD_ID, "hollenfire_mk2"), Gun.Builder.create()
 
                 // General
@@ -1012,8 +1218,11 @@ public class GunGen extends GunProvider
 
                 // Sounds
                 .setFireSound(ModSounds.HOLLENFIRE_MK2_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setReloadStart(ModSounds.CR_RELOAD_MAGAZINE_OUT.get())
+                .setReloadLoadSound(ModSounds.SR_RELOAD_MAGAZINE_IN.get())
+                .setReloadEndSound(ModSounds.CR_RELOAD_EJECTOR.get())
+                .setEjectorPullSound(ModSounds.CR_EJECTOR_PULL.get())
+                .setEjectorReleaseSound(ModSounds.CR_EJECTOR_RELEASE.get())
                 .setEnchantedFireSound(ModSounds.HOLLENFIRE_MK2_ENCHANTED_FIRE.get())
 
                 // Attachments
@@ -1069,8 +1278,11 @@ public class GunGen extends GunProvider
 
                 // Sounds
                 .setFireSound(ModSounds.SOULHUNTER_MK2_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setReloadStart(ModSounds.AR_RELOAD_MAGAZINE_OUT.get())
+                .setReloadLoadSound(ModSounds.AR_RELOAD_MAGAZINE_IN.get())
+                .setReloadEndSound(ModSounds.AR_RELOAD_EJECTOR.get())
+                .setEjectorPullSound(ModSounds.AR_EJECTOR_PULL.get())
+                .setEjectorReleaseSound(ModSounds.AR_EJECTOR_RELEASE.get())
                 .setEnchantedFireSound(ModSounds.SOULHUNTER_MK2_ENCHANTED_FIRE.get())
 
                 // Attachments
@@ -1084,7 +1296,6 @@ public class GunGen extends GunProvider
 
                 .build());
 
-        /* Sculk Tier */
         this.addGun(new ResourceLocation(Reference.MOD_ID, "subsonic_rifle"), Gun.Builder.create()
 
                 // General
@@ -1123,8 +1334,11 @@ public class GunGen extends GunProvider
 
                 // Sounds
                 .setFireSound(ModSounds.SUBSONIC_RIFLE_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setReloadStart(ModSounds.CR_RELOAD_MAGAZINE_IN.get())
+                .setReloadLoadSound(ModSounds.CR_RELOAD_MAGAZINE_OUT.get())
+                .setReloadEndSound(ModSounds.AR_RELOAD_EJECTOR.get())
+                .setEjectorPullSound(ModSounds.AR_EJECTOR_PULL.get())
+                .setEjectorReleaseSound(ModSounds.AR_EJECTOR_RELEASE.get())
                 .setSilencedFireSound(ModSounds.SUBSONIC_RIFLE_FIRE.get())
                 .setEnchantedFireSound(ModSounds.SUBSONIC_RIFLE_ENCHANTED_FIRE.get())
 
@@ -1178,8 +1392,11 @@ public class GunGen extends GunProvider
 
                 // Sounds
                 .setFireSound(ModSounds.SUPERSONIC_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setReloadStart(ModSounds.PS_SHELL.get())
+                .setReloadLoadSound(ModSounds.PS_SHELL.get())
+                .setReloadEndSound(ModSounds.PS_PUMP.get())
+                .setEjectorPullSound(ModSounds.PS_PUMP_PULL.get())
+                .setEjectorReleaseSound(ModSounds.PS_PUMP_RELEASE.get())
                 .setSilencedFireSound(ModSounds.SUPERSONIC_FIRE.get())
                 .setEnchantedFireSound(ModSounds.SUPERSONIC_FIRE.get())
 
@@ -1235,8 +1452,11 @@ public class GunGen extends GunProvider
                 // Sounds
                 .setFireSound(SoundEvents.WARDEN_SONIC_BOOM)
                 .setPreFireSound(ModSounds.HYPERSONIC_CANNON_CHARGE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setReloadStart(ModSounds.HYPERSONIC_CANNON_CHARGE.get())
+                .setReloadLoadSound(SoundEvents.ITEM_PICKUP)
+                .setReloadEndSound(SoundEvents.ITEM_FRAME_REMOVE_ITEM)
+                .setEjectorPullSound(ModSounds.AR_EJECTOR_PULL.get())
+                .setEjectorReleaseSound(ModSounds.AR_EJECTOR_RELEASE.get())
                 .setSilencedFireSound(SoundEvents.WARDEN_SONIC_BOOM)
                 .setEnchantedFireSound(SoundEvents.WARDEN_SONIC_BOOM)
 
@@ -1245,164 +1465,6 @@ public class GunGen extends GunProvider
                 .setZoom(Gun.Modules.Zoom.builder()
                         .setFovModifier(0.6F)
                         .setOffset(0.0, 3.9, -2.25))
-
-                .build());
-
-        /* Blue-printable */
-        this.addGun(new ResourceLocation(Reference.MOD_ID, "repeating_shotgun"), Gun.Builder.create()
-
-                // General
-                .setFireMode(FireMode.SEMI_AUTO)
-                .setFireRate(22)
-                .setGripType(GripType.TWO_HANDED)
-                .setRecoilKick(0.5F)
-                .setRecoilAngle(10.0F)
-                .setAlwaysSpread(true)
-                .setSpread(8.0F)
-                .setProjectileAmount(12)
-                .setDrawTimer(20)
-
-                // Reloads
-                .setMaxAmmo(8)
-                .setReloadType(ReloadType.MANUAL)
-                .setReloadTimer(16)
-                .setAdditionalReloadTimer(10)
-
-                // Projectile
-                .setAmmo(ModItems.SHOTGUN_SHELL.get())
-                .setEjectsCasing(true)
-                .setProjectileVisible(false)
-                .setDamage(25F)
-                .setAdvantage(ModTags.Entities.VERY_HEAVY.location())
-                .setReduceDamageOverLife(true)
-                .setProjectileSize(0.05F)
-                .setProjectileSpeed(6F)
-                .setProjectileLife(10)
-                .setProjectileTrailLengthMultiplier(2)
-                .setProjectileTrailColor(0xFFFF00 | 0xFF000000)
-                .setProjectileAffectedByGravity(false)
-
-                // Sounds
-                .setFireSound(ModSounds.REPEATING_SHOTGUN_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
-                .setSilencedFireSound(ModSounds.PUMP_SHOTGUN_SILENCED_FIRE.get())
-                .setEnchantedFireSound(ModSounds.REPEATING_SHOTGUN_ENCHANTED_FIRE.get())
-
-                // Attachments
-                .setMuzzleFlash(0.8, 0.0, 4.645, -10.635)
-                /*.setZoom(Gun.Modules.Zoom.builder()
-                        .setFovModifier(0.6F)
-                        .setOffset(0.0, 3.92, -1.25))*/
-                .setZoom(Gun.Modules.Zoom.builder()
-                        .setFovModifier(0.6F)
-                        .setOffset(0.0, 3.75, -1.75))
-                .setScope(1.0F, 0.0, 4.9, 0)
-                .setBarrel(1.0F, 0.0, 4.65, -10)
-                .setUnderBarrel(1.0F, 0.0, 3, 0.45)
-                .setSpecial(1.0F, -0.8, 4, -5)
-
-                .build());
-
-        this.addGun(new ResourceLocation(Reference.MOD_ID, "infantry_rifle"), Gun.Builder.create()
-
-                // General
-                .setFireMode(FireMode.SEMI_AUTO)
-                .setFireRate(3)
-                .setGripType(GripType.TWO_HANDED)
-                .setRecoilKick(0.15F)
-                .setRecoilAngle(3.0F)
-                .setAlwaysSpread(false)
-                .setSpread(3.0F)
-                .setDrawTimer(17)
-
-                // Reloads
-                .setMaxAmmo(8)
-                .setReloadType(ReloadType.MAG_FED)
-                .setReloadTimer(18)
-                .setAdditionalReloadTimer(15)
-
-                // Projectile
-                .setAmmo(ModItems.RIFLE_AMMO.get())
-                .setEjectsCasing(true)
-                .setProjectileVisible(false)
-                .setDamage(10.5F)
-                .setAdvantage(ModTags.Entities.VERY_HEAVY.location())
-                .setProjectileSize(0.05F)
-                .setProjectileSpeed(12F)
-                .setProjectileLife(60)
-                .setProjectileTrailLengthMultiplier(2)
-                .setProjectileTrailColor(0xFFFF00 | 0xFF000000)
-                .setProjectileAffectedByGravity(true)
-
-                // Sounds
-                .setFireSound(ModSounds.INFANTRY_RIFLE_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
-                .setSilencedFireSound(ModSounds.INFANTRY_RIFLE_SILENCED_FIRE.get())
-                .setEnchantedFireSound(ModSounds.INFANTRY_RIFLE_ENCHANTED_FIRE.get())
-
-                // Attachments
-                .setMuzzleFlash(0.8, 0, 4.495, -9.655)
-                .setZoom(Gun.Modules.Zoom.builder()
-                        .setFovModifier(0.6F)
-                        .setOffset(0.0, 3.8, 1.75))
-                .setScope(1.0F, 0.0, 4.97, -0.715)
-                .setBarrel(1.0F, 0.0, 4.5, -9.6)
-                .setMagazine(0.0F, 0.0, 0.0, 0.0)
-                .setSpecial(1.0F, -1, 4.3, -6)
-
-                .build());
-
-        this.addGun(new ResourceLocation(Reference.MOD_ID, "service_rifle"), Gun.Builder.create()
-
-                // General
-                .setFireMode(FireMode.AUTOMATIC)
-                .setFireRate(3)
-                .setGripType(GripType.TWO_HANDED)
-                .setRecoilKick(0.25F)
-                .setRecoilAngle(4.0F)
-                .setAlwaysSpread(true)
-                .setSpread(3.0F)
-                .setDrawTimer(20)
-
-                // Reloads
-                .setMaxAmmo(30)
-                .setReloadType(ReloadType.MAG_FED)
-                .setReloadTimer(32)
-                .setAdditionalReloadTimer(8)
-
-                // Projectile
-                .setAmmo(ModItems.RIFLE_AMMO.get())
-                .setEjectsCasing(true)
-                .setProjectileVisible(false)
-                .setDamage(7.25F)
-                .setAdvantage(ModTags.Entities.HEAVY.location())
-                .setProjectileSize(0.05F)
-                .setProjectileSpeed(16F)
-                .setProjectileLife(80)
-                .setProjectileTrailLengthMultiplier(2)
-                .setProjectileTrailColor(0xFFFF00 | 0xFF000000)
-                .setProjectileAffectedByGravity(false)
-
-                // Sounds
-                .setFireSound(ModSounds.SERVICE_RIFLE_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
-                .setSilencedFireSound(ModSounds.COMBAT_RIFLE_SILENCED_FIRE.get())
-                .setEnchantedFireSound(ModSounds.SERVICE_RIFLE_ENCHANTED_FIRE.get())
-
-                // Attachments
-                .setMuzzleFlash(0.8, 0.0, 4.68, -9.145)
-                .setZoom(Gun.Modules.Zoom.builder()
-                        .setFovModifier(0.6F)
-                        .setOffset(0.0, 5.2, -1.75))
-                .setScope(1.0F, 0.0, 5.305, 4.5)
-                .setBarrel(1.0F, 0.0, 4.685, -8.5)
-                .setStock(0.0F, 0.0, 0.0, 0.0)
-                .setUnderBarrel(1.0F, 0.0, 3.3, -1.0)
-                .setMagazine(0.0F, 0.0, 0.0, 0.0)
-                .setSpecial(1.0F, -1.2, 4.7, -3.5)
 
                 .build());
 
@@ -1444,8 +1506,11 @@ public class GunGen extends GunProvider
                 
                 // Sounds
                 .setFireSound(ModSounds.ROCKET_LAUNCHER_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setReloadStart(ModSounds.LID_OPEN.get())
+                .setReloadLoadSound(ModSounds.ROCKET_IN.get())
+                .setReloadEndSound(ModSounds.LID_CLOSE.get())
+                .setEjectorPullSound(ModSounds.CR_EJECTOR_PULL.get())
+                .setEjectorReleaseSound(ModSounds.CR_EJECTOR_RELEASE.get())
                 .setSilencedFireSound(ModSounds.ROCKET_LAUNCHER_FIRE.get())
                 .setEnchantedFireSound(ModSounds.ROCKET_LAUNCHER_FIRE.get())
 
@@ -1494,13 +1559,66 @@ public class GunGen extends GunProvider
 
                 // Sounds
                 .setFireSound(ModSounds.COMPOUND_BOW_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setReloadStart(ModSounds.CR_RELOAD_MAGAZINE_OUT.get())
+                .setReloadLoadSound(ModSounds.BOW_PLACE_ARROW.get())
+                .setReloadEndSound(ModSounds.CR_RELOAD_EJECTOR.get())
+                .setEjectorPullSound(ModSounds.BOW_PULL.get())
+                .setEjectorReleaseSound(ModSounds.BOW_STRING.get())
 
                 // Attachments
                 .setZoom(Gun.Modules.Zoom.builder()
                         .setFovModifier(0.6F)
                         .setOffset(1.05, 3.5, 0))
+
+                .build());
+
+        this.addGun(new ResourceLocation(Reference.MOD_ID, "grenade_launcher"), Gun.Builder.create()
+
+                // General
+                .setFireMode(FireMode.SEMI_AUTO)
+                .setFireRate(20)
+                .setGripType(GripType.TWO_HANDED)
+                .setRecoilKick(0.25F)
+                .setRecoilAngle(3.0F)
+                .setAlwaysSpread(true)
+                .setSpread(2.0F)
+                .setCanBeBlueprinted(false)
+                .setDrawTimer(20)
+
+                // Reloads
+                .setMaxAmmo(1)
+                .setReloadType(ReloadType.MAG_FED)
+                .setReloadTimer(42)
+                .setAdditionalReloadTimer(0)
+
+                // Projectile
+                .setAmmo(ModItems.GRENADE.get())
+                .setEjectsCasing(false)
+                .setProjectileVisible(true)
+                .setDamage(25.0F)
+                .setAdvantage(ModTags.Entities.VERY_HEAVY.location())
+                .setProjectileSize(0.05F)
+                .setProjectileSpeed(3F)
+                .setProjectileLife(200)
+                .setProjectileTrailLengthMultiplier(2)
+                .setProjectileTrailColor(0xFFFF00 | 0xFF000000)
+                .setProjectileAffectedByGravity(true)
+
+                // Sounds
+                .setFireSound(ModSounds.GRENADE_LAUNCHER_FIRE.get())
+                .setReloadStart(ModSounds.CR_RELOAD_MAGAZINE_IN.get())
+                .setReloadLoadSound(ModSounds.CR_RELOAD_MAGAZINE_OUT.get())
+                .setReloadEndSound(ModSounds.CR_RELOAD_EJECTOR.get())
+                .setEjectorPullSound(ModSounds.CR_EJECTOR_PULL.get())
+                .setEjectorReleaseSound(ModSounds.CR_EJECTOR_RELEASE.get())
+
+                // Attachments
+                .setMuzzleFlash(1.0, 0.0, 4.86, -7)
+                .setZoom(Gun.Modules.Zoom.builder()
+                        .setFovModifier(0.6F)
+                        .setOffset(0.0, 3.61, 2))
+                .setScope(1.0F, 0.0, 4.5, 0)
+                .setUnderBarrel(1.0F, 0.0, 2.5, -2.5)
 
                 .build());
 
@@ -1540,8 +1658,11 @@ public class GunGen extends GunProvider
 
                 // Sounds
                 .setFireSound(ModSounds.LIGHT_MACHINE_GUN_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setReloadStart(ModSounds.AR_RELOAD_MAGAZINE_IN.get())
+                .setReloadLoadSound(ModSounds.AR_RELOAD_MAGAZINE_OUT.get())
+                .setReloadEndSound(ModSounds.AR_RELOAD_EJECTOR.get())
+                .setEjectorPullSound(ModSounds.AR_EJECTOR_PULL.get())
+                .setEjectorReleaseSound(ModSounds.AR_EJECTOR_RELEASE.get())
                 .setSilencedFireSound(ModSounds.LIGHT_MACHINE_GUN_SILENCED_FIRE.get())
                 .setEnchantedFireSound(ModSounds.LIGHT_MACHINE_GUN_ENCHANTED_FIRE.get())
 
@@ -1554,53 +1675,6 @@ public class GunGen extends GunProvider
                 .setBarrel(1.0F, 0.0, 4.855, -7)
                 .setUnderBarrel(1.0F, 0.0, 2.5, 0.3)
                 .setSpecial(1.0F, -1.2, 3.63, -0.1)
-
-                .build());
-
-        this.addGun(new ResourceLocation(Reference.MOD_ID, "grenade_launcher"), Gun.Builder.create()
-
-                // General
-                .setFireMode(FireMode.SEMI_AUTO)
-                .setFireRate(20)
-                .setGripType(GripType.TWO_HANDED)
-                .setRecoilKick(0.25F)
-                .setRecoilAngle(3.0F)
-                .setAlwaysSpread(true)
-                .setSpread(2.0F)
-                .setCanBeBlueprinted(false)
-                .setDrawTimer(20)
-
-                // Reloads
-                .setMaxAmmo(1)
-                .setReloadType(ReloadType.MAG_FED)
-                .setReloadTimer(42)
-                .setAdditionalReloadTimer(0)
-
-                // Projectile
-                .setAmmo(ModItems.GRENADE.get())
-                .setEjectsCasing(false)
-                .setProjectileVisible(true)
-                .setDamage(25.0F)
-                .setAdvantage(ModTags.Entities.VERY_HEAVY.location())
-                .setProjectileSize(0.05F)
-                .setProjectileSpeed(3F)
-                .setProjectileLife(200)
-                .setProjectileTrailLengthMultiplier(2)
-                .setProjectileTrailColor(0xFFFF00 | 0xFF000000)
-                .setProjectileAffectedByGravity(true)
-
-                // Sounds
-                .setFireSound(ModSounds.GRENADE_LAUNCHER_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
-
-                // Attachments
-                .setMuzzleFlash(1.0, 0.0, 4.86, -7)
-                .setZoom(Gun.Modules.Zoom.builder()
-                        .setFovModifier(0.6F)
-                        .setOffset(0.0, 3.61, 2))
-                .setScope(1.0F, 0.0, 4.5, 0)
-                .setUnderBarrel(1.0F, 0.0, 2.5, -2.5)
 
                 .build());
 
@@ -1642,8 +1716,11 @@ public class GunGen extends GunProvider
 
                 // Sounds
                 .setFireSound(SoundEvents.FIRECHARGE_USE)
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setReloadStart(SoundEvents.ITEM_FRAME_REMOVE_ITEM)
+                .setReloadLoadSound(SoundEvents.ITEM_FRAME_REMOVE_ITEM)
+                .setReloadEndSound(ModSounds.CR_RELOAD_EJECTOR.get())
+                .setEjectorPullSound(SoundEvents.IRON_TRAPDOOR_OPEN)
+                .setEjectorReleaseSound(SoundEvents.IRON_TRAPDOOR_CLOSE)
 
                 // Attachments
                 .setMuzzleFlash(0.8, 0.0, 4.1, -11.8)
@@ -1693,8 +1770,11 @@ public class GunGen extends GunProvider
 
                 // Sounds
                 .setFireSound(ModSounds.LIGHT_MACHINE_GUN_FIRE.get())
-                .setReloadSound(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setCockSound(ModSounds.ITEM_PISTOL_COCK.get())
+                .setReloadStart(ModSounds.AR_RELOAD_MAGAZINE_IN.get())
+                .setReloadLoadSound(ModSounds.AR_RELOAD_MAGAZINE_OUT.get())
+                .setReloadEndSound(ModSounds.AR_RELOAD_EJECTOR.get())
+                .setEjectorPullSound(ModSounds.AR_EJECTOR_PULL.get())
+                .setEjectorReleaseSound(ModSounds.AR_EJECTOR_RELEASE.get())
                 .setSilencedFireSound(ModSounds.LIGHT_MACHINE_GUN_SILENCED_FIRE.get())
                 .setEnchantedFireSound(ModSounds.LIGHT_MACHINE_GUN_ENCHANTED_FIRE.get())
 

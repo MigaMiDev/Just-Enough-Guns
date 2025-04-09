@@ -62,10 +62,10 @@
     "reloadType": "jeg:mag_fed"
   },
   "sounds": {
-    "cock": "jeg:item.pistol.cock",
     "enchantedFire": "jeg:item.blossom_rifle.enchanted_fire",
     "fire": "jeg:item.blossom_rifle.fire",
-    "reload": "jeg:item.pistol.reload",
+    "reloadLoad": "jeg:item.pistol.cock",
+    "reloadStart": "jeg:item.pistol.reload",
     "silencedFire": "jeg:item.blossom_rifle.silenced_fire"
   }
 }

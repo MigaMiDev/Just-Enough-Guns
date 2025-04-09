@@ -2,6 +2,7 @@ package ttv.migami.jeg.item;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -16,7 +17,6 @@ import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.keyframe.event.ParticleKeyframeEvent;
 import software.bernie.geckolib.core.keyframe.event.SoundKeyframeEvent;
 import software.bernie.geckolib.util.ClientUtils;
@@ -24,6 +24,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import ttv.migami.jeg.Reference;
 import ttv.migami.jeg.animations.GunAnimations;
 import ttv.migami.jeg.client.render.gun.animated.AnimatedGunRenderer;
+import ttv.migami.jeg.common.Gun;
 import ttv.migami.jeg.init.ModItems;
 import ttv.migami.jeg.init.ModSounds;
 import ttv.migami.jeg.init.ModSyncedDataKeys;
@@ -37,24 +38,13 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     private final String gunID;
-    private final SoundEvent reloadSoundMagOut;
-    private final SoundEvent reloadSoundMagIn;
-    private final SoundEvent reloadSoundEnd;
-    private final SoundEvent ejectorSoundPull;
-    private final SoundEvent ejectorSoundRelease;
 
     private int heartBeat = 60;
 
-    public AnimatedGunItem(Properties properties, String path,
-                           SoundEvent reloadSoundMagOut, SoundEvent reloadSoundMagIn, SoundEvent reloadSoundEnd, SoundEvent ejectorSoundPull, SoundEvent ejectorSoundRelease) {
+    public AnimatedGunItem(Properties properties, String path) {
         super(properties);
 
         this.gunID = path;
-        this.reloadSoundMagOut = reloadSoundMagOut;
-        this.reloadSoundMagIn = reloadSoundMagIn;
-        this.reloadSoundEnd = reloadSoundEnd;
-        this.ejectorSoundPull = ejectorSoundPull;
-        this.ejectorSoundRelease = ejectorSoundRelease;
     }
 
     @Override
@@ -158,27 +148,22 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
         compoundTag.remove("DrawnTick");
         compoundTag.remove("IsShooting");
         compoundTag.remove("IsReloading");
-        compoundTag.remove("IsFinishingReloading");
         compoundTag.remove("IsInspecting");
         compoundTag.remove("IsAiming");
         compoundTag.remove("IsRunning");
         compoundTag.remove("IsMeleeing");
+        compoundTag.remove("IsFirstPersonReload");
     }
 
     public void resetTags(CompoundTag compoundTag) {
         compoundTag.remove("IsDrawing");
         compoundTag.remove("IsShooting");
         compoundTag.remove("IsReloading");
-        compoundTag.remove("IsFinishingReloading");
         compoundTag.remove("IsInspecting");
         compoundTag.remove("IsAiming");
         compoundTag.remove("IsRunning");
         compoundTag.remove("IsMeleeing");
-    }
-
-    private boolean isAnimationPlaying(AnimationController<GeoAnimatable> animationController, String animationName) {
-        return animationController.getCurrentAnimation() != null &&
-                animationController.getCurrentAnimation().animation().name().matches(animationName);
+        compoundTag.remove("IsFirstPersonReload");
     }
 
     private void updateBooleanTag(CompoundTag nbt, String key, boolean value) {
@@ -194,15 +179,48 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
         Player player = ClientUtils.getClientPlayer();
         if (player != null)
         {
+
+            if (!(player.getMainHandItem().getItem() instanceof GunItem)) {
+                return;
+            }
+
+            Gun gun = getModifiedGun(player.getMainHandItem());
+            SoundEvent sound;
+
             switch (gunItemSoundKeyframeEvent.getKeyframeData().getSound())
             {
                 case "rustle" -> player.playSound(ModSounds.GUN_RUSTLE.get(), 1, 1);
                 case "screw" -> player.playSound(ModSounds.GUN_SCREW.get(), 1, 1);
-                case "reload_mag_out" -> player.playSound(this.reloadSoundMagOut, 1, 1);
-                case "reload_mag_in" -> player.playSound(this.reloadSoundMagIn, 1, 1);
-                case "reload_end" -> player.playSound(this.reloadSoundEnd, 1, 1);
-                case "ejector_pull" -> player.playSound(this.ejectorSoundPull, 1, 1);
-                case "ejector_release" -> player.playSound(this.ejectorSoundRelease, 1, 1);
+                case "reload_mag_out" ->  {
+                    sound = BuiltInRegistries.SOUND_EVENT.get(gun.getSounds().getReloadStart());
+                    if (sound != null) {
+                        player.playSound(sound, 1, 1);
+                    }
+                }
+                case "reload_mag_in" -> {
+                    sound = BuiltInRegistries.SOUND_EVENT.get(gun.getSounds().getReloadLoad());
+                    if (sound != null) {
+                        player.playSound(sound, 1, 1);
+                    }
+                }
+                case "reload_end" -> {
+                    sound = BuiltInRegistries.SOUND_EVENT.get(gun.getSounds().getReloadEnd());
+                    if (sound != null) {
+                        player.playSound(sound, 1, 1);
+                    }
+                }
+                case "ejector_pull" -> {
+                    sound = BuiltInRegistries.SOUND_EVENT.get(gun.getSounds().getEjectorPull());
+                    if (sound != null) {
+                        player.playSound(sound, 1, 1);
+                    }
+                }
+                case "ejector_release" -> {
+                    sound = BuiltInRegistries.SOUND_EVENT.get(gun.getSounds().getEjectorRelease());
+                    if (sound != null) {
+                        player.playSound(sound, 1, 1);
+                    }
+                }
                 case "jammed" -> player.playSound(SoundEvents.ANVIL_LAND, 0.8F, 1.5F);
             }
         }

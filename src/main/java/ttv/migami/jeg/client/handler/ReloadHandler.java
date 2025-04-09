@@ -1,5 +1,6 @@
 package ttv.migami.jeg.client.handler;
 
+import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -20,6 +21,7 @@ import ttv.migami.jeg.init.ModSyncedDataKeys;
 import ttv.migami.jeg.item.AnimatedGunItem;
 import ttv.migami.jeg.item.GunItem;
 import ttv.migami.jeg.network.PacketHandler;
+import ttv.migami.jeg.network.message.C2SMessageFirstPersonReload;
 import ttv.migami.jeg.network.message.C2SMessageLeftOverAmmo;
 import ttv.migami.jeg.network.message.C2SMessageReload;
 import ttv.migami.jeg.network.message.C2SMessageUnload;
@@ -85,6 +87,13 @@ public class ReloadHandler
                 if(this.reloadingSlot != player.getInventory().selected)
                 {
                     this.setReloading(false);
+                }
+
+                CameraType cameraType = Minecraft.getInstance().options.getCameraType();
+                if (cameraType.isFirstPerson()) {
+                    PacketHandler.getPlayChannel().sendToServer(new C2SMessageFirstPersonReload(true));
+                } else {
+                    PacketHandler.getPlayChannel().sendToServer(new C2SMessageFirstPersonReload(false));
                 }
             }
 

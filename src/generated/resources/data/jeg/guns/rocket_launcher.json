@@ -48,10 +48,13 @@
     "reloadType": "jeg:manual"
   },
   "sounds": {
-    "cock": "jeg:item.pistol.cock",
+    "ejectorPull": "jeg:item.combat_rifle.ejector_pull",
+    "ejectorRelease": "jeg:item.combat_rifle.ejector_release",
     "enchantedFire": "jeg:item.rocket_launcher.fire",
     "fire": "jeg:item.rocket_launcher.fire",
-    "reload": "jeg:item.pistol.reload",
+    "reloadEnd": "jeg:item.rocket_launcher.lid_close",
+    "reloadLoad": "jeg:item.rocket_launcher.rocket_in",
+    "reloadStart": "jeg:item.rocket_launcher.lid_open",
     "silencedFire": "jeg:item.rocket_launcher.fire"
   }
 }

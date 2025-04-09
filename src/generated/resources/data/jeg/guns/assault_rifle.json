@@ -67,10 +67,13 @@
     "reloadType": "jeg:mag_fed"
   },
   "sounds": {
-    "cock": "jeg:item.pistol.cock",
+    "ejectorPull": "jeg:item.assault_rifle.ejector_pull",
+    "ejectorRelease": "jeg:item.assault_rifle.ejector_release",
     "enchantedFire": "jeg:item.assault_rifle.enchanted_fire",
     "fire": "jeg:item.assault_rifle.fire",
-    "reload": "jeg:item.pistol.reload",
+    "reloadEnd": "jeg:item.assault_rifle.reload_ejector",
+    "reloadLoad": "jeg:item.assault_rifle.reload_magazine_out",
+    "reloadStart": "jeg:item.assault_rifle.reload_magazine_in",
     "silencedFire": "jeg:item.assault_rifle.silenced_fire"
   }
 }

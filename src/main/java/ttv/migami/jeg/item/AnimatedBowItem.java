@@ -1,6 +1,5 @@
 package ttv.migami.jeg.item;
 
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -10,8 +9,8 @@ import ttv.migami.jeg.init.ModEnchantments;
 
 public class AnimatedBowItem extends AnimatedGunItem implements GeoAnimatable, GeoItem {
 
-    public AnimatedBowItem(Properties properties, String path, SoundEvent reloadSoundMagOut, SoundEvent reloadSoundMagIn, SoundEvent reloadSoundEnd, SoundEvent ejectorSoundPull, SoundEvent ejectorSoundRelease) {
-        super(properties, path, reloadSoundMagOut, reloadSoundMagIn, reloadSoundEnd, ejectorSoundPull, ejectorSoundRelease);
+    public AnimatedBowItem(Properties properties, String path) {
+        super(properties, path);
     }
 
     @Override

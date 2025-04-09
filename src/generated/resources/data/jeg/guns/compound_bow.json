@@ -36,8 +36,11 @@
     "reloadType": "jeg:inventory_fed"
   },
   "sounds": {
-    "cock": "jeg:item.pistol.cock",
+    "ejectorPull": "jeg:item.compound_bow.pull",
+    "ejectorRelease": "jeg:item.compound_bow.charge",
     "fire": "jeg:item.compound_bow.fire",
-    "reload": "jeg:item.pistol.reload"
+    "reloadEnd": "jeg:item.combat_rifle.reload_ejector",
+    "reloadLoad": "jeg:item.compound_bow.place_arrow",
+    "reloadStart": "jeg:item.combat_rifle.reload_magazine_out"
   }
 }
