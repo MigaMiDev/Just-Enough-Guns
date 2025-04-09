@@ -393,7 +393,7 @@ public class TerrorRaidEntity extends Entity {
             updateBossBar();
             updatePlayers();
 
-            if (this.getActivePlayers().isEmpty() || this.level().getDifficulty().equals(Difficulty.PEACEFUL)) {
+            if ((this.summonBoss && this.getActivePlayers().isEmpty()) || this.level().getDifficulty().equals(Difficulty.PEACEFUL)) {
                 this.isFinished = true;
                 this.defeat = true;
             }
