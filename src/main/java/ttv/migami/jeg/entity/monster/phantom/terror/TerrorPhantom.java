@@ -1173,7 +1173,7 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
 
         private void selectNext() {
             if (BlockPos.ZERO.equals(TerrorPhantom.this.anchorPoint)) {
-                TerrorPhantom.this.anchorPoint = new BlockPos(TerrorPhantom.this.blockPosition().getX(), 40, TerrorPhantom.this.blockPosition().getZ());
+                TerrorPhantom.this.anchorPoint = TerrorPhantom.this.level().getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, TerrorPhantom.this.blockPosition()).above(40);
             }
 
             this.angle += this.clockwise * 15.0F * 0.017453292F;

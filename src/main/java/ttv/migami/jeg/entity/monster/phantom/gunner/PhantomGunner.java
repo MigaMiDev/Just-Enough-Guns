@@ -499,7 +499,7 @@ public class PhantomGunner extends Phantom implements GeoEntity {
 
         private void selectNext() {
             if (BlockPos.ZERO.equals(PhantomGunner.this.anchorPoint)) {
-                PhantomGunner.this.anchorPoint = new BlockPos(PhantomGunner.this.blockPosition().getX(), 40, PhantomGunner.this.blockPosition().getZ());
+                PhantomGunner.this.anchorPoint = PhantomGunner.this.level().getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, PhantomGunner.this.blockPosition()).above(40);
             }
 
             this.angle += this.clockwise * 15.0F * 0.017453292F;
