@@ -536,7 +536,7 @@ public class TerrorRaidEntity extends Entity {
 
     @Override
     public void onRemovedFromWorld() {
-        if (!this.victory && !this.defeat && this.level() instanceof ServerLevel serverLevel) {
+        if (this.summonBoss && !this.victory && !this.defeat && this.level() instanceof ServerLevel serverLevel) {
             Component message2 = Component.translatable("broadcast.jeg.raid.no_players", Component.translatable("faction.jeg.terror_armada")).withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
             serverLevel.getServer().getPlayerList().broadcastSystemMessage(message2, false);
             Component message = Component.translatable("broadcast.jeg.raid.defeat", Component.translatable("faction.jeg.terror_armada")).withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
