@@ -605,14 +605,8 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 				if (bone.getName().equals("left_arm") || bone.getName().equals("fake_left_arm")) {
 					boolean isOneHanded = modifiedGun.getGeneral().getGripType().equals(GripType.ONE_HANDED);
 					boolean isHoldingShield = player.getOffhandItem().getItem() instanceof ShieldItem;
-					boolean isPlayingCriticalAnimation = animationController != null && animationController.getCurrentAnimation() != null
-							&& (animationController.getCurrentAnimation().animation().name().matches("draw")
-							|| animationController.getCurrentAnimation().animation().name().matches("reload")
-							|| animationController.getCurrentAnimation().animation().name().matches("reload_start")
-							|| animationController.getCurrentAnimation().animation().name().matches("reload_loop")
-							|| animationController.getCurrentAnimation().animation().name().matches("reload_end"));
 
-					//if (!isOneHanded || !isHoldingShield || isPlayingCriticalAnimation) {
+                    //if (!isOneHanded || !isHoldingShield || isPlayingCriticalAnimation) {
 						poseStack.scale(0.67f, 0.8f, 0.67f);
 						poseStack.translate(-0.25, -0.1, 0.1625);
 						playerEntityModel.leftArm.setPos(bone.getPivotX(), bone.getPivotY(), bone.getPivotZ());

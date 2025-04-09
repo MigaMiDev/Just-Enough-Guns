@@ -172,17 +172,6 @@ public class GunEventBus {
                     event.setCanceled(true);
                 }
 
-                //This is the Jam function
-                /*CompoundTag nbtCompound = heldItem.getOrCreateTag();
-                if (gunItem instanceof AnimatedGunItem animatedGunItem) {
-                    final long id = GeoItem.getId(player.getMainHandItem());
-                    AnimationController<GeoAnimatable> animationController = animatedGunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("controller");
-
-                    if (animationController.getCurrentAnimation().animation().name().matches("jam")) {
-                        event.setCanceled(true);
-                    }
-                }*/
-
                 int maxDamage = heldItem.getMaxDamage();
                 int currentDamage = heldItem.getDamageValue();
 
@@ -202,18 +191,7 @@ public class GunEventBus {
                         Component message = Component.translatable("chat.jeg.jam")
                                 .withStyle(ChatFormatting.GRAY);
                         player.displayClientMessage(message, true);
-                        /*if (gunItem instanceof AnimatedGunItem animatedGunItem) {
-                            final long id = GeoItem.getId(player.getMainHandItem());
-                            AnimationController<GeoAnimatable> animationController = animatedGunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("controller");
-                            nbtCompound.putBoolean("IsJammed", true);
-                            animationController.tryTriggerAnimation("jam");
-                        } else {*/
-                            event.getEntity().getCooldowns().addCooldown(event.getStack().getItem(), (coolDown));
-                        //}
-                        /*if (player.level().isClientSide) {
-                            Minecraft mc = Minecraft.getInstance();
-                            mc.options.keyAttack.setDown(false);
-                        }*/
+                        event.getEntity().getCooldowns().addCooldown(event.getStack().getItem(), (coolDown));
                         event.setCanceled(true);
                     }
                 } else if (tag.getInt("AmmoCount") >= 1) {

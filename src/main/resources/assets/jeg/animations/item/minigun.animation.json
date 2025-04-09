@@ -87,6 +87,11 @@
 						}
 					}
 				}
+			},
+			"particle_effects": {
+				"0.0": {
+					"effect": "eject_casing"
+				}
 			}
 		},
 		"aim_shoot": {
@@ -142,6 +147,11 @@
 							"easing": "easeInOutSine"
 						}
 					}
+				}
+			},
+			"particle_effects": {
+				"0.0": {
+					"effect": "eject_casing"
 				}
 			}
 		},

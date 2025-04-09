@@ -49,8 +49,8 @@ public class SoultreatItem extends ToolTipItem {
                 serverLevel.addFreshEntity(boo);
 
                 serverLevel.playSound(null, boo, SoundEvents.BEEHIVE_EXIT, SoundSource.AMBIENT, 1F, 1F);
-                serverLevel.sendParticles(ModParticleTypes.GHOST_FLAME.get(),
-                        boo.getX(), boo.getBbHeight() * 0.5, boo.getZ(), 10, 0.4, 0.4, 0.4, 0.5);
+                ((ServerLevel) boo.level()).sendParticles(ModParticleTypes.GHOST_FLAME.get(), boo.getX(), boo.getY(), boo.getZ(), 10, boo.getBbWidth() / 2, boo.getBbHeight() / 2, boo.getBbWidth() / 2, 0.1);
+
 
                 itemStack.shrink(1);
                 return InteractionResultHolder.success(itemStack);

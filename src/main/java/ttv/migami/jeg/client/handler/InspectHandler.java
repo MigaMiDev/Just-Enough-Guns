@@ -5,11 +5,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.lwjgl.glfw.GLFW;
-import software.bernie.geckolib.animatable.GeoItem;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
-import software.bernie.geckolib.core.animation.AnimationController;
 import ttv.migami.jeg.client.KeyBinds;
 import ttv.migami.jeg.item.AnimatedGunItem;
+import ttv.migami.jeg.network.PacketHandler;
+import ttv.migami.jeg.network.message.C2SMessageInspectGun;
 
 /**
  * Author: MrCrayfish
@@ -38,19 +37,10 @@ public class InspectHandler
         if(player == null)
             return;
 
-        if(player.getMainHandItem().getItem() instanceof AnimatedGunItem gunItem) {
+        if(player.getMainHandItem().getItem() instanceof AnimatedGunItem) {
             if(KeyBinds.KEY_INSPECT.isDown() && event.getAction() == GLFW.GLFW_PRESS)
             {
-                final long id = GeoItem.getId(player.getMainHandItem());
-                AnimationController<GeoAnimatable> animationController = gunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("controller");
-
-                if (animationController != null && animationController.getCurrentAnimation() != null && !animationController.getCurrentAnimation().animation().name().matches("draw")
-                        && !animationController.getCurrentAnimation().animation().name().matches("reload") &&
-                    !AimingHandler.get().isAiming()) {
-                    animationController.setAnimationSpeed(1.0D);
-                    animationController.forceAnimationReset();
-                    animationController.tryTriggerAnimation("inspect");
-                }
+                PacketHandler.getPlayChannel().sendToServer(new C2SMessageInspectGun());
             }
         }
 

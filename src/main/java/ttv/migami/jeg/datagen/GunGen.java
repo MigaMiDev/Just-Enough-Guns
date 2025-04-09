@@ -527,7 +527,7 @@ public class GunGen extends GunProvider
                 .setRecoilAngle(4.0F)
                 .setAlwaysSpread(true)
                 .setSpread(0.25F)
-                .setDrawTimer(35)
+                .setDrawTimer(30)
 
                 // Reloads
                 .setMaxAmmo(4)

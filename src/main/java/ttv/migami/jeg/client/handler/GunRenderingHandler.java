@@ -207,22 +207,6 @@ public class GunRenderingHandler {
 
         Minecraft mc = Minecraft.getInstance();
 
-        /*if (mc.player != null) {
-            ItemStack heldItem = mc.player.getMainHandItem();
-            if(mc.player.getMainHandItem().getItem() instanceof AnimatedGunItem gunItem) {
-                final long id = GeoItem.getId(heldItem);
-                AnimationController<GeoAnimatable> animationController = gunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("controller");
-
-                if(animationController != null && animationController.getCurrentAnimation() != null &&
-                        (!animationController.getCurrentAnimation().animation().name().matches("idle")))
-                {
-                    this.sprintTransition = 0;
-                    this.sprintCooldown = 20;
-                    return;
-                }
-            }
-        }*/
-
         if(mc.player != null && mc.player.isSprinting() && !ModSyncedDataKeys.SHOOTING.getValue(mc.player) && !ModSyncedDataKeys.RELOADING.getValue(mc.player) && !AimingHandler.get().isAiming() && this.sprintCooldown == 0 && this.meleeCooldown == 0)
         {
             if(this.sprintTransition < 5)

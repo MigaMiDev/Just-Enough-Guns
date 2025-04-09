@@ -1,6 +1,8 @@
 package ttv.migami.jeg.mixin.common;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -31,6 +33,7 @@ public class CookieItemMixin
             if (!level.isClientSide) {
                 itemstack.shrink(1);
                 player.getInventory().add(new ItemStack(ModItems.SOUL_TREAT.get()));
+                level.playSound(null, player.getOnPos(), SoundEvents.BEEHIVE_EXIT, SoundSource.AMBIENT, 1F, 1F);
             }
         }
     }

@@ -292,6 +292,8 @@ public class AimingHandler
                             GunAnimations.isAnimationPlaying(animationController, "reload_start") ||
                             GunAnimations.isAnimationPlaying(animationController, "reload_loop") ||
                             GunAnimations.isAnimationPlaying(animationController, "reload_stop") ||
+                            GunAnimations.isAnimationPlaying(animationController, "bayonet") ||
+                            GunAnimations.isAnimationPlaying(animationController, "melee") ||
                             GunAnimations.isAnimationPlaying(animationController, "jam")))
                 return false;
         }

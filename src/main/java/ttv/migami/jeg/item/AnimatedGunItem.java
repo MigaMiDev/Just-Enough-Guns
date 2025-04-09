@@ -17,6 +17,7 @@ import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.keyframe.event.ParticleKeyframeEvent;
 import software.bernie.geckolib.core.keyframe.event.SoundKeyframeEvent;
 import software.bernie.geckolib.util.ClientUtils;
 import software.bernie.geckolib.util.GeckoLibUtil;
@@ -26,6 +27,8 @@ import ttv.migami.jeg.client.render.gun.animated.AnimatedGunRenderer;
 import ttv.migami.jeg.init.ModItems;
 import ttv.migami.jeg.init.ModSounds;
 import ttv.migami.jeg.init.ModSyncedDataKeys;
+import ttv.migami.jeg.network.PacketHandler;
+import ttv.migami.jeg.network.message.C2SMessageCasing;
 
 import java.util.function.Consumer;
 
@@ -83,13 +86,28 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
             if (stack == player.getMainHandItem()) {
                 CompoundTag nbtCompound = stack.getOrCreateTag();
 
-                if (nbtCompound.getBoolean("IsShooting") && nbtCompound.getInt("ShootingTick") < 5) {
-                    nbtCompound.putInt("ShootingTick", nbtCompound.getInt("ShootingTick") + 1);
+                if (nbtCompound.getBoolean("IsShooting") && nbtCompound.getInt("AnimationTick") < 5) {
+                    nbtCompound.putInt("AnimationTick", nbtCompound.getInt("AnimationTick") + 1);
+                }
+                if (nbtCompound.getInt("AnimationTick") >= 5) {
+                    nbtCompound.remove("IsShooting");
+                    nbtCompound.remove("AnimationTick");
                 }
 
-                if (nbtCompound.getInt("ShootingTick") >= 5) {
-                    nbtCompound.remove("IsShooting");
-                    nbtCompound.remove("ShootingTick");
+                if (nbtCompound.getBoolean("IsMeleeing") && nbtCompound.getInt("AnimationTick") < 5) {
+                    nbtCompound.putInt("AnimationTick", nbtCompound.getInt("AnimationTick") + 1);
+                }
+                if (nbtCompound.getInt("AnimationTick") >= 5) {
+                    nbtCompound.remove("IsMeleeing");
+                    nbtCompound.remove("AnimationTick");
+                }
+
+                if (nbtCompound.getBoolean("IsInspecting") && nbtCompound.getInt("AnimationTick") < 5) {
+                    nbtCompound.putInt("AnimationTick", nbtCompound.getInt("AnimationTick") + 1);
+                }
+                if (nbtCompound.getInt("AnimationTick") >= 5) {
+                    nbtCompound.remove("IsInspecting");
+                    nbtCompound.remove("AnimationTick");
                 }
 
                 int drawTick = getModifiedGun(player.getMainHandItem()).getGeneral().getDrawTimer();
@@ -144,6 +162,7 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
         compoundTag.remove("IsInspecting");
         compoundTag.remove("IsAiming");
         compoundTag.remove("IsRunning");
+        compoundTag.remove("IsMeleeing");
     }
 
     public void resetTags(CompoundTag compoundTag) {
@@ -154,6 +173,7 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
         compoundTag.remove("IsInspecting");
         compoundTag.remove("IsAiming");
         compoundTag.remove("IsRunning");
+        compoundTag.remove("IsMeleeing");
     }
 
     private boolean isAnimationPlaying(AnimationController<GeoAnimatable> animationController, String animationName) {
@@ -188,6 +208,23 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
         }
     }
 
+    private void particleListener(ParticleKeyframeEvent<GeoAnimatable> gunItemParticleKeyframeEvent)
+    {
+        Player player = ClientUtils.getClientPlayer();
+
+        if (player != null)
+        {
+            if (player.getMainHandItem().getItem() instanceof AnimatedGunItem) {
+                ItemStack itemStack = player.getMainHandItem();
+
+                switch (gunItemParticleKeyframeEvent.getKeyframeData().getEffect())
+                {
+                    case "eject_casing" -> PacketHandler.getPlayChannel().sendToServer(new C2SMessageCasing());
+                }
+            }
+        }
+    }
+
     @Override
     public boolean isPerspectiveAware() {
         return true;
@@ -210,7 +247,7 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(GunAnimations.genericIdleController(this).setSoundKeyframeHandler(this::soundListener));
+        controllers.add(GunAnimations.genericIdleController(this).setSoundKeyframeHandler(this::soundListener).setParticleKeyframeHandler(this::particleListener));
     }
 
     @Override

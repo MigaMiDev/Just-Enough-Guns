@@ -23,7 +23,10 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.animal.Wolf;
@@ -43,9 +46,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.registries.ForgeRegistries;
-import software.bernie.geckolib.animatable.GeoItem;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
-import software.bernie.geckolib.core.animation.AnimationController;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.JustEnoughGuns;
 import ttv.migami.jeg.common.*;
@@ -62,7 +62,10 @@ import ttv.migami.jeg.item.AnimatedGunItem;
 import ttv.migami.jeg.item.GunItem;
 import ttv.migami.jeg.item.attachment.IAttachment;
 import ttv.migami.jeg.network.PacketHandler;
-import ttv.migami.jeg.network.message.*;
+import ttv.migami.jeg.network.message.C2SMessagePreFireSound;
+import ttv.migami.jeg.network.message.C2SMessageShoot;
+import ttv.migami.jeg.network.message.S2CMessageBulletTrail;
+import ttv.migami.jeg.network.message.S2CMessageGunSound;
 import ttv.migami.jeg.util.GunEnchantmentHelper;
 import ttv.migami.jeg.util.GunModifierHelper;
 
@@ -564,24 +567,17 @@ public class ServerPlayHandler
         double offsetY;
         double offsetZ;
 
-        if (stack.getItem() instanceof GunItem gunItem && !tracker.isOnCooldown(stack.getItem())) {
+        if (stack.getItem() instanceof GunItem && !tracker.isOnCooldown(stack.getItem())) {
 
             Level level = player.level();
 
-            if (gunItem instanceof AnimatedGunItem animatedGunItem) {
-                final long id = GeoItem.getId(stack);
-                AnimationController<GeoAnimatable> animationController = animatedGunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("controller");
-                if (animationController.getCurrentAnimation() != null) {
-                    if (animationController.getCurrentAnimation().animation().name().matches("draw")) {
+            if (stack.getItem() instanceof AnimatedGunItem animatedGunItem) {
+                if (stack.getTag() != null) {
+                    if (stack.getTag().getBoolean("IsDrawing")) {
                         return;
                     }
-                }
-                animationController.forceAnimationReset();
-                if ((Gun.getAttachment(IAttachment.Type.BARREL, player.getMainHandItem()).getItem() instanceof SwordItem)) {
-                    animationController.tryTriggerAnimation("bayonet");
-                }
-                else {
-                    animationController.tryTriggerAnimation("melee");
+                    animatedGunItem.resetTags(stack.getTag());
+                    stack.getTag().putBoolean("IsMeleeing", true);
                 }
             }
 
@@ -593,6 +589,15 @@ public class ServerPlayHandler
                         player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
                                 ModSounds.FLASHLIGHT.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
                     }
+                }
+            }
+
+            if ((Gun.getAttachment(IAttachment.Type.BARREL, player.getMainHandItem()).getItem() instanceof SwordItem)) {
+                if (player.isSprinting()) {
+                    Vec3 lookVec = player.getLookAngle();
+                    double pushStrength = 1;
+
+                    player.push(lookVec.x * pushStrength, lookVec.y * pushStrength, lookVec.z * pushStrength);
                 }
             }
 
@@ -654,6 +659,25 @@ public class ServerPlayHandler
                 ((ServerLevel) level).sendParticles(ParticleTypes.SWEEP_ATTACK, playerPos.x, playerPos.y, playerPos.z, 1, 0, 0, 0, 0.0);
             }
 
+        }
+    }
+
+    /**
+     * @param player
+     */
+    public static void handleInspectGun(ServerPlayer player) {
+        ItemStack stack = player.getMainHandItem();
+
+        if (stack.getItem() instanceof GunItem) {
+            if (stack.getItem() instanceof AnimatedGunItem animatedGunItem) {
+                if (stack.getTag() != null) {
+                    if (stack.getTag().getBoolean("IsDrawing")) {
+                        return;
+                    }
+                    animatedGunItem.resetTags(stack.getTag());
+                    stack.getTag().putBoolean("IsInspecting", true);
+                }
+            }
         }
     }
 

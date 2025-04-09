@@ -261,16 +261,6 @@ public class ShootingHandler
                 }
 
                 if (!KeyBinds.getShootMapping().isDown() && gun.getGeneral().getFireMode() == FireMode.RELEASE_FIRE) {
-                    if (heldItem.getItem() instanceof AnimatedGunItem animatedGunItem) {
-                        final long id = GeoItem.getId(player.getMainHandItem());
-                        AnimationController<GeoAnimatable> animationController = animatedGunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("Controller");
-
-                        if (animationController != null && animationController.getCurrentAnimation() != null
-                                && animationController.getCurrentAnimation().animation().name().matches("hold_fire")) {
-                            animationController.setAnimationSpeed(1.0D);
-                            animationController.tryTriggerAnimation("idle");
-                        }
-                    }
                     if (holdFire > 5 && previouslyPressed) {
                         this.fire(player, heldItem);
                         ChargeTracker.updateChargeTime(player, heldItem, false);
@@ -319,29 +309,11 @@ public class ShootingHandler
                             PacketHandler.getPlayChannel().sendToServer(new C2SMessageOverheat());
                         }
                     }
-                    if (gun.getGeneral().getFireMode() == FireMode.RELEASE_FIRE && heldItem.getItem() instanceof AnimatedGunItem animatedGunItem && !tracker.isOnCooldown(heldItem.getItem())) {
-                        final long id = GeoItem.getId(player.getMainHandItem());
-                        AnimationController<GeoAnimatable> animationController = animatedGunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("Controller");
-
-                        if (animationController != null && animationController.getCurrentAnimation() != null && !animationController.getCurrentAnimation().animation().name().matches("draw")
-                                && !animationController.getCurrentAnimation().animation().name().matches("reload")) {
-                            animationController.setAnimationSpeed(1.0D);
-                            animationController.tryTriggerAnimation("hold_fire");
-                        }
-                    }
                     if(gun.getGeneral().getMaxHoldFire() != 0) {
                         if(holdFire < gun.getGeneral().getMaxHoldFire() && !tracker.isOnCooldown(heldItem.getItem())) {
                             ChargeTracker.updateChargeTime(player, heldItem, true);
                             previouslyPressed = true;
-                            /*if (heldItem.getItem() instanceof AnimatedGunItem animatedGunItem) {
-                                final long id = GeoItem.getId(player.getMainHandItem());
-                                AnimationController<GeoAnimatable> animationController = animatedGunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("controller");
-                                if (animationController != null && animationController.getCurrentAnimation() != null && !animationController.getCurrentAnimation().animation().name().matches("draw")) {
-                                    holdFire++;
-                                }
-                            } else*/ {
-                                holdFire++;
-                            }
+                            holdFire++;
                         }
                     }
                     if(gun.getGeneral().getFireTimer() != 0)
@@ -351,21 +323,9 @@ public class ShootingHandler
                             {
                                 PacketHandler.getPlayChannel().sendToServer(new C2SMessagePreFireSound(player));
                             }
-
-                            /*if (heldItem.getItem() instanceof AnimatedGunItem animatedGunItem) {
-                                final long id = GeoItem.getId(player.getMainHandItem());
-                                AnimationController<GeoAnimatable> animationController = animatedGunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("controller");
-                                if (animationController != null && animationController.getCurrentAnimation() != null && !animationController.getCurrentAnimation().animation().name().matches("draw")) {
-                                    fireTimer++;
-                                    if (player.isUnderWater()) {
-                                        fireTimer++;
-                                    }
-                                }
-                            } else*/ {
+                            fireTimer++;
+                            if (player.isUnderWater()) {
                                 fireTimer++;
-                                if (player.isUnderWater()) {
-                                    fireTimer++;
-                                }
                             }
                         } else {
                             // Execute after preFire timer ends

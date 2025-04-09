@@ -3,15 +3,19 @@ package ttv.migami.jeg.animations;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animation.Animation;
 import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
+import ttv.migami.jeg.common.FireMode;
+import ttv.migami.jeg.common.Gun;
 import ttv.migami.jeg.common.ReloadType;
 import ttv.migami.jeg.init.ModSyncedDataKeys;
 import ttv.migami.jeg.item.AnimatedGunItem;
+import ttv.migami.jeg.item.attachment.IAttachment;
 
 public final class GunAnimations {
     public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
@@ -47,6 +51,10 @@ public final class GunAnimations {
             if (gunStack.getTag() != null) {
                 CompoundTag tag = gunStack.getTag();
 
+                if (ModSyncedDataKeys.SHOOTING.getValue(player) &&
+                        animatedGunItem.getModifiedGun(gunStack).getGeneral().getFireMode().equals(FireMode.RELEASE_FIRE)) {
+                    return state.setAndContinue(HOLD_FIRE);
+                }
                 if (tag.getBoolean("IsShooting") ||
                         (GunAnimations.isAnimationPlaying(state.getController(), "shoot") ||
                                 GunAnimations.isAnimationPlaying(state.getController(), "aim_shoot")) &&
@@ -58,19 +66,37 @@ public final class GunAnimations {
                         return state.setAndContinue(SHOOT);
                     }
                 } else {
+                    if (tag.getBoolean("IsMeleeing") ||
+                            (GunAnimations.isAnimationPlaying(state.getController(), "melee") ||
+                                    GunAnimations.isAnimationPlaying(state.getController(), "bayonet")) &&
+                                    !state.getController().getAnimationState().equals(AnimationController.State.PAUSED)) {
+
+                        if ((Gun.getAttachment(IAttachment.Type.BARREL, player.getMainHandItem()).getItem() instanceof SwordItem)) {
+                            return state.setAndContinue(BAYONET);
+                        } else {
+                            return state.setAndContinue(MELEE);
+                        }
+                    }
+
                     if ((!ModSyncedDataKeys.RELOADING.getValue(player) &&
                             GunAnimations.isAnimationPlaying(state.getController(), "reload_loop")) ||
                             GunAnimations.isAnimationPlaying(state.getController(), "reload_stop")) {
                         return  state.setAndContinue(RELOAD_STOP);
                     }
-                    if (ModSyncedDataKeys.RELOADING.getValue(player) ||
+                    if ((ModSyncedDataKeys.RELOADING.getValue(player) ||
                             ((GunAnimations.isAnimationPlaying(state.getController(), "reload") ||
                                     GunAnimations.isAnimationPlaying(state.getController(), "reload_start")) &&
-                                    !state.getController().hasAnimationFinished())) {
+                                    !state.getController().hasAnimationFinished()))) {
                         if (animatedGunItem.getModifiedGun(gunStack).getReloads().getReloadType().equals(ReloadType.MANUAL)) {
                             return state.setAndContinue(RELOAD_START);
                         }
                         return state.setAndContinue(RELOAD);
+                    }
+
+                    if (tag.getBoolean("IsInspecting") ||
+                            (GunAnimations.isAnimationPlaying(state.getController(), "inspect") &&
+                                    !state.getController().hasAnimationFinished())) {
+                        return state.setAndContinue(INSPECT);
                     }
 
                     if (tag.getBoolean("IsDrawing") ||
@@ -79,7 +105,9 @@ public final class GunAnimations {
                         return state.setAndContinue(DRAW);
                     } else {
                         if (tag.getBoolean("IsRunning") && !tag.getBoolean("IsAiming")) {
-                            return state.setAndContinue(SPRINT);
+                            if (!(Gun.getAttachment(IAttachment.Type.BARREL, player.getMainHandItem()).getItem() instanceof SwordItem)) {
+                                return state.setAndContinue(SPRINT);
+                            }
                         }
                     }
                 }

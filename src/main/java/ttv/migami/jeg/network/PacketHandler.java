@@ -35,6 +35,7 @@ public class PacketHandler
                 .registerPlayMessage(S2CMessageRemoveProjectile.class, MessageDirection.PLAY_CLIENT_BOUND)
                 .registerPlayMessage(C2SMessageLeftOverAmmo.class, MessageDirection.PLAY_SERVER_BOUND)
                 .registerPlayMessage(C2SMessageMelee.class, MessageDirection.PLAY_SERVER_BOUND)
+                .registerPlayMessage(C2SMessageInspectGun.class, MessageDirection.PLAY_SERVER_BOUND)
                 .registerPlayMessage(C2SMessageCasing.class, MessageDirection.PLAY_SERVER_BOUND)
                 .registerPlayMessage(C2SMessageGunUnjammed.class, MessageDirection.PLAY_SERVER_BOUND)
                 .registerPlayMessage(C2SMessageFlashlight.class, MessageDirection.PLAY_SERVER_BOUND)
