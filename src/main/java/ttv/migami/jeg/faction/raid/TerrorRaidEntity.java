@@ -383,7 +383,7 @@ public class TerrorRaidEntity extends Entity {
         super.tick();
 
         if (this.level().isClientSide) {
-            if (!this.isFinished) {
+            if (!this.isFinished && this.summonBoss) {
                 summonParticleRing();
             }
         }
