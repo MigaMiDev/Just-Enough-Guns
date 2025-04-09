@@ -79,6 +79,7 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
     private int deathTimer = 0;
     private static final int DEATH_ANIMATION_DURATION = 200;
     private double forwardSpeed = 0.1;
+    private boolean looted = false;
 
     private Player player;
     public boolean playerOwned = false;
@@ -177,7 +178,10 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
         this.endGrenades(this);
         GrenadeEntity.createExplosion(this, Config.COMMON.grenades.explosionRadius.get().floatValue(), true);
         if (this.level() instanceof ServerLevel serverLevel) {
-            this.spawnLootBarrels(serverLevel, this.getOnPos(), lootTable1, lootTable2);
+            if (!this.looted) {
+                this.spawnLootBarrels(serverLevel, this.getOnPos(), lootTable1, lootTable2);
+                this.looted = true;
+            }
             ThrowableFlareEntity flare = new ThrowableFlareEntity(serverLevel, this);
             serverLevel.addFreshEntity(flare);
             ModCommands.startTerrorRaid(serverLevel, this.position(), true, true);

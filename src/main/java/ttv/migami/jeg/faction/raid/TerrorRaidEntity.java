@@ -44,6 +44,9 @@ import ttv.migami.jeg.init.*;
 import java.util.HashSet;
 import java.util.List;
 
+import static ttv.migami.jeg.entity.monster.phantom.PhantomSwarmSpawner.spawnPhantomGunnerSwarm;
+import static ttv.migami.jeg.entity.monster.phantom.PhantomSwarmSpawner.spawnSecondLayerPhantomGunnerSwarm;
+
 public class TerrorRaidEntity extends Entity {
     private final ServerBossEvent bossBar;
     private final HashSet<LivingEntity> activeMobs = new HashSet<>();
@@ -76,6 +79,9 @@ public class TerrorRaidEntity extends Entity {
     private static final int MAX_DESPAWN_TICKS = 200;
 
     private static final int ACTIVE_RADIUS = 64;
+
+    private final int MAX_SWARM_PARTICLE_TICK = 7;
+    private int swarmParticleTick = MAX_SWARM_PARTICLE_TICK;
 
     public TerrorRaidEntity(EntityType<? extends Entity> type, Level level) {
         super(type, level);
@@ -452,6 +458,22 @@ public class TerrorRaidEntity extends Entity {
                 }
             }
 
+            if (!this.summonBoss && this.level() instanceof ServerLevel serverLevel) {
+                if (--this.swarmParticleTick <= 0 && this.tickCount <= 400) {
+                    for (ServerPlayer players : serverLevel.players()) {
+                        spawnPhantomGunnerSwarm(serverLevel, players);
+                        spawnSecondLayerPhantomGunnerSwarm(serverLevel, players);
+                    }
+                    this.swarmParticleTick = MAX_SWARM_PARTICLE_TICK;
+                }
+            }
+
+            if (!this.summonBoss && this.tickCount >= 800) {
+                this.bossBar.setVisible(false);
+                this.bossBar.removeAllPlayers();
+                this.discard();
+            }
+
             if (this.isWaveComplete()) {
                 if (this.currentWave >= this.totalWaves) {
                     this.victory = true;
@@ -473,10 +495,12 @@ public class TerrorRaidEntity extends Entity {
                         for (LivingEntity entity : getActiveMobs()) {
                             entity.removeEffect(MobEffects.GLOWING);
                         }
-                        Component message2 = Component.translatable("broadcast.jeg.raid.no_players", Component.translatable("faction.jeg.terror_armada")).withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
-                        ((ServerLevel) this.level()).getServer().getPlayerList().broadcastSystemMessage(message2, false);
-                        Component message = Component.translatable("broadcast.jeg.raid.defeat", Component.translatable("faction.jeg.terror_armada")).withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
-                        ((ServerLevel) this.level()).getServer().getPlayerList().broadcastSystemMessage(message, false);
+                        if (this.summonBoss) {
+                            Component message2 = Component.translatable("broadcast.jeg.raid.no_players", Component.translatable("faction.jeg.terror_armada")).withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
+                            ((ServerLevel) this.level()).getServer().getPlayerList().broadcastSystemMessage(message2, false);
+                            Component message = Component.translatable("broadcast.jeg.raid.defeat", Component.translatable("faction.jeg.terror_armada")).withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
+                            ((ServerLevel) this.level()).getServer().getPlayerList().broadcastSystemMessage(message, false);
+                        }
                         this.resultPrize--;
                     }
                 }
