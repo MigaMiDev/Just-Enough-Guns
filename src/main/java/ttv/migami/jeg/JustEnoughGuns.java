@@ -14,7 +14,9 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
+import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -52,6 +54,7 @@ import ttv.migami.jeg.event.ServerTickHandler;
 import ttv.migami.jeg.faction.GunMobValues;
 import ttv.migami.jeg.faction.GunnerMobSpawner;
 import ttv.migami.jeg.init.*;
+import ttv.migami.jeg.modifier.ModifierLoader;
 import ttv.migami.jeg.network.PacketHandler;
 import ttv.migami.jeg.world.loot.ModLootModifiers;
 
@@ -120,6 +123,11 @@ public class JustEnoughGuns {
         shoulderSurfingLoaded = ModList.get().isLoaded("shouldersurfing");
     }
 
+    @SubscribeEvent
+    public void onAddReloadListeners(AddReloadListenerEvent event) {
+        event.addListener(new ModifierLoader());
+    }
+
     private void onCommonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() ->
         {
@@ -172,14 +180,18 @@ public class JustEnoughGuns {
         PackOutput output = generator.getPackOutput();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
+
         BlockTagGen blockTagGen = new BlockTagGen(output, lookupProvider, existingFileHelper);
         EntityTagGen entityTagGen = new EntityTagGen(output, lookupProvider, existingFileHelper);
+
         generator.addProvider(event.includeServer(), blockTagGen);
         generator.addProvider(event.includeServer(), entityTagGen);
         generator.addProvider(event.includeServer(), new ItemTagGen(output, lookupProvider, blockTagGen.contentsGetter(), existingFileHelper));
         generator.addProvider(event.includeServer(), new GunGen(output, lookupProvider));
         generator.addProvider(event.includeServer(), new WorldGen(output, lookupProvider));
         //generator.addProvider(event.includeServer(), new DamageTypeGen(output, lookupProvider, existingFileHelper));
+        generator.addProvider(event.includeServer(), new ModifierGen(output, lookupProvider));
+
     }
 
     public static boolean isDebugging() {

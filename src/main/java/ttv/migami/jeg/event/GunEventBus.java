@@ -277,8 +277,8 @@ public class GunEventBus {
                 trumpetBlast(level, player);
             }
 
-            //if (heldItem.getItem() == ModItems.INFANTRY_RIFLE.get() && tag != null) {
-            if (heldItem.getItem() == ModItems.INFANTRY_RIFLE.get() && tag != null && !Gun.hasAttachmentEquipped(heldItem, IAttachment.Type.MAGAZINE)) {
+            if (heldItem.getItem() == ModItems.INFANTRY_RIFLE.get() && tag != null) {
+            //if (heldItem.getItem() == ModItems.INFANTRY_RIFLE.get() && tag != null && !Gun.hasAttachmentEquipped(heldItem, IAttachment.Type.MAGAZINE)) {
                 if (tag.getInt("AmmoCount") == 1)
                     event.getEntity().level().playSound(player, player.blockPosition(), ModSounds.INFANTRY_RIFLE_PING.get(), SoundSource.MASTER, 3.0F, 1.0F);
             }

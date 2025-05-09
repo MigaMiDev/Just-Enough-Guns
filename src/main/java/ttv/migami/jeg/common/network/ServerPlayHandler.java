@@ -36,6 +36,7 @@ import net.minecraft.world.entity.monster.piglin.Piglin;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
@@ -49,18 +50,26 @@ import net.minecraftforge.registries.ForgeRegistries;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.JustEnoughGuns;
 import ttv.migami.jeg.common.*;
-import ttv.migami.jeg.common.container.*;
-import ttv.migami.jeg.crafting.workbench.*;
+import ttv.migami.jeg.common.container.AttachmentContainer;
+import ttv.migami.jeg.crafting.handler.IModularWorkbenchContainer;
+import ttv.migami.jeg.crafting.workbench.AbstractWorkbenchRecipe;
+import ttv.migami.jeg.crafting.workbench.WorkbenchRecipes;
 import ttv.migami.jeg.entity.monster.phantom.gunner.PhantomGunner;
 import ttv.migami.jeg.entity.monster.phantom.terror.TerrorPhantom;
 import ttv.migami.jeg.entity.projectile.ProjectileEntity;
 import ttv.migami.jeg.event.BurstFireEvent;
 import ttv.migami.jeg.event.GunFireEvent;
-import ttv.migami.jeg.init.*;
+import ttv.migami.jeg.init.ModEnchantments;
+import ttv.migami.jeg.init.ModItems;
+import ttv.migami.jeg.init.ModSounds;
+import ttv.migami.jeg.init.ModSyncedDataKeys;
 import ttv.migami.jeg.interfaces.IProjectileFactory;
 import ttv.migami.jeg.item.AnimatedGunItem;
 import ttv.migami.jeg.item.GunItem;
 import ttv.migami.jeg.item.attachment.IAttachment;
+import ttv.migami.jeg.modifier.Modifier;
+import ttv.migami.jeg.modifier.ModifierHelper;
+import ttv.migami.jeg.modifier.StatModifier;
 import ttv.migami.jeg.network.PacketHandler;
 import ttv.migami.jeg.network.message.C2SMessagePreFireSound;
 import ttv.migami.jeg.network.message.C2SMessageShoot;
@@ -418,7 +427,7 @@ public class ServerPlayHandler
      * @param id     the id of an item which is registered as a valid workstation recipe
      * @param pos    the block position of the workstation the player is using
      */
-    public static void handleCraft(ServerPlayer player, ResourceLocation id, BlockPos pos) {
+    /*public static void handleCraft(ServerPlayer player, ResourceLocation id, BlockPos pos) {
         Level world = player.level();
 
         if (player.containerMenu instanceof ScrapWorkbenchContainer workbench) {
@@ -472,27 +481,38 @@ public class ServerPlayHandler
                 Containers.dropItemStack(world, pos.getX() + 0.5, pos.getY() + 1.125, pos.getZ() + 0.5, stack);
             }
         }
-    }
+    }*/
 
-    /*
-    public static void handleRecycle(ServerPlayer player, ResourceLocation id, BlockPos pos)
-    {
-        Level world = player.level;
+    public static void handleCraft(ServerPlayer player, ResourceLocation id, BlockPos pos) {
+        Level world = player.level();
 
-        if(player.containerMenu instanceof RecyclerContainer recycler)
-        {
-            if(recycler.getPos().equals(pos))
-            {
-                RecyclerRecipe recipe = RecyclerRecipes.getRecipeById(world, id);
-                if(recipe == null)
-                    return;
+        if (!(player.containerMenu instanceof IModularWorkbenchContainer container)) return;
+        if (!container.getPos().equals(pos)) return;
 
-                ItemStack stack = recipe.getItem();
-                Containers.dropItemStack(world, pos.getX() + 0.5, pos.getY() + 1.125, pos.getZ() + 0.5, stack);
+        RecipeType<?> type = container.getRecipeType();
+        AbstractWorkbenchRecipe<?> recipe = (AbstractWorkbenchRecipe<?>) WorkbenchRecipes.getRecipeById(world, id, type);
+
+        if (recipe == null || !recipe.hasMaterials(player)) return;
+
+        recipe.consumeMaterials(player);
+        ItemStack stack = recipe.getItem();
+
+        if (stack.getTagElement("CustomModifier") == null && player.getRandom().nextFloat() > 0.25F) {
+            Modifier group = ModifierHelper.getRandomGroup();
+
+            for (StatModifier mod : group.getModifiers()) {
+                //applyModifier(stack, mod);
             }
+
+            //stack.setHoverName(Component.translatable("jeg.modifier." + group.getName()).append(" ").append(stack.getHoverName()));
+            if (stack.getItem() instanceof GunItem gunItem) {
+                gunItem.setModifier(ModifierHelper.getGroupByName(group.getName()));
+            }
+            stack.getOrCreateTag().putString("CustomModifier", group.getName());
         }
+
+        Containers.dropItemStack(world, pos.getX() + 0.5, pos.getY() + 1.125, pos.getZ() + 0.5, stack);
     }
-    */
 
     /**
      * @param player
@@ -700,6 +720,10 @@ public class ServerPlayHandler
     public static void handleUnload(ServerPlayer player) {
         ItemStack stack = player.getMainHandItem();
         if (stack.getItem() instanceof GunItem gunItem) {
+            if (stack.getItem() instanceof AnimatedGunItem animatedGunItem) {
+                animatedGunItem.resetTags(stack);
+            }
+
             Gun gun = gunItem.getModifiedGun(stack);
             CompoundTag tag = stack.getTag();
 

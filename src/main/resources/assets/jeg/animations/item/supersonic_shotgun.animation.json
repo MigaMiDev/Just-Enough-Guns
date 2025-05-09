@@ -156,11 +156,6 @@
 						}
 					}
 				}
-			},
-			"particle_effects": {
-				"0.5833": {
-					"effect": "eject_casing"
-				}
 			}
 		},
 		"aim_shoot": {
@@ -267,11 +262,6 @@
 							"vector": [0, 0, 0]
 						}
 					}
-				}
-			},
-			"particle_effects": {
-				"0.5833": {
-					"effect": "eject_casing"
 				}
 			}
 		},

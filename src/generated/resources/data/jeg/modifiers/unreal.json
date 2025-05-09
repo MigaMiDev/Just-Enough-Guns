@@ -1,0 +1,12 @@
+{
+  "chance": 0.2,
+  "color": 43775,
+  "modifiers": [
+    {
+      "amount": 1.5,
+      "attribute": "damage"
+    }
+  ],
+  "name": "unreal",
+  "rarity": "rare"
+}

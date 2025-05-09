@@ -766,16 +766,16 @@ public class GunGen extends GunProvider
                 .setFireMode(FireMode.AUTOMATIC)
                 .setFireRate(2)
                 .setGripType(GripType.TWO_HANDED)
-                .setRecoilKick(0.25F)
-                .setRecoilAngle(4.0F)
+                .setRecoilKick(0.45F)
+                .setRecoilAngle(2.0F)
                 .setAlwaysSpread(true)
                 .setSpread(3.0F)
 
                 // Reloads
                 .setMaxAmmo(30)
                 .setReloadType(ReloadType.MAG_FED)
-                .setReloadTimer(60)
-                .setAdditionalReloadTimer(10)
+                .setReloadTimer(80)
+                .setAdditionalReloadTimer(0)
 
                 // Projectile
                 .setAmmo(ModItems.SPECTRE_ROUND.get())
@@ -802,7 +802,7 @@ public class GunGen extends GunProvider
                 .setMuzzleFlash(0.8, 0.0, 3.5, -4.7)
                 .setZoom(Gun.Modules.Zoom.builder()
                         .setFovModifier(0.6F)
-                        .setOffset(0.0, 4.15, -1.75))
+                        .setOffset(0.0, 4.75, -1.75))
                 .setScope(1.0F, 0.0, 3.85, 4.6)
                 .setBarrel(1.0F, 0.0, 3.4, -7.5)
                 .setStock(0.0F, 0.0, 0.0, 0.0)
@@ -822,6 +822,7 @@ public class GunGen extends GunProvider
                 .setAlwaysSpread(true)
                 .setSpread(8.0F)
                 .setProjectileAmount(10)
+                .setCollateral(true)
 
                 // Reloads
                 .setMaxAmmo(8)
@@ -833,7 +834,7 @@ public class GunGen extends GunProvider
                 .setAmmo(ModItems.SPECTRE_ROUND.get())
                 .setEjectsCasing(true)
                 .setProjectileVisible(false)
-                .setDamage(20F)
+                .setDamage(28F)
                 .setAdvantage(ModTags.Entities.UNDEAD.location())
                 .setReduceDamageOverLife(true)
                 .setProjectileSize(0.05F)
@@ -1088,8 +1089,8 @@ public class GunGen extends GunProvider
                 // Reloads
                 .setMaxAmmo(8)
                 .setReloadType(ReloadType.MAG_FED)
-                .setReloadTimer(18)
-                .setAdditionalReloadTimer(15)
+                .setReloadTimer(30)
+                .setAdditionalReloadTimer(10)
 
                 // Projectile
                 .setAmmo(ModItems.RIFLE_AMMO.get())

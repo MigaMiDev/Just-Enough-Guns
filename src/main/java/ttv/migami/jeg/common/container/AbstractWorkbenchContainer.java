@@ -7,17 +7,20 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import ttv.migami.jeg.blockentity.inventory.IStorageBlock;
 
 public abstract class AbstractWorkbenchContainer extends AbstractContainerMenu {
     private final BlockEntity workbench;
     private final BlockPos pos;
+    private final RecipeType<?> recipeType;
 
-    public AbstractWorkbenchContainer(int windowId, Container playerInventory, BlockEntity workbench, MenuType<?> containerType) {
+    public AbstractWorkbenchContainer(int windowId, Container playerInventory, BlockEntity workbench, MenuType<?> containerType, RecipeType<?> recipeType) {
         super(containerType, windowId);
         this.workbench = workbench;
         this.pos = workbench.getBlockPos();
+        this.recipeType = recipeType;
 
         setupContainerSlots(playerInventory);
 
@@ -86,6 +89,10 @@ public abstract class AbstractWorkbenchContainer extends AbstractContainerMenu {
 
     public BlockPos getPos() {
         return pos;
+    }
+
+    public RecipeType<?> getRecipeType() {
+        return recipeType;
     }
 
     protected abstract void setupContainerSlots(Container playerInventory);

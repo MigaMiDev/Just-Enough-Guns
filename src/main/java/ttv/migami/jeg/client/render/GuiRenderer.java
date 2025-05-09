@@ -28,6 +28,8 @@ import ttv.migami.jeg.init.ModSyncedDataKeys;
 import ttv.migami.jeg.item.GunItem;
 import ttv.migami.jeg.item.TelescopicScopeItem;
 import ttv.migami.jeg.item.attachment.IAttachment;
+import ttv.migami.jeg.modifier.Modifier;
+import ttv.migami.jeg.modifier.ModifierHelper;
 
 import static ttv.migami.jeg.common.Gun.getTotalAmmoCount;
 
@@ -182,11 +184,18 @@ public class GuiRenderer {
                 } else {
                     ammoStack = Gun.findAmmoStack(player, gun.getReloads().getReloadItem());
                 }
-                int startX = (int) (minecraft.getWindow().getGuiScaledWidth() * 0.95 - 100) + Config.CLIENT.display.displayAmmoGUIXOffset.get();
+                int startX = (int) (minecraft.getWindow().getGuiScaledWidth() * 0.95 - 120) + Config.CLIENT.display.displayAmmoGUIXOffset.get();
                 int startY = (int) (minecraft.getWindow().getGuiScaledHeight() - 65) + Config.CLIENT.display.displayAmmoGUIYOffset.get();
 
+                int color = heldItem.getRarity().color.getColor();
+                String modifier = heldItem.getOrCreateTag().getString("CustomModifier");
+                if (!modifier.isEmpty()) {
+                    Modifier modifierGroup = ModifierHelper.getGroupByName(modifier);
+                    if (modifierGroup != null) color = modifierGroup.getColor();
+                }
+
                 String name = heldItem.getHoverName().getString();
-                guiGraphics.drawString(Minecraft.getInstance().font, name, startX, startY - 10, heldItem.getRarity().color.getColor(), true);
+                guiGraphics.drawString(Minecraft.getInstance().font, name, startX, startY - 10, color, true);
 
                 guiGraphics.pose().pushPose();
                 guiGraphics.pose().translate(startX, startY, 0);

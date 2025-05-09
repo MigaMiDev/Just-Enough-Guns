@@ -30,6 +30,7 @@ import ttv.migami.jeg.enchantment.EnchantmentTypes;
 import ttv.migami.jeg.init.ModEnchantments;
 import ttv.migami.jeg.init.ModItems;
 import ttv.migami.jeg.init.ModTags;
+import ttv.migami.jeg.modifier.Modifier;
 import ttv.migami.jeg.util.GunEnchantmentHelper;
 import ttv.migami.jeg.util.GunModifierHelper;
 
@@ -45,6 +46,7 @@ import static ttv.migami.jeg.JustEnoughGuns.devilFruitsLoaded;
 public class GunItem extends Item implements IColored, IMeta {
     private final WeakHashMap<CompoundTag, Gun> modifiedGunCache = new WeakHashMap<>();
     private Gun gun = new Gun();
+    private Modifier modifier = null;
 
     public GunItem(Item.Properties properties) {
         super(properties);
@@ -58,8 +60,24 @@ public class GunItem extends Item implements IColored, IMeta {
         return this.gun;
     }
 
+    public void setModifier(Modifier modifier) {
+        this.modifier = modifier;
+    }
+
+    public Modifier getModifier() {
+        return this.modifier;
+    }
+
     @Override
     public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
+        if (this.modifier != null && Config.COMMON.gameplay.gunModifiers.get()) {
+            pStack.setHoverName(pStack.getHoverName().copy().withStyle(style -> style.withColor(this.modifier.getColor()).withItalic(false)));
+
+            /*if (pStack.getHoverName().getString().matches(Component.translatable("item." + this.getModID() + "." + this.toString()).getString())) {
+                    pStack.setHoverName(Component.translatable("jeg.modifier." + modifierGroup.getName()).append(" ").append(pStack.getHoverName()));
+            }*/
+        }
+
         if (pStack.getTag() != null && !pStack.getTag().contains("AmmoCount")) {
             pStack.getTag().putInt("AmmoCount", 0);
         }
@@ -97,6 +115,11 @@ public class GunItem extends Item implements IColored, IMeta {
 
         if (stack.getItem() != ModItems.FINGER_GUN.get()) {
             if (Screen.hasShiftDown()) {
+                if (this.modifier != null && Config.COMMON.gameplay.gunModifiers.get()) {
+                    tooltip.add(Component.translatable("info.jeg.modifier").withStyle(ChatFormatting.GRAY)
+                            .append(Component.translatable("modifier.jeg." + this.modifier.getName()).withStyle(style -> style.withColor(this.modifier.getColor()))));
+                }
+
                 String fireMode = modifiedGun.getGeneral().getFireMode().getId().toString();
                 tooltip.add(Component.translatable("info.jeg.fire_mode").withStyle(ChatFormatting.GRAY)
                         .append(Component.translatable("fire_mode." + fireMode).withStyle(ChatFormatting.WHITE)));
@@ -126,6 +149,11 @@ public class GunItem extends Item implements IColored, IMeta {
                 }
 
                 float damage = modifiedGun.getProjectile().getDamage();
+
+                if (this.modifier != null && Config.COMMON.gameplay.gunModifiers.get()) {
+                    damage *= (float) this.modifier.getModifiers().get(0).getValue();
+                }
+
                 ResourceLocation advantage = modifiedGun.getProjectile().getAdvantage();
                 damage = GunModifierHelper.getModifiedProjectileDamage(stack, damage);
                 damage = GunEnchantmentHelper.getAcceleratorDamage(stack, damage);
@@ -310,5 +338,12 @@ public class GunItem extends Item implements IColored, IMeta {
 
     public boolean isValidRepairItem(ItemStack pToRepair, ItemStack pRepair) {
         return pRepair.is(ModItems.REPAIR_KIT.get());
+    }
+
+    public String getModID() {
+        ResourceLocation registryName = ForgeRegistries.ITEMS.getKey(this);
+        if (registryName != null)
+            return registryName.getNamespace();
+        else return null;
     }
 }

@@ -27,6 +27,7 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.joml.Matrix4f;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.cache.object.GeoBone;
@@ -36,7 +37,6 @@ import software.bernie.geckolib.renderer.GeoItemRenderer;
 import software.bernie.geckolib.renderer.GeoRenderer;
 import software.bernie.geckolib.util.RenderUtils;
 import ttv.migami.jeg.Config;
-import ttv.migami.jeg.Reference;
 import ttv.migami.jeg.client.GunRenderType;
 import ttv.migami.jeg.client.handler.AimingHandler;
 import ttv.migami.jeg.client.handler.GunRecoilHandler;
@@ -177,9 +177,9 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 			return texture;
 		} else {
 			if (stack.getItem() instanceof GunItem) {
-				return new ResourceLocation(Reference.MOD_ID, "textures/animated/gun/" + stack.getItem() + ".png");
+				return new ResourceLocation(getModID(stack), "textures/animated/gun/" + stack.getItem() + ".png");
 			} else {
-				return new ResourceLocation(Reference.MOD_ID, "textures/animated/attachment/" + stack.getItem() + ".png");
+				return new ResourceLocation(getModID(stack), "textures/animated/attachment/" + stack.getItem() + ".png");
 			}
 		}
 	}
@@ -192,9 +192,9 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 			return model;
 		} else {
 			if (stack.getItem() instanceof GunItem) {
-				return new ResourceLocation(Reference.MOD_ID, "geo/item/gun/" + stack.getItem() + ".geo.json");
+				return new ResourceLocation(getModID(stack), "geo/item/gun/" + stack.getItem() + ".geo.json");
 			} else {
-				return new ResourceLocation(Reference.MOD_ID, "geo/item/attachment/" + stack.getItem() + ".geo.json");
+				return new ResourceLocation(getModID(stack), "geo/item/attachment/" + stack.getItem() + ".geo.json");
 			}
 		}
 	}
@@ -203,9 +203,9 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 		// Gun Skin testing! "Paint Jobs"
 		ResourceLocation newGunTexture;
 		if (stack.hasTag() && (Gun.getAttachment(IAttachment.Type.PAINT_JOB, stack).getItem() instanceof PaintJobCanItem paintJobCanItem)) {
-			newGunTexture = new ResourceLocation(Reference.MOD_ID, "textures/animated/gun/paintjob/" + paintJobCanItem.getPaintJob() + "/" + stack.getItem() + ".png");
+			newGunTexture = new ResourceLocation(getModID(stack), "textures/animated/gun/paintjob/" + paintJobCanItem.getPaintJob() + "/" + stack.getItem() + ".png");
 		} else {
-			newGunTexture = new ResourceLocation(Reference.MOD_ID, "textures/animated/gun/" + stack.getItem() + ".png");
+			newGunTexture = new ResourceLocation(getModID(stack), "textures/animated/gun/" + stack.getItem() + ".png");
 		}
 		newGunTexture = getValidTexture(newGunTexture, stack);
 
@@ -217,9 +217,9 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 
 		ResourceLocation newGunModel;
 		if (stack.hasTag() && (Gun.getAttachment(IAttachment.Type.PAINT_JOB, stack).getItem() instanceof PaintJobCanItem paintJobCanItem)) {
-			newGunModel = new ResourceLocation(Reference.MOD_ID, "geo/item/gun/paintjob/" + paintJobCanItem.getPaintJob() + "/" + stack.getItem() + ".geo.json");
+			newGunModel = new ResourceLocation(getModID(stack), "geo/item/gun/paintjob/" + paintJobCanItem.getPaintJob() + "/" + stack.getItem() + ".geo.json");
 		} else {
-			newGunModel = new ResourceLocation(Reference.MOD_ID, "geo/item/gun/" + stack.getItem() + ".geo.json");
+			newGunModel = new ResourceLocation(getModID(stack), "geo/item/gun/" + stack.getItem() + ".geo.json");
 		}
 		newGunModel = getValidModel(newGunModel, stack);
 
@@ -448,7 +448,7 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 		poseStack.pushPose();
 
 		{
-			if (currentItemStack.getItem() == ModItems.SERVICE_RIFLE.get()) {
+			//if (currentItemStack.getItem() == ModItems.SERVICE_RIFLE.get()) {
 				switch(bone.getName())
 				{
 					case "railing" -> bone.setHidden(Gun.getScope(currentItemStack) == null);
@@ -465,7 +465,7 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
                     case "tactical_handguard" -> bone.setHidden(Gun.getAttachment(IAttachment.Type.STOCK, currentItemStack).getItem() != ModItems.TACTICAL_STOCK.get());
 					case "light_handguard" -> bone.setHidden(Gun.getAttachment(IAttachment.Type.STOCK, currentItemStack).getItem() != ModItems.LIGHT_STOCK.get());
 				}
-			}
+			//}
 
 			if (animatable instanceof AnimatedBowItem && currentItemStack.getTag() != null) {
 				if (bone.getName().matches("arrow")) {
@@ -798,9 +798,9 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 							// Gun Skin testing! "Paint Jobs"
                             ResourceLocation newTextureResource;
                             if (stack.hasTag() && (Gun.getAttachment(IAttachment.Type.PAINT_JOB, stack).getItem() instanceof PaintJobCanItem paintJobCanItem)) {
-								newTextureResource = new ResourceLocation(Reference.MOD_ID, "textures/animated/attachment/paintjob/" + paintJobCanItem.getPaintJob() + "/" + attachmentStack.getItem() + ".png");
+								newTextureResource = new ResourceLocation(getModID(stack), "textures/animated/attachment/paintjob/" + paintJobCanItem.getPaintJob() + "/" + attachmentStack.getItem() + ".png");
 							} else {
-								newTextureResource = new ResourceLocation(Reference.MOD_ID, "textures/animated/attachment/" + attachmentStack.getItem() + ".png");
+								newTextureResource = new ResourceLocation(getModID(stack), "textures/animated/attachment/" + attachmentStack.getItem() + ".png");
 							}
 							newTextureResource = getValidTexture(newTextureResource, attachmentStack);
 
@@ -813,9 +813,9 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 
                             /*ResourceLocation newModelResource;
                             if (stack.hasTag() && (Gun.getAttachment(IAttachment.Type.PAINT_JOB, stack).getItem() instanceof PaintJobCanItem paintJobCanItem)) {
-								newModelResource = new ResourceLocation(Reference.MOD_ID, "geo/item/attachment/paintjob/" + paintJobCanItem.getPaintJob() + "/" + attachmentStack.getItem() + ".geo.json");
+								newModelResource = new ResourceLocation(getModID(stack), "geo/item/attachment/paintjob/" + paintJobCanItem.getPaintJob() + "/" + attachmentStack.getItem() + ".geo.json");
 							} else {
-								newModelResource = new ResourceLocation(Reference.MOD_ID, "geo/item/attachment/" + attachmentStack.getItem() + ".geo.json");
+								newModelResource = new ResourceLocation(getModID(stack), "geo/item/attachment/" + attachmentStack.getItem() + ".geo.json");
 							}
 							newModelResource = getValidModel(newModelResource, attachmentStack);
 
@@ -921,5 +921,13 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 		builder.vertex(matrix, 0, 1, 0).color(1.0F, 1.0F, 1.0F, 1.0F).uv(maxU, 0).uv2(15728880).endVertex();
 
 		poseStack.popPose();
+	}
+
+	private String getModID(ItemStack stack) {
+		Item item = stack.getItem();
+		ResourceLocation registryName = ForgeRegistries.ITEMS.getKey(item);
+		if (registryName != null)
+			return registryName.getNamespace();
+		else return null;
 	}
 }

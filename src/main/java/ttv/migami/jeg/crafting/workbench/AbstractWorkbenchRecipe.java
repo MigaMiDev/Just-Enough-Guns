@@ -8,6 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import ttv.migami.jeg.util.InventoryUtil;
@@ -60,7 +61,7 @@ public abstract class AbstractWorkbenchRecipe<T extends BlockEntity & Container>
     public abstract RecipeSerializer<?> getSerializer();
 
     @Override
-    public abstract net.minecraft.world.item.crafting.RecipeType<?> getType();
+    public abstract RecipeType<?> getType();
 
     public boolean hasMaterials(Player player) {
         for (WorkbenchIngredient ingredient : this.getMaterials()) {

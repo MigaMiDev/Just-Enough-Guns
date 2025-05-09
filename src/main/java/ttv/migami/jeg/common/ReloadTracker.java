@@ -100,21 +100,23 @@ public class ReloadTracker
                 ResourceLocation reloadSound = this.gun.getSounds().getReloadStart();
                 playReloadSound(reloadSound, player);
             }
-            int interval = GunEnchantmentHelper.getReloadInterval(this.stack);
+
+            int interval;
+            if(this.isWeaponEmpty())
+            {
+                interval = GunEnchantmentHelper.getReloadInterval(stack, gun.getReloads().getReloadTimer() + gun.getReloads().getAdditionalReloadTimer());
+            }
+            else
+            {
+                interval = GunEnchantmentHelper.getReloadInterval(stack, gun.getReloads().getReloadTimer());
+            }
 
             if(gun.getReloads().getReloadType() == ReloadType.MAG_FED || gun.getReloads().getReloadType() == ReloadType.INVENTORY_FED ||
                     gun.getReloads().getReloadType() == ReloadType.SINGLE_ITEM)
             {
                 int quickHandsLevel = player.getMainHandItem().getEnchantmentLevel(ModEnchantments.QUICK_HANDS.get());
 
-                if(this.isWeaponEmpty())
-                {
-                    interval = gun.getReloads().getReloadTimer() + gun.getReloads().getAdditionalReloadTimer();
-                }
-                else
-                {
-                    interval = gun.getReloads().getReloadTimer();
-                }
+
 
                 if (quickHandsLevel == 1) {
                     interval = Math.max(1, Math.round(interval * 0.75F));
@@ -138,7 +140,6 @@ public class ReloadTracker
             }
             else
             {
-                interval = gun.getReloads().getReloadTimer();
                 if (this.firstReload) {
                     interval += gun.getReloads().getAdditionalReloadTimer();
                 }

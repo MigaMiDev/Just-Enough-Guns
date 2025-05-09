@@ -30,6 +30,7 @@ import ttv.migami.jeg.init.ModSounds;
 import ttv.migami.jeg.init.ModSyncedDataKeys;
 import ttv.migami.jeg.network.PacketHandler;
 import ttv.migami.jeg.network.message.C2SMessageCasing;
+import ttv.migami.jeg.util.GunEnchantmentHelper;
 
 import java.util.function.Consumer;
 
@@ -55,9 +56,7 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
             return;
         }
 
-        final long id = GeoItem.getId(stack);
-
-        if (stack.getItem() == ModItems.FINGER_GUN.get() && !stack.getTag().getBoolean("IgnoreAmmo")){
+        if (stack.getItem() == ModItems.FINGER_GUN.get() && stack.getTag() != null && !stack.getTag().getBoolean("IgnoreAmmo")){
             stack.getOrCreateTag().putBoolean("IgnoreAmmo", true);
         }
 
@@ -100,7 +99,7 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
                     nbtCompound.remove("AnimationTick");
                 }
 
-                int drawTick = getModifiedGun(player.getMainHandItem()).getGeneral().getDrawTimer();
+                int drawTick = GunEnchantmentHelper.getModifiedDrawTick(player.getMainHandItem(), getModifiedGun(player.getMainHandItem()).getGeneral().getDrawTimer());
 
                 if (nbtCompound.getInt("DrawnTick") >= drawTick) {
                     nbtCompound.putBoolean("IsDrawing", false);
@@ -149,7 +148,6 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
         compoundTag.remove("IsShooting");
         compoundTag.remove("IsReloading");
         compoundTag.remove("IsInspecting");
-        compoundTag.remove("IsAiming");
         compoundTag.remove("IsRunning");
         compoundTag.remove("IsMeleeing");
         compoundTag.remove("IsFirstPersonReload");
@@ -160,7 +158,6 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
         compoundTag.remove("IsShooting");
         compoundTag.remove("IsReloading");
         compoundTag.remove("IsInspecting");
-        compoundTag.remove("IsAiming");
         compoundTag.remove("IsRunning");
         compoundTag.remove("IsMeleeing");
         compoundTag.remove("IsFirstPersonReload");

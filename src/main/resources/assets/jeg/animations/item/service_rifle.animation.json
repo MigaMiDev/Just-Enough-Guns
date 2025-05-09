@@ -1044,32 +1044,6 @@
 							"vector": [0, 0, 0]
 						}
 					}
-				},
-				"charging_handle": {
-					"position": {
-						"0.5": {
-							"vector": [0, 0, 0]
-						},
-						"0.5833": {
-							"vector": [0, 0, 2.5]
-						},
-						"0.7083": {
-							"vector": [0, 0, 2.5]
-						},
-						"0.875": {
-							"vector": [0, 0, 0]
-						}
-					}
-				},
-				"tactical_stock": {
-					"position": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"0.5": {
-							"vector": [0, 0, 0]
-						}
-					}
 				}
 			},
 			"sound_effects": {

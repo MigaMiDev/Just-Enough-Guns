@@ -1,0 +1,12 @@
+{
+  "chance": 0.5,
+  "color": 13421772,
+  "modifiers": [
+    {
+      "amount": 0.7,
+      "attribute": "damage"
+    }
+  ],
+  "name": "awful",
+  "rarity": "common"
+}

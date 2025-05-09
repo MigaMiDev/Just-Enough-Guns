@@ -4,14 +4,16 @@ import net.minecraft.world.Container;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
 import ttv.migami.jeg.blockentity.ScrapWorkbenchBlockEntity;
+import ttv.migami.jeg.crafting.handler.IModularWorkbenchContainer;
 import ttv.migami.jeg.init.ModContainers;
+import ttv.migami.jeg.init.ModRecipeTypes;
 
 /**
  * Author: MrCrayfish
  */
-public class ScrapWorkbenchContainer extends AbstractWorkbenchContainer {
+public class ScrapWorkbenchContainer extends AbstractWorkbenchContainer implements IModularWorkbenchContainer {
     public ScrapWorkbenchContainer(int windowId, Container playerInventory, ScrapWorkbenchBlockEntity workbench) {
-        super(windowId, playerInventory, workbench, ModContainers.SCRAP_WORKBENCH.get());
+        super(windowId, playerInventory, workbench, ModContainers.SCRAP_WORKBENCH.get(), ModRecipeTypes.SCRAP_WORKBENCH.get());
     }
 
     @Override

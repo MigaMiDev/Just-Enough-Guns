@@ -135,11 +135,12 @@ public class ModItems {
             ));
 
     /* Spectre Tier */
-    public static final RegistryObject<GunItem> BLOSSOM_RIFLE = REGISTER.register("blossom_rifle",
-            () -> new GunItem(new Item.Properties()
+    public static final RegistryObject<AnimatedGunItem> BLOSSOM_RIFLE = REGISTER.register("blossom_rifle",
+            () -> new AnimatedGunItem(new Item.Properties()
                     .stacksTo(1)
                     .durability(512)
-                    .rarity(Rarity.EPIC)
+                    .rarity(Rarity.EPIC),
+                    "blossom_rifle"
             ));
     public static final RegistryObject<GunItem> HOLY_SHOTGUN = REGISTER.register("holy_shotgun",
             () -> new GunItem(new Item.Properties()

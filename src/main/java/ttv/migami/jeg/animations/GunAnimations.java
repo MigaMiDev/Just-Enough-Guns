@@ -13,9 +13,11 @@ import software.bernie.geckolib.util.ClientUtils;
 import ttv.migami.jeg.common.FireMode;
 import ttv.migami.jeg.common.Gun;
 import ttv.migami.jeg.common.ReloadType;
+import ttv.migami.jeg.init.ModItems;
 import ttv.migami.jeg.init.ModSyncedDataKeys;
 import ttv.migami.jeg.item.AnimatedGunItem;
 import ttv.migami.jeg.item.attachment.IAttachment;
+import ttv.migami.jeg.util.GunEnchantmentHelper;
 
 public final class GunAnimations {
     public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
@@ -24,6 +26,7 @@ public final class GunAnimations {
     public static final RawAnimation HOLD_FIRE = RawAnimation.begin().then("hold_fire", Animation.LoopType.PLAY_ONCE).thenLoop("hold");
     public static final RawAnimation HOLD = RawAnimation.begin().then("hold", Animation.LoopType.LOOP);
     public static final RawAnimation RELOAD = RawAnimation.begin().then("reload", Animation.LoopType.PLAY_ONCE).thenLoop("idle");
+    public static final RawAnimation RELOAD_ALT = RawAnimation.begin().then("reload_alt", Animation.LoopType.PLAY_ONCE).thenLoop("idle");
     public static final RawAnimation RELOAD_START = RawAnimation.begin().then("reload_start", Animation.LoopType.PLAY_ONCE).thenLoop("reload_loop");
     public static final RawAnimation RELOAD_LOOP = RawAnimation.begin().then("reload_loop", Animation.LoopType.LOOP);
     public static final RawAnimation RELOAD_STOP = RawAnimation.begin().then("reload_stop", Animation.LoopType.PLAY_ONCE).thenLoop("idle");
@@ -38,6 +41,8 @@ public final class GunAnimations {
         return new AnimationController<>(animatable, "Controller", 0, state -> {
             Player player = ClientUtils.getClientPlayer();
             ItemStack gunStack = player.getMainHandItem();
+
+            state.setControllerSpeed(1F);
 
             if (gunStack.getItem() != animatable)
                 return state.setAndContinue(IDLE);
@@ -81,14 +86,24 @@ public final class GunAnimations {
                     if ((!ModSyncedDataKeys.RELOADING.getValue(player) &&
                             GunAnimations.isAnimationPlaying(state.getController(), "reload_loop")) ||
                             GunAnimations.isAnimationPlaying(state.getController(), "reload_stop")) {
+                        state.setControllerSpeed(GunEnchantmentHelper.getReloadAnimationSpeed(gunStack));
                         return  state.setAndContinue(RELOAD_STOP);
                     }
                     if ((ModSyncedDataKeys.RELOADING.getValue(player) ||
                             ((GunAnimations.isAnimationPlaying(state.getController(), "reload") ||
+                                    GunAnimations.isAnimationPlaying(state.getController(), "reload_alt") ||
                                     GunAnimations.isAnimationPlaying(state.getController(), "reload_start")) &&
                                     !state.getController().hasAnimationFinished()))) {
                         if (animatedGunItem.getModifiedGun(gunStack).getReloads().getReloadType().equals(ReloadType.MANUAL)) {
+                            state.setControllerSpeed(GunEnchantmentHelper.getReloadAnimationSpeed(gunStack));
                             return state.setAndContinue(RELOAD_START);
+                        }
+                        state.setControllerSpeed(GunEnchantmentHelper.getReloadAnimationSpeed(gunStack));
+                        if (gunStack.is(ModItems.INFANTRY_RIFLE.get())) {
+                            if (Gun.getAttachment(IAttachment.Type.MAGAZINE, gunStack).getItem() == ModItems.EXTENDED_MAG.get() ||
+                                    Gun.getAttachment(IAttachment.Type.MAGAZINE, gunStack).getItem() == ModItems.DRUM_MAG.get()) {
+                                return state.setAndContinue(RELOAD_ALT);
+                            }
                         }
                         return state.setAndContinue(RELOAD);
                     }
@@ -102,6 +117,7 @@ public final class GunAnimations {
                     if (tag.getBoolean("IsDrawing") ||
                             (GunAnimations.isAnimationPlaying(state.getController(), "draw") &&
                                     !state.getController().hasAnimationFinished())) {
+                        state.setControllerSpeed(GunEnchantmentHelper.getReloadAnimationSpeed(gunStack));
                         return state.setAndContinue(DRAW);
                     } else {
                         if (tag.getBoolean("IsRunning") && !tag.getBoolean("IsAiming")) {

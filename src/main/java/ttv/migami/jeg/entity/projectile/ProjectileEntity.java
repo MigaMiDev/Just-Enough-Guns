@@ -48,8 +48,11 @@ import org.valkyrienskies.mod.common.world.RaycastUtilsKt;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.JustEnoughGuns;
 import ttv.migami.jeg.client.medal.MedalType;
-import ttv.migami.jeg.common.*;
+import ttv.migami.jeg.common.BoundingBoxManager;
+import ttv.migami.jeg.common.ChargeTracker;
+import ttv.migami.jeg.common.Gun;
 import ttv.migami.jeg.common.Gun.Projectile;
+import ttv.migami.jeg.common.SpreadTracker;
 import ttv.migami.jeg.entity.monster.phantom.gunner.PhantomGunner;
 import ttv.migami.jeg.entity.monster.phantom.terror.TerrorPhantom;
 import ttv.migami.jeg.event.GunProjectileHitEvent;
@@ -484,6 +487,37 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
                     }
                 }
             }
+
+            // Helmets against headshots!
+            if (headshot && entity instanceof LivingEntity livingEntity) {
+                ItemStack helmet = livingEntity.getItemBySlot(EquipmentSlot.HEAD);
+                if (helmet.is(Items.TURTLE_HELMET) && this.random.nextFloat() < 0.2F) {
+                    headshot = false;
+
+                    // If true, remove the entities helmet!
+                    if (this.random.nextBoolean()) {
+                        livingEntity.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
+                        if (!helmet.isEmpty() && !livingEntity.level().isClientSide) {
+                            ItemEntity flyingHelmet = new ItemEntity(
+                                    livingEntity.level(),
+                                    livingEntity.getX(),
+                                    livingEntity.getY() + livingEntity.getBbHeight(),
+                                    livingEntity.getZ(),
+                                    helmet
+                            );
+
+                            flyingHelmet.setDeltaMovement(
+                                    (this.random.nextDouble() - 0.5) * 0.3,
+                                    0.5 + this.random.nextDouble() * 0.5,
+                                    (this.random.nextDouble() - 0.5) * 0.3
+                            );
+                            livingEntity.level().addFreshEntity(flyingHelmet);
+                            flyingHelmet.setDeltaMovement(flyingHelmet.getDeltaMovement().add(0, 1.0, 0));
+
+                        }
+                    }
+                }
+            }
         }
 
         if(hitPos == null)
@@ -750,11 +784,8 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
             this.onHitEntity(entity, result.getLocation(), startVec, endVec, entityHitResult.isHeadshot());
 
             int collateralLevel = EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.COLLATERAL.get(), weapon);
-            ResourceLocation advantage = this.getProjectile().getAdvantage();
 
-            if(!(entity.getType().is(ModTags.Entities.GHOST) && Config.COMMON.gameplay.gunAdvantage.get() &&
-                    advantage.equals(ModTags.Entities.UNDEAD.location())) ||
-                    collateralLevel == 0)
+            if(collateralLevel == 0 && !this.ignoreEntity(entity))
             {
                 if (!(this instanceof RocketEntity) && !this.projectile.isCollateral() && !(this instanceof FlameProjectileEntity)) {
                     this.remove(RemovalReason.KILLED);
@@ -800,10 +831,13 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
             // Deal extra damage and light on fire the undead!
             if (advantage.equals(ModTags.Entities.UNDEAD.location()))
             {
-                if (entity.getType().is(ModTags.Entities.UNDEAD) || entity.getType().is(ModTags.Entities.GHOST))
+                if (isUndead(entity) || entity.getType().is(ModTags.Entities.GHOST))
                 {
                     advantageMultiplier = 1.25F;
                     entity.setSecondsOnFire(2);
+                } else
+                {
+                    advantageMultiplier = 0.75F;
                 }
             }
         }
@@ -811,13 +845,48 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
         return advantageMultiplier;
     }
 
+    protected boolean ignoreEntity(Entity entity) {
+        if (entity instanceof LivingEntity livingEntity && livingEntity.hasEffect(ModEffects.PLAYER_BULLET_PROTECTION.get()) && this.shooter instanceof Player) {
+            return true;
+        }
+
+        if (entity instanceof LivingEntity livingEntity && livingEntity.hasEffect(ModEffects.BULLET_PROTECTION.get())) {
+            return true;
+        }
+
+        ResourceLocation advantage = this.getProjectile().getAdvantage();
+        if(entity.getType().is(ModTags.Entities.GHOST) && (!advantage.equals(ModTags.Entities.UNDEAD.location())))
+        {
+            if (this.getProjectile().getItem().equals(ModItems.SPECTRE_ROUND.getId())) return false;
+            return true;
+        }
+
+        if (this.shooter.getMainHandItem().is(ModItems.HOLY_SHOTGUN.get()) && !isUndead(entity) && !(entity instanceof Enemy)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    protected boolean isUndead(Entity entity) {
+        if (entity instanceof LivingEntity livingEntity) {
+            if (livingEntity.getMobType().equals(MobType.UNDEAD) || entity.getType().is(ModTags.Entities.UNDEAD)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     protected void onHitEntity(Entity entity, Vec3 hitVec, Vec3 startVec, Vec3 endVec, boolean headshot)
     {
+        if (this.ignoreEntity(entity)) {
+            return;
+        }
+
         float damage = this.getDamage();
         float newDamage = this.getCriticalDamage(this.weapon, this.random, damage);
         boolean critical = damage != newDamage;
         damage = newDamage;
-        ResourceLocation advantage = this.getProjectile().getAdvantage();
         if (Config.COMMON.gameplay.gunAdvantage.get()) {
             damage *= advantageMultiplier(entity);
         }
@@ -847,30 +916,18 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
             damage = damage / damageDivisor;
         }
 
-        if(!(entity instanceof Player) && !(entity.getType().is(ModTags.Entities.GHOST) &&
-                !advantage.equals(ModTags.Entities.UNDEAD.location())))
-        {
-            entity.hurt(source, damage);
-            if (!Config.COMMON.gameplay.enableKnockback.get()) {
-                entity.setDeltaMovement(0, 0, 0);
-            }
+        entity.hurt(source, damage);
+        if (!Config.COMMON.gameplay.enableKnockback.get()) {
+            entity.setDeltaMovement(0, 0, 0);
         }
-        else if (entity instanceof Player player && !(player.hasEffect(ModEffects.BULLET_PROTECTION.get()))) {
-            entity.hurt(source, damage);
-            if (!Config.COMMON.gameplay.enableKnockback.get()) {
-                entity.setDeltaMovement(0, 0, 0);
-            }
-        }
+
+
         if (!entity.level().isClientSide) {
             ((ServerLevel) entity.level()).sendParticles(ParticleTypes.DAMAGE_INDICATOR, entity.getX(), entity.getY(), entity.getZ(), (int) damage / 2, entity.getBbWidth() / 2, entity.getBbHeight() / 2, entity.getBbWidth() / 2, 0.1);
         }
 
         if(this.shooter instanceof Player player && entity instanceof LivingEntity livingEntity)
         {
-            if (livingEntity.hasEffect(ModEffects.BULLET_PROTECTION.get())) {
-                return;
-            }
-
             int hitType = critical ? S2CMessageProjectileHitEntity.HitType.CRITICAL : headshot ? S2CMessageProjectileHitEntity.HitType.HEADSHOT : S2CMessageProjectileHitEntity.HitType.NORMAL;
 
             if (headshot) {

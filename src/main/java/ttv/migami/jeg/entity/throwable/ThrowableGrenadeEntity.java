@@ -153,7 +153,13 @@ public class ThrowableGrenadeEntity extends ThrowableItemEntity
                 );
             }
         } else {
-            GrenadeEntity.createExplosion(this, Config.COMMON.grenades.explosionRadius.get().floatValue(), true);
+            if (this.terrorPhantomThrown && Config.COMMON.gunnerMobs.terrorPhantomDestroyBlocks.get())
+            {
+                GrenadeEntity.createExplosion(this, Config.COMMON.grenades.explosionRadius.get().floatValue(), false);
+            }
+            else {
+                GrenadeEntity.createExplosion(this, Config.COMMON.grenades.explosionRadius.get().floatValue(), true);
+            }
         }
     }
 }

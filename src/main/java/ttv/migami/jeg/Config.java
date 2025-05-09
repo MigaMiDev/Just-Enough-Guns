@@ -240,6 +240,7 @@ public class Config
 		public final ForgeConfigSpec.BooleanValue gunJamming;
 		public final ForgeConfigSpec.BooleanValue underwaterFiring;
 		public final ForgeConfigSpec.BooleanValue gunAdvantage;
+		public final ForgeConfigSpec.BooleanValue gunModifiers;
 		public final ForgeConfigSpec.DoubleValue growBoundingBoxAmount;
 		public final ForgeConfigSpec.BooleanValue enableHeadShots;
 		//public final ForgeConfigSpec.DoubleValue headShotDamageMultiplier;
@@ -264,6 +265,7 @@ public class Config
 				this.gunDurability = builder.comment("If enabled, both guns and attachment will receive damage upon firing a gun.").define("gunDurability", true);
 				this.gunJamming = builder.comment("If enabled, guns will have an increasing chance of jamming the lower durability they have left.").define("gunJamming", true);
 				this.gunAdvantage = builder.comment("If enabled, guns will deal less/more damage depending on their advantage.").define("gunAdvantage", true);
+				this.gunModifiers = builder.comment("If enabled, guns will generate stat modifiers.").define("gunModifiers", true);
 				this.underwaterFiring = builder.comment("If enabled, guns will be able to shoot underwater (There are guns that already do this).").define("underwaterFiring", false);
 				this.growBoundingBoxAmount = builder.comment("The extra amount to expand an entity's bounding box when checking for projectile collision. Setting this value higher will make it easier to hit entities").defineInRange("growBoundingBoxAmount", 0.3, 0.0, 1.0);
 				this.enableHeadShots = builder.comment("Enables the check for head shots for players. Projectiles that hit the head of a player will have increased damage.").define("enableHeadShots", true);
@@ -349,7 +351,9 @@ public class Config
 		public final ForgeConfigSpec.IntValue randomRaidIntervalMaxTicks;
 		public final ForgeConfigSpec.IntValue minimumDaysForRaids;
 		public final ForgeConfigSpec.ConfigValue<List<? extends String>> factions;
+		public final ForgeConfigSpec.BooleanValue terrorPhantomDestroyBlocks;
 		public final ForgeConfigSpec.BooleanValue phantomSwarm;
+		public final ForgeConfigSpec.BooleanValue phantomGunnersReplacePhantoms;
 
 		public GunnerMobs(ForgeConfigSpec.Builder builder) {
 			builder.comment("Faction and Gun Configuration").push("gunner_config");
@@ -364,7 +368,9 @@ public class Config
 				this.initialChance = builder.comment("This will define the initial chance of mobs spawning with guns. Goes from 0% to 100%").defineInRange("initialChance", 1, 0, 100);
 				this.chanceIncrement = builder.comment("This defines the increment of the chance of mobs spawning with guns per day.").defineInRange("chanceIncrement", 1, 0, 100);
 				this.maxChance = builder.comment("This will define the max chance of mobs spawning with guns.").defineInRange("maxChance", 50, 1, 100);
+				this.terrorPhantomDestroyBlocks = builder.comment("If enabled, the Terror Phantom will destroy blocks with its grenades.").define("terrorPhantomDestroyBlocks", false);
 				this.phantomSwarm = builder.comment("If enabled, defeating the Terror Phantom will enable the Phantom Swarm.").define("phantomSwarm", true);
+				this.phantomGunnersReplacePhantoms = builder.comment("If enabled, Phantom Gunners will have a chance to replace Phantoms AFTER defeating the Terror Phantom.").define("phantomGunnersReplacePhantoms", true);
 				this.gunnerMobPatrols = builder.comment("If enabled, Factions inside the config will have the same chance to spawn like Pillager Patrols.").define("gunnerMobPatrols", true);
 				this.patrolIntervalDays = builder.comment("Fixed patrol interval in days. Set to 0 to use a random interval instead.").defineInRange("patrolIntervalDays", 5, 0, 30);
 				this.randomIntervalMinTicks = builder.comment("Minimum random interval in ticks if patrolIntervalDays is 0.").defineInRange("randomIntervalMinTicks", 12000, 1, Integer.MAX_VALUE);

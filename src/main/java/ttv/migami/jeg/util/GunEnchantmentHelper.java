@@ -41,12 +41,11 @@ public class GunEnchantmentHelper
         if (modifiedGun.getReloads().getReloadType() == ReloadType.MAG_FED)
             return getMagReloadSpeed(weapon);
         else
-            return getReloadInterval(weapon);
+            return getReloadInterval(weapon, modifiedGun.getReloads().getReloadTimer());
     }
 
-    public static int getReloadInterval(ItemStack weapon)
+    public static int getReloadInterval(ItemStack weapon, int interval)
     {
-        int interval = 10;
         int level = EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.QUICK_HANDS.get(), weapon);
         if(level > 0)
         {
@@ -75,6 +74,20 @@ public class GunEnchantmentHelper
             speed -= Math.round(((speed/4)) * level);
         }
         return Math.max(speed, 4);
+    }
+
+    public static float getReloadAnimationSpeed(ItemStack weapon) {
+        int level = EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.QUICK_HANDS.get(), weapon);
+        return 1.0f + (0.2F * level);
+    }
+
+    public static int getModifiedDrawTick(ItemStack stack, int baseDrawTick) {
+        int level = EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.QUICK_HANDS.get(), stack);
+        if (level > 0) {
+            float modifier = 1.0f - (0.2F * level);
+            return Math.max(Math.round(baseDrawTick * modifier), 1);
+        }
+        return baseDrawTick;
     }
 
     public static int getRate(ItemStack weapon, Gun modifiedGun)
@@ -138,10 +151,5 @@ public class GunEnchantmentHelper
     {
         int level = EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.PUNCTURING.get(), weapon);
         return level * 0.05F;
-    }
-
-    public static int getQuickHands(ItemStack weapon)
-    {
-        return EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.QUICK_HANDS.get(), weapon);
     }
 }

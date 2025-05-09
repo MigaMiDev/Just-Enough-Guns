@@ -4,14 +4,16 @@ import net.minecraft.world.Container;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
 import ttv.migami.jeg.blockentity.GunmetalWorkbenchBlockEntity;
+import ttv.migami.jeg.crafting.handler.IModularWorkbenchContainer;
 import ttv.migami.jeg.init.ModContainers;
+import ttv.migami.jeg.init.ModRecipeTypes;
 
 /**
  * Author: MrCrayfish
  */
-public class GunmetalWorkbenchContainer extends AbstractWorkbenchContainer {
+public class GunmetalWorkbenchContainer extends AbstractWorkbenchContainer implements IModularWorkbenchContainer {
     public GunmetalWorkbenchContainer(int windowId, Container playerInventory, GunmetalWorkbenchBlockEntity workbench) {
-        super(windowId, playerInventory, workbench, ModContainers.GUNMETAL_WORKBENCH.get());
+        super(windowId, playerInventory, workbench, ModContainers.GUNMETAL_WORKBENCH.get(), ModRecipeTypes.GUNMETAL_WORKBENCH.get());
     }
 
     @Override

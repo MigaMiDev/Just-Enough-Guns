@@ -41,7 +41,8 @@
   },
   "projectile": {
     "advantage": "jeg:undead",
-    "damage": 20.0,
+    "collateral": true,
+    "damage": 28.0,
     "damageReduceOverLife": true,
     "ejectsCasing": true,
     "headshotMultiplier": 1.5,

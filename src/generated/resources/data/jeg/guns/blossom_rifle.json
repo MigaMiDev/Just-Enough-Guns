@@ -12,8 +12,8 @@
     "fireMode": "jeg:automatic",
     "gripType": "jeg:two_handed",
     "rate": 2,
-    "recoilAngle": 4.0,
-    "recoilKick": 0.25,
+    "recoilAngle": 2.0,
+    "recoilKick": 0.45,
     "spread": 3.0
   },
   "modules": {
@@ -39,7 +39,7 @@
     },
     "zoom": {
       "fovModifier": 0.6,
-      "yOffset": 4.15,
+      "yOffset": 4.75,
       "zOffset": -1.75
     }
   },
@@ -56,9 +56,9 @@
     "trailLengthMultiplier": 2.0
   },
   "reloads": {
-    "additionalReloadTimer": 10,
+    "additionalReloadTimer": 0,
     "maxAmmo": 30,
-    "reloadTimer": 60,
+    "reloadTimer": 80,
     "reloadType": "jeg:mag_fed"
   },
   "sounds": {
