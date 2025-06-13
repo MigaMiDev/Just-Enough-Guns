@@ -2,8 +2,8 @@
   "display": {
     "flash": {
       "size": 0.8,
-      "yOffset": 3.5,
-      "zOffset": -4.7
+      "yOffset": 4.4,
+      "zOffset": -9.7
     }
   },
   "general": {
@@ -19,28 +19,30 @@
   "modules": {
     "attachments": {
       "barrel": {
-        "yOffset": 3.4,
-        "zOffset": -7.5
+        "yOffset": 5.1,
+        "zOffset": -9.4
       },
       "magazine": {
         "scale": 0.0
       },
       "scope": {
-        "yOffset": 3.85,
-        "zOffset": 4.6
+        "yOffset": 6.0,
+        "zOffset": 3.0
       },
-      "stock": {
-        "scale": 0.0
+      "special": {
+        "xOffset": -1.1,
+        "yOffset": 5.0,
+        "zOffset": -6.2
       },
       "underBarrel": {
-        "yOffset": 2.25,
-        "zOffset": 1.4
+        "yOffset": 3.9,
+        "zOffset": 2.5
       }
     },
     "zoom": {
       "fovModifier": 0.6,
       "yOffset": 4.75,
-      "zOffset": -1.75
+      "zOffset": -1.5
     }
   },
   "projectile": {

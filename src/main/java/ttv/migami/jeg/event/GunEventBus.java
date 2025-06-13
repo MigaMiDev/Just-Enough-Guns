@@ -305,7 +305,7 @@ public class GunEventBus {
                         //stack.shrink(1);
                     }
                 } else {
-                    stack.hurtAndBreak(damageAmount, player, null);
+                    stack.hurtAndBreak(damageAmount, player, e -> {});
                 }
             }
         }
@@ -328,7 +328,7 @@ public class GunEventBus {
                                     .withStyle(ChatFormatting.GRAY);
                             player.displayClientMessage(message, true);
                         } else {
-                            scopeStack.hurtAndBreak(1, player, null);
+                            scopeStack.hurtAndBreak(1, player, e -> {});
                         }
                     }
                 }
@@ -346,7 +346,7 @@ public class GunEventBus {
                                     .withStyle(ChatFormatting.GRAY);
                             player.displayClientMessage(message, true);
                         } else {
-                            barrelStack.hurtAndBreak(1, player, null);
+                            barrelStack.hurtAndBreak(1, player, e -> {});
                         }
                     }
                 }
@@ -364,7 +364,7 @@ public class GunEventBus {
                                     .withStyle(ChatFormatting.GRAY);
                             player.displayClientMessage(message, true);
                         } else {
-                            stockStack.hurtAndBreak(1, player, null);
+                            stockStack.hurtAndBreak(1, player, e -> {});
                         }
                     }
                 }
@@ -382,7 +382,7 @@ public class GunEventBus {
                                     .withStyle(ChatFormatting.GRAY);
                             player.displayClientMessage(message, true);
                         } else {
-                            underBarrelStack.hurtAndBreak(1, player, null);
+                            underBarrelStack.hurtAndBreak(1, player, e -> {});
                         }
                     }
                 }
@@ -566,6 +566,10 @@ public class GunEventBus {
             if (angle < sweepAngle / 2) {
                 double distanceMultiplier = 1.0 - Math.min(distance / maxDistance, 1.0);
                 float adjustedDamage = (float) (maxDamage * distanceMultiplier);
+
+                if (!gun.getProjectile().isDamageReduceOverLife()) {
+                    adjustedDamage = maxDamage;
+                }
 
                 if (adjustedDamage > 0) {
                     entity.hurt(shooter.damageSources().sonicBoom(shooter), adjustedDamage);

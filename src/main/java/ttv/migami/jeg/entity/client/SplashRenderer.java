@@ -30,7 +30,8 @@ public class SplashRenderer extends EntityRenderer<Splash> {
     public void render(Splash pEntity, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack,
                        MultiBufferSource pBuffer, int pPackedLight) {
         pPoseStack.pushPose();
-        pPoseStack.mulPose(Axis.YP.rotationDegrees(pEntity.tickCount * 10));
+        float rotation = (pEntity.tickCount + pPartialTicks) * 15f;
+        pPoseStack.mulPose(Axis.YP.rotationDegrees(rotation));
         //pPoseStack.scale(1, -1, 1);
         //pPoseStack.translate(0.0D, -1.5D, 0.0D);
 

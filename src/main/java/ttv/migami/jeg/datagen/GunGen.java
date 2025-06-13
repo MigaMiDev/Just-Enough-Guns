@@ -6,7 +6,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.Items;
 import ttv.migami.jeg.Reference;
-import ttv.migami.jeg.common.*;
+import ttv.migami.jeg.common.FireMode;
+import ttv.migami.jeg.common.GripType;
+import ttv.migami.jeg.common.Gun;
+import ttv.migami.jeg.common.ReloadType;
 import ttv.migami.jeg.init.ModItems;
 import ttv.migami.jeg.init.ModSounds;
 import ttv.migami.jeg.init.ModTags;
@@ -799,14 +802,14 @@ public class GunGen extends GunProvider
                 .setEnchantedFireSound(ModSounds.BLOSSOM_RIFLE_ENCHANTED_FIRE.get())
 
                 // Attachments
-                .setMuzzleFlash(0.8, 0.0, 3.5, -4.7)
+                .setMuzzleFlash(0.8, 0.0, 4.4, -9.7)
                 .setZoom(Gun.Modules.Zoom.builder()
                         .setFovModifier(0.6F)
-                        .setOffset(0.0, 4.75, -1.75))
-                .setScope(1.0F, 0.0, 3.85, 4.6)
-                .setBarrel(1.0F, 0.0, 3.4, -7.5)
-                .setStock(0.0F, 0.0, 0.0, 0.0)
-                .setUnderBarrel(1.0F, 0.0, 2.25, 1.4)
+                        .setOffset(0.0, 4.75, -1.50))
+                .setScope(1.0F, 0.0, 6.0, 3.0)
+                .setBarrel(1.0F, 0.0, 5.1, -9.4)
+                        .setSpecial(1.0F, -1.1, 5.0, -6.2)
+                .setUnderBarrel(1.0F, 0.0, 3.9, 2.5)
                 .setMagazine(0.0F, 0.0, 0.0, 0.0)
 
                 .build());
@@ -834,7 +837,7 @@ public class GunGen extends GunProvider
                 .setAmmo(ModItems.SPECTRE_ROUND.get())
                 .setEjectsCasing(true)
                 .setProjectileVisible(false)
-                .setDamage(28F)
+                .setDamage(23F)
                 .setAdvantage(ModTags.Entities.UNDEAD.location())
                 .setReduceDamageOverLife(true)
                 .setProjectileSize(0.05F)

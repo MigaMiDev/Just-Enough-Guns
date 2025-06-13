@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -71,6 +72,19 @@ public class GunnerMobSpawner {
 
         if (faction != null) {
             entity.addTag("MobGunner");
+        }
+    }
+
+    @SubscribeEvent
+    public void onLivingEquipmentChange(LivingEquipmentChangeEvent event) {
+        if (!(event.getEntity() instanceof PathfinderMob mob)) {
+            return;
+        }
+
+        ItemStack heldItem = mob.getMainHandItem();
+
+        if (heldItem.getItem() instanceof GunItem) {
+            reassessWeaponGoal(mob);
         }
     }
 

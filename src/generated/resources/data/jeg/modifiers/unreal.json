@@ -3,8 +3,19 @@
   "color": 43775,
   "modifiers": [
     {
+      "type": "stat",
       "amount": 1.5,
       "attribute": "damage"
+    },
+    {
+      "type": "stat",
+      "amount": 1.2,
+      "attribute": "fire_rate"
+    },
+    {
+      "type": "stat",
+      "amount": 1.3,
+      "attribute": "projectile_velocity"
     }
   ],
   "name": "unreal",

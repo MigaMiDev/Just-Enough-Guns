@@ -236,6 +236,8 @@ public class Config
 		public final Griefing griefing;
 		public final ForgeConfigSpec.BooleanValue drawAnimation;
 		public final ForgeConfigSpec.IntValue bulletProtection;
+		public final ForgeConfigSpec.BooleanValue mobsDropHelmets;
+		public final ForgeConfigSpec.BooleanValue playersDropHelmets;
 		public final ForgeConfigSpec.BooleanValue gunDurability;
 		public final ForgeConfigSpec.BooleanValue gunJamming;
 		public final ForgeConfigSpec.BooleanValue underwaterFiring;
@@ -262,6 +264,8 @@ public class Config
 				this.griefing = new Griefing(builder);
 				this.drawAnimation = builder.comment("If enabled, animated guns will play a Drawing animation when equipping.").define("drawAnimation", true);
 				this.bulletProtection = builder.comment("The amount of seconds Bullet Protection is applied upon Player respawn.").defineInRange("bulletProtection", 10, 0, 60);
+				this.mobsDropHelmets = builder.comment("If enabled, mobs that receive headshots, have a chance to drop their helmets!").define("mobsDropHelmets", true);
+				this.playersDropHelmets = builder.comment("If enabled, if players receive a fatal blow to the head, the helmet will cover it!").define("playersDropHelmets", true);
 				this.gunDurability = builder.comment("If enabled, both guns and attachment will receive damage upon firing a gun.").define("gunDurability", true);
 				this.gunJamming = builder.comment("If enabled, guns will have an increasing chance of jamming the lower durability they have left.").define("gunJamming", true);
 				this.gunAdvantage = builder.comment("If enabled, guns will deal less/more damage depending on their advantage.").define("gunAdvantage", true);

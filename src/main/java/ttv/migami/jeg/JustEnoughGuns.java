@@ -34,10 +34,7 @@ import ttv.migami.jeg.client.CustomGunManager;
 import ttv.migami.jeg.client.KeyBinds;
 import ttv.migami.jeg.client.MetaLoader;
 import ttv.migami.jeg.client.handler.CrosshairHandler;
-import ttv.migami.jeg.client.render.entity.BooRenderer;
-import ttv.migami.jeg.client.render.entity.GhoulRenderer;
-import ttv.migami.jeg.client.render.entity.RaidEntityRenderer;
-import ttv.migami.jeg.client.render.entity.TerrorRaidEntityRenderer;
+import ttv.migami.jeg.client.render.entity.*;
 import ttv.migami.jeg.common.BoundingBoxManager;
 import ttv.migami.jeg.common.NetworkGunManager;
 import ttv.migami.jeg.common.ProjectileManager;
@@ -72,6 +69,8 @@ public class JustEnoughGuns {
     public static boolean recruitsLoaded = false;
     public static boolean guardsLoaded = false;
     public static boolean shoulderSurfingLoaded = false;
+    // I am not okay with the original mod's name haha
+    public static boolean aQuietPlaceLoaded = false;
     public static final Logger LOGGER = LogManager.getLogger(Reference.MOD_ID);
 
     public JustEnoughGuns() {
@@ -121,6 +120,7 @@ public class JustEnoughGuns {
         recruitsLoaded = ModList.get().isLoaded("recruits");
         guardsLoaded = ModList.get().isLoaded("guardvillagers");
         shoulderSurfingLoaded = ModList.get().isLoaded("shouldersurfing");
+        aQuietPlaceLoaded = ModList.get().isLoaded("death_angels");
     }
 
     @SubscribeEvent
@@ -169,6 +169,7 @@ public class JustEnoughGuns {
         EntityRenderers.register(ModEntities.BOO.get(), BooRenderer::new);
         EntityRenderers.register(ModEntities.TERROR_PHANMTOM.get(), TerrorPhantomRenderer::new);
         EntityRenderers.register(ModEntities.PHANTOM_GUNNER.get(), PhantomGunnerRenderer::new);
+        EntityRenderers.register(ModEntities.DYNAMIC_HELMET.get(), DynamicHelmetRenderer::new);
         EntityRenderers.register(ModEntities.SPLASH.get(), SplashRenderer::new);
         EntityRenderers.register(ModEntities.BUBBLE.get(), BubbleRenderer::new);
         event.enqueueWork(ClientHandler::setup);

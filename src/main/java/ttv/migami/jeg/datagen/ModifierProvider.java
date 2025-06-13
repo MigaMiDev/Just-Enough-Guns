@@ -3,13 +3,17 @@ package ttv.migami.jeg.datagen;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import ttv.migami.jeg.Reference;
 import ttv.migami.jeg.modifier.Modifier;
-import ttv.migami.jeg.modifier.StatModifier;
+import ttv.migami.jeg.modifier.type.ExplosiveAmmoModifier;
+import ttv.migami.jeg.modifier.type.IModifierEffect;
+import ttv.migami.jeg.modifier.type.PotionEffectModifier;
+import ttv.migami.jeg.modifier.type.StatModifier;
 
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -60,10 +64,27 @@ public abstract class ModifierProvider implements DataProvider {
         json.addProperty("color", group.getColor());
 
         JsonArray mods = new JsonArray();
-        for (StatModifier mod : group.getModifiers()) {
+        for (IModifierEffect effect : group.getModifiers()) {
             JsonObject modJson = new JsonObject();
-            modJson.addProperty("attribute", mod.getType().name().toLowerCase());
-            modJson.addProperty("amount", mod.getValue());
+
+            if (effect instanceof StatModifier statMod) {
+                modJson.addProperty("type", "stat");
+                modJson.addProperty("attribute", statMod.getStatType().name().toLowerCase());
+                modJson.addProperty("amount", statMod.getValue());
+            }
+
+            else if (effect instanceof PotionEffectModifier potionMod) {
+                modJson.addProperty("type", "potion");
+                modJson.addProperty("effect", BuiltInRegistries.MOB_EFFECT.getKey(potionMod.getEffect()).toString());
+                modJson.addProperty("duration", potionMod.getDuration());
+                modJson.addProperty("amplifier", potionMod.getAmplifier());
+            }
+
+            else if (effect instanceof ExplosiveAmmoModifier) {
+                modJson.addProperty("type", "explosive");
+                modJson.addProperty("value", true);
+            }
+
             mods.add(modJson);
         }
         json.add("modifiers", mods);

@@ -9,6 +9,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import ttv.migami.jeg.Reference;
 import ttv.migami.jeg.entity.Bubble;
+import ttv.migami.jeg.entity.DynamicHelmet;
 import ttv.migami.jeg.entity.HealingTalismanEntity;
 import ttv.migami.jeg.entity.Splash;
 import ttv.migami.jeg.entity.animal.Boo;
@@ -64,6 +65,7 @@ public class ModEntities
     public static final RegistryObject<EntityType<PhantomGunner>> PHANTOM_GUNNER = REGISTER.register("phantom_gunner", () -> EntityType.Builder.of(PhantomGunner::new, MobCategory.MONSTER).sized(4.0F, 1.0F).fireImmune().build("phantom_gunner"));
 
     /* Custom */
+    public static final RegistryObject<EntityType<DynamicHelmet>> DYNAMIC_HELMET = REGISTER.register("dynamic_helmet", () -> EntityType.Builder.<DynamicHelmet>of(DynamicHelmet::new, MobCategory.MISC).sized(0.5F, 0.5F).noSummon().clientTrackingRange(8).updateInterval(1).setShouldReceiveVelocityUpdates(true).fireImmune().build("dynamic_helmet"));
     public static final RegistryObject<EntityType<Splash>> SPLASH = REGISTER.register("splash", () -> EntityType.Builder.<Splash>of(Splash::new, MobCategory.MISC).sized(5.0F, 5.0F).noSave().noSummon().fireImmune().build("splash"));
     public static final RegistryObject<EntityType<Bubble>> BUBBLE = REGISTER.register("bubble", () -> EntityType.Builder.<Bubble>of(Bubble::new, MobCategory.MISC).sized(3.0F, 1.0F).noSave().noSummon().build("bubble"));
 

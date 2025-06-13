@@ -69,7 +69,7 @@ import ttv.migami.jeg.item.GunItem;
 import ttv.migami.jeg.item.attachment.IAttachment;
 import ttv.migami.jeg.modifier.Modifier;
 import ttv.migami.jeg.modifier.ModifierHelper;
-import ttv.migami.jeg.modifier.StatModifier;
+import ttv.migami.jeg.modifier.type.IModifierEffect;
 import ttv.migami.jeg.network.PacketHandler;
 import ttv.migami.jeg.network.message.C2SMessagePreFireSound;
 import ttv.migami.jeg.network.message.C2SMessageShoot;
@@ -497,18 +497,20 @@ public class ServerPlayHandler
         recipe.consumeMaterials(player);
         ItemStack stack = recipe.getItem();
 
-        if (stack.getTagElement("CustomModifier") == null && player.getRandom().nextFloat() > 0.25F) {
-            Modifier group = ModifierHelper.getRandomGroup();
+        if (Config.COMMON.gameplay.gunModifiers.get()) {
+            if (stack.getTagElement("CustomModifier") == null && player.getRandom().nextFloat() > 0.25F) {
+                Modifier group = ModifierHelper.getRandomGroup();
 
-            for (StatModifier mod : group.getModifiers()) {
-                //applyModifier(stack, mod);
-            }
+                for (IModifierEffect mod : group.getModifiers()) {
+                    //applyModifier(stack, mod);
+                }
 
-            //stack.setHoverName(Component.translatable("jeg.modifier." + group.getName()).append(" ").append(stack.getHoverName()));
-            if (stack.getItem() instanceof GunItem gunItem) {
-                gunItem.setModifier(ModifierHelper.getGroupByName(group.getName()));
+                //stack.setHoverName(Component.translatable("jeg.modifier." + group.getName()).append(" ").append(stack.getHoverName()));
+                if (stack.getItem() instanceof GunItem gunItem) {
+                    gunItem.setModifier(ModifierHelper.getGroupByName(group.getName()));
+                }
+                stack.getOrCreateTag().putString("CustomModifier", group.getName());
             }
-            stack.getOrCreateTag().putString("CustomModifier", group.getName());
         }
 
         Containers.dropItemStack(world, pos.getX() + 0.5, pos.getY() + 1.125, pos.getZ() + 0.5, stack);
@@ -570,7 +572,7 @@ public class ServerPlayHandler
 
                 if (!player.getAbilities().instabuild && Config.COMMON.gameplay.gunDurability.get() && currentDamage <= maxDamage / 1.5) {
                     if (bayonet.getEnchantmentLevel(Enchantments.MENDING) == 0) {
-                        bayonet.hurtAndBreak(15, player, null);
+                        bayonet.hurtAndBreak(15, player, e -> {});
                     }
                 }
             }
@@ -663,7 +665,7 @@ public class ServerPlayHandler
 
                         if (!player.getAbilities().instabuild && Config.COMMON.gameplay.gunDurability.get() && currentDamage <= maxDamage / 1.5) {
                             if (bayonet.getEnchantmentLevel(Enchantments.MENDING) == 0) {
-                                bayonet.hurtAndBreak(8, player, null);
+                                bayonet.hurtAndBreak(8, player, e -> {});
                             }
                         }
                     }

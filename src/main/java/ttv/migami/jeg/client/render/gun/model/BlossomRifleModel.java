@@ -31,15 +31,7 @@ public class BlossomRifleModel implements IOverrideModel {
         if ((Gun.getScope(stack) == null))
             RenderUtil.renderModel(SpecialModels.BLOSSOM_RIFLE_IRON_SIGHT.getModel(), stack, matrixStack, buffer, light, overlay);
 
-        if (Gun.hasAttachmentEquipped(stack, IAttachment.Type.STOCK)) {
-
-            if (Gun.getAttachment(IAttachment.Type.STOCK, stack).getItem() == ModItems.TACTICAL_STOCK.get())
-                RenderUtil.renderModel(SpecialModels.BLOSSOM_RIFLE_STOCK_TACTICAL.getModel(), stack, matrixStack, buffer, light, overlay);
-            else if (Gun.getAttachment(IAttachment.Type.STOCK, stack).getItem() == ModItems.LIGHT_STOCK.get())
-                RenderUtil.renderModel(SpecialModels.BLOSSOM_RIFLE_STOCK_LIGHT.getModel(), stack, matrixStack, buffer, light, overlay);
-            else if (Gun.getAttachment(IAttachment.Type.STOCK, stack).getItem() == ModItems.WEIGHTED_STOCK.get())
-                RenderUtil.renderModel(SpecialModels.BLOSSOM_RIFLE_STOCK_WEIGHTED.getModel(), stack, matrixStack, buffer, light, overlay);
-        }
+        RenderUtil.renderModel(SpecialModels.BLOSSOM_RIFLE_STOCK_TACTICAL.getModel(), stack, matrixStack, buffer, light, overlay);
 
         if (Gun.hasAttachmentEquipped(stack, IAttachment.Type.BARREL)) {
             if (Gun.getAttachment(IAttachment.Type.BARREL, stack).getItem() == ModItems.SILENCER.get())

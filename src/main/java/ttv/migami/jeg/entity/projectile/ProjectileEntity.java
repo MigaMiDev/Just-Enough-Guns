@@ -5,6 +5,7 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -21,6 +22,9 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.EnderMan;
@@ -30,6 +34,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.GameRules;
@@ -53,8 +58,7 @@ import ttv.migami.jeg.common.ChargeTracker;
 import ttv.migami.jeg.common.Gun;
 import ttv.migami.jeg.common.Gun.Projectile;
 import ttv.migami.jeg.common.SpreadTracker;
-import ttv.migami.jeg.entity.monster.phantom.gunner.PhantomGunner;
-import ttv.migami.jeg.entity.monster.phantom.terror.TerrorPhantom;
+import ttv.migami.jeg.entity.DynamicHelmet;
 import ttv.migami.jeg.event.GunProjectileHitEvent;
 import ttv.migami.jeg.event.KillEffectEvent;
 import ttv.migami.jeg.init.*;
@@ -91,6 +95,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
     protected Gun modifiedGun;
     protected Gun.General general;
     protected Gun.Projectile projectile;
+    protected Gun.PotionEffect potionEffect;
     private ItemStack weapon = ItemStack.EMPTY;
     private ItemStack item = ItemStack.EMPTY;
     protected float additionalDamage = 0.0F;
@@ -113,6 +118,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
         this.modifiedGun = modifiedGun;
         this.general = modifiedGun.getGeneral();
         this.projectile = modifiedGun.getProjectile();
+        this.potionEffect = modifiedGun.getPotionEffect();
         this.entitySize = new EntityDimensions(this.projectile.getSize(), this.projectile.getSize(), false);
         this.modifiedGravity = modifiedGun.getProjectile().isGravity() ? GunModifierHelper.getModifiedProjectileGravity(weapon, -0.04) : 0.0;
         this.life = GunModifierHelper.getModifiedProjectileLife(weapon, this.projectile.getLife());
@@ -491,31 +497,8 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
             // Helmets against headshots!
             if (headshot && entity instanceof LivingEntity livingEntity) {
                 ItemStack helmet = livingEntity.getItemBySlot(EquipmentSlot.HEAD);
-                if (helmet.is(Items.TURTLE_HELMET) && this.random.nextFloat() < 0.2F) {
-                    headshot = false;
-
-                    // If true, remove the entities helmet!
-                    if (this.random.nextBoolean()) {
-                        livingEntity.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
-                        if (!helmet.isEmpty() && !livingEntity.level().isClientSide) {
-                            ItemEntity flyingHelmet = new ItemEntity(
-                                    livingEntity.level(),
-                                    livingEntity.getX(),
-                                    livingEntity.getY() + livingEntity.getBbHeight(),
-                                    livingEntity.getZ(),
-                                    helmet
-                            );
-
-                            flyingHelmet.setDeltaMovement(
-                                    (this.random.nextDouble() - 0.5) * 0.3,
-                                    0.5 + this.random.nextDouble() * 0.5,
-                                    (this.random.nextDouble() - 0.5) * 0.3
-                            );
-                            livingEntity.level().addFreshEntity(flyingHelmet);
-                            flyingHelmet.setDeltaMovement(flyingHelmet.getDeltaMovement().add(0, 1.0, 0));
-
-                        }
-                    }
+                if (!helmet.isEmpty()) {
+                    headshot = helmetHit(livingEntity, helmet);
                 }
             }
         }
@@ -526,6 +509,91 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
         }
 
         return new EntityResult(entity, hitPos, headshot);
+    }
+
+    private void checkHelmet() {
+
+    }
+
+    private boolean helmetHit(LivingEntity livingEntity, ItemStack helmet) {
+        int durabilityLeft = helmet.getMaxDamage() - helmet.getDamageValue();
+        if (livingEntity instanceof Player player && Config.COMMON.gameplay.playersDropHelmets.get()) {
+            // TODO: replace with datapacks!
+            if (helmet.is(Items.TURTLE_HELMET) && (this.random.nextFloat() < 0.2F || this.getAdvantage().equals(ModTags.Entities.VERY_HEAVY.location()))) {
+                if (this.projectile.getDamage() > livingEntity.getHealth() && livingEntity.getHealth() > 5F) {
+                    if (!this.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
+                        removeHelmet(livingEntity, helmet);
+                    }
+                    livingEntity.setHealth(0.5F);
+                    livingEntity.invulnerableTime = 40;
+                    player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 40, 0, false, false));
+                }
+
+                if (durabilityLeft <= 1) {
+                    helmet.hurtAndBreak(1, livingEntity, e -> {
+                        e.broadcastBreakEvent(EquipmentSlot.HEAD);
+                    });
+                    livingEntity.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
+                } else {
+                    helmet.setDamageValue(helmet.getMaxDamage() - 1);
+                }
+                return false;
+            }
+        } else if (!(livingEntity instanceof Player) && Config.COMMON.gameplay.mobsDropHelmets.get()) {
+            if (!livingEntity.getType().is(ModTags.Entities.VERY_HEAVY) && (this.random.nextFloat() < 0.4F || this.getAdvantage().equals(ModTags.Entities.VERY_HEAVY.location()))) {
+                if (this.random.nextBoolean() || this.getAdvantage().equals(ModTags.Entities.VERY_HEAVY.location())) {
+                    removeHelmet(livingEntity, helmet);
+                    livingEntity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 40, 0, false, false));
+                }
+
+                if (durabilityLeft <= 1) {
+                    helmet.hurtAndBreak(1, livingEntity, e -> {
+                        e.broadcastBreakEvent(EquipmentSlot.HEAD);
+                    });
+                    livingEntity.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
+                } else {
+                    helmet.setDamageValue(helmet.getMaxDamage() - 1);
+                }
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public void removeHelmet(LivingEntity livingEntity, ItemStack helmet) {
+        if (ignoreEntity(livingEntity)) {
+            return;
+        }
+
+        if (helmet.getEnchantmentLevel(Enchantments.BINDING_CURSE) != 0) {
+            return;
+        }
+
+        livingEntity.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
+        if (!helmet.isEmpty() && !livingEntity.level().isClientSide) {
+            livingEntity.level().playSound(null, livingEntity.getOnPos(), ModSounds.MEDAL_HEADSHOT.get(), SoundSource.PLAYERS, 1, 1);
+
+            DynamicHelmet flyingHelmet = new DynamicHelmet(this.level(), livingEntity.getX(), livingEntity.getEyeY() - 0.5, livingEntity.getZ(), helmet);
+
+            /*ItemEntity flyingHelmet = new ItemEntity(
+                    livingEntity.level(),
+                    livingEntity.getX(),
+                    livingEntity.getY() + livingEntity.getBbHeight(),
+                    livingEntity.getZ(),
+                    helmet
+            );*/
+
+            flyingHelmet.setXRot(livingEntity.getXRot());
+            flyingHelmet.setYRot(livingEntity.getYRot());
+
+            flyingHelmet.setDeltaMovement(
+                    (this.random.nextDouble() - 0.5) * 0.3,
+                    0.5 + this.random.nextDouble() * 0.2,
+                    (this.random.nextDouble() - 0.5) * 0.3
+            );
+            livingEntity.level().addFreshEntity(flyingHelmet);
+        }
     }
 
     private void onHit(HitResult result, Vec3 startVec, Vec3 endVec)
@@ -618,8 +686,8 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
                 }
 
                 boolean advantageFlag = false;
-                if (Config.COMMON.gameplay.gunAdvantage.get() && this.projectile.getAdvantage().equals(ModTags.Entities.HEAVY.location()) ||
-                        this.projectile.getAdvantage().equals(ModTags.Entities.VERY_HEAVY.location())) {
+                if (Config.COMMON.gameplay.gunAdvantage.get() && this.getAdvantage().equals(ModTags.Entities.HEAVY.location()) ||
+                        this.getAdvantage().equals(ModTags.Entities.VERY_HEAVY.location())) {
                     advantageFlag = true;
                 } else if (!Config.COMMON.gameplay.gunAdvantage.get()) {
                     advantageFlag = true;
@@ -733,39 +801,8 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
                 }
             }
 
-            // Prevent Raid/Patrol mobs from hitting each other
-            if (this.shooter.getTags().contains("GunnerPatroller") && entity.getTags().contains("GunnerPatroller")) {
+            if (ignoreEntity(entity)) {
                 return;
-            }
-            if (entity instanceof TerrorPhantom terrorPhantom && terrorPhantom.isPlayerOwned()) {
-                return;
-            }
-            if (this.shooter instanceof PhantomGunner phantomGunner) {
-                if (phantomGunner.isPlayerOwned() && phantomGunner.getPlayer() != null) {
-                    if (phantomGunner.getPlayer() == this.shooter) {
-                        return;
-                    }
-                }
-            }
-            if (entity instanceof PhantomGunner phantomGunner) {
-                if (phantomGunner.isPlayerOwned() && phantomGunner.getPlayer() != null) {
-                    if (phantomGunner.getPlayer() == this.shooter) {
-                        return;
-                    }
-                }
-            }
-            if (this.shooter.getTags().contains("PlayerOwned") && entity.getTags().contains("PlayerOwned")) {
-                return;
-            }
-            if (this.shooter.getTags().contains("PlayerOwned") && !(entity instanceof Enemy) && !(entity instanceof Player)) {
-                return;
-            }
-
-            // Entities of the same type are not allowed to hit each other
-            if (this.shooter instanceof PathfinderMob pathfinderMob && pathfinderMob.getType() == entity.getType()) {
-                if (this.level().random.nextFloat() < 0.9) {
-                    return;
-                }
             }
 
             // Fire
@@ -798,9 +835,16 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
         }
     }
 
+    public ResourceLocation getAdvantage() {
+        if (!Config.COMMON.gameplay.gunAdvantage.get()) {
+            return null;
+        }
+        return this.getProjectile().getAdvantage();
+    }
+
     public float advantageMultiplier(Entity entity)
     {
-        ResourceLocation advantage = this.getProjectile().getAdvantage();
+        ResourceLocation advantage = this.getAdvantage();
         float advantageMultiplier = 1F;
 
         if (!advantage.equals(ModTags.Entities.NONE.location()))
@@ -846,6 +890,9 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
     }
 
     protected boolean ignoreEntity(Entity entity) {
+        if (entity instanceof LivingEntity livingEntity && livingEntity.isDeadOrDying()) {
+            return true;
+        }
         if (entity instanceof LivingEntity livingEntity && livingEntity.hasEffect(ModEffects.PLAYER_BULLET_PROTECTION.get()) && this.shooter instanceof Player) {
             return true;
         }
@@ -854,7 +901,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
             return true;
         }
 
-        ResourceLocation advantage = this.getProjectile().getAdvantage();
+        ResourceLocation advantage = this.getAdvantage();
         if(entity.getType().is(ModTags.Entities.GHOST) && (!advantage.equals(ModTags.Entities.UNDEAD.location())))
         {
             if (this.getProjectile().getItem().equals(ModItems.SPECTRE_ROUND.getId())) return false;
@@ -863,6 +910,26 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 
         if (this.shooter.getMainHandItem().is(ModItems.HOLY_SHOTGUN.get()) && !isUndead(entity) && !(entity instanceof Enemy)) {
             return true;
+        }
+
+        if (this.shooter.getTags().contains("GunnerPatroller") && entity.getTags().contains("GunnerPatroller")) {
+            return true;
+        }
+
+        if (this.shooter instanceof Player && entity.getTags().contains("PlayerOwned")) {
+            return true;
+        }
+        if (this.shooter.getTags().contains("PlayerOwned") && entity.getTags().contains("PlayerOwned")) {
+            return true;
+        }
+        if (this.shooter.getTags().contains("PlayerOwned") && !(entity instanceof Enemy) && !(entity instanceof Player)) {
+            return true;
+        }
+
+        if (this.shooter instanceof PathfinderMob pathfinderMob && pathfinderMob.getType() == entity.getType()) {
+            if (this.level().random.nextFloat() < 0.9) {
+                return true;
+            }
         }
 
         return false;
@@ -921,6 +988,12 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
             entity.setDeltaMovement(0, 0, 0);
         }
 
+        if (this.potionEffect.getPotionEffect() != null && !this.potionEffect.isSelfApplied() && entity instanceof LivingEntity livingEntity) {
+            MobEffect effect = BuiltInRegistries.MOB_EFFECT.get(this.potionEffect.getPotionEffect());
+            if (effect != null) {
+                livingEntity.addEffect(new MobEffectInstance(effect, this.potionEffect.getPotionEffectDuration(), this.potionEffect.getPotionEffectStrength()));
+            }
+        }
 
         if (!entity.level().isClientSide) {
             ((ServerLevel) entity.level()).sendParticles(ParticleTypes.DAMAGE_INDICATOR, entity.getX(), entity.getY(), entity.getZ(), (int) damage / 2, entity.getBbWidth() / 2, entity.getBbHeight() / 2, entity.getBbWidth() / 2, 0.1);
@@ -1284,6 +1357,8 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
     {
         this.projectile = new Gun.Projectile();
         this.projectile.deserializeNBT(compound.getCompound("Projectile"));
+        this.potionEffect = new Gun.PotionEffect();
+        this.potionEffect.deserializeNBT(compound.getCompound("PotionEffect"));
         this.general = new Gun.General();
         this.general.deserializeNBT(compound.getCompound("General"));
         this.modifiedGravity = compound.getDouble("ModifiedGravity");
@@ -1294,6 +1369,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
     protected void addAdditionalSaveData(CompoundTag compound)
     {
         compound.put("Projectile", this.projectile.serializeNBT());
+        compound.put("PotionEffect", this.potionEffect.serializeNBT());
         compound.put("General", this.general.serializeNBT());
         compound.putDouble("ModifiedGravity", this.modifiedGravity);
         compound.putInt("MaxLife", this.life);
@@ -1303,6 +1379,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
     public void writeSpawnData(FriendlyByteBuf buffer)
     {
         buffer.writeNbt(this.projectile.serializeNBT());
+        buffer.writeNbt(this.potionEffect.serializeNBT());
         buffer.writeNbt(this.general.serializeNBT());
         buffer.writeInt(this.shooterId);
         BufferUtil.writeItemStackToBufIgnoreTag(buffer, this.item);
@@ -1315,6 +1392,8 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
     {
         this.projectile = new Gun.Projectile();
         this.projectile.deserializeNBT(buffer.readNbt());
+        this.potionEffect = new Gun.PotionEffect();
+        this.potionEffect.deserializeNBT(buffer.readNbt());
         this.general = new Gun.General();
         this.general.deserializeNBT(buffer.readNbt());
         this.shooterId = buffer.readInt();

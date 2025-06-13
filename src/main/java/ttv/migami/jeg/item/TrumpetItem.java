@@ -93,7 +93,7 @@ public class TrumpetItem extends BarrelItem {
             world.playSound(player, player.blockPosition(), SoundEvents.ITEM_BREAK, SoundSource.PLAYERS, 1.0F, 1.0F);
             itemStack.shrink(1);
         } else {
-            itemStack.hurtAndBreak(1, player, null);
+            itemStack.hurtAndBreak(1, player, e -> {});
         }
 
         return InteractionResultHolder.sidedSuccess(itemStack, world.isClientSide());

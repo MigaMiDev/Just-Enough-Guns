@@ -31,6 +31,9 @@ import ttv.migami.jeg.init.ModEnchantments;
 import ttv.migami.jeg.init.ModItems;
 import ttv.migami.jeg.init.ModTags;
 import ttv.migami.jeg.modifier.Modifier;
+import ttv.migami.jeg.modifier.type.IModifierEffect;
+import ttv.migami.jeg.modifier.type.StatModifier;
+import ttv.migami.jeg.modifier.type.StatType;
 import ttv.migami.jeg.util.GunEnchantmentHelper;
 import ttv.migami.jeg.util.GunModifierHelper;
 
@@ -149,9 +152,16 @@ public class GunItem extends Item implements IColored, IMeta {
                 }
 
                 float damage = modifiedGun.getProjectile().getDamage();
-
                 if (this.modifier != null && Config.COMMON.gameplay.gunModifiers.get()) {
-                    damage *= (float) this.modifier.getModifiers().get(0).getValue();
+                    float fireRateMultiplier = 1.0F;
+
+                    for (IModifierEffect effect : this.modifier.getModifiers()) {
+                        if (effect instanceof StatModifier statModifier && statModifier.getStatType() == StatType.DAMAGE) {
+                            fireRateMultiplier *= statModifier.getValue();
+                        }
+                    }
+
+                    damage *= fireRateMultiplier;
                 }
 
                 ResourceLocation advantage = modifiedGun.getProjectile().getAdvantage();

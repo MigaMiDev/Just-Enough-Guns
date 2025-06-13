@@ -56,8 +56,10 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
             return;
         }
 
-        if (stack.getItem() == ModItems.FINGER_GUN.get() && stack.getTag() != null && !stack.getTag().getBoolean("IgnoreAmmo")){
-            stack.getOrCreateTag().putBoolean("IgnoreAmmo", true);
+        if (stack.getItem() == ModItems.FINGER_GUN.get() && stack.getTag() != null && !stack.getTag().getBoolean("IgnoreAmmo")) {
+            if (stack.hasTag()) {
+                stack.getTag().putBoolean("IgnoreAmmo", true);
+            }
         }
 
         if (entity instanceof Player player) {

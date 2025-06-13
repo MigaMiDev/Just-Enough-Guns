@@ -10,6 +10,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
@@ -478,8 +479,7 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 			}
 
 			// Makes the gun glow if needed
-			if (bone.getName().matches("glow") || bone.getName().matches("glow_2") ||
-					bone.getName().matches("glow_3")) {
+			if (bone.getName().startsWith("glow")) {
 				packedLight = 15728880;
 			}
 
@@ -584,6 +584,12 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 
 			if (renderArms)
 			{
+				EntityRenderer<?> renderer = client.getEntityRenderDispatcher().getRenderer(client.player);
+
+				if (!(renderer instanceof PlayerRenderer)) {
+					return;
+				}
+
 				PlayerRenderer playerEntityRenderer = (PlayerRenderer) client.getEntityRenderDispatcher().getRenderer(client.player);
 				PlayerModel<AbstractClientPlayer> playerEntityModel = playerEntityRenderer.getModel();
 

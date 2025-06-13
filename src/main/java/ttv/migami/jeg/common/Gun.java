@@ -48,6 +48,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
     protected General general = new General();
     protected Reloads reloads = new Reloads();
     protected Projectile projectile = new Projectile();
+    protected PotionEffect potionEffect = new PotionEffect();
     protected Sounds sounds = new Sounds();
     protected Display display = new Display();
     protected Modules modules = new Modules();
@@ -59,6 +60,11 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
     public Projectile getProjectile()
     {
         return this.projectile;
+    }
+
+    public PotionEffect getPotionEffect()
+    {
+        return this.potionEffect;
     }
 
     public Sounds getSounds()
@@ -951,6 +957,115 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         public boolean hitsRubberFruit()
         {
             return this.hitsRubberFruit;
+        }
+    }
+
+    public static class PotionEffect implements INBTSerializable<CompoundTag>
+    {
+        @Optional
+        private boolean selfPotionEffect;
+        @Optional
+        @Nullable
+        private ResourceLocation potionEffect;
+        @Optional
+        private int potionEffectStrength;
+        @Optional
+        private int potionEffectDuration;
+
+        @Override
+        public CompoundTag serializeNBT()
+        {
+            CompoundTag tag = new CompoundTag();
+            if (this.potionEffect != null) {
+                tag.putBoolean("SelfPotionEffect", this.selfPotionEffect);
+                tag.putString("PotionEffect", this.potionEffect.toString());
+                tag.putInt("PotionEffectStrength", this.potionEffectStrength);
+                tag.putInt("PotionEffectDuration", this.potionEffectDuration);
+            }
+            return tag;
+        }
+
+        @Override
+        public void deserializeNBT(CompoundTag tag)
+        {
+            if(tag.contains("SelfPotionEffect", Tag.TAG_ANY_NUMERIC))
+            {
+                this.selfPotionEffect = tag.getBoolean("SelfPotionEffect");
+            }
+            if(tag.contains("PotionEffect", Tag.TAG_STRING))
+            {
+                this.potionEffect = new ResourceLocation(tag.getString("PotionEffect"));
+            }
+            if(tag.contains("PotionEffectStrength", Tag.TAG_ANY_NUMERIC))
+            {
+                this.potionEffectStrength = tag.getInt("PotionEffectStrength");
+            }
+            if(tag.contains("PotionEffectDuration", Tag.TAG_ANY_NUMERIC))
+            {
+                this.potionEffectDuration = tag.getInt("PotionEffectDuration");
+            }
+        }
+
+        public JsonObject toJsonObject()
+        {
+            JsonObject object = new JsonObject();
+            if(this.potionEffect != null) {
+                if(this.selfPotionEffect) object.addProperty("selfPotionEffect", this.selfPotionEffect);
+                object.addProperty("potionEffect", this.potionEffect.toString());
+                if(this.potionEffectStrength > 0) {
+                    object.addProperty("potionEffectStrength", this.potionEffectStrength);
+                } else {
+                    object.addProperty("potionEffectStrength", 0);
+                }
+                if(this.potionEffectDuration > 0) {
+                    object.addProperty("potionEffectDuration", this.potionEffectDuration);
+                } else {
+                    object.addProperty("potionEffectDuration", 20);
+                }
+            }
+            return object;
+        }
+
+        public PotionEffect copy()
+        {
+            PotionEffect potionEffect = new PotionEffect();
+            potionEffect.selfPotionEffect = this.selfPotionEffect;
+            potionEffect.potionEffect = this.potionEffect;
+            potionEffect.potionEffectStrength = this.potionEffectStrength;
+            potionEffect.potionEffectDuration = this.potionEffectDuration;
+            return potionEffect;
+        }
+
+        /**
+         * @return Is the effect added to the shooter?
+         */
+        public boolean isSelfApplied()
+        {
+            return this.selfPotionEffect;
+        }
+
+        /**
+         * @return The effect added by this projectile
+         */
+        public ResourceLocation getPotionEffect()
+        {
+            return this.potionEffect;
+        }
+
+        /**
+         * @return The effect's strength
+         */
+        public int getPotionEffectStrength()
+        {
+            return this.potionEffectStrength;
+        }
+
+        /**
+         * @return The effects duration
+         */
+        public int getPotionEffectDuration()
+        {
+            return this.potionEffectDuration;
         }
     }
 
@@ -1907,6 +2022,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         tag.put("General", this.general.serializeNBT());
         tag.put("Reloads", this.reloads.serializeNBT());
         tag.put("Projectile", this.projectile.serializeNBT());
+        tag.put("PotionEffect", this.potionEffect.serializeNBT());
         tag.put("Sounds", this.sounds.serializeNBT());
         tag.put("Display", this.display.serializeNBT());
         tag.put("Modules", this.modules.serializeNBT());
@@ -1928,6 +2044,10 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         {
             this.projectile.deserializeNBT(tag.getCompound("Projectile"));
         }
+        if(tag.contains("PotionEffect", Tag.TAG_COMPOUND))
+        {
+            this.potionEffect.deserializeNBT(tag.getCompound("PotionEffect"));
+        }
         if(tag.contains("Sounds", Tag.TAG_COMPOUND))
         {
             this.sounds.deserializeNBT(tag.getCompound("Sounds"));
@@ -1948,6 +2068,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         object.add("general", this.general.toJsonObject());
         object.add("reloads", this.reloads.toJsonObject());
         object.add("projectile", this.projectile.toJsonObject());
+        GunJsonUtil.addObjectIfNotEmpty(object, "potionEffect", this.potionEffect.toJsonObject());
         GunJsonUtil.addObjectIfNotEmpty(object, "sounds", this.sounds.toJsonObject());
         GunJsonUtil.addObjectIfNotEmpty(object, "display", this.display.toJsonObject());
         GunJsonUtil.addObjectIfNotEmpty(object, "modules", this.modules.toJsonObject());
@@ -1967,6 +2088,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         gun.general = this.general.copy();
         gun.reloads = this.reloads.copy();
         gun.projectile = this.projectile.copy();
+        gun.potionEffect = this.potionEffect.copy();
         gun.sounds = this.sounds.copy();
         gun.display = this.display.copy();
         gun.modules = this.modules.copy();
@@ -2621,6 +2743,30 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         public Builder setReduceDamageOverLife(boolean damageReduceOverLife)
         {
             this.gun.projectile.damageReduceOverLife = damageReduceOverLife;
+            return this;
+        }
+
+        public Builder setSelfPotionEffect(boolean selfPotionEffect)
+        {
+            this.gun.potionEffect.selfPotionEffect = selfPotionEffect;
+            return this;
+        }
+
+        public Builder setPotionEffect(ResourceLocation potionEffect)
+        {
+            this.gun.potionEffect.potionEffect = potionEffect;
+            return this;
+        }
+
+        public Builder setPotionEffectStrength(int strength)
+        {
+            this.gun.potionEffect.potionEffectStrength = strength;
+            return this;
+        }
+
+        public Builder setPotionEffectDuration(int duration)
+        {
+            this.gun.potionEffect.potionEffectDuration = duration;
             return this;
         }
 

@@ -3,8 +3,19 @@
   "color": 13421772,
   "modifiers": [
     {
+      "type": "stat",
       "amount": 0.7,
       "attribute": "damage"
+    },
+    {
+      "type": "stat",
+      "amount": 0.9,
+      "attribute": "fire_rate"
+    },
+    {
+      "type": "stat",
+      "amount": 0.8,
+      "attribute": "projectile_velocity"
     }
   ],
   "name": "awful",

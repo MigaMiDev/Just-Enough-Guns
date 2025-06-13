@@ -509,7 +509,7 @@ public class TerrorRaidEntity extends Entity {
                 if (this.despawnTicks == 100 && this.summonBoss) {
                     this.playHorn();
                 }
-                if (this.despawnTicks < 0) {
+                if (this.despawnTicks < 0 && !this.defeat) {
                     if (this.summonBoss) {
                         LightningBolt lightningBolt = new LightningBolt(EntityType.LIGHTNING_BOLT, this.level());
                         lightningBolt.setPos(this.getPosition(1F).add(0, 64, 32));

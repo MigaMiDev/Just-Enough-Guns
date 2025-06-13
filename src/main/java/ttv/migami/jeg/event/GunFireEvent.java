@@ -1,5 +1,7 @@
 package ttv.migami.jeg.event;
 
+import net.mcreator.deathangels.init.DeathAngelsModMobEffects;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -7,7 +9,10 @@ import net.minecraftforge.eventbus.api.Cancelable;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animation.AnimationController;
+import ttv.migami.jeg.JustEnoughGuns;
 import ttv.migami.jeg.item.AnimatedGunItem;
+import ttv.migami.jeg.item.GunItem;
+import ttv.migami.jeg.util.GunModifierHelper;
 
 /**
  * <p>Fired when a player shoots a gun.</p>
@@ -72,6 +77,14 @@ public class GunFireEvent extends PlayerEvent
                     final long id = GeoItem.getId(stack);
                     AnimationController<GeoAnimatable> animationController = animatedGunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("Controller");
                     animationController.forceAnimationReset();
+                }
+            }
+
+            if (stack.getItem() instanceof GunItem) {
+                if (!GunModifierHelper.isSilencedFire(stack)) {
+                    if (JustEnoughGuns.aQuietPlaceLoaded) {
+                        player.addEffect(new MobEffectInstance(DeathAngelsModMobEffects.SOUND_EMITTING.get(), 40, 1));
+                    }
                 }
             }
         }
