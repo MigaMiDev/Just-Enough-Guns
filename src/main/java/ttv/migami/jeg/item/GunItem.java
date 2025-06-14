@@ -306,8 +306,7 @@ public class GunItem extends Item implements IColored, IMeta {
             Gun data = NetworkGunManager.get() != null
                     ? NetworkGunManager.get().getRegisteredGuns().get(id)
                     : null;
-            //return data != null ? data : Gun.EMPTY;   // fallback
-            return data;
+            return data != null ? data : this.gun;
         }
 
         if (tagCompound != null && tagCompound.contains("Gun", Tag.TAG_COMPOUND)) {

@@ -38,6 +38,7 @@ import software.bernie.geckolib.renderer.GeoItemRenderer;
 import software.bernie.geckolib.renderer.GeoRenderer;
 import software.bernie.geckolib.util.RenderUtils;
 import ttv.migami.jeg.Config;
+import ttv.migami.jeg.Reference;
 import ttv.migami.jeg.client.GunRenderType;
 import ttv.migami.jeg.client.handler.AimingHandler;
 import ttv.migami.jeg.client.handler.GunRecoilHandler;
@@ -200,7 +201,38 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 		}
 	}
 
-	private void updateGunSkin(ItemStack stack) {
+	private static ResourceLocation tex(ResourceLocation gunId) {
+		return new ResourceLocation(Reference.MOD_ID,
+				"textures/" + gunId.getPath() + ".png");
+	}
+
+	private static ResourceLocation geo(ResourceLocation gunId) {
+		return new ResourceLocation(Reference.MOD_ID,
+				"geo/" + gunId.getPath() + ".geo.json");
+	}
+
+	private void loadDataGunResources(ItemStack stack) {
+		if (!stack.hasTag() || stack.getTag() == null || stack.getTag().get("GunId") == null) return;
+
+		ResourceLocation id = new ResourceLocation(stack.getTag().getString("GunId"));
+		ResourceLocation newGunTexture = tex(id);
+
+		if (!newGunTexture.equals(oldGunTexture)) {
+			oldGunTexture = newGunTexture;
+			AnimatedGunModel animaModel = (AnimatedGunModel) this.getGeoModel();
+			animaModel.setCurrentTexture(oldGunTexture);
+		}
+
+		ResourceLocation newGunModel = geo(id);
+
+		if (!newGunModel.equals(oldGunModel)) {
+			oldGunModel = newGunModel;
+			AnimatedGunModel animaModel = (AnimatedGunModel) this.getGeoModel();
+			animaModel.setCurrentModel(oldGunModel);
+		}
+	}
+
+	private void updateGunResources(ItemStack stack) {
 		// Gun Skin testing! "Paint Jobs"
 		ResourceLocation newGunTexture;
 		if (stack.hasTag() && (Gun.getAttachment(IAttachment.Type.PAINT_JOB, stack).getItem() instanceof PaintJobCanItem paintJobCanItem)) {
@@ -290,7 +322,13 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 		float translateZ = model.getTransforms().firstPersonRightHand.translation.z();
 
 		// Gun Skin testing! "Paint Jobs"
-		this.updateGunSkin(stack);
+		if (stack.hasTag() && stack.getTag() != null) {
+			if (!stack.getTag().contains("GunId")) {
+				this.updateGunResources(stack);
+			} else {
+				loadDataGunResources(stack);
+			}
+		}
 
 		/* Applies some of the original transforms */
 		if (stack.getItem() instanceof AnimatedGunItem && this.renderType == ItemDisplayContext.FIRST_PERSON_RIGHT_HAND) {
@@ -803,6 +841,7 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 						{
 							// Gun Skin testing! "Paint Jobs"
                             ResourceLocation newTextureResource;
+
                             if (stack.hasTag() && (Gun.getAttachment(IAttachment.Type.PAINT_JOB, stack).getItem() instanceof PaintJobCanItem paintJobCanItem)) {
 								newTextureResource = new ResourceLocation(getModID(stack), "textures/animated/attachment/paintjob/" + paintJobCanItem.getPaintJob() + "/" + attachmentStack.getItem() + ".png");
 							} else {
@@ -810,10 +849,6 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 							}
 							newTextureResource = getValidTexture(newTextureResource, attachmentStack);
 
-							// Update texture only if it has changed
-							if (!newTextureResource.equals(oldTextureResource)) {
-
-							}
 							attachmentRenderer.updateTexture(newTextureResource);
 							oldTextureResource = newTextureResource;
 

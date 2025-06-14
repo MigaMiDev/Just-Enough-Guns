@@ -616,6 +616,36 @@
 							"easing": "easeInOutSine"
 						}
 					}
+				},
+				"right_arm": {
+					"rotation": {
+						"vector": [90, 0, -180]
+					},
+					"position": {
+						"vector": [5.65, -1.83, 2.4]
+					}
+				},
+				"left_arm": {
+					"rotation": {
+						"0.0": {
+							"vector": [73.95054, -26.20116, -129.71317],
+							"easing": "easeInOutSine"
+						},
+						"0.625": {
+							"vector": [73.95054, -26.20116, -129.71317],
+							"easing": "easeInOutSine"
+						}
+					},
+					"position": {
+						"0.0": {
+							"vector": [-3.9, -3.2, -8.85],
+							"easing": "easeOutSine"
+						},
+						"0.625": {
+							"vector": [-3.9, -3.2, -8.85],
+							"easing": "easeOutSine"
+						}
+					}
 				}
 			}
 		},

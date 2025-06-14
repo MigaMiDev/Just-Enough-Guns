@@ -13,6 +13,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackResources;
+import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.EnchantedBookItem;
@@ -27,12 +29,14 @@ import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.resource.PathPackResources;
 import org.lwjgl.glfw.GLFW;
 import ttv.migami.jeg.JustEnoughGuns;
 import ttv.migami.jeg.Reference;
@@ -42,6 +46,7 @@ import ttv.migami.jeg.client.render.gun.model.*;
 import ttv.migami.jeg.client.screen.*;
 import ttv.migami.jeg.client.screen.recycler.RecyclerScreen;
 import ttv.migami.jeg.client.util.PropertyHelper;
+import ttv.migami.jeg.common.NetworkGunManager;
 import ttv.migami.jeg.debug.IEditorMenu;
 import ttv.migami.jeg.debug.client.screen.EditorScreen;
 import ttv.migami.jeg.enchantment.EnchantmentTypes;
@@ -57,6 +62,8 @@ import ttv.migami.jeg.network.message.C2SMessageAttachments;
 import ttv.migami.mdf.effect.FruitEffect;
 
 import java.lang.reflect.Field;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import static ttv.migami.jeg.JustEnoughGuns.devilFruitsLoaded;
 
@@ -66,6 +73,37 @@ import static ttv.migami.jeg.JustEnoughGuns.devilFruitsLoaded;
 @Mod.EventBusSubscriber(modid = Reference.MOD_ID, value = Dist.CLIENT)
 public class ClientHandler {
     private static Field mouseOptionsField;
+    public static final String CONFIG_NS = Reference.MOD_ID + "_cfg";
+
+    @SubscribeEvent
+    public static void addPack(AddPackFindersEvent event) {
+        if (event.getPackType() != PackType.CLIENT_RESOURCES) return;
+
+        Path root = NetworkGunManager.CONFIG_GUN_DIR      // …/config/jeg/guns
+                .getParent()                         // …/config/jeg
+                .resolve("guns")                     // (safety)
+                .resolve("assets");                  // …/config/jeg/guns/assets
+
+        if (!Files.isDirectory(root)) return;
+
+        // Forge ≥1.20: PathPackResources is the simple wrapper for a folder
+        PackResources pack = new PathPackResources(
+                CONFIG_NS,                                // namespace / pack ID
+                true,                                     // always hidden (no toggle)
+                root);
+
+        /*event.addRepositorySource(consumer ->
+                consumer.accept(
+                        PackMetadataSectionSerializer.createPack(
+                                Component.literal("JEG config-gun assets"), 1),
+                        pack,
+                        PackPosition.TOP,
+                        Collections.emptyMap(),
+                        PackSource.BUILT_IN,
+                        true,
+                        null,
+                        false));*/
+    }
 
     public static void setup() {
         MinecraftForge.EVENT_BUS.register(AimingHandler.get());

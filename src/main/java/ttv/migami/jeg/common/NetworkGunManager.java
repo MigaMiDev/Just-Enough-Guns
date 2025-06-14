@@ -49,9 +49,15 @@ import java.util.stream.Stream;
 @Mod.EventBusSubscriber(modid = Reference.MOD_ID)
 public class NetworkGunManager extends SimplePreparableReloadListener<Map<ResourceLocation, Gun>>
 {
+    public static final Path CONFIG_PACK_DIR = FMLPaths.CONFIGDIR.get()
+            .resolve("jeg");
+
     public static final Path CONFIG_GUN_DIR = FMLPaths.CONFIGDIR.get()
             .resolve("jeg")
+            .resolve("data")
             .resolve("guns");
+
+    public static final String CONFIG_NAMESPACE = Reference.MOD_ID + "_cfg";
 
     private static final int FILE_TYPE_LENGTH_VALUE = ".json".length();
     private static final Gson GSON_INSTANCE = Util.make(() -> {
@@ -121,12 +127,13 @@ public class NetworkGunManager extends SimplePreparableReloadListener<Map<Resour
         /* Awesome new Config/Data Guns! */
         try {
             Files.createDirectories(CONFIG_GUN_DIR);
+
             try (Stream<Path> files = Files.walk(CONFIG_GUN_DIR)) {
                 files.filter(p -> p.toString().endsWith(".json"))
-                        .forEach(p -> readJson(Reference.MOD_ID,           // namespace
-                                p.getFileName().toString(), // file name
+                        .forEach(p -> readJson(CONFIG_NAMESPACE,
+                                p.getFileName().toString(),
                                 () -> Files.newInputStream(p),
-                                map, null));                // null → use file name
+                                map, null));
             }
         } catch (IOException e) {
             JustEnoughGuns.LOGGER.error("Couldn't scan {}", CONFIG_GUN_DIR, e);
@@ -344,11 +351,24 @@ public class NetworkGunManager extends SimplePreparableReloadListener<Map<Resour
                 id = forcedId;
             } else {
                 String base = filePath.substring(0, filePath.length() - 5);
-                if (base.contains("/")) base = base.substring(base.lastIndexOf('/') + 1);
-                id = new ResourceLocation(namespace, base);
+                if (base.contains("/")) {
+                    base = base.substring(base.lastIndexOf('/') + 1);
+                }
+
+                String uniqueBase = base;
+                int counter = 1;
+                ResourceLocation testId = new ResourceLocation(namespace, uniqueBase);
+
+                while (sink.containsKey(testId)) {
+                    uniqueBase = base + "_" + counter++;
+                    testId = new ResourceLocation(namespace, uniqueBase);
+                }
+
+                id = testId;
             }
 
             sink.put(id, gun);
+            JustEnoughGuns.LOGGER.info("Registered gun '{}'", id);
         } catch (Exception ex) {
             JustEnoughGuns.LOGGER.error("Couldn't read {}", filePath, ex);
         }

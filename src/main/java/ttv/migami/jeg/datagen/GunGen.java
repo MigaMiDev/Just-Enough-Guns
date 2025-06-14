@@ -29,6 +29,60 @@ public class GunGen extends GunProvider
     @Override
     protected void registerGuns()
     {
+        this.addGun(new ResourceLocation(Reference.MOD_ID, "abstract_gun"), Gun.Builder.create()
+
+                // General
+                .setFireMode(FireMode.AUTOMATIC)
+                .setFireRate(3)
+                .setGripType(GripType.TWO_HANDED)
+                .setRecoilKick(0.22F)
+                .setRecoilAngle(2.7F)
+                .setAlwaysSpread(true)
+                .setSpread(4.0F)
+                .setDrawTimer(28)
+
+                // Reloads
+                .setMaxAmmo(30)
+                .setReloadType(ReloadType.MAG_FED)
+                .setReloadTimer(35)
+                .setAdditionalReloadTimer(15)
+
+                // Projectile
+                .setAmmo(ModItems.RIFLE_AMMO.get())
+                .setEjectsCasing(true)
+                .setProjectileVisible(false)
+                .setDamage(6F)
+                .setProjectileSize(0.05F)
+                .setProjectileSpeed(14F)
+                .setProjectileLife(60)
+                .setProjectileTrailLengthMultiplier(2)
+                .setProjectileTrailColor(0xFFFF00 | 0xFF000000)
+                .setProjectileAffectedByGravity(true)
+
+                // Sounds
+                .setFireSound(ModSounds.ASSAULT_RIFLE_FIRE.get())
+                .setReloadStart(ModSounds.AR_RELOAD_MAGAZINE_IN.get()) // NOTE: This seems reversed!
+                .setReloadLoadSound(ModSounds.AR_RELOAD_MAGAZINE_OUT.get()) // Consider flipping these two
+                .setReloadEndSound(ModSounds.AR_RELOAD_EJECTOR.get())
+                .setEjectorPullSound(ModSounds.AR_EJECTOR_PULL.get())
+                .setEjectorReleaseSound(ModSounds.AR_EJECTOR_RELEASE.get())
+                .setSilencedFireSound(ModSounds.ASSAULT_RIFLE_SILENCED_FIRE.get())
+                .setEnchantedFireSound(ModSounds.ASSAULT_RIFLE_ENCHANTED_FIRE.get())
+
+                // Attachments
+                .setMuzzleFlash(0.8, 0.0, 3.96, -4.785)
+                .setZoom(Gun.Modules.Zoom.builder()
+                        .setFovModifier(0.6F)
+                        .setOffset(0.0, 3.75, -1.75))
+                .setScope(1.0F, 0.0, 4.715, 5.0)
+                .setBarrel(1.0F, 0.0, 3.97, -4.5)
+                .setStock(0.0F, 0.0, 0.0, 0.0)
+                .setUnderBarrel(1.0F, 0.0, 2.7, 0.3)
+                .setMagazine(0.0F, 0.0, 0.0, 0.0)
+                .setSpecial(1.0F, -1, 4, 0)
+
+                .build());
+
         this.addGun(new ResourceLocation(Reference.MOD_ID, "finger_gun"), Gun.Builder.create()
 
                 // General

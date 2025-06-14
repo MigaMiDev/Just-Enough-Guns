@@ -18,9 +18,9 @@ public class ModItems {
 
     public static final DeferredRegister<Item> REGISTER = DeferredRegister.create(ForgeRegistries.ITEMS, Reference.MOD_ID);
 
-    public static final RegistryObject<GunItem> ABSTRACT_GUN =
+    public static final RegistryObject<AnimatedGunItem> ABSTRACT_GUN =
             REGISTER.register("abstract_gun",
-                    () -> new GunItem(new Item.Properties().stacksTo(1)));
+                    () -> new AnimatedGunItem(new Item.Properties().stacksTo(1), "abstract_gun"));
 
     /* Firearms */
     /* Scrap Tier */

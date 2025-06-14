@@ -64,7 +64,7 @@ public final class GunAnimations {
                         (GunAnimations.isAnimationPlaying(state.getController(), "shoot") ||
                                 GunAnimations.isAnimationPlaying(state.getController(), "aim_shoot")) &&
                                 !state.getController().getAnimationState().equals(AnimationController.State.PAUSED)) {
-
+                    state.setControllerSpeed(GunEnchantmentHelper.getReloadAnimationSpeed(gunStack));
                     if (tag.getBoolean("IsAiming")) {
                         return state.setAndContinue(AIM_SHOOT);
                     } else {
@@ -111,6 +111,9 @@ public final class GunAnimations {
                     if (tag.getBoolean("IsInspecting") ||
                             (GunAnimations.isAnimationPlaying(state.getController(), "inspect") &&
                                     !state.getController().hasAnimationFinished())) {
+                        if (tag.getBoolean("IsAiming")) {
+                            return state.setAndContinue(IDLE);
+                        }
                         return state.setAndContinue(INSPECT);
                     }
 
