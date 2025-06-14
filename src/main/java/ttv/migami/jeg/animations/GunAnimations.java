@@ -4,6 +4,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
+import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animation.Animation;
 import software.bernie.geckolib.core.animation.AnimationController;
@@ -43,6 +44,8 @@ public final class GunAnimations {
             ItemStack gunStack = player.getMainHandItem();
 
             state.setControllerSpeed(1F);
+
+            if (!state.getData(DataTickets.ITEM_RENDER_PERSPECTIVE).firstPerson()) return state.setAndContinue(IDLE);
 
             if (gunStack.getItem() != animatable)
                 return state.setAndContinue(IDLE);

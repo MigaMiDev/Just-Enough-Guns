@@ -7,8 +7,8 @@
   ],
   "display": {
     "thirdperson_righthand": {
-      "translation": [0, 8.75, -8.5],
-      "scale": [1.5, 1.5, 1.5]
+      "translation": [0, -3, -8.5],
+      "scale": [1.2, 1.2, 1.2]
     },
     "firstperson_righthand": {
       "translation": [
@@ -19,8 +19,8 @@
     },
     "gui": {
       "rotation": [90, -45, 90],
-      "translation": [-3.75, 12.4, 0],
-      "scale": [2, 2, 2]
+      "translation": [8, -2, 0],
+      "scale": [1.7, 1.7, 1.7]
     },
     "fixed": {
       "rotation": [

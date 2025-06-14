@@ -11,6 +11,8 @@ import net.minecraftforge.resource.PathPackResources;
 import ttv.migami.jeg.JustEnoughGuns;
 import ttv.migami.jeg.common.NetworkGunManager;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -28,9 +30,11 @@ public final class ConfigPackLoader {
 
         JustEnoughGuns.LOGGER.error("Trying to register a pack with the ID {} in the Root {}", PACK_ID, ROOT);
 
+        ensurePackMcmeta();
+
         Pack pack = Pack.readMetaAndCreate(
                 PACK_ID,
-                Component.literal("Just Enough Guns – config resources"),
+                Component.literal("JEG: Data-Driven Guns!"),
                 /*alwaysEnabled=*/true,
                 CONFIG_RESOURCES,
                 PackType.CLIENT_RESOURCES,
@@ -42,5 +46,27 @@ public final class ConfigPackLoader {
             e.addRepositorySource(finder -> finder.accept(pack));
             JustEnoughGuns.LOGGER.error("Registered a Resource Pack for {}", PACK_ID);
         } else JustEnoughGuns.LOGGER.error("Could not register the Resource Pack for {}", PACK_ID);
+    }
+
+    private static void ensurePackMcmeta() {
+        Path mcmeta = ROOT.resolve("pack.mcmeta");
+
+        if (Files.notExists(mcmeta)) {
+            try {
+                Files.createDirectories(ROOT);
+                String json = """
+                {
+                  "pack": {
+                    "pack_format": 15,
+                    "description": "Assets for the new Data-Driven Guns!"
+                  }
+                }
+                """;
+                Files.writeString(mcmeta, json);
+                JustEnoughGuns.LOGGER.info("Generated default pack.mcmeta for {}", PACK_ID);
+            } catch (IOException e) {
+                JustEnoughGuns.LOGGER.error("Failed to create pack.mcmeta for {}", PACK_ID, e);
+            }
+        }
     }
 }

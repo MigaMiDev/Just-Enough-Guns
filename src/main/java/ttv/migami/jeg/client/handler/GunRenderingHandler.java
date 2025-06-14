@@ -806,6 +806,12 @@ public class GunRenderingHandler {
                     //if (!display.firstPerson()) {
                     doRender = true;
                 }
+
+                if (stack.hasTag() && stack.getTag() != null) {
+                    if (stack.getTag().contains("GunId")) {
+                        doRender = false;
+                    }
+                }
             } else {
                 doRender = true;
             }

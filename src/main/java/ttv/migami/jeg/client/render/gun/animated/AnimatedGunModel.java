@@ -7,6 +7,7 @@ import ttv.migami.jeg.item.AnimatedGunItem;
 public class AnimatedGunModel extends DefaultedItemGeoModel<AnimatedGunItem> {
     private ResourceLocation currentTexture;
     private ResourceLocation currentModel;
+    private ResourceLocation currentAnimation;
 
     public AnimatedGunModel(ResourceLocation path) {
         super(path);
@@ -33,7 +34,7 @@ public class AnimatedGunModel extends DefaultedItemGeoModel<AnimatedGunItem> {
 
     @Override
     public ResourceLocation getAnimationResource(AnimatedGunItem gunItem) {
-        return new ResourceLocation(gunItem.getModID(), "animations/item/" + gunItem.toString() + ".animation.json");
+        return currentAnimation != null ? currentAnimation : new ResourceLocation(gunItem.getModID(), "animations/item/" + gunItem.toString() + ".animation.json");
     }
 
     public void setCurrentTexture(ResourceLocation texture) {
@@ -42,5 +43,9 @@ public class AnimatedGunModel extends DefaultedItemGeoModel<AnimatedGunItem> {
 
     public void setCurrentModel(ResourceLocation model) {
         this.currentModel = model;
+    }
+
+    public void setCurrentAnimation(ResourceLocation animation) {
+        this.currentAnimation = animation;
     }
 }

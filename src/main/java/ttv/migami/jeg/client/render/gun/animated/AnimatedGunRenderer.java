@@ -75,6 +75,7 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 	private ResourceLocation oldModelResource = null;
     private static ResourceLocation oldGunTexture = null;
 	private static ResourceLocation oldGunModel = null;
+	private static ResourceLocation oldGunAnimation = null;
 
 	public AnimatedGunRenderer(ResourceLocation path) {
 		super(new AnimatedGunModel(path));
@@ -201,6 +202,28 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 		}
 	}
 
+	private ResourceLocation getValidAbstractGunModel(ResourceLocation model) {
+		Minecraft client = Minecraft.getInstance();
+		Optional<Resource> resource = client.getResourceManager().getResource(model);
+
+		if (resource.isPresent()) {
+			return model;
+		} else {
+			return new ResourceLocation(Reference.MOD_ID, "geo/item/gun/" + "abstract_gun" + ".geo.json");
+		}
+	}
+
+	private ResourceLocation getValidAbstractGunAnimation(ResourceLocation model) {
+		Minecraft client = Minecraft.getInstance();
+		Optional<Resource> resource = client.getResourceManager().getResource(model);
+
+		if (resource.isPresent()) {
+			return model;
+		} else {
+			return new ResourceLocation(Reference.MOD_ID, "animations/item/" + "abstract_gun" + ".animation.json");
+		}
+	}
+
 	private static ResourceLocation tex(ResourceLocation gunId) {
 		return new ResourceLocation(Reference.MOD_ID,
 				"textures/" + gunId.getPath() + ".png");
@@ -211,10 +234,25 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 				"geo/" + gunId.getPath() + ".geo.json");
 	}
 
+	private static ResourceLocation animation(ResourceLocation gunId) {
+		return new ResourceLocation(Reference.MOD_ID,
+				"animations/" + gunId.getPath() + ".animation.json");
+	}
+
 	private void loadDataGunResources(ItemStack stack) {
 		if (!stack.hasTag() || stack.getTag() == null || stack.getTag().get("GunId") == null) return;
 
 		ResourceLocation id = new ResourceLocation(stack.getTag().getString("GunId"));
+
+		ResourceLocation newGunModel = geo(id);
+		newGunModel = getValidAbstractGunModel(newGunModel);
+
+		if (!newGunModel.equals(oldGunModel)) {
+			oldGunModel = newGunModel;
+			AnimatedGunModel animaModel = (AnimatedGunModel) this.getGeoModel();
+			animaModel.setCurrentModel(oldGunModel);
+		}
+
 		ResourceLocation newGunTexture = tex(id);
 
 		if (!newGunTexture.equals(oldGunTexture)) {
@@ -223,18 +261,20 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 			animaModel.setCurrentTexture(oldGunTexture);
 		}
 
-		ResourceLocation newGunModel = geo(id);
+		ResourceLocation newGunAnimation = animation(id);
+		newGunAnimation = getValidAbstractGunAnimation(newGunAnimation);
 
-		if (!newGunModel.equals(oldGunModel)) {
-			oldGunModel = newGunModel;
+		if (!newGunAnimation.equals(oldGunAnimation)) {
+			oldGunAnimation = newGunAnimation;
 			AnimatedGunModel animaModel = (AnimatedGunModel) this.getGeoModel();
-			animaModel.setCurrentModel(oldGunModel);
+			animaModel.setCurrentAnimation(oldGunAnimation);
 		}
 	}
 
 	private void updateGunResources(ItemStack stack) {
 		// Gun Skin testing! "Paint Jobs"
 		ResourceLocation newGunTexture;
+
 		if (stack.hasTag() && (Gun.getAttachment(IAttachment.Type.PAINT_JOB, stack).getItem() instanceof PaintJobCanItem paintJobCanItem)) {
 			newGunTexture = new ResourceLocation(getModID(stack), "textures/animated/gun/paintjob/" + paintJobCanItem.getPaintJob() + "/" + stack.getItem() + ".png");
 		} else {
@@ -273,22 +313,26 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 			return;
 		}
 
-		if ((this.renderType != ItemDisplayContext.FIRST_PERSON_RIGHT_HAND && !transformType.equals(ItemDisplayContext.FIXED) && !transformType.equals(ItemDisplayContext.GROUND)
-		//if ((this.renderType != ItemDisplayContext.FIRST_PERSON_RIGHT_HAND && !transformType.equals(ItemDisplayContext.GROUND)
-				&& !stack.is(ModItems.FINGER_GUN.get()))) {
-			// Hack to remove transforms created by ItemRenderer#render
-			poseStack.popPose();
+		if (stack.hasTag() && stack.getTag() != null) {
+			if (!stack.getTag().contains("GunId")) {
+				if ((this.renderType != ItemDisplayContext.FIRST_PERSON_RIGHT_HAND && !transformType.equals(ItemDisplayContext.FIXED) && !transformType.equals(ItemDisplayContext.GROUND)
+						//if ((this.renderType != ItemDisplayContext.FIRST_PERSON_RIGHT_HAND && !transformType.equals(ItemDisplayContext.GROUND)
+						&& !stack.is(ModItems.FINGER_GUN.get()))) {
+					// Hack to remove transforms created by ItemRenderer#render
+					poseStack.popPose();
 
-			poseStack.pushPose();
-			{
-				Minecraft mc = Minecraft.getInstance();
-				GunRenderingHandler.get().renderWeapon(mc.player, stack, transformType, poseStack, bufferSource, packedLight, Minecraft.getInstance().getDeltaFrameTime());
+					poseStack.pushPose();
+					{
+						Minecraft mc = Minecraft.getInstance();
+						GunRenderingHandler.get().renderWeapon(mc.player, stack, transformType, poseStack, bufferSource, packedLight, Minecraft.getInstance().getDeltaFrameTime());
+					}
+					poseStack.popPose();
+
+					// Push the stack again since we popped the pose prior
+					poseStack.pushPose();
+					return;
+				}
 			}
-			poseStack.popPose();
-
-			// Push the stack again since we popped the pose prior
-			poseStack.pushPose();
-			return;
 		}
 
 		if (AimingHandler.get().isAiming() &&  this.renderPerspective == ItemDisplayContext.FIRST_PERSON_RIGHT_HAND &&
@@ -467,10 +511,14 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 	@Override
 	public void renderRecursively(PoseStack poseStack, AnimatedGunItem animatable, GeoBone bone, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha)
 	{
-		if (this.renderPerspective != ItemDisplayContext.FIRST_PERSON_RIGHT_HAND && this.renderPerspective != ItemDisplayContext.FIXED && this.renderPerspective != ItemDisplayContext.GROUND
-		//if (this.renderPerspective != ItemDisplayContext.FIRST_PERSON_RIGHT_HAND && this.renderPerspective != ItemDisplayContext.GROUND
-				&& !currentItemStack.is(ModItems.FINGER_GUN.get())) {
-			return;
+		if (currentItemStack.hasTag() && currentItemStack.getTag() != null) {
+			if (!currentItemStack.getTag().contains("GunId")) {
+				if (this.renderPerspective != ItemDisplayContext.FIRST_PERSON_RIGHT_HAND && this.renderPerspective != ItemDisplayContext.FIXED && this.renderPerspective != ItemDisplayContext.GROUND
+						//if (this.renderPerspective != ItemDisplayContext.FIRST_PERSON_RIGHT_HAND && this.renderPerspective != ItemDisplayContext.GROUND
+						&& !currentItemStack.is(ModItems.FINGER_GUN.get())) {
+					return;
+				}
+			}
 		}
 
 		if (AimingHandler.get().isAiming() && this.renderPerspective == ItemDisplayContext.FIRST_PERSON_RIGHT_HAND &&

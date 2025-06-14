@@ -4,10 +4,13 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.suggestion.SuggestionProvider;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.commands.arguments.coordinates.Vec3Argument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -38,6 +41,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.JustEnoughGuns;
 import ttv.migami.jeg.common.Gun;
+import ttv.migami.jeg.common.NetworkGunManager;
 import ttv.migami.jeg.entity.monster.phantom.gunner.PhantomGunner;
 import ttv.migami.jeg.entity.throwable.ThrowableExplosiveChargeEntity;
 import ttv.migami.jeg.faction.Faction;
@@ -55,10 +59,41 @@ import java.util.Random;
 import static ttv.migami.jeg.faction.GunMobValues.*;
 
 public class ModCommands {
+    private static final SuggestionProvider<CommandSourceStack> CFG_GUN_ID_SUGGESTIONS =
+            (context, builder) -> {
+                NetworkGunManager mgr = NetworkGunManager.get();
+                if (mgr == null) return builder.buildFuture();
+
+                return SharedSuggestionProvider.suggest(
+                        mgr.getRegisteredGuns().keySet().stream()
+                                .filter(id -> id.getNamespace()
+                                        .equals(NetworkGunManager.CONFIG_NAMESPACE))
+                                .map(ResourceLocation::toString),
+                        builder);
+            };
+
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(
 
                 Commands.literal("justEnoughGuns")
+                        .then(Commands.literal("give").requires(src -> src.hasPermission(2))
+                                .then(Commands.argument("gunId", ResourceLocationArgument.id()).suggests(CFG_GUN_ID_SUGGESTIONS)
+                                        .executes(ctx -> {
+                                            ResourceLocation gunId = ResourceLocationArgument.getId(ctx, "gunId");
+                                            ItemStack stack = GunItem.makeGunStack(gunId);
+                                            stack.setCount(1);
+                                            ctx.getSource().getPlayerOrException().getInventory().placeItemBackInInventory(stack);
+                                            return 1;
+                                        })
+                                        .then(Commands.argument("count", IntegerArgumentType.integer(1,64))
+                                                .executes(ctx -> {
+                                                    ResourceLocation gunId = ResourceLocationArgument.getId(ctx, "gunId");
+                                                    int count = IntegerArgumentType.getInteger(ctx, "count");
+                                                    ItemStack stack = GunItem.makeGunStack(gunId);
+                                                    stack.setCount(count);
+                                                    ctx.getSource().getPlayerOrException().getInventory().placeItemBackInInventory(stack);
+                                                    return 1;
+                                                }))))
                         .then(Commands.literal("reload").executes(ctx -> {
                             MinecraftServer srv = ctx.getSource().getServer();
 

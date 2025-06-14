@@ -67,9 +67,6 @@ import ttv.migami.jeg.interfaces.IProjectileFactory;
 import ttv.migami.jeg.item.AnimatedGunItem;
 import ttv.migami.jeg.item.GunItem;
 import ttv.migami.jeg.item.attachment.IAttachment;
-import ttv.migami.jeg.modifier.Modifier;
-import ttv.migami.jeg.modifier.ModifierHelper;
-import ttv.migami.jeg.modifier.type.IModifierEffect;
 import ttv.migami.jeg.network.PacketHandler;
 import ttv.migami.jeg.network.message.C2SMessagePreFireSound;
 import ttv.migami.jeg.network.message.C2SMessageShoot;
@@ -497,7 +494,7 @@ public class ServerPlayHandler
         recipe.consumeMaterials(player);
         ItemStack stack = recipe.getItem();
 
-        if (Config.COMMON.gameplay.gunModifiers.get()) {
+        /*if (Config.COMMON.gameplay.gunModifiers.get()) {
             if (stack.getTagElement("CustomModifier") == null && player.getRandom().nextFloat() > 0.25F) {
                 Modifier group = ModifierHelper.getRandomGroup();
 
@@ -511,7 +508,7 @@ public class ServerPlayHandler
                 }
                 stack.getOrCreateTag().putString("CustomModifier", group.getName());
             }
-        }
+        }*/
 
         Containers.dropItemStack(world, pos.getX() + 0.5, pos.getY() + 1.125, pos.getZ() + 0.5, stack);
     }

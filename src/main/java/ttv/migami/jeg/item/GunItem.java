@@ -298,6 +298,18 @@ public class GunItem extends Item implements IColored, IMeta {
         //return Objects.requireNonNull(ChatFormatting.WHITE.getColor());
     }
 
+    @Override
+    public Component getName(ItemStack stack) {
+        if (stack.hasTag() && stack.getTag() != null) {
+            if (stack.getTag().contains("GunId")) {
+                ResourceLocation gunID = new ResourceLocation(stack.getTag().getString("GunId"));
+                return Component.translatable("item.jeg." + gunID.getPath());
+            }
+        }
+
+        return super.getName(stack);
+    }
+
     public Gun getModifiedGun(ItemStack stack) {
         // Data-driven gun
         CompoundTag tagCompound = stack.getTag();
