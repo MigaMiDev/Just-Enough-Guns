@@ -76,24 +76,26 @@ public class ModCommands {
         dispatcher.register(
 
                 Commands.literal("justEnoughGuns")
-                        .then(Commands.literal("give").requires(src -> src.hasPermission(2))
-                                .then(Commands.argument("gunId", ResourceLocationArgument.id()).suggests(CFG_GUN_ID_SUGGESTIONS)
-                                        .executes(ctx -> {
-                                            ResourceLocation gunId = ResourceLocationArgument.getId(ctx, "gunId");
-                                            ItemStack stack = GunItem.makeGunStack(gunId);
-                                            stack.setCount(1);
-                                            ctx.getSource().getPlayerOrException().getInventory().placeItemBackInInventory(stack);
-                                            return 1;
-                                        })
-                                        .then(Commands.argument("count", IntegerArgumentType.integer(1,64))
+                        .then(Commands.literal("give")
+                                .then(Commands.argument("player", EntityArgument.player())
+                                        .then(Commands.argument("gunId", ResourceLocationArgument.id()).suggests(CFG_GUN_ID_SUGGESTIONS)
                                                 .executes(ctx -> {
                                                     ResourceLocation gunId = ResourceLocationArgument.getId(ctx, "gunId");
-                                                    int count = IntegerArgumentType.getInteger(ctx, "count");
                                                     ItemStack stack = GunItem.makeGunStack(gunId);
-                                                    stack.setCount(count);
-                                                    ctx.getSource().getPlayerOrException().getInventory().placeItemBackInInventory(stack);
-                                                    return 1;
-                                                }))))
+                                                    Player player = EntityArgument.getPlayer(ctx, "player");
+                                                    stack.setCount(1);
+                                                    return executeGiveDataGun(ctx.getSource(), stack, player);
+                                                })
+                                                .then(Commands.argument("count", IntegerArgumentType.integer(1,64))
+                                                        .executes(ctx -> {
+                                                            ResourceLocation gunId = ResourceLocationArgument.getId(ctx, "gunId");
+                                                            int count = IntegerArgumentType.getInteger(ctx, "count");
+                                                            Player player = EntityArgument.getPlayer(ctx, "player");
+                                                            ItemStack stack = GunItem.makeGunStack(gunId);
+                                                            stack.setCount(count);
+                                                            return executeGiveDataGun(ctx.getSource(), stack, player);
+                                                        }))))
+                                )
                         .then(Commands.literal("reload").executes(ctx -> {
                             MinecraftServer srv = ctx.getSource().getServer();
 
@@ -253,6 +255,22 @@ public class ModCommands {
                         )
 
         );
+    }
+
+    private static int executeGiveDataGun(CommandSourceStack source, ItemStack stack, Player player) {
+        if (!source.hasPermission(2)) {
+            source.sendFailure(Component.nullToEmpty("You do not have permission to execute this command"));
+            return 0;
+        }
+
+        if (stack == null) {
+            source.sendFailure(Component.nullToEmpty("Could not found the specified Data-Gun!"));
+            return 0;
+        }
+
+        player.getInventory().placeItemBackInInventory(stack);
+        source.sendSuccess(() -> Component.nullToEmpty("Enjoy your new Data-Gun!"), true);
+        return 1;
     }
 
     private static int executeSpawnPatrol(CommandSourceStack source, String factionName, int size, Vec3 pos, boolean forceGuns, int spread) {
