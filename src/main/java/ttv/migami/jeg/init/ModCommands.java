@@ -13,6 +13,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -47,6 +48,7 @@ import ttv.migami.jeg.faction.raid.RaidEntity;
 import ttv.migami.jeg.faction.raid.TerrorRaidEntity;
 import ttv.migami.jeg.item.GunItem;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -55,7 +57,23 @@ import static ttv.migami.jeg.faction.GunMobValues.*;
 public class ModCommands {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(
+
                 Commands.literal("justEnoughGuns")
+                        .then(Commands.literal("reload").executes(ctx -> {
+                            MinecraftServer srv = ctx.getSource().getServer();
+
+                            Collection<String> enabled =
+                                    srv.getPackRepository().getSelectedIds();
+                                    //srv.getReloadableRegistries().reload(List.of(NetworkGunManager.ID));
+
+                            srv.reloadResources(enabled).thenAccept(v -> {
+                                ctx.getSource().sendSuccess(
+                                        () -> Component.literal("Data-Guns reloaded"),
+                                        true);
+                            });
+
+                            return 0;
+                        }))
                         .then(Commands.literal("spawnPatrol")
                                 .then(Commands.argument("faction", StringArgumentType.string())
                                         .suggests((context, builder) -> {

@@ -270,9 +270,11 @@ public class ClientHandler {
 
                         ItemStack stack = new ItemStack(item);
                         stack.getOrCreateTag().putInt("AmmoCount", item.getGun().getReloads().getMaxAmmo());
-                        output.accept(stack);
+                        if (!stack.is(ModItems.ABSTRACT_GUN.get())) output.accept(stack);
                         return;
                     }
+                    ClientSideCache.INSTANCE.getCreativeSamples()
+                            .forEach(output::accept);
                     if(registryObject.get().asItem() == ModBlocks.DYNAMIC_LIGHT.get().asItem()) {
                         return;
                     }

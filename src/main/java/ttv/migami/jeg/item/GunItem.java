@@ -71,6 +71,13 @@ public class GunItem extends Item implements IColored, IMeta {
         return this.modifier;
     }
 
+    // Data-driven gun
+    public static ItemStack makeGunStack(ResourceLocation gunId) {
+        ItemStack stack = new ItemStack(ModItems.ABSTRACT_GUN.get());
+        stack.getOrCreateTag().putString("GunId", gunId.toString());
+        return stack;
+    }
+
     @Override
     public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
         if (this.modifier != null && Config.COMMON.gameplay.gunModifiers.get()) {
@@ -292,7 +299,17 @@ public class GunItem extends Item implements IColored, IMeta {
     }
 
     public Gun getModifiedGun(ItemStack stack) {
+        // Data-driven gun
         CompoundTag tagCompound = stack.getTag();
+        if (tagCompound != null && tagCompound.contains("GunId", Tag.TAG_STRING)) {
+            ResourceLocation id = new ResourceLocation(tagCompound.getString("GunId"));
+            Gun data = NetworkGunManager.get() != null
+                    ? NetworkGunManager.get().getRegisteredGuns().get(id)
+                    : null;
+            //return data != null ? data : Gun.EMPTY;   // fallback
+            return data;
+        }
+
         if (tagCompound != null && tagCompound.contains("Gun", Tag.TAG_COMPOUND)) {
             return this.modifiedGunCache.computeIfAbsent(tagCompound, item ->
             {
