@@ -161,8 +161,8 @@ public class EntityKillEventHandler {
             LivingEntity livingEntity = dragon.getKillCredit();
 
             if (livingEntity instanceof Player player) {
-                ItemStack itemStack = new ItemStack(ModItems.FINGER_GUN.get());
                 if (player.getMainHandItem().getItem() == Items.AIR) {
+                    ItemStack itemStack = new ItemStack(ModItems.FINGER_GUN.get());
                     if (!player.getInventory().add(itemStack)) {
                         player.drop(itemStack, false);
                     }
@@ -183,17 +183,19 @@ public class EntityKillEventHandler {
 
                         ItemStack mainHandItem = player.getMainHandItem();
                         if (mainHandItem.getItem() instanceof GunItem gunItem) {
-                            Gun modifiedGun = gunItem.getModifiedGun(mainHandItem);
+                            if (!mainHandItem.is(ModItems.FINGER_GUN.get())) {
+                                Gun modifiedGun = gunItem.getModifiedGun(mainHandItem);
 
-                            if (!modifiedGun.getGeneral().isInfinityDisabled()) {
-                                if (mainHandItem.getEnchantmentLevel(ModEnchantments.INFINITY.get()) == 0) {
-                                    mainHandItem.enchant(ModEnchantments.INFINITY.get(), 1);
-                                    enchantedAtLeastOneGun = true;
+                                if (!modifiedGun.getGeneral().isInfinityDisabled()) {
+                                    if (mainHandItem.getEnchantmentLevel(ModEnchantments.INFINITY.get()) == 0) {
+                                        mainHandItem.enchant(ModEnchantments.INFINITY.get(), 1);
+                                        enchantedAtLeastOneGun = true;
+                                    }
+                                } else {
+                                    Component message = Component.translatable("chat.jeg.infinity_disabled")
+                                            .withStyle(ChatFormatting.GRAY);
+                                    player.displayClientMessage(message, true);
                                 }
-                            } else {
-                                Component message = Component.translatable("chat.jeg.infinity_disabled")
-                                        .withStyle(ChatFormatting.GRAY);
-                                player.displayClientMessage(message, true);
                             }
                         }
                     }
@@ -268,18 +270,20 @@ public class EntityKillEventHandler {
 
                         ItemStack mainHandItem = player.getMainHandItem();
                         if (mainHandItem.getItem() instanceof GunItem gunItem) {
-                            Gun modifiedGun = gunItem.getModifiedGun(mainHandItem);
+                            if (!mainHandItem.is(ModItems.FINGER_GUN.get())) {
+                                Gun modifiedGun = gunItem.getModifiedGun(mainHandItem);
 
-                            if (!modifiedGun.getGeneral().isWitheredDisabled()) {
-                                Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(mainHandItem);
+                                if (!modifiedGun.getGeneral().isWitheredDisabled()) {
+                                    Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(mainHandItem);
 
-                                int currentWitheredLevel = enchantments.getOrDefault(ModEnchantments.WITHERED.get(), 0);
+                                    int currentWitheredLevel = enchantments.getOrDefault(ModEnchantments.WITHERED.get(), 0);
 
-                                if (currentWitheredLevel < Config.COMMON.world.maxWitheredLevel.get()) {
-                                    enchantments.put(ModEnchantments.WITHERED.get(), currentWitheredLevel + 1);
+                                    if (currentWitheredLevel < Config.COMMON.world.maxWitheredLevel.get()) {
+                                        enchantments.put(ModEnchantments.WITHERED.get(), currentWitheredLevel + 1);
 
-                                    EnchantmentHelper.setEnchantments(enchantments, mainHandItem);
-                                    enchantedAtLeastOneGun = true;
+                                        EnchantmentHelper.setEnchantments(enchantments, mainHandItem);
+                                        enchantedAtLeastOneGun = true;
+                                    }
                                 }
                             }
                         }
