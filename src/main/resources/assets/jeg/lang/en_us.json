@@ -408,6 +408,7 @@
   "enchantment.jeg.fire_starter.desc": "Fired bullets will set blocks and entities on fire upon impact",
   "enchantment.jeg.infinity.desc": "This weapon no longer needs ammo to reload",
   "enchantment.jeg.withered.desc": "Increases the damage of a weapon",
+  "enchantment.jeg.atlantic_shooter.desc": "Grants the weapon the ability to shoot underwater!",
   "perk.jeg.title": "Perks:",
   "perk.jeg.entry.positive": "+ %s",
   "perk.jeg.entry.negative": "- %s",

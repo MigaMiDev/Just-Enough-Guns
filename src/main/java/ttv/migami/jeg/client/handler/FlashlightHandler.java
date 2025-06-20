@@ -39,17 +39,17 @@ public class FlashlightHandler
     public static void flashlight(TickEvent.PlayerTickEvent event) {
         Player player = event.player;
 
-        if (!Config.COMMON.gameplay.allowFlashlights.get()) {
-            Component message = Component.translatable("chat.jeg.disabled_flashlights")
-                    .withStyle(ChatFormatting.GRAY);
-            player.displayClientMessage(message, true);
-            return;
-        }
-
         Minecraft mc = Minecraft.getInstance();
         ItemStack heldItem = player.getMainHandItem();
         if(heldItem.getItem() instanceof FlashlightItem)
         {
+            if (!Config.COMMON.gameplay.allowFlashlights.get()) {
+                Component message = Component.translatable("chat.jeg.disabled_flashlights")
+                        .withStyle(ChatFormatting.GRAY);
+                player.displayClientMessage(message, true);
+                return;
+            }
+
             boolean charging = KeyBinds.getShootMapping().isDown();
             if(JustEnoughGuns.controllableLoaded)
             {

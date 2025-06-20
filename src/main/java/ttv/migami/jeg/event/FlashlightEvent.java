@@ -111,16 +111,16 @@ public class FlashlightEvent {
             return;
         }
 
-        if (!Config.COMMON.gameplay.allowFlashlights.get()) {
-            Component message = Component.translatable("chat.jeg.disabled_flashlights")
-                    .withStyle(ChatFormatting.GRAY);
-            player.displayClientMessage(message, true);
-            return;
-        }
-
         boolean attachment = false;
         if (Gun.hasAttachmentEquipped(player.getMainHandItem(), IAttachment.Type.SPECIAL)) {
             if (Gun.getAttachment(IAttachment.Type.SPECIAL, player.getMainHandItem()).getItem() == ModItems.FLASHLIGHT.get()) {
+                if (!Config.COMMON.gameplay.allowFlashlights.get()) {
+                    Component message = Component.translatable("chat.jeg.disabled_flashlights")
+                            .withStyle(ChatFormatting.GRAY);
+                    player.displayClientMessage(message, true);
+                    return;
+                }
+
                 ItemStack flashlight = Gun.getAttachment(IAttachment.Type.SPECIAL, player.getMainHandItem());
                 if (flashlight.getTag() != null && flashlight.getTag().getBoolean("Powered")) {
                     attachment = true;

@@ -16,6 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
+import ttv.migami.jeg.Config;
 import ttv.migami.jeg.client.KeyBinds;
 import ttv.migami.jeg.init.ModItems;
 import ttv.migami.jeg.init.ModSounds;
@@ -88,11 +89,11 @@ public class FlashlightItem extends SpecialItem {
             boolean powered = tag.getBoolean(TAG_POWERED);
             int batteryLife = tag.getInt(TAG_BATTERY_LIFE);
 
-            /*if (!Config.COMMON.gameplay.allowFlashlights.get()) {
+            if (!Config.COMMON.gameplay.allowFlashlights.get()) {
                 Component message = Component.translatable("chat.jeg.disabled_flashlights")
                         .withStyle(ChatFormatting.GRAY);
                 player.displayClientMessage(message, true);
-            }*/
+            }
 
             if (batteryLife <= 0) {
                 if (powered) {
