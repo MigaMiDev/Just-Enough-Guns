@@ -11,14 +11,10 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.lwjgl.glfw.GLFW;
-import software.bernie.geckolib.animatable.GeoItem;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
-import software.bernie.geckolib.core.animation.AnimationController;
 import ttv.migami.jeg.client.KeyBinds;
 import ttv.migami.jeg.common.Gun;
 import ttv.migami.jeg.event.GunReloadEvent;
 import ttv.migami.jeg.init.ModSyncedDataKeys;
-import ttv.migami.jeg.item.AnimatedGunItem;
 import ttv.migami.jeg.item.GunItem;
 import ttv.migami.jeg.network.PacketHandler;
 import ttv.migami.jeg.network.message.C2SMessageFirstPersonReload;
@@ -50,20 +46,6 @@ public class ReloadHandler
 
     private ReloadHandler()
     {
-    }
-
-    public static void stopReloadAnimation() {
-        Player player = Minecraft.getInstance().player;
-        if(player == null)
-            return;
-
-        ItemStack itemStack = player.getMainHandItem();
-        if (itemStack.getItem() instanceof AnimatedGunItem gunItem) {
-            final long id = GeoItem.getId(player.getMainHandItem());
-            AnimationController<GeoAnimatable> animationController = gunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("controller");
-            animationController.tryTriggerAnimation("reload_stop");
-            animationController.forceAnimationReset();
-        }
     }
 
     @SubscribeEvent

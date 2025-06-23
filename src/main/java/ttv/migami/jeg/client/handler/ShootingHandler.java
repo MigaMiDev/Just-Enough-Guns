@@ -154,6 +154,12 @@ public class ShootingHandler
         if(player != null)
         {
             ItemStack heldItem = player.getMainHandItem();
+            if (heldItem.getItem() instanceof GunItem && KeyBinds.getShootMapping().isDown() && !Gun.hasAmmo(heldItem) && !PlayerReviveHelper.isBleeding(player)) {
+                if (heldItem.hasTag() && heldItem.getTag() != null && heldItem.getTag().getInt("AmmoCount") <= 0) {
+                    JustEnoughGuns.LOGGER.atInfo().log("reloading");
+                    ReloadHandler.get().setReloading(true);
+                }
+            }
             if(heldItem.getItem() instanceof GunItem gunItem && (Gun.hasAmmo(heldItem) || player.isCreative()) && !PlayerReviveHelper.isBleeding(player))
             {
                 Gun gun = gunItem.getModifiedGun(heldItem);
