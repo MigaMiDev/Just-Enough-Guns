@@ -7,6 +7,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpyglassItem;
 import net.minecraft.world.item.SwordItem;
@@ -61,13 +62,13 @@ public class AttachmentContainer extends AbstractContainerMenu
         // Attachment slots
         for(int i = 0; i < 6; i++)
         {
-            this.addSlot(new AttachmentSlot(this, this.weaponInventory, this.weapon, IAttachment.Type.values()[i], playerInventory.player, i, -64, 8 + i * 18));
+            this.addSlot(new AttachmentSlot(this, this.weaponInventory, this.weapon, IAttachment.Type.values()[i], playerInventory.player, i, -64, (8 + i * 18) - 18));
         }
 
         // Cosmetic slots
         for(int i = 6; i < numSlots; i++)
         {
-            this.addSlot(new AttachmentSlot(this, this.weaponInventory, this.weapon, IAttachment.Type.values()[i], playerInventory.player, i, -64, 8 + 26 + i * 18));
+            this.addSlot(new AttachmentSlot(this, this.weaponInventory, this.weapon, IAttachment.Type.values()[i], playerInventory.player, i, -64, (8 + 26 + i * 18) - 18));
         }
 
         // Inventory slots
@@ -136,6 +137,11 @@ public class AttachmentContainer extends AbstractContainerMenu
             if(attachment.getItem() instanceof PaintJobCanItem)
             {
                 cosmetics.put("Paint_Job", attachment.save(new CompoundTag()));
+            }
+
+            if(attachment.getItem() instanceof DyeItem)
+            {
+                cosmetics.put("Dye", attachment.save(new CompoundTag()));
             }
 
             if(attachment.getItem() instanceof KillEffectItem)

@@ -254,7 +254,7 @@ public class GunEventBus {
 
             // Pushback
             float pushBack = gun.getGeneral().getShooterPushback();
-            if (player.isCrouching()) {
+            if (player.isCrouching() && player.level().getBlockState(player.getOnPos()).isSolid()) {
                     pushBack = pushBack / 2;
             }
             recoil(player, pushBack);

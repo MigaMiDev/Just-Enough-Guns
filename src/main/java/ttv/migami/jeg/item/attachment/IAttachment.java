@@ -40,6 +40,7 @@ public interface IAttachment<T extends Attachment>
         MAGAZINE("magazine", "Magazine", "magazine"),
         SPECIAL("special", "Special", "special"),
         PAINT_JOB("paint_job", "Paint_Job", "paintJob"),
+        DYE("dye", "Dye", "dye"),
         KILL_EFECT("kill_effect", "Kill_Effect", "killEffect");
 
         private final String translationKey;

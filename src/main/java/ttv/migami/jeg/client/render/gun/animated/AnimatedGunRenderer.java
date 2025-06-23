@@ -34,6 +34,7 @@ import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.object.Color;
 import software.bernie.geckolib.renderer.GeoItemRenderer;
 import software.bernie.geckolib.renderer.GeoRenderer;
 import software.bernie.geckolib.util.RenderUtils;
@@ -60,6 +61,7 @@ import ttv.migami.jeg.item.attachment.IAttachment;
 import ttv.migami.jeg.item.attachment.IBarrel;
 import ttv.migami.jeg.item.attachment.impl.Scope;
 import ttv.migami.jeg.item.attachment.item.PaintJobCanItem;
+import ttv.migami.jeg.util.DyeUtils;
 import ttv.migami.jeg.util.GunModifierHelper;
 
 import javax.annotation.Nullable;
@@ -118,10 +120,10 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 		this.updateImmersiveCamera();
 	}
 
-	/*@Override
+	@Override
 	public Color getRenderColor(AnimatedGunItem animatable, float partialTick, int packedLight) {
-		return Color.RED;
-	}*/
+		return Color.ofOpaque(DyeUtils.getStoredDyeRGB(this.currentItemStack));
+	}
 
 	private void updateSprinting()
 	{

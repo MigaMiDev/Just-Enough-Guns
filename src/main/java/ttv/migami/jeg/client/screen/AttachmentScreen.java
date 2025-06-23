@@ -55,14 +55,6 @@ public class AttachmentScreen extends AbstractContainerScreen<AttachmentContaine
     private final Inventory playerInventory;
     private final Container weaponInventory;
 
-    private boolean showHelp = true;
-    private int windowZoom = 10;
-    private int windowX, windowY;
-    private float windowRotationX, windowRotationY;
-    private boolean mouseGrabbed;
-    private int mouseGrabbedButton;
-    private int mouseClickedX, mouseClickedY;
-
     public AttachmentScreen(AttachmentContainer screenContainer, Inventory playerInventory, Component titleIn)
     {
         super(screenContainer, playerInventory, titleIn);
@@ -132,7 +124,7 @@ public class AttachmentScreen extends AbstractContainerScreen<AttachmentContaine
         int startX = (this.width - this.imageWidth) / 2;
         int startY = (this.height - this.imageHeight) / 2;
 
-        if(RenderUtil.isMouseWithin(mouseX, mouseY, startX - 67, startY + 118, 22, 22)) {
+        if(RenderUtil.isMouseWithin(mouseX, mouseY, startX - 67, startY + 100, 22, 22)) {
             pGuiGraphics.renderComponentTooltip(this.font, Arrays.asList(Component.translatable("cutesy.jeg.thanks"), Component.literal("- MigaMi ♡").withStyle(ChatFormatting.BLUE)), mouseX, mouseY);
         }
 
@@ -147,7 +139,7 @@ public class AttachmentScreen extends AbstractContainerScreen<AttachmentContaine
         for(int i = 0; i < 6; i++)
         {
             int x = -64;
-            int y = 8 + (i % 8) * 18;
+            int y = (8 + (i % 9) * 18) - 18;
             if(RenderUtil.isMouseWithin(mouseX, mouseY, startX + x, startY + y, 18, 18))
             {
                 IAttachment.Type type = IAttachment.Type.values()[i];
@@ -174,7 +166,7 @@ public class AttachmentScreen extends AbstractContainerScreen<AttachmentContaine
         for(int i = 6; i < IAttachment.Type.values().length; i++)
         {
             int x = -64;
-            int y = 8 + 26 + (i % 8) * 18;
+            int y = (8 + 26 + (i % 9) * 18) - 18;
             if(RenderUtil.isMouseWithin(mouseX, mouseY, startX + x, startY + y, 18, 18))
             {
                 IAttachment.Type type = IAttachment.Type.values()[i];
@@ -225,11 +217,11 @@ public class AttachmentScreen extends AbstractContainerScreen<AttachmentContaine
         int left = (this.width - this.imageWidth) / 2;
         int top = (this.height - this.imageHeight) / 2;
         pGuiGraphics.blit(GUI_TEXTURES, left, top, 0, 0, this.imageWidth, this.imageHeight);
-        pGuiGraphics.blit(GUI_TEXTURES, left - 71, top, 203, 0, 32, this.imageHeight);
+        pGuiGraphics.blit(GUI_TEXTURES, left - 71, top - 18, 203, 0, 32, 202);
         if (this.minecraft.player.getMainHandItem().getTag() != null && this.minecraft.player.getMainHandItem().getTag().getBoolean("MedalsEnabled")) {
-            pGuiGraphics.blit(GUI_TEXTURES, left - 31, top + 148, 176, 145, 22, 22);
+            pGuiGraphics.blit(GUI_TEXTURES, left - 31, top + 148, 176, 161, 22, 22);
         } else {
-            pGuiGraphics.blit(GUI_TEXTURES, left - 31, top + 148, 176, 167, 22, 22);
+            pGuiGraphics.blit(GUI_TEXTURES, left - 31, top + 148, 176, 183, 22, 22);
         }
 
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
@@ -260,22 +252,22 @@ public class AttachmentScreen extends AbstractContainerScreen<AttachmentContaine
          * for the weapon, it will draw a cross instead. */
         for (int i = 0; i < 6; i++) {
             int x = -64;
-            int y = 8 + (i % 8) * 18;
+            int y = (8 + (i % 9) * 18) - 18;
             if (!this.canPlaceAttachmentInSlot(this.menu.getCarried(), this.menu.getSlot(i))) {
                 pGuiGraphics.blit(GUI_TEXTURES, left + x, top + y, 176, 0, 16, 16);
             } else if (this.weaponInventory.getItem(i).isEmpty()) {
-                pGuiGraphics.blit(GUI_TEXTURES, left + x, top + y, 176, 16 + (i % 8) * 16, 16, 16);
+                pGuiGraphics.blit(GUI_TEXTURES, left + x, top + y, 176, 16 + (i % 9) * 16, 16, 16);
             }
         }
 
         // Cosmetic slots
         for (int i = 6; i < IAttachment.Type.values().length; i++) {
             int x = -64;
-            int y = 8 + 26 + (i % 8) * 18;
+            int y = (8 + 26 + (i % 9) * 18) - 18;
             if (!this.canPlaceAttachmentInSlot(this.menu.getCarried(), this.menu.getSlot(i))) {
                 pGuiGraphics.blit(GUI_TEXTURES, left + x, top + y, 176, 0, 16, 16);
             } else if (this.weaponInventory.getItem(i).isEmpty()) {
-                pGuiGraphics.blit(GUI_TEXTURES, left + x, top + y, 176, 16 + (i % 8) * 16, 16, 16);
+                pGuiGraphics.blit(GUI_TEXTURES, left + x, top + y, 176, 16 + (i % 9) * 16, 16, 16);
             }
         }
     }
@@ -359,6 +351,9 @@ public class AttachmentScreen extends AbstractContainerScreen<AttachmentContaine
             return true;
 
         if (stack.getItem() instanceof PaintJobCanItem)
+            return true;
+
+        if (stack.getItem() instanceof DyeItem)
             return true;
 
         if (stack.getItem() instanceof KillEffectItem)

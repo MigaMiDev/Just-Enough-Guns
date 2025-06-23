@@ -4,6 +4,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpyglassItem;
 import net.minecraft.world.item.SwordItem;
@@ -52,7 +53,7 @@ public class AttachmentSlot extends Slot
         GunItem item = (GunItem) this.weapon.getItem();
         Gun modifiedGun = item.getModifiedGun(this.weapon);
 
-        if (this.type.equals(IAttachment.Type.PAINT_JOB) || this.type.equals(IAttachment.Type.KILL_EFECT)) {
+        if (this.type.equals(IAttachment.Type.PAINT_JOB) || this.type.equals(IAttachment.Type.DYE) ||this.type.equals(IAttachment.Type.KILL_EFECT)) {
             return true;
         }
         return modifiedGun.canAttachType(this.type);
@@ -72,6 +73,7 @@ public class AttachmentSlot extends Slot
                 stack.getItem() instanceof SwordItem ||
                 stack.getItem() instanceof SpyglassItem ||
                 stack.getItem() instanceof PaintJobCanItem ||
+                stack.getItem() instanceof DyeItem ||
                 stack.getItem() instanceof KillEffectItem))
         {
             return false;
@@ -90,6 +92,10 @@ public class AttachmentSlot extends Slot
         else if (stack.getItem() instanceof PaintJobCanItem)
         {
             return this.type == IAttachment.Type.PAINT_JOB;
+        }
+        else if (stack.getItem() instanceof DyeItem)
+        {
+            return this.type == IAttachment.Type.DYE;
         }
         else if (stack.getItem() instanceof KillEffectItem)
         {
@@ -111,6 +117,7 @@ public class AttachmentSlot extends Slot
                     attachment instanceof PseudoBarrel ||
                     attachment instanceof PseudoScope ||
                     attachment instanceof PaintJobCanItem ||
+                    attachment instanceof DyeItem ||
                     attachment instanceof KillEffectItem)
             {
                 return attachment.getType() == this.type && modifiedGun.canAttachType(this.type) && attachment.canAttachTo(this.weapon);

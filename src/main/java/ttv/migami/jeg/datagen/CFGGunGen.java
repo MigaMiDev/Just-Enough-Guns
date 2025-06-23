@@ -147,7 +147,7 @@ public class CFGGunGen extends CFGGunProvider
                 .setAlwaysSpread(true)
                 .setSpread(16.0F)
                 .setProjectileAmount(8)
-                .setDrawTimer(40)
+                .setDrawTimer(30)
 
                 // Reloads
                 .setMaxAmmo(8)
