@@ -81,7 +81,7 @@ public class ThrowableMolotovCocktailEntity extends ThrowableGrenadeEntity
                     this.getX() - this.getDeltaMovement().x(),
                     this.getY() - this.getDeltaMovement().y(),
                     this.getZ() - this.getDeltaMovement().z(),
-                    10,
+                    20,
                     2, 1, 2,
                     0
             );
