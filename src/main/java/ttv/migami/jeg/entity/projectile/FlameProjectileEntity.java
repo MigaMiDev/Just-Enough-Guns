@@ -21,6 +21,7 @@ import net.minecraftforge.common.MinecraftForge;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.common.Gun;
 import ttv.migami.jeg.event.GunProjectileHitEvent;
+import ttv.migami.jeg.init.ModItems;
 import ttv.migami.jeg.init.ModParticleTypes;
 import ttv.migami.jeg.item.GunItem;
 
@@ -218,6 +219,10 @@ public class FlameProjectileEntity extends ProjectileEntity {
                     0.3
             );
             if (this.random.nextBoolean() && this.shooter.isCrouching()) {
+                if (!this.shooter.getMainHandItem().is(ModItems.FLAMETHROWER.get())) {
+                    return;
+                }
+
                 sendParticlesToAll(
                         ((ServerLevel) this.level()),
                         ModParticleTypes.SMOKE.get(),
@@ -234,6 +239,10 @@ public class FlameProjectileEntity extends ProjectileEntity {
             if(Config.COMMON.gameplay.griefing.setFireToBlocks.get()) {
 
                 if (this.shooter == null || !this.shooter.isCrouching()) {
+                    return;
+                }
+
+                if (!this.shooter.getMainHandItem().is(ModItems.FLAMETHROWER.get())) {
                     return;
                 }
 

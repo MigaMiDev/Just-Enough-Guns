@@ -138,6 +138,7 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> HIT_MARKER = register("entity.bullet.hit");
     public static final RegistryObject<SoundEvent> MEDAL_GENERIC = register("ui.medal.generic");
     public static final RegistryObject<SoundEvent> MEDAL_HEADSHOT = register("ui.medal.headshot");
+    public static final RegistryObject<SoundEvent> WATER_DROP = register("item.water_drop");
 
     public static final RegistryObject<SoundEvent> BIRTHDAY_PARTY = register("item.kill_effect.birthday_party");
     public static final RegistryObject<SoundEvent> AIR_HORN = register("item.kill_effect.air_horn");

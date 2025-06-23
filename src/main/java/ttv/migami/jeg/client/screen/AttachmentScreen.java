@@ -31,6 +31,7 @@ import ttv.migami.jeg.client.screen.widget.MiniButton;
 import ttv.migami.jeg.client.util.RenderUtil;
 import ttv.migami.jeg.common.container.AttachmentContainer;
 import ttv.migami.jeg.common.container.slot.AttachmentSlot;
+import ttv.migami.jeg.init.ModItems;
 import ttv.migami.jeg.init.ModSounds;
 import ttv.migami.jeg.item.GunItem;
 import ttv.migami.jeg.item.attachment.IAttachment;
@@ -207,6 +208,10 @@ public class AttachmentScreen extends AbstractContainerScreen<AttachmentContaine
             String modName = ModList.get().getModContainerById(modId)
                     .map(container -> container.getModInfo().getDisplayName())
                     .orElse("JEG: Add-on");
+
+            if (mainHandItem.is(ModItems.ABSTRACT_GUN.get())) {
+                modName = "JEG: Gun-packs!";
+            }
 
             pGuiGraphics.drawCenteredString(this.font, modName, this.imageWidth / 2, -30, 6843377);
         }

@@ -1006,6 +1006,41 @@
 						}
 					}
 				}
+			},
+			"sound_effects": {
+				"0.375": {
+					"effect": "reload_mag_out"
+				},
+				"1.7083": {
+					"effect": "reload_mag_in"
+				},
+				"1.8333": {
+					"effect": "reload_mag_in"
+				},
+				"1.9583": {
+					"effect": "reload_mag_in"
+				},
+				"2.2083": {
+					"effect": "reload_mag_in"
+				},
+				"2.3333": {
+					"effect": "reload_mag_in"
+				},
+				"2.4583": {
+					"effect": "reload_mag_in"
+				},
+				"2.6667": {
+					"effect": "reload_mag_in"
+				},
+				"2.7917": {
+					"effect": "reload_mag_in"
+				},
+				"2.9167": {
+					"effect": "reload_mag_in"
+				},
+				"3.0417": {
+					"effect": "reload_end"
+				}
 			}
 		},
 		"inspect": {
@@ -1337,6 +1372,11 @@
 						}
 					}
 				},
+				"watering_can": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				},
 				"left_arm": {
 					"rotation": {
 						"vector": [73.95054, -26.20116, -129.71317]
@@ -1351,6 +1391,11 @@
 					},
 					"position": {
 						"vector": [4.83903, -2.13486, 5.08625]
+					}
+				},
+				"water_droplets": {
+					"scale": {
+						"vector": [0, 0, 0]
 					}
 				}
 			}
@@ -1402,6 +1447,11 @@
 						}
 					}
 				},
+				"watering_can": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				},
 				"left_arm": {
 					"rotation": {
 						"0.0": {
@@ -1452,6 +1502,11 @@
 						"0.5833": {
 							"vector": [4.83903, -2.13486, 5.08625]
 						}
+					}
+				},
+				"water_droplets": {
+					"scale": {
+						"vector": [0, 0, 0]
 					}
 				}
 			}
@@ -1495,6 +1550,11 @@
 						}
 					}
 				},
+				"watering_can": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				},
 				"left_arm": {
 					"rotation": {
 						"0.0": {
@@ -1545,6 +1605,11 @@
 						"0.6667": {
 							"vector": [4.83903, -2.13486, 5.08625]
 						}
+					}
+				},
+				"water_droplets": {
+					"scale": {
+						"vector": [0, 0, 0]
 					}
 				}
 			}

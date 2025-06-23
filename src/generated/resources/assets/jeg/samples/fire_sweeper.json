@@ -1,0 +1,76 @@
+{
+  "display": {
+    "flash": {
+      "size": 0.8,
+      "yOffset": 4.645,
+      "zOffset": -10.635
+    }
+  },
+  "general": {
+    "alwaysSpread": true,
+    "drawTimer": 40,
+    "fireMode": "jeg:automatic",
+    "gripType": "jeg:two_handed",
+    "projectileAmount": 8,
+    "rate": 4,
+    "recoilAngle": 5.0,
+    "recoilKick": 2.0,
+    "spread": 16.0
+  },
+  "modules": {
+    "attachments": {
+      "barrel": {
+        "yOffset": 4.65,
+        "zOffset": -10.0
+      },
+      "scope": {
+        "yOffset": 4.9
+      },
+      "special": {
+        "xOffset": -0.8,
+        "yOffset": 4.0,
+        "zOffset": -5.0
+      },
+      "underBarrel": {
+        "yOffset": 3.0,
+        "zOffset": 0.45
+      }
+    },
+    "zoom": {
+      "fovModifier": 0.6,
+      "yOffset": 3.75,
+      "zOffset": -1.75
+    }
+  },
+  "projectile": {
+    "advantage": "jeg:very_heavy",
+    "collateral": true,
+    "damage": 12.0,
+    "damageReduceOverLife": true,
+    "ejectsCasing": true,
+    "headshotMultiplier": 1.5,
+    "hideTrail": true,
+    "item": "minecraft:fire_charge",
+    "life": 7,
+    "size": 0.05,
+    "speed": 2.0,
+    "trailColor": -256,
+    "trailLengthMultiplier": 2.0
+  },
+  "reloads": {
+    "additionalReloadTimer": 10,
+    "maxAmmo": 8,
+    "reloadTimer": 30,
+    "reloadType": "jeg:mag_fed"
+  },
+  "sounds": {
+    "ejectorPull": "jeg:item.pump_shotgun.pump_pull",
+    "ejectorRelease": "jeg:item.pump_shotgun.pump_release",
+    "enchantedFire": "jeg:item.repeating_shotgun.enchanted_fire",
+    "fire": "jeg:item.repeating_shotgun.fire",
+    "reloadEnd": "jeg:item.pump_shotgun.pump",
+    "reloadLoad": "jeg:item.pump_shotgun.shell",
+    "reloadStart": "jeg:item.pump_shotgun.pump_pull",
+    "silencedFire": "jeg:item.pump_shotgun.silenced_fire"
+  }
+}

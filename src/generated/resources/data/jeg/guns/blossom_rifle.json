@@ -66,8 +66,9 @@
   "sounds": {
     "enchantedFire": "jeg:item.blossom_rifle.enchanted_fire",
     "fire": "jeg:item.blossom_rifle.fire",
-    "reloadLoad": "jeg:item.pistol.cock",
-    "reloadStart": "jeg:item.pistol.reload",
+    "reloadEnd": "minecraft:block.beehive.exit",
+    "reloadLoad": "jeg:item.water_drop",
+    "reloadStart": "jeg:item.assault_rifle.reload_magazine_out",
     "silencedFire": "jeg:item.blossom_rifle.silenced_fire"
   }
 }

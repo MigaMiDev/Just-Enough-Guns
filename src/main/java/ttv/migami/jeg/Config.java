@@ -416,8 +416,8 @@ public class Config
 								"lost_souls" + "|3" +
 										"|jeg:ghoul" +
 										"|jeg:waterpipe_shotgun,jeg:revolver" +
-										"|jeg:custom_smg" +
-										"|jeg:holy_shotgun,jeg:blossom_rifle"
+										"|jeg:custom_smg,jeg:assault_rifle,jeg:semi_auto_rifle" +
+										"|jeg:blossom_rifle,jeg:service_rifle,jeg:infantry_rifle"
 						), o -> o instanceof String);
 
 			}

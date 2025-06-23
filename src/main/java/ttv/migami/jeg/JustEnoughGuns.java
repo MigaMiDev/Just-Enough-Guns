@@ -47,6 +47,7 @@ import ttv.migami.jeg.entity.client.SplashRenderer;
 import ttv.migami.jeg.entity.client.TerrorPhantomRenderer;
 import ttv.migami.jeg.entity.projectile.*;
 import ttv.migami.jeg.entity.throwable.GrenadeEntity;
+import ttv.migami.jeg.event.ConfigPackLoader;
 import ttv.migami.jeg.event.ServerTickHandler;
 import ttv.migami.jeg.faction.GunMobValues;
 import ttv.migami.jeg.faction.GunnerMobSpawner;
@@ -74,6 +75,9 @@ public class JustEnoughGuns {
     public static final Logger LOGGER = LogManager.getLogger(Reference.MOD_ID);
 
     public JustEnoughGuns() {
+        ConfigPackLoader.exportSampleResourcesIfMissing();
+        ConfigPackLoader.exportSampleDataIfMissing();
+
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.clientSpec);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.commonSpec);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.serverSpec);
@@ -189,6 +193,7 @@ public class JustEnoughGuns {
         generator.addProvider(event.includeServer(), entityTagGen);
         generator.addProvider(event.includeServer(), new ItemTagGen(output, lookupProvider, blockTagGen.contentsGetter(), existingFileHelper));
         generator.addProvider(event.includeServer(), new GunGen(output, lookupProvider));
+        generator.addProvider(event.includeServer(), new CFGGunGen(output, lookupProvider));
         generator.addProvider(event.includeServer(), new WorldGen(output, lookupProvider));
         //generator.addProvider(event.includeServer(), new DamageTypeGen(output, lookupProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new ModifierGen(output, lookupProvider));

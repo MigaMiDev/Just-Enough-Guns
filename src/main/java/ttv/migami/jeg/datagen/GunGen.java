@@ -61,8 +61,8 @@ public class GunGen extends GunProvider
 
                 // Sounds
                 .setFireSound(ModSounds.ASSAULT_RIFLE_FIRE.get())
-                .setReloadStart(ModSounds.AR_RELOAD_MAGAZINE_IN.get()) // NOTE: This seems reversed!
-                .setReloadLoadSound(ModSounds.AR_RELOAD_MAGAZINE_OUT.get()) // Consider flipping these two
+                .setReloadStart(ModSounds.AR_RELOAD_MAGAZINE_IN.get())
+                .setReloadLoadSound(ModSounds.AR_RELOAD_MAGAZINE_OUT.get())
                 .setReloadEndSound(ModSounds.AR_RELOAD_EJECTOR.get())
                 .setEjectorPullSound(ModSounds.AR_EJECTOR_PULL.get())
                 .setEjectorReleaseSound(ModSounds.AR_EJECTOR_RELEASE.get())
@@ -471,8 +471,8 @@ public class GunGen extends GunProvider
 
                 // Sounds
                 .setFireSound(ModSounds.ASSAULT_RIFLE_FIRE.get())
-                .setReloadStart(ModSounds.AR_RELOAD_MAGAZINE_IN.get()) // NOTE: This seems reversed!
-                .setReloadLoadSound(ModSounds.AR_RELOAD_MAGAZINE_OUT.get()) // Consider flipping these two
+                .setReloadStart(ModSounds.AR_RELOAD_MAGAZINE_IN.get())
+                .setReloadLoadSound(ModSounds.AR_RELOAD_MAGAZINE_OUT.get())
                 .setReloadEndSound(ModSounds.AR_RELOAD_EJECTOR.get())
                 .setEjectorPullSound(ModSounds.AR_EJECTOR_PULL.get())
                 .setEjectorReleaseSound(ModSounds.AR_EJECTOR_RELEASE.get())
@@ -850,8 +850,11 @@ public class GunGen extends GunProvider
 
                 // Sounds
                 .setFireSound(ModSounds.BLOSSOM_RIFLE_FIRE.get())
-                .setReloadStart(ModSounds.ITEM_PISTOL_RELOAD.get())
-                .setReloadLoadSound(ModSounds.ITEM_PISTOL_COCK.get())
+
+                .setReloadStart(ModSounds.AR_RELOAD_MAGAZINE_OUT.get())
+                .setReloadLoadSound(ModSounds.WATER_DROP.get())
+                .setReloadEndSound(SoundEvents.BEEHIVE_EXIT)
+
                 .setSilencedFireSound(ModSounds.BLOSSOM_RIFLE_SILENCED_FIRE.get())
                 .setEnchantedFireSound(ModSounds.BLOSSOM_RIFLE_ENCHANTED_FIRE.get())
 
@@ -1743,7 +1746,7 @@ public class GunGen extends GunProvider
                 .setFireRate(1)
                 .setGripType(GripType.TWO_HANDED)
                 .setRecoilKick(0.15F)
-                .setRecoilAngle(.5F)
+                .setRecoilAngle(0.5F)
                 .setAlwaysSpread(true)
                 .setSpread(20.0F)
                 .setOverheatTimer(150)

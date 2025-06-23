@@ -118,6 +118,11 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 		this.updateImmersiveCamera();
 	}
 
+	/*@Override
+	public Color getRenderColor(AnimatedGunItem animatable, float partialTick, int packedLight) {
+		return Color.RED;
+	}*/
+
 	private void updateSprinting()
 	{
 		this.prevSprintTransition = this.sprintTransition;

@@ -1183,6 +1183,26 @@
       }
     ]
   },
+  "item.water_drop": {
+    "sounds": [
+      {
+        "name": "jeg:item/water_drop/1",
+        "stream": true
+      },
+      {
+        "name": "jeg:item/water_drop/2",
+        "stream": true
+      },
+      {
+        "name": "jeg:item/water_drop/3",
+        "stream": true
+      },
+      {
+        "name": "jeg:item/water_drop/4",
+        "stream": true
+      }
+    ]
+  },
   "entity.stun_grenade.explosion": {
     "subtitle": "subtitle.jeg.stun.explosion",
     "sounds": [

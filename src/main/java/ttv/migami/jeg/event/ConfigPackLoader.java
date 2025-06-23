@@ -12,8 +12,10 @@ import ttv.migami.jeg.JustEnoughGuns;
 import ttv.migami.jeg.common.NetworkGunManager;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Map;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class ConfigPackLoader {
@@ -66,6 +68,82 @@ public final class ConfigPackLoader {
                 JustEnoughGuns.LOGGER.info("Generated default pack.mcmeta for {}", PACK_ID);
             } catch (IOException e) {
                 JustEnoughGuns.LOGGER.error("Failed to create pack.mcmeta for {}", PACK_ID, e);
+            }
+        }
+    }
+
+    public static void exportSampleResourcesIfMissing() {
+        Path exportRoot = NetworkGunManager.CONFIG_PACK_DIR;
+
+        Map<String, String> filesToCopy = Map.of(
+                "assets/jeg/geo/vindicator_smg.geo.json", "assets/jeg/samples/geo/vindicator_smg.geo.json",
+                "assets/jeg/textures/vindicator_smg.png", "assets/jeg/samples/textures/vindicator_smg.png",
+                "assets/jeg/animations/vindicator_smg.png", "assets/jeg/samples/animations/vindicator_smg.animation.json",
+
+                "assets/jeg/geo/primitive_blowpipe.geo.json", "assets/jeg/samples/geo/primitive_blowpipe.geo.json",
+                "assets/jeg/textures/primitive_blowpipe.png", "assets/jeg/samples/textures/primitive_blowpipe.png",
+                "assets/jeg/animations/primitive_blowpipe.png", "assets/jeg/samples/animations/primitive_blowpipe.animation.json",
+
+                "assets/jeg/geo/fire_sweeper.geo.json", "assets/jeg/samples/geo/fire_sweeper.geo.json",
+                "assets/jeg/textures/fire_sweeper.png", "assets/jeg/samples/textures/fire_sweeper.png",
+                "assets/jeg/animations/fire_sweeper.png", "assets/jeg/samples/animations/fire_sweeper.animation.json",
+
+                "assets/jeg/lang/en_us.json", "assets/jeg/samples/lang/en_us.json"
+        );
+
+        for (var entry : filesToCopy.entrySet()) {
+            Path destPath = exportRoot.resolve(entry.getKey());
+            String internalPath = entry.getValue();
+
+            if (!Files.exists(destPath)) {
+                try {
+                    Files.createDirectories(destPath.getParent());
+
+                    try (InputStream in = ConfigPackLoader.class.getClassLoader().getResourceAsStream(internalPath)) {
+                        if (in == null) {
+                            JustEnoughGuns.LOGGER.error("Missing resource in JAR: {}", internalPath);
+                            continue;
+                        }
+
+                        Files.copy(in, destPath);
+                        JustEnoughGuns.LOGGER.info("Exported sample file to {}", destPath);
+                    }
+                } catch (IOException e) {
+                    JustEnoughGuns.LOGGER.error("Failed to export sample file to {}", destPath, e);
+                }
+            }
+        }
+    }
+
+    public static void exportSampleDataIfMissing() {
+        Path exportRoot = NetworkGunManager.CONFIG_GUN_DIR.getParent().getParent();
+
+        Map<String, String> filesToCopy = Map.of(
+                "data/guns/vindicator_smg.json", "assets/jeg/samples/vindicator_smg.json",
+                "data/guns/primitive_blowpipe.json", "assets/jeg/samples/primitive_blowpipe.json",
+                "data/guns/fire_sweeper.json", "assets/jeg/samples/fire_sweeper.json"
+        );
+
+        for (var entry : filesToCopy.entrySet()) {
+            Path destPath = exportRoot.resolve(entry.getKey());
+            String internalPath = entry.getValue();
+
+            if (!Files.exists(destPath)) {
+                try {
+                    Files.createDirectories(destPath.getParent());
+
+                    try (InputStream in = ConfigPackLoader.class.getClassLoader().getResourceAsStream(internalPath)) {
+                        if (in == null) {
+                            JustEnoughGuns.LOGGER.error("Missing resource in JAR: {}", internalPath);
+                            continue;
+                        }
+
+                        Files.copy(in, destPath);
+                        JustEnoughGuns.LOGGER.info("Exported sample file to {}", destPath);
+                    }
+                } catch (IOException e) {
+                    JustEnoughGuns.LOGGER.error("Failed to export sample file to {}", destPath, e);
+                }
             }
         }
     }
