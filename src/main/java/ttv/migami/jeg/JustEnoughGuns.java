@@ -48,6 +48,7 @@ import ttv.migami.jeg.entity.client.TerrorPhantomRenderer;
 import ttv.migami.jeg.entity.projectile.*;
 import ttv.migami.jeg.entity.throwable.GrenadeEntity;
 import ttv.migami.jeg.event.ConfigPackLoader;
+import ttv.migami.jeg.event.ModCommandsRegister;
 import ttv.migami.jeg.event.ServerTickHandler;
 import ttv.migami.jeg.faction.GunMobValues;
 import ttv.migami.jeg.faction.GunnerMobSpawner;
@@ -114,6 +115,7 @@ public class JustEnoughGuns {
         });
         MinecraftForge.EVENT_BUS.register(new TrumpetSkeletonAI());
         MinecraftForge.EVENT_BUS.register(new GunnerMobSpawner());
+        MinecraftForge.EVENT_BUS.register(new ModCommandsRegister());
         MinecraftForge.EVENT_BUS.register(ServerTickHandler.class);
         controllableLoaded = ModList.get().isLoaded("controllable");
         playerReviveLoaded = ModList.get().isLoaded("playerrevive");

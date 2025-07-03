@@ -33,6 +33,27 @@ public class AtlanteanSpearOnShipwreckTreasureModifier extends LootModifier {
             int random = new Random().nextInt(1) + 1; //Min 1, Max 1.
             generatedLoot.add(new ItemStack(item, random));
         }
+
+        //Vec3 origin = context.getParam(LootContextParams.ORIGIN); // this is nullable!
+
+        /*if (origin != null) {
+            if (context.getLevel() != null) {
+                BlockPos pos = BlockPos.containing(origin);
+                Holder<Biome> biomeHolder = context.getLevel().getBiome(pos);
+
+                // Get the biome's ResourceLocation (e.g., "minecraft:warm_ocean")
+                Optional<ResourceKey<Biome>> biomeKey = context.getLevel().registryAccess()
+                        .registryOrThrow(Registries.BIOME)
+                        .getResourceKey(biomeHolder.value());
+
+                if (biomeKey.isPresent() && biomeKey.get().location().toString().equals("minecraft:warm_ocean")) {
+                    if (context.getRandom().nextFloat() > 0.66F) {
+                        generatedLoot.add(new ItemStack(item));
+                    }
+                }
+            }
+        }*/
+
         return generatedLoot;
     }
 

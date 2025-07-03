@@ -783,7 +783,9 @@ public class ServerPlayHandler
 
                     tag.putInt("AmmoCount", currentAmmo - residue);
 
-                    spawnAmmo(player, new ItemStack(item, residue));
+                    if (stack.getEnchantmentLevel(ModEnchantments.INFINITY.get()) == 0) {
+                        spawnAmmo(player, new ItemStack(item, residue));
+                    }
                 }
             }
         }

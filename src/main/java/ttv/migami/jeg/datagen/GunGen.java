@@ -729,7 +729,7 @@ public class GunGen extends GunProvider
                 .setMaxAmmo(4)
                 .setReloadType(ReloadType.MANUAL)
                 .setReloadTimer(20)
-                .setAdditionalReloadTimer(20)
+                .setAdditionalReloadTimer(10)
 
                 // Projectile
                 .setAmmo(ModItems.RIFLE_AMMO.get())
@@ -1549,7 +1549,7 @@ public class GunGen extends GunProvider
                 .setMaxAmmo(1)
                 .setReloadType(ReloadType.MANUAL)
                 .setReloadTimer(45)
-                .setAdditionalReloadTimer(43)
+                .setAdditionalReloadTimer(14)
 
                 // Projectile
                 .setAmmo(ModItems.ROCKET.get())

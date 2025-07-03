@@ -18,6 +18,8 @@ public class ModItems {
 
     public static final DeferredRegister<Item> REGISTER = DeferredRegister.create(ForgeRegistries.ITEMS, Reference.MOD_ID);
 
+    ADD SMOKE BOMB
+
     public static final RegistryObject<AnimatedGunItem> ABSTRACT_GUN =
             REGISTER.register("abstract_gun",
                     () -> new AnimatedGunItem(new Item.Properties().stacksTo(1), "abstract_gun"));

@@ -10,7 +10,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -22,7 +21,6 @@ import ttv.migami.jeg.Reference;
 import ttv.migami.jeg.common.Gun;
 import ttv.migami.jeg.entity.ai.AIType;
 import ttv.migami.jeg.entity.ai.GunAttackGoal;
-import ttv.migami.jeg.init.ModCommands;
 import ttv.migami.jeg.init.ModTags;
 import ttv.migami.jeg.item.GunItem;
 
@@ -31,11 +29,6 @@ import java.util.UUID;
 @Mod.EventBusSubscriber(modid = Reference.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class GunnerMobSpawner {
     public static final UUID GUN_FOLLOW_RANGE_MODIFIER_UUID = UUID.randomUUID();
-
-    @SubscribeEvent
-    public static void onRegisterCommands(RegisterCommandsEvent event) {
-        ModCommands.register(event.getDispatcher());
-    }
 
     @SubscribeEvent
     public static void onSpecialSpawn(MobSpawnEvent.FinalizeSpawn event) {

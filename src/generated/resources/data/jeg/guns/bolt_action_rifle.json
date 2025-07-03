@@ -53,7 +53,7 @@
     "trailLengthMultiplier": 2.0
   },
   "reloads": {
-    "additionalReloadTimer": 20,
+    "additionalReloadTimer": 10,
     "maxAmmo": 4,
     "reloadTimer": 20,
     "reloadType": "jeg:manual"
