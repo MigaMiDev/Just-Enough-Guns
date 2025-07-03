@@ -35,5 +35,15 @@ public class GameRendererMixin {
             GuiGraphics pGuiGraphics = new GuiGraphics(minecraft, minecraft.renderBuffers().bufferSource());
             pGuiGraphics.fill(0, 0, window.getScreenWidth(), window.getScreenHeight(), ((int) (percent * Config.SERVER.alphaOverlay.get() + 0.5) << 24) | 16777215);
         }
+
+        MobEffectInstance smokeEffect = player.getEffect(ModEffects.SMOKED.get());
+
+        if (smokeEffect != null)
+        {
+            float percent = Math.min((smokeEffect.getDuration() / (float) Config.SERVER.alphaFadeThreshold.get()), 1);
+            Window window = Minecraft.getInstance().getWindow();
+            GuiGraphics pGuiGraphics = new GuiGraphics(minecraft, minecraft.renderBuffers().bufferSource());
+            pGuiGraphics.fill(0, 0, window.getScreenWidth(), window.getScreenHeight(), ((int) (percent * 248 + 0.5) << 24) | 8156784);
+        }
     }
 }

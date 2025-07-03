@@ -35,6 +35,7 @@ public class GunEntityRenderers
         event.registerEntityRenderer(ModEntities.THROWABLE_GRENADE.get(), ThrowableGrenadeRenderer::new);
         event.registerEntityRenderer(ModEntities.THROWABLE_STUN_GRENADE.get(), ThrowableGrenadeRenderer::new);
         event.registerEntityRenderer(ModEntities.THROWABLE_MOLOTOV_COCKTAIL.get(), ThrowableGrenadeRenderer::new);
+        event.registerEntityRenderer(ModEntities.THROWABLE_SMOKE_GRENADE.get(), ThrowableGrenadeRenderer::new);
         event.registerEntityRenderer(ModEntities.THROWABLE_WATER_BOMB.get(), ThrowableGrenadeRenderer::new);
         event.registerEntityRenderer(ModEntities.THROWABLE_POCKET_BUBBLE.get(), ThrowableGrenadeRenderer::new);
         event.registerEntityRenderer(ModEntities.THROWABLE_FLARE.get(), ThrowableGrenadeRenderer::new);

@@ -1221,6 +1221,26 @@
       }
     ]
   },
+  "entity.molotov.explosion": {
+    "subtitle": "subtitle.jeg.molotov.explosion",
+    "sounds": [
+      {
+        "name": "jeg:entity/molotov/explosion",
+        "volume": 0.75,
+        "stream": true
+      }
+    ]
+  },
+  "entity.smoke_grenade.explosion": {
+    "subtitle": "subtitle.jeg.smoke_grenade.explosion",
+    "sounds": [
+      {
+        "name": "jeg:entity/smoke_grenade/explosion",
+        "volume": 0.75,
+        "stream": true
+      }
+    ]
+  },
   "entity.ghoul.death": {
     "subtitle": "subtitle.jeg.ghoul.death",
     "sounds": [

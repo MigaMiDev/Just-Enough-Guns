@@ -11,6 +11,7 @@ import net.minecraft.world.level.Level;
 import ttv.migami.jeg.init.ModEntities;
 import ttv.migami.jeg.init.ModItems;
 import ttv.migami.jeg.init.ModParticleTypes;
+import ttv.migami.jeg.init.ModSounds;
 
 import static ttv.migami.jeg.common.network.ServerPlayHandler.sendParticlesToAll;
 
@@ -71,7 +72,7 @@ public class ThrowableMolotovCocktailEntity extends ThrowableGrenadeEntity
     {
         double y = this.getY() + this.getType().getDimensions().height * 0.5;
         this.level().playSound(null, this.getX(), y, this.getZ(), SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 2, 1);
-        this.level().playSound(null, this.getX(), y, this.getZ(), SoundEvents.FIRECHARGE_USE, SoundSource.BLOCKS, 2, 1);
+        this.level().playSound(null, this.getX(), y, this.getZ(), ModSounds.ENTITY_MOLOTOV_EXPLOSION.get(), SoundSource.BLOCKS, 4, 1);
         GrenadeEntity.createFireExplosion(this, 2.0F, true);
         if (this.level() instanceof ServerLevel serverLevel) {
             sendParticlesToAll(

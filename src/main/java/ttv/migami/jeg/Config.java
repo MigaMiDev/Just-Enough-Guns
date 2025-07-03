@@ -207,6 +207,7 @@ public class Config
 		public final Missiles missiles;
 		public final Grenades grenades;
 		public final StunGrenades stunGrenades;
+		public final SmokeGrenades smokeGrenades;
 		public final ProjectileSpread projectileSpread;
 
 		public Common(ForgeConfigSpec.Builder builder)
@@ -222,6 +223,7 @@ public class Config
 				this.missiles = new Missiles(builder);
 				this.grenades = new Grenades(builder);
 				this.stunGrenades = new StunGrenades(builder);
+				this.smokeGrenades = new SmokeGrenades(builder);
 				this.projectileSpread = new ProjectileSpread(builder);
 			}
 			builder.pop();
@@ -575,10 +577,31 @@ public class Config
 
 		public StunGrenades(ForgeConfigSpec.Builder builder)
 		{
-			builder.comment("Properties relating to stun grenades").push("stun_grenades");
+			builder.comment("Properties relating to Stun Grenades").push("stun_grenades");
 			{
 				this.blind = new Blind(builder);
 				this.deafen = new Deafen(builder);
+			}
+			builder.pop();
+		}
+	}
+
+	/**
+	 * Stun Grenade related config options
+	 */
+	public static class SmokeGrenades
+	{
+		public final ForgeConfigSpec.DoubleValue smokeGrenadeCloudDiameter;
+		public final ForgeConfigSpec.DoubleValue smokeGrenadeDamage;
+		public final ForgeConfigSpec.DoubleValue smokeGrenadeCloudDuration;
+
+		public SmokeGrenades(ForgeConfigSpec.Builder builder)
+		{
+			builder.comment("Properties relating to Smoke Grenades").push("smoke_grenades");
+			{
+				this.smokeGrenadeCloudDiameter = builder.comment("Diameter of a Smoke Grenade cloud. Use cautiously when setting high, might cause lag.").defineInRange("smokeGrenadeCloudDiameter", 6.0, 0.0, Double.MAX_VALUE);
+				this.smokeGrenadeDamage = builder.comment("Damage per second inside a Smoke Grenade cloud.").defineInRange("smokeGrenadeDamage", 0.0, 0.0, Double.MAX_VALUE);
+				this.smokeGrenadeCloudDuration = builder.comment("Duration of a Smoke Grenade cloud in seconds.").defineInRange("smokeGrenadeCloudDuration", 20.0, 0.0, Double.MAX_VALUE);
 			}
 			builder.pop();
 		}

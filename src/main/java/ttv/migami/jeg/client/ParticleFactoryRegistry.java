@@ -43,6 +43,8 @@ public class ParticleFactoryRegistry
         event.registerSpriteSet(ModParticleTypes.BIG_EXPLOSION.get(), BigExplosion.Provider::new);
         event.registerSpriteSet(ModParticleTypes.SMALL_EXPLOSION.get(), SmallExplosion.Provider::new);
         event.registerSpriteSet(ModParticleTypes.SMOKE.get(), SmokeParticle.Provider::new);
+        event.registerSpriteSet(ModParticleTypes.SMOKE_CLOUD.get(), SmokeCloudParticle.Factory::new);
+        event.registerSpriteSet(ModParticleTypes.SMOKE_EFFECT.get(), SmokeEffectParticle.Factory::new);
         event.registerSpriteSet(ModParticleTypes.FIRE.get(), FireParticle.Provider::new);
 
         event.registerSpriteSet(ModParticleTypes.BUBBLE_AMMO.get(), BubbleAmmoParticle.Provider::new);

@@ -47,6 +47,7 @@ public class ModEntities
     public static final RegistryObject<EntityType<RocketEntity>> ROCKET = registerBasic("rocket", RocketEntity::new);
     public static final RegistryObject<EntityType<ThrowableGrenadeEntity>> THROWABLE_GRENADE = registerBasic("throwable_grenade", ThrowableGrenadeEntity::new);
     public static final RegistryObject<EntityType<ThrowableStunGrenadeEntity>> THROWABLE_STUN_GRENADE = registerBasic("throwable_stun_grenade", ThrowableStunGrenadeEntity::new);
+    public static final RegistryObject<EntityType<ThrowableSmokeGrenadeEntity>> THROWABLE_SMOKE_GRENADE = registerBasic("throwable_smoke_grenade", ThrowableSmokeGrenadeEntity::new);
     public static final RegistryObject<EntityType<ThrowableMolotovCocktailEntity>> THROWABLE_MOLOTOV_COCKTAIL = registerBasic("throwable_molotov_cocktail", ThrowableMolotovCocktailEntity::new);
     public static final RegistryObject<EntityType<HealingTalismanEntity>> HEALING_TALISMAN = registerBasic("healing_talisman", HealingTalismanEntity::new);
     public static final RegistryObject<EntityType<ThrowableWaterBombEntity>> THROWABLE_WATER_BOMB = registerBasic("throwable_water_bomb", ThrowableWaterBombEntity::new);
@@ -103,6 +104,17 @@ public class ModEntities
                 .noSave()
                 .setShouldReceiveVelocityUpdates(false)
                 .setCustomClientFactory((spawnEntity, world) -> null)
+                .build(id));
+    }
+
+    private static <T extends Entity> RegistryObject<EntityType<T>> registerLight(String id, BiFunction<EntityType<T>, Level, T> function)
+    {
+        return REGISTER.register(id, () -> EntityType.Builder.of(function::apply, MobCategory.MISC)
+                .sized(0.01F, 0.01F)
+                .setTrackingRange(256)
+                .setUpdateInterval(1)
+                .noSummon()
+                .fireImmune()
                 .build(id));
     }
 }

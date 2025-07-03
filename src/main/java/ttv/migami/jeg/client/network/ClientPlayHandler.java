@@ -144,6 +144,30 @@ public class ClientPlayHandler
         }
     }
 
+    public static void handleExplosionSmokeGrenade(S2CMessageSmokeGrenade message)
+    {
+        Minecraft mc = Minecraft.getInstance();
+        Level level = Objects.requireNonNull(mc.level);
+        double x = message.getX();
+        double y = message.getY();
+        double z = message.getZ();
+        double diameter = Config.COMMON.smokeGrenades.smokeGrenadeCloudDiameter.get();
+        double vel = 0.004;
+        int amount = (int) (diameter * 15);
+
+        for(int i = 0; i < amount; i++)
+        {
+            level.addAlwaysVisibleParticle(ModParticleTypes.SMOKE_CLOUD.get(),
+                    true,
+                    x+((Math.random()-0.5) * diameter),
+                    y+(Math.random() * (diameter * 0.5)),
+                    z+((Math.random()-0.5) * diameter),
+                    (Math.random()-0.5) * vel,
+                    Math.random() * (vel * 0.5),
+                    (Math.random()-0.5) * vel);
+        }
+    }
+
     private static Particle spawnParticle(ParticleEngine manager, ParticleOptions data, double x, double y, double z, RandomSource rand, double velocityMultiplier)
     {
         return manager.createParticle(data, x, y, z, (rand.nextDouble() - 0.5) * velocityMultiplier, (rand.nextDouble() - 0.5) * velocityMultiplier, (rand.nextDouble() - 0.5) * velocityMultiplier);

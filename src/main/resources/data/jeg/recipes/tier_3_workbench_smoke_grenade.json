@@ -1,0 +1,29 @@
+{
+  "type": "jeg:gunnite_workbench",
+  "materials": [
+    {
+      "item": "minecraft:gunpowder",
+      "count": 1
+    },
+    {
+      "item": "minecraft:blaze_powder",
+      "count": 1
+    },
+    {
+      "item": "minecraft:paper",
+      "count": 3
+    },
+    {
+      "item": "minecraft:sugar",
+      "count": 4
+    },
+    {
+      "tag": "forge:ingots/iron",
+      "count": 1
+    }
+  ],
+  "result": {
+    "item": "jeg:smoke_grenade"
+  },
+  "time": 30
+}

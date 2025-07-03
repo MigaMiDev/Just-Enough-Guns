@@ -18,8 +18,6 @@ public class ModItems {
 
     public static final DeferredRegister<Item> REGISTER = DeferredRegister.create(ForgeRegistries.ITEMS, Reference.MOD_ID);
 
-    ADD SMOKE BOMB
-
     public static final RegistryObject<AnimatedGunItem> ABSTRACT_GUN =
             REGISTER.register("abstract_gun",
                     () -> new AnimatedGunItem(new Item.Properties().stacksTo(1), "abstract_gun"));
@@ -289,6 +287,12 @@ public class ModItems {
             () -> new MolotovCocktailItem(new Item.Properties()
                     .stacksTo(16)
                     , 72000
+            ));
+    // Thanks to An0m3l1 on Discord!
+    public static final RegistryObject<Item> SMOKE_GRENADE = REGISTER.register("smoke_grenade",
+            () -> new SmokeGrenadeItem(new Item.Properties()
+                    .stacksTo(16)
+                    , 20 * 5
             ));
     public static final RegistryObject<Item> WATER_BOMB = REGISTER.register("water_bomb",
             () -> new WaterBombItem(new Item.Properties()
