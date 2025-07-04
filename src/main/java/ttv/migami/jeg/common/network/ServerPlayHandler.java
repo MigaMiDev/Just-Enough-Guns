@@ -33,6 +33,7 @@ import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.ZombifiedPiglin;
 import net.minecraft.world.entity.monster.piglin.Piglin;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.*;
@@ -276,6 +277,57 @@ public class ServerPlayHandler
         else
         {
             world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.3F, 0.8F);
+        }
+    }
+
+    public static void doPanicEntities(LivingEntity player, Vec3 pos, int radius) {
+        AABB box = new AABB(
+                pos.x - radius, pos.y - radius, pos.z - radius,
+                pos.x + radius, pos.y + radius, pos.z + radius
+        );
+
+        List<LivingEntity> allEntities = player.level().getEntitiesOfClass(LivingEntity.class, box);
+
+        for (LivingEntity entity : allEntities) {
+            if (entity instanceof PathfinderMob mob) {
+                mob.getBrain().eraseMemory(MemoryModuleType.HURT_BY);
+                mob.getBrain().eraseMemory(MemoryModuleType.HURT_BY_ENTITY);
+                mob.getNavigation().stop();
+
+                double speedMultiplier = (entity.getType() == EntityType.VILLAGER) ? 1.0 : 1.5;
+
+                Vec3 randomPos = LandRandomPos.getPos(mob, 16, 7);
+                if (randomPos != null) {
+                    mob.getNavigation().moveTo(randomPos.x, randomPos.y, randomPos.z, speedMultiplier);
+                }
+            }
+        }
+    }
+
+    public static void doPanicVillagersAndHostiles(LivingEntity player, Vec3 pos, int radius) {
+        AABB box = new AABB(
+                pos.x - radius, pos.y - radius, pos.z - radius,
+                pos.x + radius, pos.y + radius, pos.z + radius
+        );
+
+        List<LivingEntity> allEntities = player.level().getEntitiesOfClass(LivingEntity.class, box);
+
+        for (LivingEntity entity : allEntities) {
+            if (entity instanceof PathfinderMob mob) {
+                if ((Config.COMMON.fleeingMobs.enabled.get() && entity instanceof Villager) ||
+                        (Config.COMMON.aggroMobs.enabled.get() && HOSTILE_ENTITIES.test(entity))) {
+                    mob.getBrain().eraseMemory(MemoryModuleType.HURT_BY);
+                    mob.getBrain().eraseMemory(MemoryModuleType.HURT_BY_ENTITY);
+                    mob.getNavigation().stop();
+
+                    double speedMultiplier = (entity.getType() == EntityType.VILLAGER) ? 1.0 : 1.5;
+
+                    Vec3 randomPos = LandRandomPos.getPos(mob, 16, 7);
+                    if (randomPos != null) {
+                        mob.getNavigation().moveTo(randomPos.x, randomPos.y, randomPos.z, speedMultiplier);
+                    }
+                }
+            }
         }
     }
 

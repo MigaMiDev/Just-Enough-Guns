@@ -22,12 +22,8 @@ import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import software.bernie.geckolib.animatable.GeoItem;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
-import software.bernie.geckolib.core.animation.AnimationController;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.JustEnoughGuns;
-import ttv.migami.jeg.animations.GunAnimations;
 import ttv.migami.jeg.client.KeyBinds;
 import ttv.migami.jeg.client.util.PropertyHelper;
 import ttv.migami.jeg.common.GripType;
@@ -37,7 +33,6 @@ import ttv.migami.jeg.compat.ShoulderSurfingHelper;
 import ttv.migami.jeg.debug.Debug;
 import ttv.migami.jeg.init.ModBlocks;
 import ttv.migami.jeg.init.ModSyncedDataKeys;
-import ttv.migami.jeg.item.AnimatedGunItem;
 import ttv.migami.jeg.item.GunItem;
 import ttv.migami.jeg.network.PacketHandler;
 import ttv.migami.jeg.network.message.C2SMessageAim;
@@ -282,20 +277,10 @@ public class AimingHandler
         if(!gun.canAimDownSight())
             return false;
 
-        if(mc.player.getMainHandItem().getItem() instanceof AnimatedGunItem gunItem) {
-            final long id = GeoItem.getId(heldItem);
-            AnimationController<GeoAnimatable> animationController = gunItem.getAnimatableInstanceCache().getManagerForId(id).getAnimationControllers().get("Controller");
-
-            if(animationController != null && animationController.getCurrentAnimation() != null &&
-                    (GunAnimations.isAnimationPlaying(animationController, "draw") ||
-                            GunAnimations.isAnimationPlaying(animationController, "reload") ||
-                            GunAnimations.isAnimationPlaying(animationController, "reload_start") ||
-                            GunAnimations.isAnimationPlaying(animationController, "reload_loop") ||
-                            GunAnimations.isAnimationPlaying(animationController, "reload_stop") ||
-                            GunAnimations.isAnimationPlaying(animationController, "bayonet") ||
-                            GunAnimations.isAnimationPlaying(animationController, "melee") ||
-                            GunAnimations.isAnimationPlaying(animationController, "jam")))
+        if(mc.player.getMainHandItem().getTag() != null) {
+            if (mc.player.getMainHandItem().getTag().getBoolean("IsDrawing")) {
                 return false;
+            }
         }
 
         if(mc.player.getOffhandItem().getItem() instanceof ShieldItem && gun.getGeneral().getGripType() == GripType.ONE_HANDED)

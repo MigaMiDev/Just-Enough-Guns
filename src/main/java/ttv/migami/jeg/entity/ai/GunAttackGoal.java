@@ -138,7 +138,9 @@ public class GunAttackGoal<T extends PathfinderMob> extends Goal {
             }
 
             // Panic State
-            if (this.aiType == AIType.COWARD && (this.shooter.getHealth() < (this.shooter.getMaxHealth() / 3) || this.shooter.invulnerableTime != 0)) {
+            if (this.aiType == AIType.COWARD &&
+                    (this.shooter.getHealth() < (this.shooter.getMaxHealth() / 3) || this.shooter.invulnerableTime != 0) ||
+                    this.shooter.hasEffect(ModEffects.BLINDED.get())) {
                 this.isPanicked = true;
                 this.panickTimer = 20;
             }
@@ -227,6 +229,10 @@ public class GunAttackGoal<T extends PathfinderMob> extends Goal {
                             burstResetTimer = 20 + this.shooter.level().random.nextInt(40); // Wait 20-60 ticks before next burst sequence
                         }
 
+                        if (this.shooter.hasEffect(ModEffects.BLINDED.get()) && (!this.aiType.equals(AIType.DEFAULT)) && !this.aiType.equals(AIType.TACTICAL)) {
+                            burstResetTimer = 0;
+                        }
+
                         if (remainingBursts > 0 && --burstIntervalTimer <= 0) {
                             if (this.shooter.getMainHandItem().getItem() instanceof GunItem) {
                                 shoot(target, gun);
@@ -288,11 +294,17 @@ public class GunAttackGoal<T extends PathfinderMob> extends Goal {
     }
 
     private void shoot(LivingEntity target, Gun gun) {
+        if (this.shooter.hasEffect(ModEffects.SMOKED.get()) || target.hasEffect(ModEffects.SMOKED.get())) {
+            if (this.shooter.getRandom().nextBoolean()) {
+                return;
+            }
+        }
+
         ItemStack heldItem = this.shooter.getMainHandItem();
         if (heldItem.getItem() == ModItems.SUPERSONIC_SHOTGUN.get()) {
             GunEventBus.soundwaveBlast(this.shooter.level(), this.shooter, Gun.getAdditionalDamage(heldItem), gun);
         } else {
-            AIGunEvent.performGunAttack(this.shooter, heldItem, gun, this.spreadModifier);
+            AIGunEvent.performGunAttack(this.shooter, target, heldItem, gun, this.spreadModifier);
         }
         this.attackTime = gun.getGeneral().getRate();
         consumeAmmo(heldItem);

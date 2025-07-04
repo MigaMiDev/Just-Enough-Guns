@@ -264,7 +264,7 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(GunAnimations.genericIdleController(this).setSoundKeyframeHandler(this::soundListener).setParticleKeyframeHandler(this::particleListener));
+        controllers.add(GunAnimations.animationController(this).setSoundKeyframeHandler(this::soundListener).setParticleKeyframeHandler(this::particleListener));
     }
 
     @Override

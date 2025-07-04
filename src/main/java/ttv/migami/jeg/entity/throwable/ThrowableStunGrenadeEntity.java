@@ -25,6 +25,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.Config.EffectCriteria;
+import ttv.migami.jeg.common.network.ServerPlayHandler;
 import ttv.migami.jeg.init.ModEffects;
 import ttv.migami.jeg.init.ModEntities;
 import ttv.migami.jeg.init.ModItems;
@@ -72,6 +73,9 @@ public class ThrowableStunGrenadeEntity extends ThrowableGrenadeEntity
         if(this.level().isClientSide)
         {
             return;
+        }
+        if (this.getOwner() instanceof LivingEntity livingEntity) {
+            ServerPlayHandler.doPanicEntities(livingEntity, this.position(), 4);
         }
         PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(this.level(), this.getX(), y, this.getZ(), 64), new S2CMessageStunGrenade(this.getX(), y, this.getZ()));
 

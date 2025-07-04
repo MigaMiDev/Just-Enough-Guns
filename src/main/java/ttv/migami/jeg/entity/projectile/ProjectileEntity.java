@@ -539,7 +539,10 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
                 }
                 return false;
             }
-        } else if (!(livingEntity instanceof Player) && Config.COMMON.gameplay.mobsDropHelmets.get() && !livingEntity.getTags().contains("EliteGunner")) {
+        } else if (!(livingEntity instanceof Player) && Config.COMMON.gameplay.mobsDropHelmets.get()) {
+            if (livingEntity.getTags().contains("EliteGunner") && this.random.nextBoolean()) {
+                return false;
+            }
             if (!livingEntity.getType().is(ModTags.Entities.VERY_HEAVY) && (this.random.nextFloat() < 0.4F || this.getAdvantage().equals(ModTags.Entities.VERY_HEAVY.location()))) {
                 if (this.random.nextBoolean() || this.getAdvantage().equals(ModTags.Entities.VERY_HEAVY.location())) {
                     removeHelmet(livingEntity, helmet);

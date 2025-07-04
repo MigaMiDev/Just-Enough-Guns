@@ -18,6 +18,7 @@ import ttv.migami.jeg.common.SpreadTracker;
 import ttv.migami.jeg.entity.monster.phantom.gunner.PhantomGunner;
 import ttv.migami.jeg.entity.monster.phantom.terror.TerrorPhantom;
 import ttv.migami.jeg.entity.projectile.ProjectileEntity;
+import ttv.migami.jeg.init.ModEffects;
 import ttv.migami.jeg.init.ModSyncedDataKeys;
 import ttv.migami.jeg.interfaces.IProjectileFactory;
 import ttv.migami.jeg.item.GunItem;
@@ -71,12 +72,20 @@ public class AIGunEvent {
         }
     }*/
 
-    public static void performGunAttack(Mob shooter, ItemStack itemStack, Gun modifiedGun, float spreadModifier) {
+    public static void performGunAttack(Mob shooter, LivingEntity target, ItemStack itemStack, Gun modifiedGun, float spreadModifier) {
         final Level level = shooter.level();
         if (level.isClientSide()) return;
         int count = modifiedGun.getGeneral().getProjectileAmount();
         Gun.Projectile projectileProps = modifiedGun.getProjectile();
         ProjectileEntity[] spawnedProjectiles = new ProjectileEntity[count];
+
+        if (shooter.hasEffect(ModEffects.SMOKED.get()) || shooter.hasEffect(ModEffects.BLINDED.get())) {
+            spreadModifier *= 2;
+        }
+        if (target.hasEffect(ModEffects.SMOKED.get())) {
+            spreadModifier *= 1.5F;
+        }
+
         for (int i = 0; i < count; ++i) {
             IProjectileFactory factory = ProjectileManager.getInstance().getFactory(projectileProps.getItem());
             ProjectileEntity projectileEntity = factory.create(level, shooter, itemStack, (GunItem) itemStack.getItem(), modifiedGun);

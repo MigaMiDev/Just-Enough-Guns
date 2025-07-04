@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import ttv.migami.jeg.Config;
+import ttv.migami.jeg.common.network.ServerPlayHandler;
 import ttv.migami.jeg.init.ModEntities;
 import ttv.migami.jeg.init.ModItems;
 import ttv.migami.jeg.init.ModParticleTypes;
@@ -69,6 +70,10 @@ public class ThrowableGrenadeEntity extends ThrowableItemEntity
             this.rotation += speed * 50;
         }*/
         particleTick();
+
+        if (this.getOwner() instanceof LivingEntity livingEntity) {
+            ServerPlayHandler.doPanicVillagersAndHostiles(livingEntity, this.position(), 3);
+        }
     }
 
     public void particleTick()

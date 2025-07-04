@@ -11,6 +11,7 @@ import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
+import ttv.migami.jeg.client.handler.AimingHandler;
 import ttv.migami.jeg.common.FireMode;
 import ttv.migami.jeg.common.Gun;
 import ttv.migami.jeg.common.ReloadType;
@@ -38,7 +39,7 @@ public final class GunAnimations {
     public static final RawAnimation DRAW = RawAnimation.begin().then("draw", Animation.LoopType.PLAY_ONCE).thenLoop("idle");
     public static final RawAnimation JAM = RawAnimation.begin().then("jam", Animation.LoopType.PLAY_ONCE).thenLoop("idle");
 
-    public static <T extends GeoAnimatable> AnimationController<GeoAnimatable> genericIdleController(AnimatedGunItem animatable) {
+    public static <T extends GeoAnimatable> AnimationController<GeoAnimatable> animationController(AnimatedGunItem animatable) {
         return new AnimationController<>(animatable, "Controller", 0, state -> {
             Player player = ClientUtils.getClientPlayer();
             ItemStack gunStack = player.getMainHandItem();
@@ -122,7 +123,7 @@ public final class GunAnimations {
 
                     if (tag.getBoolean("IsDrawing") ||
                             (GunAnimations.isAnimationPlaying(state.getController(), "draw") &&
-                                    !state.getController().hasAnimationFinished())) {
+                                    !state.getController().hasAnimationFinished() && !AimingHandler.get().isAiming())) {
                         state.setControllerSpeed(GunEnchantmentHelper.getReloadAnimationSpeed(gunStack));
                         return state.setAndContinue(DRAW);
                     } else {
