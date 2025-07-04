@@ -12,6 +12,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
@@ -175,7 +176,10 @@ public class GunItem extends Item implements IColored, IMeta {
                 damage = GunModifierHelper.getModifiedProjectileDamage(stack, damage);
                 damage = GunEnchantmentHelper.getAcceleratorDamage(stack, damage);
                 damage = GunEnchantmentHelper.getWitheredDamage(stack, damage);
-                tooltip.add(Component.translatable("info.jeg.damage", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(damage) + additionalDamageText).withStyle(ChatFormatting.GRAY));
+                if (modifiedGun.getProjectile().getItem().equals(new ResourceLocation(Items.EMERALD.toString()))){
+                    tooltip.add(Component.translatable("info.jeg.damage", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(damage) + additionalDamageText)
+                            .append(Component.literal(" - " + ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format((damage * 4) * 0.8) + additionalDamageText)).withStyle(ChatFormatting.GRAY));
+                } else tooltip.add(Component.translatable("info.jeg.damage", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(damage) + additionalDamageText).withStyle(ChatFormatting.GRAY));
 
                 if (!advantage.equals(ModTags.Entities.NONE.location()) && Config.COMMON.gameplay.gunAdvantage.get()) {
                     tooltip.add(Component.translatable("info.jeg.advantage").withStyle(ChatFormatting.GRAY)

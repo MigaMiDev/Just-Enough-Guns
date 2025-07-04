@@ -12,7 +12,6 @@ import ttv.migami.jeg.common.FireMode;
 import ttv.migami.jeg.common.GripType;
 import ttv.migami.jeg.common.Gun;
 import ttv.migami.jeg.common.ReloadType;
-import ttv.migami.jeg.init.ModItems;
 import ttv.migami.jeg.init.ModSounds;
 import ttv.migami.jeg.init.ModTags;
 
@@ -35,7 +34,7 @@ public class CFGGunGen extends CFGGunProvider
 
                 // General
                 .setFireMode(FireMode.AUTOMATIC)
-                .setFireRate(1)
+                .setFireRate(2)
                 .setGripType(GripType.TWO_HANDED)
                 .setRecoilKick(0.33F)
                 .setRecoilAngle(1.0F)
@@ -45,21 +44,23 @@ public class CFGGunGen extends CFGGunProvider
 
                 // Reloads
                 .setMaxAmmo(30)
-                .setReloadType(ReloadType.MAG_FED)
+                .setReloadType(ReloadType.SINGLE_ITEM)
                 .setReloadTimer(35)
                 .setAdditionalReloadTimer(10)
 
                 // Projectile
-                .setAmmo(ModItems.PISTOL_AMMO.get())
-                .setEjectsCasing(true)
+                .setAmmo(Items.EMERALD)
+                .setReloadItem(Items.EMERALD_BLOCK)
+                .setEjectsCasing(false)
                 .setProjectileVisible(false)
-                .setDamage(4.5F)
+                .setDamage(2.0F)
                 .setProjectileSize(0.05F)
-                .setProjectileSpeed(12F)
+                .setProjectileSpeed(6F)
                 .setProjectileLife(60)
                 .setProjectileTrailLengthMultiplier(2)
-                .setProjectileTrailColor(0xFFFF00 | 0xFF000000)
-                .setProjectileAffectedByGravity(true)
+                .setProjectileTrailColor(0x00FF00 | 0xFF000000)
+                .setProjectileAffectedByGravity(false)
+                .setReduceDamageOverLife(true)
 
                 // Sounds
                 .setFireSound(ModSounds.CUSTOM_SMG_FIRE.get())

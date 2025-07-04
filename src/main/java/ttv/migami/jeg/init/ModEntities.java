@@ -40,7 +40,9 @@ public class ModEntities
     public static final RegistryObject<EntityType<WaterProjectileEntity>> WATER_PROJECTILE = registerProjectile("water_projectile", WaterProjectileEntity::new);
     public static final RegistryObject<EntityType<BlazeProjectileEntity>> BLAZE_PROJECTILE = registerProjectile("blaze_projectile", BlazeProjectileEntity::new);
     public static final RegistryObject<EntityType<SonicProjectileEntity>> SONIC_PROJECTILE = registerProjectile("sonic_projectile", SonicProjectileEntity::new);
+    public static final RegistryObject<EntityType<ResonanceProjectileEntity>> RESONANCE_PROJECTILE = registerProjectile("resonance_projectile", ResonanceProjectileEntity::new);
     public static final RegistryObject<EntityType<FlareProjectileEntity>> FLARE_PROJECTILE = registerBasic("flare_projectile", FlareProjectileEntity::new);
+
     public static final RegistryObject<EntityType<WhirpoolEntity>> WATER_BOMB = registerBasic("water_bomb", WhirpoolEntity::new);
     public static final RegistryObject<EntityType<PocketBubbleEntity>> POCKET_BUBBLE = registerBasic("pocket_bubble", PocketBubbleEntity::new);
     public static final RegistryObject<EntityType<GrenadeEntity>> GRENADE = registerBasic("grenade", GrenadeEntity::new);

@@ -156,6 +156,8 @@ public class JustEnoughGuns {
             ProjectileManager.getInstance().registerFactory(ModItems.SPECTRE_ROUND.get(), (worldIn, entity, weapon, item, modifiedGun) -> new SpectreProjectileEntity(ModEntities.SPECTRE_PROJECTILE.get(), worldIn, entity, weapon, item, modifiedGun));
             ProjectileManager.getInstance().registerFactory(ModItems.BLAZE_ROUND.get(), (worldIn, entity, weapon, item, modifiedGun) -> new BlazeProjectileEntity(ModEntities.BLAZE_PROJECTILE.get(), worldIn, entity, weapon, item, modifiedGun));
             ProjectileManager.getInstance().registerFactory(Items.ECHO_SHARD, (worldIn, entity, weapon, item, modifiedGun) -> new SonicProjectileEntity(ModEntities.SONIC_PROJECTILE.get(), worldIn, entity, weapon, item, modifiedGun));
+            ProjectileManager.getInstance().registerFactory(Items.EMERALD, (worldIn, entity, weapon, item, modifiedGun) -> new ResonanceProjectileEntity(ModEntities.RESONANCE_PROJECTILE.get(), worldIn, entity, weapon, item, modifiedGun));
+
             ProjectileManager.getInstance().registerFactory(ModItems.FLARE.get(), (worldIn, entity, weapon, item, modifiedGun) -> new FlareProjectileEntity(ModEntities.FLARE_PROJECTILE.get(), worldIn, entity, weapon, item, modifiedGun));
             ProjectileManager.getInstance().registerFactory(ModItems.WATER_BOMB.get(), (worldIn, entity, weapon, item, modifiedGun) -> new WhirpoolEntity(ModEntities.WATER_BOMB.get(), worldIn, entity, weapon, item, modifiedGun));
             ProjectileManager.getInstance().registerFactory(ModItems.POCKET_BUBBLE.get(), (worldIn, entity, weapon, item, modifiedGun) -> new PocketBubbleEntity(ModEntities.POCKET_BUBBLE.get(), worldIn, entity, weapon, item, modifiedGun));

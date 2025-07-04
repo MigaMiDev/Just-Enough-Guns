@@ -10,7 +10,7 @@
     "drawTimer": 20,
     "fireMode": "jeg:automatic",
     "gripType": "jeg:two_handed",
-    "rate": 1,
+    "rate": 2,
     "recoilAngle": 1.0,
     "recoilKick": 0.33,
     "spread": 4.0
@@ -40,22 +40,22 @@
   },
   "projectile": {
     "advantage": "jeg:none",
-    "damage": 4.5,
-    "ejectsCasing": true,
-    "gravity": true,
+    "damage": 2.0,
+    "damageReduceOverLife": true,
     "headshotMultiplier": 1.5,
-    "item": "jeg:pistol_ammo",
+    "item": "minecraft:emerald",
     "life": 60,
     "size": 0.05,
-    "speed": 12.0,
-    "trailColor": -256,
+    "speed": 6.0,
+    "trailColor": -16711936,
     "trailLengthMultiplier": 2.0
   },
   "reloads": {
     "additionalReloadTimer": 10,
     "maxAmmo": 30,
+    "reloadItem": "minecraft:emerald_block",
     "reloadTimer": 35,
-    "reloadType": "jeg:mag_fed"
+    "reloadType": "jeg:single_item"
   },
   "sounds": {
     "ejectorPull": "jeg:item.combat_rifle.ejector_pull",

@@ -88,7 +88,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 {
     private static final Random RANDOM = new Random();
     private static final Predicate<Entity> PROJECTILE_TARGETS = input -> input != null && input.isPickable() && !input.isSpectator();
-    private static final Predicate<BlockState> IGNORE_LEAVES = input -> input != null && Config.COMMON.gameplay.ignoreLeaves.get() && input.getBlock() instanceof LeavesBlock;
+    public static final Predicate<BlockState> IGNORE_LEAVES = input -> input != null && Config.COMMON.gameplay.ignoreLeaves.get() && input.getBlock() instanceof LeavesBlock;
 
     protected int shooterId;
     protected LivingEntity shooter;
@@ -957,6 +957,11 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
         float newDamage = this.getCriticalDamage(this.weapon, this.random, damage);
         boolean critical = damage != newDamage;
         damage = newDamage;
+
+        if (entity instanceof LivingEntity livingEntity && livingEntity.hasEffect(ModEffects.RESONANCE.get()) && this instanceof ResonanceProjectileEntity) {
+            damage = (float) (damage * (livingEntity.getEffect(ModEffects.RESONANCE.get()).getAmplifier() * 0.8));
+        }
+
         if (Config.COMMON.gameplay.gunAdvantage.get()) {
             damage *= advantageMultiplier(entity);
         }
