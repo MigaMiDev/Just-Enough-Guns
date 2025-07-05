@@ -63,14 +63,13 @@ public class CFGGunGen extends CFGGunProvider
                 .setReduceDamageOverLife(true)
 
                 // Sounds
-                .setFireSound(ModSounds.CUSTOM_SMG_FIRE.get())
+                .setFireSound(ModSounds.BLOSSOM_RIFLE_FIRE.get())
                 .setReloadStart(ModSounds.CR_RELOAD_MAGAZINE_OUT.get())
                 .setReloadLoadSound(ModSounds.SR_RELOAD_MAGAZINE_IN.get())
                 .setReloadEndSound(ModSounds.CR_RELOAD_EJECTOR.get())
                 .setEjectorPullSound(ModSounds.CR_EJECTOR_PULL.get())
                 .setEjectorReleaseSound(ModSounds.CR_EJECTOR_RELEASE.get())
-                .setSilencedFireSound(ModSounds.CUSTOM_SMG_SILENCED_FIRE.get())
-                .setEnchantedFireSound(ModSounds.CUSTOM_SMG_ENCHANTED_FIRE.get())
+                .setEnchantedFireSound(ModSounds.BLOSSOM_RIFLE_ENCHANTED_FIRE.get())
 
                 // Attachments
                 .setMuzzleFlash(0.8, 0, 4.45, -5)
@@ -175,12 +174,9 @@ public class CFGGunGen extends CFGGunProvider
 
                 // Attachments
                 .setMuzzleFlash(0.8, 0.0, 4.645, -10.635)
-                /*.setZoom(Gun.Modules.Zoom.builder()
-                        .setFovModifier(0.6F)
-                        .setOffset(0.0, 3.92, -1.25))*/
                 .setZoom(Gun.Modules.Zoom.builder()
                         .setFovModifier(0.6F)
-                        .setOffset(0.0, 3.75, -1.75))
+                        .setOffset(0.0, 5.4, -1.75))
                 .setScope(1.0F, 0.0, 4.9, 0)
                 .setBarrel(1.0F, 0.0, 4.65, -10)
                 .setUnderBarrel(1.0F, 0.0, 3, 0.45)

@@ -187,7 +187,7 @@ public class FlameProjectileEntity extends ProjectileEntity {
 	/**
 	 * Sets blocks on fire
 	 */
-    protected void onHit(HitResult result, Vec3 startVec, Vec3 endVec) {
+    private void onHit(HitResult result, Vec3 startVec, Vec3 endVec) {
 		
 		if(MinecraftForge.EVENT_BUS.post(new GunProjectileHitEvent(result, this))) {
 			

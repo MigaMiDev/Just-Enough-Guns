@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseFireBlock;
+import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -24,9 +25,13 @@ import ttv.migami.jeg.init.ModCommands;
 import ttv.migami.jeg.init.ModParticleTypes;
 import ttv.migami.jeg.item.GunItem;
 
+import java.util.function.Predicate;
+
 import static ttv.migami.jeg.common.network.ServerPlayHandler.sendParticlesToAll;
 
 public class FlareProjectileEntity extends ProjectileEntity {
+    private static final Predicate<BlockState> IGNORE_LEAVES = input -> input != null && Config.COMMON.gameplay.ignoreLeaves.get() && input.getBlock() instanceof LeavesBlock;
+
     private boolean hasRaid = false;
     private String raid = null;
     private boolean terrorRaid = false;
@@ -165,7 +170,7 @@ public class FlareProjectileEntity extends ProjectileEntity {
     /**
      * Sets blocks on fire
      */
-    protected void onHit(HitResult result, Vec3 startVec, Vec3 endVec) {
+    private void onHit(HitResult result, Vec3 startVec, Vec3 endVec) {
 
         if(MinecraftForge.EVENT_BUS.post(new GunProjectileHitEvent(result, this))) {
 

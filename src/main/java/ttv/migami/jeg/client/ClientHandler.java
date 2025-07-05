@@ -313,7 +313,7 @@ public class ClientHandler {
                     }
                     ClientSideCache.INSTANCE.getCreativeSamples()
                             .forEach(output::accept);
-                    if(registryObject.get().asItem() == ModBlocks.DYNAMIC_LIGHT.get().asItem()) {
+                    if(registryObject.get().asItem() == ModBlocks.DYNAMIC_LIGHT.get().asItem() || registryObject.get().asItem() == ModBlocks.BRIGHT_DYNAMIC_LIGHT.get().asItem()) {
                         return;
                     }
                     if(registryObject.get() instanceof FlareItem)

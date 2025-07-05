@@ -12,6 +12,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseFireBlock;
+import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -23,9 +24,13 @@ import ttv.migami.jeg.event.GunProjectileHitEvent;
 import ttv.migami.jeg.init.ModEnchantments;
 import ttv.migami.jeg.item.GunItem;
 
+import java.util.function.Predicate;
+
 import static ttv.migami.jeg.common.network.ServerPlayHandler.sendParticlesToAll;
 
 public class ArrowProjectileEntity extends ProjectileEntity {
+    private static final Predicate<BlockState> IGNORE_LEAVES = input -> input != null && Config.COMMON.gameplay.ignoreLeaves.get() && input.getBlock() instanceof LeavesBlock;
+
     private boolean flaming = false;
     private boolean charged = false;
 
@@ -145,7 +150,7 @@ public class ArrowProjectileEntity extends ProjectileEntity {
 	/**
      * Sets blocks on fire
      */
-    protected void onHit(HitResult result, Vec3 startVec, Vec3 endVec) {
+    private void onHit(HitResult result, Vec3 startVec, Vec3 endVec) {
 		
 		if(MinecraftForge.EVENT_BUS.post(new GunProjectileHitEvent(result, this))) {
 			

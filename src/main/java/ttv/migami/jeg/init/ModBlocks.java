@@ -114,6 +114,8 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> DYNAMIC_LIGHT = register("dynamic_light",
             DynamicLightBlock::new);
+    public static final RegistryObject<Block> BRIGHT_DYNAMIC_LIGHT = register("bright_dynamic_light",
+            BrightDynamicLightBlock::new);
 
     private static <T extends Block> RegistryObject<T> register(String id, Supplier<T> blockSupplier) {
         return register(id, blockSupplier, block1 -> new BlockItem(block1, new Item.Properties()));

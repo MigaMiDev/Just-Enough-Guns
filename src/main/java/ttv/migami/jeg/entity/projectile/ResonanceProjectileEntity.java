@@ -34,8 +34,8 @@ public class ResonanceProjectileEntity extends ProjectileEntity {
 					this.getX() - this.getDeltaMovement().x(),
 					this.getY() - this.getDeltaMovement().y(),
 					this.getZ() - this.getDeltaMovement().z(),
-					1,
-					0, 0, 0,
+					2,
+					0.1, 0.1, 0.1,
 					0.05
 			);
 		}

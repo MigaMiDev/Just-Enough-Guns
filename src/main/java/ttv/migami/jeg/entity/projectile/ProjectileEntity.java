@@ -88,7 +88,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 {
     private static final Random RANDOM = new Random();
     private static final Predicate<Entity> PROJECTILE_TARGETS = input -> input != null && input.isPickable() && !input.isSpectator();
-    public static final Predicate<BlockState> IGNORE_LEAVES = input -> input != null && Config.COMMON.gameplay.ignoreLeaves.get() && input.getBlock() instanceof LeavesBlock;
+    private static final Predicate<BlockState> IGNORE_LEAVES = input -> input != null && Config.COMMON.gameplay.ignoreLeaves.get() && input.getBlock() instanceof LeavesBlock;
 
     protected int shooterId;
     protected LivingEntity shooter;
@@ -599,7 +599,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
         }
     }
 
-    void onHit(HitResult result, Vec3 startVec, Vec3 endVec)
+    private void onHit(HitResult result, Vec3 startVec, Vec3 endVec)
     {
         if(MinecraftForge.EVENT_BUS.post(new GunProjectileHitEvent(result, this)))
         {
@@ -1047,6 +1047,24 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
     {
         if (!(this instanceof FlameProjectileEntity)) {
             PacketHandler.getPlayChannel().sendToTrackingChunk(() -> this.level().getChunkAt(pos), new S2CMessageProjectileHitBlock(x, y, z, pos, face));
+        }
+
+        if (this instanceof BlazeProjectileEntity) {
+            if(Config.COMMON.gameplay.griefing.setFireToBlocks.get()) {
+
+                BlockPos offsetPos = pos.relative(face);
+
+                if(this.level().getRandom().nextFloat() > 0.50F) { // 50% chance of setting the block on fire
+                    if(BaseFireBlock.canBePlacedAt(this.level(), offsetPos, face)) {
+
+                        BlockState fireState = BaseFireBlock.getState(this.level(), offsetPos);
+                        this.level().setBlock(offsetPos, fireState, 11);
+                        ((ServerLevel) this.level()).sendParticles(ParticleTypes.LAVA, x - 1.0 + this.random.nextDouble() * 2.0, y, z - 1.0 + this.random.nextDouble() * 2.0, 4, 0, 0, 0, 0);
+
+                    }
+                }
+
+            }
         }
     }
 

@@ -1,15 +1,23 @@
 package ttv.migami.jeg.event;
 
 import net.mcreator.deathangels.init.DeathAngelsModMobEffects;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.Cancelable;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animation.AnimationController;
+import ttv.migami.jeg.Config;
 import ttv.migami.jeg.JustEnoughGuns;
+import ttv.migami.jeg.init.ModBlocks;
 import ttv.migami.jeg.item.AnimatedGunItem;
 import ttv.migami.jeg.item.GunItem;
 import ttv.migami.jeg.util.GunModifierHelper;
@@ -87,6 +95,33 @@ public class GunFireEvent extends PlayerEvent
                     }
                 }
             }
+
+            if (Config.COMMON.gameplay.dynamicLightsOnShooting.get()) {
+                BlockState targetState = player.level().getBlockState(BlockPos.containing(player.getEyePosition()));
+                if (targetState.getBlock() == ModBlocks.BRIGHT_DYNAMIC_LIGHT.get()) {
+                    if (getValue(player.level(), BlockPos.containing(player.getEyePosition()), "Delay") < 1.0) {
+                        updateDelayAndNotify(player.level(), BlockPos.containing(player.getEyePosition()), targetState);
+                    }
+                } else if (targetState.getBlock() == Blocks.AIR || targetState.getBlock() == Blocks.CAVE_AIR) {
+                    BlockState dynamicLightState = ModBlocks.BRIGHT_DYNAMIC_LIGHT.get().defaultBlockState();
+                    player.level().setBlock(BlockPos.containing(player.getEyePosition()), dynamicLightState, 3);
+                }
+            }
         }
+    }
+
+    private static void updateDelayAndNotify(LevelAccessor world, BlockPos pos, BlockState state) {
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        if (blockEntity != null) {
+            blockEntity.getPersistentData().putDouble("Delay", 1.0);
+        }
+        if (world instanceof Level) {
+            ((Level) world).sendBlockUpdated(pos, state, state, 3);
+        }
+    }
+
+    public static double getValue(LevelAccessor world, BlockPos pos, String tag) {
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        return blockEntity != null ? blockEntity.getPersistentData().getDouble(tag) : -1.0;
     }
 }

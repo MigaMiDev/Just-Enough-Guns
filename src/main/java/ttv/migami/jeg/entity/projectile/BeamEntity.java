@@ -13,14 +13,21 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import ttv.migami.jeg.Config;
 import ttv.migami.jeg.common.Gun;
 import ttv.migami.jeg.item.GunItem;
 import ttv.migami.jeg.util.math.ExtendedEntityRayTraceResult;
 
+import java.util.function.Predicate;
+
 public class BeamEntity extends ProjectileEntity {
+	private static final Predicate<BlockState> IGNORE_LEAVES = input -> input != null && Config.COMMON.gameplay.ignoreLeaves.get() && input.getBlock() instanceof LeavesBlock;
+
 	protected float distance = -1f;
 	protected float laserPitch = 0.0f;
 	protected float laserYaw = 0.0f;
@@ -120,7 +127,7 @@ public class BeamEntity extends ProjectileEntity {
 		}
 
 		if (raytraceresult != null) {
-			this.onHit(raytraceresult, startVec, endVec);
+			//this.onHit(raytraceresult, startVec, endVec);
 			var hitVec = raytraceresult.getLocation();
 			distance = (float) startVec.distanceTo(hitVec);
 		}
