@@ -599,7 +599,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
         }
     }
 
-    private void onHit(HitResult result, Vec3 startVec, Vec3 endVec)
+    void onHit(HitResult result, Vec3 startVec, Vec3 endVec)
     {
         if(MinecraftForge.EVENT_BUS.post(new GunProjectileHitEvent(result, this)))
         {

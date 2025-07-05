@@ -3,7 +3,7 @@
     "flash": {
       "size": 0.8,
       "yOffset": 4.45,
-      "zOffset": -2.205
+      "zOffset": -5.0
     }
   },
   "general": {
@@ -17,24 +17,18 @@
   },
   "modules": {
     "attachments": {
-      "barrel": {
-        "yOffset": 4.475,
-        "zOffset": -1.2
+      "scope": {
+        "yOffset": 5.1,
+        "zOffset": 1.0
       },
-      "magazine": {
-        "scale": 0.0
-      },
-      "special": {
-        "xOffset": -0.8,
-        "yOffset": 3.8
-      },
-      "stock": {
-        "scale": 0.0
+      "underBarrel": {
+        "yOffset": 2.7,
+        "zOffset": -1.5
       }
     },
     "zoom": {
       "fovModifier": 0.6,
-      "yOffset": 3.85,
+      "yOffset": 3.2,
       "zOffset": -1.75
     }
   },

@@ -35,6 +35,7 @@ public class ModEntities
 
     public static final RegistryObject<EntityType<ArrowProjectileEntity>> ARROW_PROJECTILE = registerProjectile("arrow_projectile", ArrowProjectileEntity::new);
     public static final RegistryObject<EntityType<FlameProjectileEntity>> FLAME_PROJECTILE = registerProjectile("flame_projectile", FlameProjectileEntity::new);
+    public static final RegistryObject<EntityType<BeamEntity>> BEAM = registerBasic("beam", BeamEntity::new);
     public static final RegistryObject<EntityType<ProjectileEntity>> PROJECTILE = registerProjectile("projectile", ProjectileEntity::new);
     public static final RegistryObject<EntityType<SpectreProjectileEntity>> SPECTRE_PROJECTILE = registerProjectile("spectre_projectile", SpectreProjectileEntity::new);
     public static final RegistryObject<EntityType<WaterProjectileEntity>> WATER_PROJECTILE = registerProjectile("water_projectile", WaterProjectileEntity::new);

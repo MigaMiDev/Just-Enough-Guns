@@ -73,14 +73,12 @@ public class CFGGunGen extends CFGGunProvider
                 .setEnchantedFireSound(ModSounds.CUSTOM_SMG_ENCHANTED_FIRE.get())
 
                 // Attachments
-                .setMuzzleFlash(0.8, 0, 4.45, -2.205)
+                .setMuzzleFlash(0.8, 0, 4.45, -5)
                 .setZoom(Gun.Modules.Zoom.builder()
                         .setFovModifier(0.6F)
-                        .setOffset(0.0, 3.85, -1.75))
-                .setBarrel(1.0F, 0.0, 4.475, -1.2)
-                .setStock(0.0F, 0.0, 0.0, 0.0)
-                .setMagazine(0.0F, 0.0, 0.0, 0.0)
-                .setSpecial(1.0F, -0.8, 3.8, 0)
+                        .setOffset(0.0, 4.6, -1.75))
+                .setScope(1.0F, 0.0, 5.1, 1)
+                .setUnderBarrel(1.0F, 0.0, 2.7, -1.5)
 
                 .build());
 
@@ -127,13 +125,6 @@ public class CFGGunGen extends CFGGunProvider
                 .setReloadEndSound(ModSounds.CR_RELOAD_EJECTOR.get())
                 .setEjectorPullSound(ModSounds.CR_EJECTOR_PULL.get())
                 .setEjectorReleaseSound(ModSounds.CR_EJECTOR_RELEASE.get())
-
-                // Attachments
-                .setMuzzleFlash(0.8, 0, 4.45, -2.205)
-                .setBarrel(1.0F, 0.0, 4.475, -1.2)
-                .setStock(0.0F, 0.0, 0.0, 0.0)
-                .setMagazine(0.0F, 0.0, 0.0, 0.0)
-                .setSpecial(1.0F, -0.8, 3.8, 0)
 
                 .build());
 

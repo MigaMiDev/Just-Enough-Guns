@@ -181,6 +181,11 @@ public class GunItem extends Item implements IColored, IMeta {
                             .append(Component.literal(" - " + ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format((damage * 4) * 0.8) + additionalDamageText)).withStyle(ChatFormatting.GRAY));
                 } else tooltip.add(Component.translatable("info.jeg.damage", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(damage) + additionalDamageText).withStyle(ChatFormatting.GRAY));
 
+                if (modifiedGun.getProjectile().getItem().equals(new ResourceLocation(Items.EMERALD.toString()))) {
+                    tooltip.add(Component.translatable("info.jeg.resonance").withStyle(ChatFormatting.GREEN));
+                    tooltip.add(Component.translatable("info.jeg.resonance_info").withStyle(ChatFormatting.GREEN));
+                }
+
                 if (!advantage.equals(ModTags.Entities.NONE.location()) && Config.COMMON.gameplay.gunAdvantage.get()) {
                     tooltip.add(Component.translatable("info.jeg.advantage").withStyle(ChatFormatting.GRAY)
                             .append(Component.translatable("advantage." + advantage).withStyle(ChatFormatting.GOLD)));

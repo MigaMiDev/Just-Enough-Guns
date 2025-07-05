@@ -1,6 +1,40 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
+		"idle": {
+			"loop": true,
+			"bones": {
+				"right_arm": {
+					"rotation": {
+						"vector": [90, 0, -180]
+					},
+					"position": {
+						"vector": [5.65, -2.2, 3.8]
+					}
+				},
+				"left_arm": {
+					"rotation": {
+						"vector": [73.95054, -26.20116, -129.71317]
+					},
+					"position": {
+						"vector": [-2.5, -4.2, -2.85]
+					}
+				},
+				"gun_body": {
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"vector": [0, 0, 0]
+					}
+				},
+				"makeshift_stock": {
+					"position": {
+						"vector": [0, 0, 0]
+					}
+				}
+			}
+		},
 		"shoot": {
 			"loop": true,
 			"animation_length": 0.375,
@@ -11,10 +45,10 @@
 					},
 					"position": {
 						"0.0": {
-							"vector": [5.65, -2.2, 5.5]
+							"vector": [5.65, -2.2, 4]
 						},
 						"0.25": {
-							"vector": [5.65, -2.2, 5]
+							"vector": [5.65, -2.2, 3.8]
 						}
 					}
 				},
@@ -23,7 +57,7 @@
 						"vector": [73.95054, -26.20116, -129.71317]
 					},
 					"position": {
-						"vector": [-2.5, -4.2, -0.85]
+						"vector": [-2.5, -4.2, -2.85]
 					}
 				},
 				"gun_body": {
@@ -85,10 +119,10 @@
 					},
 					"position": {
 						"0.0": {
-							"vector": [5.65, -2.2, 5.5]
+							"vector": [5.65, -2.2, 4]
 						},
 						"0.25": {
-							"vector": [5.65, -2.2, 5]
+							"vector": [5.65, -2.2, 3.8]
 						}
 					}
 				},
@@ -97,7 +131,7 @@
 						"vector": [73.95054, -26.20116, -129.71317]
 					},
 					"position": {
-						"vector": [-2.5, -4.2, -0.85]
+						"vector": [-2.5, -4.2, -2.85]
 					}
 				},
 				"gun_body": {
@@ -1033,40 +1067,6 @@
 			"sound_effects": {
 				"0.5": {
 					"effect": "reload_end"
-				}
-			}
-		},
-		"idle": {
-			"loop": true,
-			"bones": {
-				"right_arm": {
-					"rotation": {
-						"vector": [90, 0, -180]
-					},
-					"position": {
-						"vector": [5.65, -2.2, 5]
-					}
-				},
-				"left_arm": {
-					"rotation": {
-						"vector": [73.95054, -26.20116, -129.71317]
-					},
-					"position": {
-						"vector": [-2.5, -4.2, -0.85]
-					}
-				},
-				"gun_body": {
-					"rotation": {
-						"vector": [0, 0, 0]
-					},
-					"position": {
-						"vector": [0, 0, 0]
-					}
-				},
-				"makeshift_stock": {
-					"position": {
-						"vector": [0, 0, 0]
-					}
 				}
 			}
 		},

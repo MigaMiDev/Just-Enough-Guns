@@ -176,6 +176,8 @@
   "info.jeg.damage": "Damage: %s",
   "info.jeg.modifier": "Modifier: ",
   "info.jeg.advantage": "Advantage: ",
+  "info.jeg.resonance": "This Gun will apply Resonance to Entities!",
+  "info.jeg.resonance_info": "Resonance multiplies the Damage dealt!",
   "info.jeg.ignore_ammo": "Infinite Ammo",
   "info.jeg.ammo": "Ammo: %s",
   "info.jeg.ammo_type": "Ammo Type: %s",

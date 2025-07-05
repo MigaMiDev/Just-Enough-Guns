@@ -78,15 +78,15 @@ public final class ConfigPackLoader {
         Map<String, String> filesToCopy = Map.of(
                 "assets/jeg/geo/vindicator_smg.geo.json", "assets/jeg/samples/geo/vindicator_smg.geo.json",
                 "assets/jeg/textures/vindicator_smg.png", "assets/jeg/samples/textures/vindicator_smg.png",
-                "assets/jeg/animations/vindicator_smg.png", "assets/jeg/samples/animations/vindicator_smg.animation.json",
+                "assets/jeg/animations/vindicator_smg.animation.json", "assets/jeg/samples/animations/vindicator_smg.animation.json",
 
                 "assets/jeg/geo/primitive_blowpipe.geo.json", "assets/jeg/samples/geo/primitive_blowpipe.geo.json",
                 "assets/jeg/textures/primitive_blowpipe.png", "assets/jeg/samples/textures/primitive_blowpipe.png",
-                "assets/jeg/animations/primitive_blowpipe.png", "assets/jeg/samples/animations/primitive_blowpipe.animation.json",
+                "assets/jeg/animations/primitive_blowpipe.animation.json", "assets/jeg/samples/animations/primitive_blowpipe.animation.json",
 
                 "assets/jeg/geo/fire_sweeper.geo.json", "assets/jeg/samples/geo/fire_sweeper.geo.json",
                 "assets/jeg/textures/fire_sweeper.png", "assets/jeg/samples/textures/fire_sweeper.png",
-                "assets/jeg/animations/fire_sweeper.png", "assets/jeg/samples/animations/fire_sweeper.animation.json",
+                "assets/jeg/animations/fire_sweeper.animation.json", "assets/jeg/samples/animations/fire_sweeper.animation.json",
 
                 "assets/jeg/lang/en_us.json", "assets/jeg/samples/lang/en_us.json"
         );
