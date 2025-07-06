@@ -237,6 +237,7 @@ public class Config
 	{
 		public final Griefing griefing;
 		public final ForgeConfigSpec.BooleanValue dynamicLightsOnShooting;
+		public final ForgeConfigSpec.BooleanValue mobDynamicLightsOnShooting;
 		public final ForgeConfigSpec.BooleanValue drawAnimation;
 		public final ForgeConfigSpec.IntValue bulletProtection;
 		public final ForgeConfigSpec.BooleanValue mobsDropHelmets;
@@ -266,7 +267,8 @@ public class Config
 			{
 				this.griefing = new Griefing(builder);
 				this.drawAnimation = builder.comment("If enabled, animated guns will play a Drawing animation when equipping.").define("drawAnimation", true);
-				this.dynamicLightsOnShooting = builder.comment("If enabled, shooting will create a Dynamic Light block.").define("dynamicLightsOnShooting", true);
+				this.dynamicLightsOnShooting = builder.comment("If enabled, Mobs shooting will create a Dynamic Light block.").define("dynamicLightsOnShooting", true);
+				this.mobDynamicLightsOnShooting = builder.comment("If enabled, shooting will create a Dynamic Light block.").define("mobDynamicLightsOnShooting", true);
 				this.bulletProtection = builder.comment("The amount of seconds Bullet Protection is applied upon Player respawn.").defineInRange("bulletProtection", 10, 0, 60);
 				this.mobsDropHelmets = builder.comment("If enabled, mobs that receive headshots, have a chance to drop their helmets!").define("mobsDropHelmets", true);
 				this.playersDropHelmets = builder.comment("If enabled, if players receive a fatal blow to the head, the helmet will cover it!").define("playersDropHelmets", true);

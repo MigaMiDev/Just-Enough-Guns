@@ -1,6 +1,7 @@
 package ttv.migami.jeg.entity.ai;
 
 import com.mrcrayfish.framework.api.network.LevelLocation;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
@@ -10,6 +11,10 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.common.Gun;
@@ -18,6 +23,7 @@ import ttv.migami.jeg.common.SpreadTracker;
 import ttv.migami.jeg.entity.monster.phantom.gunner.PhantomGunner;
 import ttv.migami.jeg.entity.monster.phantom.terror.TerrorPhantom;
 import ttv.migami.jeg.entity.projectile.ProjectileEntity;
+import ttv.migami.jeg.init.ModBlocks;
 import ttv.migami.jeg.init.ModEffects;
 import ttv.migami.jeg.init.ModSyncedDataKeys;
 import ttv.migami.jeg.interfaces.IProjectileFactory;
@@ -125,6 +131,18 @@ public class AIGunEvent {
                     messageBulletTrail
             );
         }
+
+        if (Config.COMMON.gameplay.mobDynamicLightsOnShooting.get()) {
+            BlockState targetState = shooter.level().getBlockState(BlockPos.containing(shooter.getEyePosition()));
+            if (targetState.getBlock() == ModBlocks.BRIGHT_DYNAMIC_LIGHT.get()) {
+                if (getValue(shooter.level(), BlockPos.containing(shooter.getEyePosition()), "Delay") < 1.0) {
+                    updateDelayAndNotify(shooter.level(), BlockPos.containing(shooter.getEyePosition()), targetState);
+                }
+            } else if (targetState.getBlock() == Blocks.AIR || targetState.getBlock() == Blocks.CAVE_AIR) {
+                BlockState dynamicLightState = ModBlocks.BRIGHT_DYNAMIC_LIGHT.get().defaultBlockState();
+                shooter.level().setBlock(BlockPos.containing(shooter.getEyePosition()), dynamicLightState, 3);
+            }
+        }
     }
 
     public static Vec3 getDirection(LivingEntity shooter, ItemStack weapon, GunItem item, Gun modifiedGun, float spreadModifier)
@@ -220,5 +238,20 @@ public class AIGunEvent {
         float f2 = -Mth.cos(-pitch * 0.017453292F);
         float f3 = Mth.sin(-pitch * 0.017453292F);
         return new Vec3(f1 * f2, f3, f * f2);
+    }
+
+    private static void updateDelayAndNotify(LevelAccessor world, BlockPos pos, BlockState state) {
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        if (blockEntity != null) {
+            blockEntity.getPersistentData().putDouble("Delay", 1.0);
+        }
+        if (world instanceof Level) {
+            ((Level) world).sendBlockUpdated(pos, state, state, 3);
+        }
+    }
+
+    public static double getValue(LevelAccessor world, BlockPos pos, String tag) {
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        return blockEntity != null ? blockEntity.getPersistentData().getDouble(tag) : -1.0;
     }
 }
