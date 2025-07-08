@@ -18,12 +18,6 @@
     "spread": 16.0
   },
   "modules": {
-    "attachments": {
-      "underBarrel": {
-        "yOffset": 3.0,
-        "zOffset": 0.45
-      }
-    },
     "zoom": {
       "fovModifier": 0.6,
       "yOffset": 5.4,

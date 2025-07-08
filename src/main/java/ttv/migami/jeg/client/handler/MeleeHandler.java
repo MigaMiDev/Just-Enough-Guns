@@ -40,6 +40,9 @@ public class MeleeHandler
 
         if(KeyBinds.KEY_MELEE.isDown() && event.getAction() == GLFW.GLFW_PRESS)
         {
+            if (player.getMainHandItem().getOrCreateTag().getString("GunId").endsWith("blowpipe")) {
+                return;
+            }
             if (player.getMainHandItem().getItem() instanceof AnimatedBowItem || player.getMainHandItem().is(ModItems.MINIGUN.get())) {
                 return;
             }

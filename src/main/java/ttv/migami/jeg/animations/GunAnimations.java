@@ -23,6 +23,7 @@ import ttv.migami.jeg.item.attachment.IAttachment;
 import ttv.migami.jeg.util.GunEnchantmentHelper;
 
 public final class GunAnimations {
+    private static String lastGunId = "";
     public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
     public static final RawAnimation SHOOT = RawAnimation.begin().then("shoot", Animation.LoopType.HOLD_ON_LAST_FRAME);
     public static final RawAnimation AIM_SHOOT = RawAnimation.begin().then("aim_shoot", Animation.LoopType.HOLD_ON_LAST_FRAME);
@@ -44,6 +45,14 @@ public final class GunAnimations {
         return new AnimationController<>(animatable, "Controller", 0, state -> {
             Player player = ClientUtils.getClientPlayer();
             ItemStack gunStack = player.getMainHandItem();
+
+            if (gunStack.getOrCreateTag().contains("GunId")) {
+                String currentId = gunStack.getOrCreateTag().getString("GunId");
+                if (!currentId.equals(lastGunId)) {
+                    lastGunId = currentId;
+                    state.resetCurrentAnimation();
+                }
+            }
 
             state.setControllerSpeed(1F);
 
