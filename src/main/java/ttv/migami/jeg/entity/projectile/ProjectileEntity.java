@@ -1336,17 +1336,21 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
         int fireRadius = Mth.ceil(radius);
 
         for (int dx = -fireRadius; dx <= fireRadius; dx++) {
-            for (int dz = -fireRadius; dz <= fireRadius; dz++) {
-                for (int dy = -fireRadius; dy <= fireRadius; dy++) {
+            for (int dy = -fireRadius; dy <= fireRadius; dy++) {
+                for (int dz = -fireRadius; dz <= fireRadius; dz++) {
                     BlockPos pos = origin.offset(dx, dy, dz);
 
-                    // Distance check (sphere)
-                    if (pos.distSqr(origin) <= radius * radius) {
-                        BlockState state = world.getBlockState(pos);
-                        BlockState above = world.getBlockState(pos.above());
+                    if (pos.distSqr(origin) > radius * radius) continue;
 
-                        if (world.getBlockState(pos).isSolid() && above.isAir() && world.getBlockState(pos.above()).isAir()) {
-                            world.setBlock(pos.above(), Blocks.FIRE.defaultBlockState(), 11);
+                    BlockState state = world.getBlockState(pos);
+
+                    if (state.isFlammable(world, pos, Direction.UP)) {
+                        // Try placing fire on any air block adjacent to a flammable one
+                        for (Direction dir : Direction.values()) {
+                            BlockPos neighbor = pos.relative(dir);
+                            if (world.getBlockState(neighbor).isAir() && Blocks.FIRE.defaultBlockState().canSurvive(world, neighbor)) {
+                                world.setBlock(neighbor, Blocks.FIRE.defaultBlockState(), 11);
+                            }
                         }
                     }
                 }
