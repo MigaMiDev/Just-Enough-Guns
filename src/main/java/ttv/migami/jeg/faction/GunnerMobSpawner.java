@@ -7,9 +7,11 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -96,6 +98,10 @@ public class GunnerMobSpawner {
         }
 
         ItemStack heldItem = mob.getMainHandItem();
+
+        if (mob.getTags().contains("MobGunner") && mob instanceof AbstractPiglin abstractPiglin && abstractPiglin.level().dimension() == Level.OVERWORLD) {
+            abstractPiglin.setImmuneToZombification(true);
+        }
 
         if (mob.getTags().contains("MobGunner") && !(heldItem.getItem() instanceof GunItem)) {
             GunnerManager manager = new GunnerManager(GunnerManager.getConfigFactions());
