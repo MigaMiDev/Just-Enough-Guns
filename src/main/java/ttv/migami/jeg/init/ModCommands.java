@@ -29,6 +29,7 @@ import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.animal.horse.SkeletonHorse;
 import net.minecraft.world.entity.animal.horse.ZombieHorse;
 import net.minecraft.world.entity.monster.*;
+import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
 import net.minecraft.world.entity.monster.piglin.Piglin;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -369,6 +370,10 @@ public class ModCommands {
                             : new ItemStack(Items.GOLDEN_SWORD));
                 }
             }
+        }
+
+        if (mob instanceof AbstractPiglin abstractPiglin) {
+            abstractPiglin.setImmuneToZombification(true);
         }
 
         return mob;
