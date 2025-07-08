@@ -53,11 +53,11 @@
       }
     ]
   },
-  "event.raid.dark_horn": {
-    "subtitle": "subtitle.event.raid.dark_horn",
+  "event.raid.terror_horn": {
+    "subtitle": "subtitle.event.raid.terror_horn",
     "sounds": [
       {
-        "name": "jeg:event/raid/dark_horn"
+        "name": "jeg:event/raid/terror_horn"
       }
     ]
   },

@@ -279,6 +279,9 @@ public class ModItems {
     public static final RegistryObject<ScoreStreakItem> PHANTOM_GUNNER_BAIT = REGISTER.register("phantom_gunner_bait",
             () -> new PhantomGunnerBaitItem(new Item.Properties().rarity(Rarity.RARE).stacksTo(1), 3000));
 
+    public static final RegistryObject<TerrorHornItem> TERROR_HORN = REGISTER.register("terror_horn",
+            () -> new TerrorHornItem(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1)));
+
     /* Projectiles And Throwables */
     public static final RegistryObject<Item> GRENADE = REGISTER.register("grenade",
             () -> new GrenadeItem(new Item.Properties()

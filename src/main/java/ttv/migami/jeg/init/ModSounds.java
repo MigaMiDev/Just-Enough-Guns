@@ -143,7 +143,7 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> BIRTHDAY_PARTY = register("item.kill_effect.birthday_party");
     public static final RegistryObject<SoundEvent> AIR_HORN = register("item.kill_effect.air_horn");
 
-    public static final RegistryObject<SoundEvent> DARK_HORN = register("event.raid.dark_horn");
+    public static final RegistryObject<SoundEvent> TERROR_HORN = register("event.raid.terror_horn");
 
     public static final RegistryObject<SoundEvent> AMMO_POUCH = register("item.loot_drop.item.ammo_pouch");
     public static final RegistryObject<SoundEvent> BADGE_PACK = register("item.loot_drop.item.badge_pack");

@@ -146,7 +146,7 @@ public class FlareProjectileEntity extends ProjectileEntity {
                 ServerLevel level = (ServerLevel) this.level();
                 int x = level.random.nextInt(-50, 50);
                 int z = level.random.nextInt(-50, 50);
-                level.playSound(null, BlockPos.containing(this.getPosition(1F).add(x, -50, z)), ModSounds.DARK_HORN.get(), SoundSource.HOSTILE, 1000F, 1);
+                level.playSound(null, BlockPos.containing(this.getPosition(1F).add(x, -50, z)), ModSounds.terror_horn.get(), SoundSource.HOSTILE, 1000F, 1);
                 for (ServerPlayer player : level.players()) {
                     player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 260, 0, true, false));
                 }

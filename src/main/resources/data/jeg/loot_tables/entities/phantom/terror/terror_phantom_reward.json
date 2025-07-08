@@ -6,6 +6,22 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "name": "jeg:terror_horn",
+          "weight": 100,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
           "name": "jeg:minigun",
           "weight": 100,
           "functions": [

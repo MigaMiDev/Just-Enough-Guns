@@ -597,7 +597,7 @@ public class ModCommands {
         int z = level.random.nextInt(-50, 50);
         TerrorRaidEntity.summonTerrorRaidEntity(level, pos, true, defeat);
 
-        level.playSound(null, BlockPos.containing(pos.add(x, 32, z)), ModSounds.DARK_HORN.get(), SoundSource.HOSTILE, 1000F, 1);
+        level.playSound(null, BlockPos.containing(pos.add(x, 32, z)), ModSounds.TERROR_HORN.get(), SoundSource.HOSTILE, 1000F, 1);
     }
 
     public static boolean spawnRaider(ServerLevel level, LivingEntity entity, Player player, BlockPos.MutableBlockPos spawnPos, Vec3 targetPos, boolean forceGuns) {

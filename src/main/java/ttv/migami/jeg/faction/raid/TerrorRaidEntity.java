@@ -291,7 +291,7 @@ public class TerrorRaidEntity extends Entity {
     public void playHorn () {
         int x = this.level().random.nextInt(-25, 25);
         int z = this.level().random.nextInt(-25, 25);
-        this.level().playSound(null, BlockPos.containing(this.position().add(x, 32, z)), ModSounds.DARK_HORN.get(), SoundSource.HOSTILE, 1000F, 1);
+        this.level().playSound(null, BlockPos.containing(this.position().add(x, 32, z)), ModSounds.TERROR_HORN.get(), SoundSource.HOSTILE, 1000F, 1);
         for (LivingEntity entity : getActivePlayers()) {
             entity.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 100, 0, false, false));
         }
