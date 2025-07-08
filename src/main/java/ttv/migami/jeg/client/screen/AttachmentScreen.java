@@ -202,7 +202,7 @@ public class AttachmentScreen extends AbstractContainerScreen<AttachmentContaine
                     .orElse("JEG: Add-on");
 
             if (mainHandItem.is(ModItems.ABSTRACT_GUN.get())) {
-                modName = "JEG: Gun-packs!";
+                modName = "JEG: Gun-Packs!";
             }
 
             pGuiGraphics.drawCenteredString(this.font, modName, this.imageWidth / 2, -30, 6843377);

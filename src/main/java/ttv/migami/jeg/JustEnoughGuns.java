@@ -107,7 +107,6 @@ public class JustEnoughGuns {
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
             FrameworkClientAPI.registerDataLoader(MetaLoader.getInstance());
             ClientHandler.onRegisterCreativeTab(bus);
-            ClientHandler.onRegisterGunnersTab(bus);
             bus.addListener(KeyBinds::registerKeyMappings);
             bus.addListener(CrosshairHandler::onConfigReload);
             bus.addListener(ClientHandler::onRegisterReloadListener);

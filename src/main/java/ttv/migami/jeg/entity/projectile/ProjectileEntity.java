@@ -973,7 +973,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
         }
 
         DamageSource source = ModDamageTypes.Sources.projectile(this.level().registryAccess(), this, this.shooter);
-        if (entity instanceof EnderMan) {
+        if (entity instanceof EnderMan && !(this instanceof SonicProjectileEntity)) {
             source = this.shooter.damageSources().mobProjectile(this, this.shooter);
         }
 

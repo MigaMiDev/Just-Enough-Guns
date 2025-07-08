@@ -1,0 +1,10 @@
+{
+  "type": "jeg:primitive_bow_on_jungle_temple",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:chests/jungle_temple"
+    }
+  ],
+  "item": "jeg:primitive_bow"
+}

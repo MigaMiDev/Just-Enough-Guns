@@ -57,6 +57,10 @@ public class FlashlightEvent {
         Player player = event.player;
         boolean isAiming = ModSyncedDataKeys.AIMING.getValue(player);
 
+        if (player.isSprinting()) {
+            return;
+        }
+
         if (!player.level().isClientSide && !player.isSpectator() && player.getMainHandItem().getItem() instanceof GunItem) {
             if (Gun.hasAttachmentEquipped(player.getMainHandItem(), IAttachment.Type.SPECIAL)) {
                 if (Gun.getAttachment(IAttachment.Type.SPECIAL, player.getMainHandItem()).getItem() == ModItems.LASER_POINTER.get()) {
@@ -108,6 +112,10 @@ public class FlashlightEvent {
         }
 
         if (player.isDeadOrDying()) {
+            return;
+        }
+
+        if (player.isSprinting()) {
             return;
         }
 

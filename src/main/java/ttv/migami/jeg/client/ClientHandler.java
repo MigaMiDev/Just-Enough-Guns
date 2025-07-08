@@ -312,8 +312,6 @@ public class ClientHandler {
                         if (!stack.is(ModItems.ABSTRACT_GUN.get())) output.accept(stack);
                         return;
                     }
-                    ClientSideCache.INSTANCE.getCreativeSamples()
-                            .forEach(output::accept);
                     if(registryObject.get().asItem() == ModBlocks.DYNAMIC_LIGHT.get().asItem() || registryObject.get().asItem() == ModBlocks.BRIGHT_DYNAMIC_LIGHT.get().asItem()) {
                         return;
                     }
@@ -339,6 +337,33 @@ public class ClientHandler {
                 }
             });
         register.register("creative_tab", builder::build);
+        register.register(bus);
+        onRegisterDataGunsTab(bus);
+        onRegisterGunnersTab(bus);
+    }
+
+    public static void onRegisterDataGunsTab(IEventBus bus)
+    {
+        DeferredRegister<CreativeModeTab> register = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Reference.MOD_ID);
+        CreativeModeTab.Builder builder = CreativeModeTab.builder();
+        builder.title(Component.translatable( "itemGroup." + Reference.MOD_ID + ".data"));
+        builder.icon(() -> {
+            ItemStack stack = new ItemStack(ModItems.ABSTRACT_GUN.get());
+            stack.getOrCreateTag().putString("GunId", "vindicator_smg");
+            stack.getOrCreateTag().putBoolean("IgnoreAmmo", true);
+            return stack;
+        });
+        builder.displayItems((flags, output) ->
+        {
+            ModItems.REGISTER.getEntries().forEach(registryObject ->
+            {
+
+                ClientSideCache.INSTANCE.getCreativeSamples()
+                        .forEach(output::accept);
+            });
+            //CustomGunManager.fill(output);
+        });
+        register.register("data_guns_tab", builder::build);
         register.register(bus);
     }
 

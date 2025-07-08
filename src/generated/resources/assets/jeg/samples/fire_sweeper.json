@@ -18,6 +18,11 @@
     "spread": 16.0
   },
   "modules": {
+    "attachments": {
+      "magazine": {
+        "scale": 0.0
+      }
+    },
     "zoom": {
       "fovModifier": 0.6,
       "yOffset": 5.4,
@@ -40,19 +45,19 @@
     "trailLengthMultiplier": 2.0
   },
   "reloads": {
-    "additionalReloadTimer": 10,
+    "additionalReloadTimer": 30,
     "maxAmmo": 8,
-    "reloadTimer": 30,
+    "reloadTimer": 90,
     "reloadType": "jeg:mag_fed"
   },
   "sounds": {
-    "ejectorPull": "jeg:item.pump_shotgun.pump_pull",
+    "ejectorPull": "minecraft:item.firecharge.use",
     "ejectorRelease": "jeg:item.pump_shotgun.pump_release",
     "enchantedFire": "jeg:item.repeating_shotgun.enchanted_fire",
     "fire": "jeg:item.repeating_shotgun.fire",
     "reloadEnd": "jeg:item.pump_shotgun.pump",
-    "reloadLoad": "jeg:item.pump_shotgun.shell",
-    "reloadStart": "jeg:item.pump_shotgun.pump_pull",
+    "reloadLoad": "jeg:item.assault_rifle.reload_magazine_in",
+    "reloadStart": "jeg:item.assault_rifle.reload_magazine_out",
     "silencedFire": "jeg:item.pump_shotgun.silenced_fire"
   }
 }

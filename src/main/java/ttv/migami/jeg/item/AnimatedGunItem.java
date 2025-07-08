@@ -63,6 +63,12 @@ public class AnimatedGunItem extends GunItem implements GeoAnimatable, GeoItem {
         }
 
         if (entity instanceof Player player) {
+            if (player.getMainHandItem().getItem() == ModItems.ABSTRACT_GUN.get() &&
+                    player.getMainHandItem().getOrCreateTag().getString("GunId").endsWith("fire_sweeper")) {
+                if (player.getRandom().nextFloat() < 0.025 && !ModSyncedDataKeys.RELOADING.getValue(player) && player.getMainHandItem().getOrCreateTag().getInt("AmmoCount") > 0) {
+                    player.playSound(SoundEvents.FIRE_AMBIENT, 0.3F, 0.7F + player.getRandom().nextFloat());
+                }
+            }
             if (player.getMainHandItem().getItem() == ModItems.HYPERSONIC_CANNON.get()) {
                 this.heartBeat--;
                 if (this.heartBeat == 0) {

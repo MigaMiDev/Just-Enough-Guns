@@ -120,11 +120,6 @@
 						}
 					}
 				}
-			},
-			"particle_effects": {
-				"0.0": {
-					"effect": "eject_casing"
-				}
 			}
 		},
 		"aim_shoot": {
@@ -212,11 +207,6 @@
 						}
 					}
 				}
-			},
-			"particle_effects": {
-				"0.0": {
-					"effect": "eject_casing"
-				}
 			}
 		},
 		"sprint": {
@@ -251,7 +241,7 @@
 						"vector": [90, 0, -180]
 					},
 					"position": {
-						"vector": [5.65, -1.83, 2.4]
+						"vector": [5.65, -2.53, 5.4]
 					}
 				},
 				"left_arm": {
@@ -259,7 +249,7 @@
 						"vector": [73.95054, -26.20116, -129.71317]
 					},
 					"position": {
-						"vector": [-2.9, -4.2, -6.85]
+						"vector": [-3.2, -4.2, -5.55]
 					}
 				},
 				"glow_3": {
@@ -892,6 +882,9 @@
 				},
 				"6.0": {
 					"effect": "reload_end"
+				},
+				"6.0417": {
+					"effect": "ejector_pull"
 				}
 			},
 			"timeline": {
@@ -1117,22 +1110,38 @@
 						"0.0417": {
 							"vector": [90, 0, -180]
 						},
-						"2.125": {
+						"1.9167": {
 							"vector": [90, 0, -180]
 						},
-						"4.7917": {
-							"vector": [90, 0, -180]
+						"2.5": {
+							"vector": [122.5, 47.5, -180],
+							"easing": "easeOutBack"
+						},
+						"4.8333": {
+							"vector": [122.5, 47.5, -180]
+						},
+						"5.3333": {
+							"vector": [90, 0, -180],
+							"easing": "easeOutBack"
 						}
 					},
 					"position": {
 						"0.0417": {
 							"vector": [5.65, -2.53, 5.4]
 						},
-						"2.125": {
+						"1.9167": {
 							"vector": [5.65, -2.53, 5.4]
 						},
-						"4.7917": {
-							"vector": [5.65, -2.53, 5.4]
+						"2.4167": {
+							"vector": [2.75, -5.43, 3.8],
+							"easing": "easeOutBack"
+						},
+						"4.8333": {
+							"vector": [2.75, -5.43, 3.8]
+						},
+						"5.3333": {
+							"vector": [5.65, -2.53, 5.4],
+							"easing": "easeOutBack"
 						}
 					}
 				},
@@ -1276,12 +1285,6 @@
 				},
 				"2.0": {
 					"effect": "rustle"
-				},
-				"2.5833": {
-					"effect": "ejector_pull"
-				},
-				"4.0": {
-					"effect": "ejector_release"
 				},
 				"5.0417": {
 					"effect": "rustle"
@@ -1435,6 +1438,14 @@
 							"easing": "linear"
 						}
 					}
+				}
+			},
+			"sound_effects": {
+				"0.7083": {
+					"effect": "ejector_pull"
+				},
+				"0.75": {
+					"effect": "reload_end"
 				}
 			}
 		}

@@ -68,6 +68,15 @@ public class ModLootModifiers {
     public static final RegistryObject<Codec<? extends IGlobalLootModifier>> ATLANTIC_SHOOTER_ON_SHIPWRECK =
             LOOT_MODIFIER_SERIALIZERS.register("atlantic_shooter_on_shipwreck", AtlanticShooterOnShipwreck.CODEC);
 
+    public static final RegistryObject<Codec<? extends IGlobalLootModifier>> PRIMITIVE_BOW_JUNGLE_TEMPLE =
+            LOOT_MODIFIER_SERIALIZERS.register("primitive_bow_on_jungle_temple", PrimitiveBowOnJungleTempleModifier.CODEC);
+
+    public static final RegistryObject<Codec<? extends IGlobalLootModifier>> PRIMITIVE_BLOWPIPE_JUNGLE_TEMPLE =
+            LOOT_MODIFIER_SERIALIZERS.register("primitive_blowpipe_on_jungle_temple", PrimitiveBlowpipeOnJungleTempleModifier.CODEC);
+
+    public static final RegistryObject<Codec<? extends IGlobalLootModifier>> FIRE_SWEEPER_BASTION =
+            LOOT_MODIFIER_SERIALIZERS.register("fire_sweeper_bastion", FireSweeperBastionModifier.CODEC);
+
     public static void register(IEventBus bus) {
         LOOT_MODIFIER_SERIALIZERS.register(bus);
     }

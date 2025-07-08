@@ -143,8 +143,8 @@ public class CFGGunGen extends CFGGunProvider
                 // Reloads
                 .setMaxAmmo(8)
                 .setReloadType(ReloadType.MAG_FED)
-                .setReloadTimer(30)
-                .setAdditionalReloadTimer(10)
+                .setReloadTimer(90)
+                .setAdditionalReloadTimer(30)
 
                 // Projectile
                 .setAmmo(Items.FIRE_CHARGE)
@@ -164,10 +164,10 @@ public class CFGGunGen extends CFGGunProvider
 
                 // Sounds
                 .setFireSound(ModSounds.REPEATING_SHOTGUN_FIRE.get())
-                .setReloadStart(ModSounds.PS_PUMP_PULL.get())
-                .setReloadLoadSound(ModSounds.PS_SHELL.get())
+                .setReloadStart(ModSounds.AR_RELOAD_MAGAZINE_OUT.get())
+                .setReloadLoadSound(ModSounds.AR_RELOAD_MAGAZINE_IN.get())
                 .setReloadEndSound(ModSounds.PS_PUMP.get())
-                .setEjectorPullSound(ModSounds.PS_PUMP_PULL.get())
+                .setEjectorPullSound(SoundEvents.FIRECHARGE_USE)
                 .setEjectorReleaseSound(ModSounds.PS_PUMP_RELEASE.get())
                 .setSilencedFireSound(ModSounds.PUMP_SHOTGUN_SILENCED_FIRE.get())
                 .setEnchantedFireSound(ModSounds.REPEATING_SHOTGUN_ENCHANTED_FIRE.get())
@@ -177,6 +177,7 @@ public class CFGGunGen extends CFGGunProvider
                 .setZoom(Gun.Modules.Zoom.builder()
                         .setFovModifier(0.6F)
                         .setOffset(0.0, 5.4, -1.75))
+                .setMagazine(0.0F, 0.0, 0.0, 0.0)
 
                 .build());
     }

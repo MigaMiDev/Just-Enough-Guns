@@ -238,6 +238,12 @@ public class GunItem extends Item implements IColored, IMeta {
             else if (this == ModItems.FLAMETHROWER.get()) {
                 tooltip.add(Component.translatable("info.jeg.tooltip_item.flamethrower_blueprint").withStyle(ChatFormatting.GRAY));
             }
+            else if (this == ModItems.MINIGUN.get()) {
+                tooltip.add(Component.translatable("info.jeg.tooltip_item.minigun").withStyle(ChatFormatting.GRAY));
+            }
+            else if (this == ModItems.PRIMITIVE_BOW.get()) {
+                tooltip.add(Component.translatable("info.jeg.tooltip_item.primitive_bow").withStyle(ChatFormatting.GRAY));
+            }
 
             if (modifiedGun.getGeneral().getFireTimer() != 0) {
                 tooltip.add(Component.literal(""));
