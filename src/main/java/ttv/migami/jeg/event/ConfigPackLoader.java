@@ -113,6 +113,33 @@ public final class ConfigPackLoader {
                 }
             }
         }
+
+        Map<String, String> filesToCopy2 = Map.of(
+                "assets/jeg/textures/fire_sweeper.png.mcmeta", "assets/jeg/samples/textures/fire_sweeper.png.mcmeta"
+        );
+
+        for (var entry : filesToCopy2.entrySet()) {
+            Path destPath = exportRoot.resolve(entry.getKey());
+            String internalPath = entry.getValue();
+
+            if (!Files.exists(destPath)) {
+                try {
+                    Files.createDirectories(destPath.getParent());
+
+                    try (InputStream in = ConfigPackLoader.class.getClassLoader().getResourceAsStream(internalPath)) {
+                        if (in == null) {
+                            JustEnoughGuns.LOGGER.error("Missing resource in JAR: {}", internalPath);
+                            continue;
+                        }
+
+                        Files.copy(in, destPath);
+                        JustEnoughGuns.LOGGER.info("Exported sample file to {}", destPath);
+                    }
+                } catch (IOException e) {
+                    JustEnoughGuns.LOGGER.error("Failed to export sample file to {}", destPath, e);
+                }
+            }
+        }
     }
 
     public static void exportSampleDataIfMissing() {

@@ -308,7 +308,7 @@ public class Config
 		public final ForgeConfigSpec.BooleanValue ghoulSpawning;
 		public final ForgeConfigSpec.BooleanValue trumpetSpawning;
 		public final ForgeConfigSpec.BooleanValue creepersDropLiveGrenades;
-		public final ForgeConfigSpec.BooleanValue entitiesDropEchoShards;
+		public final ForgeConfigSpec.BooleanValue entitiesDropAmmo;
 		//public final ForgeConfigSpec.BooleanValue spreadSculk;
 		public final ForgeConfigSpec.IntValue playerGunfireVolume;
 		public final ForgeConfigSpec.IntValue mobGunfireVolume;
@@ -325,7 +325,7 @@ public class Config
 				this.ghoulSpawning = builder.comment("If disabled, Ghouls will not generate.").define("ghoulSpawning", true);
 				this.trumpetSpawning = builder.comment("If disabled, Trumpet Skeletons will not generate.").define("trumpetSpawning", true);
 				this.creepersDropLiveGrenades = builder.comment("If enabled, Creepers have a 5% chance of dropping a live grenade.").define("creepersDropLiveGrenades", true);
-				this.entitiesDropEchoShards = builder.comment("If enabled, all entities killed by a Sculk Gun will have a chance to drop an Echo Shard.").define("entitiesDropEchoShards", true);
+				this.entitiesDropAmmo = builder.comment("If enabled, all entities killed by SOME guns, have a chance to drop the Gun's Ammo.").define("entitiesDropEchoShards", true);
 				//this.spreadSculk = builder.comment("If enabled, the Hyper-Sonic Cannon will spread Sculk when killing an entity.").define("spreadSculk", true);
 				this.playerGunfireVolume = builder.comment("The volume for Player Gunfire. Default is 8").defineInRange("playerGunfireVolume", 8, 1, 10);
 				this.mobGunfireVolume = builder.comment("The volume for Mob Gunfire. Default is 8").defineInRange("mobGunfireVolume", 8, 1, 10);

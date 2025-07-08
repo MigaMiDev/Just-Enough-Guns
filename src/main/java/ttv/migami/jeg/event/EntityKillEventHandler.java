@@ -117,7 +117,7 @@ public class EntityKillEventHandler {
 
         // Drop Echo Shards
         if (entity.level().getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT) &&
-                RANDOM.nextDouble() < (ECHO_SHARD_SPAWN_CHANCE * entity.getMainHandItem().getEnchantmentLevel(ModEnchantments.RECLAIMED.get()) + 1) && Config.COMMON.world.entitiesDropEchoShards.get()) {
+                RANDOM.nextDouble() < (ECHO_SHARD_SPAWN_CHANCE * entity.getMainHandItem().getEnchantmentLevel(ModEnchantments.RECLAIMED.get()) + 1) && Config.COMMON.world.entitiesDropAmmo.get()) {
             BlockPos pos = entity.blockPosition();
 
             if (killer.getMainHandItem().getItem() instanceof GunItem gunItem) {
@@ -137,6 +137,27 @@ public class EntityKillEventHandler {
                     killer.level().playLocalSound(killer.getX(), killer.getY(), killer.getZ(), SoundEvents.SCULK_CATALYST_BLOOM, SoundSource.PLAYERS, 1.0F, 1.0F, false);
 
                     serverLevel.playSound(entity, pos, SoundEvents.SCULK_CATALYST_BLOOM, SoundSource.PLAYERS, 10F, 1F);
+                }
+            }
+        }
+
+        // Drop Fire Charges
+        if (entity.level().getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT) &&
+                RANDOM.nextDouble() < (ECHO_SHARD_SPAWN_CHANCE * entity.getMainHandItem().getEnchantmentLevel(ModEnchantments.RECLAIMED.get()) + 1) && Config.COMMON.world.entitiesDropAmmo.get()) {
+            BlockPos pos = entity.blockPosition();
+
+            if (killer.getMainHandItem().getItem() instanceof GunItem gunItem) {
+                ItemStack stack = killer.getMainHandItem();
+                Gun gun = gunItem.getModifiedGun(stack);
+
+                ResourceLocation charge = new ResourceLocation(Items.FIRE_CHARGE.toString());
+                ResourceLocation reloadItem = new ResourceLocation(gun.getProjectile().getItem().toString());
+                if (charge.equals(reloadItem)) {
+                    int shardCount = RANDOM.nextDouble() < 0.3 ? 2 : 1;
+
+                    ItemStack chargeStack = new ItemStack(Items.FIRE_CHARGE, shardCount);
+                    ItemEntity chargeEntity = new ItemEntity(serverLevel, pos.getX(), pos.getY(), pos.getZ(), chargeStack);
+                    serverLevel.addFreshEntity(chargeEntity);
                 }
             }
         }

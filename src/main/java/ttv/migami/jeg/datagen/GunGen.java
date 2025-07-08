@@ -1,9 +1,11 @@
 package ttv.migami.jeg.datagen;
 
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.Items;
 import ttv.migami.jeg.Reference;
 import ttv.migami.jeg.common.FireMode;
@@ -1632,6 +1634,64 @@ public class GunGen extends GunProvider
                         .setOffset(1.05, 3.5, 0))
 
                 .build());
+
+
+        this.addGun(new ResourceLocation(Reference.MOD_ID, "primitive_bow"), Gun.Builder.create()
+
+                // General
+                .setFireMode(FireMode.RELEASE_FIRE)
+                .setFireRate(10)
+                .setGripType(GripType.TWO_HANDED)
+                .setRecoilKick(0.1F)
+                .setRecoilAngle(2.0F)
+                .setAlwaysSpread(false)
+                .setSpread(0.0F)
+                .setMaxHoldFire(20)
+                .setSilenced(true)
+                .setCanBeBlueprinted(false)
+                .setDrawTimer(10)
+
+                // Reloads
+                .setMaxAmmo(1)
+                .setReloadType(ReloadType.INVENTORY_FED)
+                .setReloadTimer(16)
+                .setAdditionalReloadTimer(0)
+
+                // Projectile
+                .setAmmo(Items.ARROW)
+                .setEjectsCasing(false)
+                .setProjectileVisible(false)
+                .setDamage(7.0F)
+                .setHeadshotMultiplier(1.8F)
+                .setAdvantage(ModTags.Entities.HEAVY.location())
+                .setProjectileSize(0.05F)
+                .setProjectileSpeed(8F)
+                .setProjectileAffectedByGravity(true)
+                .setProjectileLife(1000)
+                .setProjectileTrailLengthMultiplier(2)
+                .setProjectileTrailColor(0xFFFFFF | 0xFF000000)
+
+                // Sounds
+                .setFireSound(ModSounds.COMPOUND_BOW_FIRE.get())
+                .setReloadStart(ModSounds.CR_RELOAD_MAGAZINE_OUT.get())
+                .setReloadLoadSound(ModSounds.BOW_PLACE_ARROW.get())
+                .setReloadEndSound(ModSounds.CR_RELOAD_EJECTOR.get())
+                .setEjectorPullSound(ModSounds.BOW_PULL.get())
+                .setEjectorReleaseSound(ModSounds.BOW_STRING.get())
+
+                // Mob Effect
+                .setPotionEffect(BuiltInRegistries.MOB_EFFECT.getKey(MobEffects.POISON))
+                .setPotionEffectStrength(2)
+                .setPotionEffectDuration(100)
+                .setSelfPotionEffect(false)
+
+                // Attachments
+                .setZoom(Gun.Modules.Zoom.builder()
+                        .setFovModifier(0.6F)
+                        .setOffset(1.50, 4.5, 0))
+
+                .build());
+
 
         this.addGun(new ResourceLocation(Reference.MOD_ID, "grenade_launcher"), Gun.Builder.create()
 

@@ -180,6 +180,8 @@ public enum SpecialModels {
 
     REPEATING_SHOTGUN("gun/repeating_shotgun"),
 
+    PRIMITIVE_BOW("gun/primitive_bow"),
+
     COMPOUND_BOW("gun/compound_bow"),
 
     LIGHT_MACHINE_GUN("gun/light_machine_gun"),

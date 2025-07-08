@@ -220,6 +220,13 @@ public class ModItems {
                     .rarity(Rarity.EPIC),
                     "rocket_launcher"
             ));
+    public static final RegistryObject<AnimatedBowItem> PRIMITIVE_BOW = REGISTER.register("primitive_bow",
+            () -> new AnimatedBowItem(new Item.Properties()
+                    .stacksTo(1)
+                    .durability(128)
+                    .rarity(Rarity.RARE),
+                    "primitive_bow"
+            ));
     public static final RegistryObject<AnimatedBowItem> COMPOUND_BOW = REGISTER.register("compound_bow",
             () -> new AnimatedBowItem(new Item.Properties()
                     .stacksTo(1)

@@ -11,6 +11,7 @@ import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
+import ttv.migami.jeg.Config;
 import ttv.migami.jeg.client.handler.AimingHandler;
 import ttv.migami.jeg.common.FireMode;
 import ttv.migami.jeg.common.Gun;
@@ -121,9 +122,9 @@ public final class GunAnimations {
                         return state.setAndContinue(INSPECT);
                     }
 
-                    if (tag.getBoolean("IsDrawing") ||
+                    if (Config.COMMON.gameplay.drawAnimation.get() && (tag.getBoolean("IsDrawing") ||
                             (GunAnimations.isAnimationPlaying(state.getController(), "draw") &&
-                                    !state.getController().hasAnimationFinished() && !AimingHandler.get().isAiming())) {
+                                    !state.getController().hasAnimationFinished() && !AimingHandler.get().isAiming()))) {
                         state.setControllerSpeed(GunEnchantmentHelper.getReloadAnimationSpeed(gunStack));
                         return state.setAndContinue(DRAW);
                     } else {

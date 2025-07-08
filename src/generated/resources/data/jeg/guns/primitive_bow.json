@@ -1,0 +1,51 @@
+{
+  "general": {
+    "canBeBlueprinted": false,
+    "drawTimer": 10,
+    "fireMode": "jeg:release_fire",
+    "gripType": "jeg:two_handed",
+    "maxHoldFire": 20,
+    "rate": 10,
+    "recoilAngle": 2.0,
+    "recoilKick": 0.1,
+    "silenced": true
+  },
+  "modules": {
+    "zoom": {
+      "fovModifier": 0.6,
+      "xOffset": 1.5,
+      "yOffset": 4.5
+    }
+  },
+  "potionEffect": {
+    "potionEffect": "minecraft:poison",
+    "potionEffectDuration": 100,
+    "potionEffectStrength": 2
+  },
+  "projectile": {
+    "advantage": "jeg:heavy",
+    "damage": 7.0,
+    "gravity": true,
+    "headshotMultiplier": 1.8,
+    "item": "minecraft:arrow",
+    "life": 1000,
+    "size": 0.05,
+    "speed": 8.0,
+    "trailColor": -1,
+    "trailLengthMultiplier": 2.0
+  },
+  "reloads": {
+    "additionalReloadTimer": 0,
+    "maxAmmo": 1,
+    "reloadTimer": 16,
+    "reloadType": "jeg:inventory_fed"
+  },
+  "sounds": {
+    "ejectorPull": "jeg:item.compound_bow.pull",
+    "ejectorRelease": "jeg:item.compound_bow.charge",
+    "fire": "jeg:item.compound_bow.fire",
+    "reloadEnd": "jeg:item.combat_rifle.reload_ejector",
+    "reloadLoad": "jeg:item.compound_bow.place_arrow",
+    "reloadStart": "jeg:item.combat_rifle.reload_magazine_out"
+  }
+}

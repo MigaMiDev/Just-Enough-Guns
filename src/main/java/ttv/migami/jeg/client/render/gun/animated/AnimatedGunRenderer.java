@@ -403,7 +403,7 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 			this.applySwayTransforms(poseStack, modifiedGun, localPlayer, translateX, translateY, translateZ, Minecraft.getInstance().getPartialTick());
 			//this.applySprintingTransforms(modifiedGun, hand, poseStack, Minecraft.getInstance().getPartialTick());
 
-			if (stack.getItem() instanceof AnimatedBowItem) {
+			if (stack.getItem() instanceof AnimatedBowItem || stack.getOrCreateTag().getString("GunId").endsWith("bow")) {
 				poseStack.translate(-0.5, 0.5, -0.1);
 				poseStack.mulPose(Axis.ZP.rotationDegrees(-45));
 			}
@@ -480,7 +480,7 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 					double time = AimingHandler.get().getNormalisedAdsProgress();
 					double transition = PropertyHelper.getSightAnimations(stack, modifiedGun).getSightCurve().apply(time);
 
-					if (stack.getItem() instanceof AnimatedBowItem) {
+					if (stack.getItem() instanceof AnimatedBowItem || stack.getOrCreateTag().getString("GunId").endsWith("bow")) {
 						poseStack.mulPose(Axis.ZP.rotationDegrees((float) (45 * transition)));
 						poseStack.translate(0.508 * transition, -0.6 * transition, 0);
 					}
@@ -561,7 +561,7 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 				}
 			//}
 
-			if (animatable instanceof AnimatedBowItem && currentItemStack.getTag() != null) {
+			if ((animatable instanceof AnimatedBowItem || currentItemStack.getOrCreateTag().getString("GunId").endsWith("bow")) && currentItemStack.getTag() != null) {
 				if (bone.getName().matches("arrow")) {
 					if (this.renderPerspective.equals(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND)) {
 						bone.setHidden(currentItemStack.getTag().getInt("AmmoCount") <= 0);
@@ -574,6 +574,18 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 			// Makes the gun glow if needed
 			if (bone.getName().startsWith("glow")) {
 				packedLight = 15728880;
+			}
+
+			if (bone.getName().startsWith("aim_hide")) {
+				bone.setHidden(AimingHandler.get().isAiming());
+			}
+
+			if (currentItemStack.getTag() != null) {
+				int ammoCount = currentItemStack.getTag().getInt("AmmoCount");
+
+				if (bone.getName().startsWith("empty_hide")) {
+					bone.setHidden(ammoCount == 0);
+				}
 			}
 
 			if (currentItemStack.getTag() != null) {

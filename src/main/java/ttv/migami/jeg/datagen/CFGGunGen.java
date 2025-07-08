@@ -75,7 +75,7 @@ public class CFGGunGen extends CFGGunProvider
                 .setMuzzleFlash(0.8, 0, 4.45, -5)
                 .setZoom(Gun.Modules.Zoom.builder()
                         .setFovModifier(0.6F)
-                        .setOffset(0.0, 4.6, -1.75))
+                        .setOffset(0.0,  4.65, -1.75))
                 .setScope(1.0F, 0.0, 5.1, 1)
                 .setUnderBarrel(1.0F, 0.0, 2.7, -1.5)
 
@@ -113,7 +113,7 @@ public class CFGGunGen extends CFGGunProvider
 
                 // Mob Effect
                 .setPotionEffect(BuiltInRegistries.MOB_EFFECT.getKey(MobEffects.POISON))
-                .setPotionEffectStrength(2)
+                .setPotionEffectStrength(0)
                 .setPotionEffectDuration(100)
                 .setSelfPotionEffect(false)
 
@@ -177,10 +177,7 @@ public class CFGGunGen extends CFGGunProvider
                 .setZoom(Gun.Modules.Zoom.builder()
                         .setFovModifier(0.6F)
                         .setOffset(0.0, 5.4, -1.75))
-                .setScope(1.0F, 0.0, 4.9, 0)
-                .setBarrel(1.0F, 0.0, 4.65, -10)
                 .setUnderBarrel(1.0F, 0.0, 3, 0.45)
-                .setSpecial(1.0F, -0.8, 4, -5)
 
                 .build());
     }

@@ -6,6 +6,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import ttv.migami.jeg.Config;
 import ttv.migami.jeg.common.Gun;
 import ttv.migami.jeg.common.ReloadType;
 import ttv.migami.jeg.init.ModEnchantments;
@@ -82,6 +83,9 @@ public class GunEnchantmentHelper
     }
 
     public static int getModifiedDrawTick(ItemStack stack, int baseDrawTick) {
+        if (!Config.COMMON.gameplay.drawAnimation.get()) {
+            return 0;
+        }
         int level = EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.QUICK_HANDS.get(), stack);
         if (level > 0) {
             float modifier = 1.0f - (0.2F * level);

@@ -18,6 +18,8 @@ import software.bernie.geckolib.core.animation.AnimationController;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.JustEnoughGuns;
 import ttv.migami.jeg.init.ModBlocks;
+import ttv.migami.jeg.init.ModItems;
+import ttv.migami.jeg.item.AnimatedBowItem;
 import ttv.migami.jeg.item.AnimatedGunItem;
 import ttv.migami.jeg.item.GunItem;
 import ttv.migami.jeg.util.GunModifierHelper;
@@ -96,7 +98,13 @@ public class GunFireEvent extends PlayerEvent
                 }
             }
 
-            if (Config.COMMON.gameplay.dynamicLightsOnShooting.get()) {
+            boolean doesNotLight = stack.is(ModItems.FINGER_GUN.get())
+                    || stack.is(ModItems.TYPHOONEE.get())
+                    || stack.is(ModItems.ATLANTEAN_SPEAR.get())
+                    || stack.getItem() instanceof AnimatedBowItem
+                    || stack.getOrCreateTag().getString("GunId").endsWith("bow");
+
+            if (Config.COMMON.gameplay.dynamicLightsOnShooting.get() && !doesNotLight) {
                 BlockState targetState = player.level().getBlockState(BlockPos.containing(player.getEyePosition()));
                 if (targetState.getBlock() == ModBlocks.BRIGHT_DYNAMIC_LIGHT.get()) {
                     if (getValue(player.level(), BlockPos.containing(player.getEyePosition()), "Delay") < 1.0) {

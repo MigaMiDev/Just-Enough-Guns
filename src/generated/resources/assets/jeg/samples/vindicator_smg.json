@@ -28,7 +28,7 @@
     },
     "zoom": {
       "fovModifier": 0.6,
-      "yOffset": 3.2,
+      "yOffset": 4.65,
       "zOffset": -1.75
     }
   },
@@ -54,11 +54,10 @@
   "sounds": {
     "ejectorPull": "jeg:item.combat_rifle.ejector_pull",
     "ejectorRelease": "jeg:item.combat_rifle.ejector_release",
-    "enchantedFire": "jeg:item.custom_smg.enchanted_fire",
-    "fire": "jeg:item.custom_smg.fire",
+    "enchantedFire": "jeg:item.blossom_rifle.enchanted_fire",
+    "fire": "jeg:item.blossom_rifle.fire",
     "reloadEnd": "jeg:item.combat_rifle.reload_ejector",
     "reloadLoad": "jeg:item.service_rifle.reload_magazine_in",
-    "reloadStart": "jeg:item.combat_rifle.reload_magazine_out",
-    "silencedFire": "jeg:item.custom_smg.silenced_fire"
+    "reloadStart": "jeg:item.combat_rifle.reload_magazine_out"
   }
 }

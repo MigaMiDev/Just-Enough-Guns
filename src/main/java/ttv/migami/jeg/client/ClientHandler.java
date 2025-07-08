@@ -199,6 +199,7 @@ public class ClientHandler {
         ModelOverrides.register(ModItems.INFANTRY_RIFLE.get(), new InfantryRifleModel());
         ModelOverrides.register(ModItems.SERVICE_RIFLE.get(), new ServiceRifleModel());
         ModelOverrides.register(ModItems.ROCKET_LAUNCHER.get(), new RocketLauncherModel());
+        ModelOverrides.register(ModItems.PRIMITIVE_BOW.get(), new PrimitiveBowModel());
         ModelOverrides.register(ModItems.COMPOUND_BOW.get(), new CompoundBowModel());
         ModelOverrides.register(ModItems.LIGHT_MACHINE_GUN.get(), new LightMachineGunModel());
         ModelOverrides.register(ModItems.GRENADE_LAUNCHER.get(), new GrenadeLauncherModel());

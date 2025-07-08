@@ -959,7 +959,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
         damage = newDamage;
 
         if (entity instanceof LivingEntity livingEntity && livingEntity.hasEffect(ModEffects.RESONANCE.get()) && this instanceof ResonanceProjectileEntity) {
-            damage = (float) (damage * (livingEntity.getEffect(ModEffects.RESONANCE.get()).getAmplifier() * 0.8));
+            damage = (float) (damage * ((1 + livingEntity.getEffect(ModEffects.RESONANCE.get()).getAmplifier()) * 0.8));
         }
 
         if (Config.COMMON.gameplay.gunAdvantage.get()) {
@@ -1315,23 +1315,43 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
         }
     }
 
-    public static void createFireExplosion(Entity entity, float radius, boolean forceNone)
-    {
+    public static void createFireExplosion(Entity entity, float radius, boolean forceNone) {
         Level world = entity.level();
-        if(world.isClientSide())
-            return;
+        if (world.isClientSide()) return;
 
         DamageSource source = entity instanceof ProjectileEntity projectile ? entity.damageSources().explosion(entity, projectile.getShooter()) : null;
+
         Explosion.BlockInteraction mode = Explosion.BlockInteraction.KEEP;
-        Explosion explosion = new ProjectileExplosion(world, entity, source, null, entity.getX(), entity.getY(), entity.getZ(), radius, true, mode);
+        Explosion explosion = new ProjectileExplosion(world, entity, source, null,
+                entity.getX(), entity.getY(), entity.getZ(), radius, true, mode);
 
-        if(net.minecraftforge.event.ForgeEventFactory.onExplosionStart(world, explosion))
-            return;
+        if (net.minecraftforge.event.ForgeEventFactory.onExplosionStart(world, explosion)) return;
 
-        // Do explosion logic
+        // Explosion logic
         explosion.explode();
         explosion.finalizeExplosion(true);
 
+        // Vertical fire logic
+        BlockPos origin = entity.blockPosition();
+        int fireRadius = Mth.ceil(radius);
+
+        for (int dx = -fireRadius; dx <= fireRadius; dx++) {
+            for (int dz = -fireRadius; dz <= fireRadius; dz++) {
+                for (int dy = -fireRadius; dy <= fireRadius; dy++) {
+                    BlockPos pos = origin.offset(dx, dy, dz);
+
+                    // Distance check (sphere)
+                    if (pos.distSqr(origin) <= radius * radius) {
+                        BlockState state = world.getBlockState(pos);
+                        BlockState above = world.getBlockState(pos.above());
+
+                        if (world.getBlockState(pos).isSolid() && above.isAir() && world.getBlockState(pos.above()).isAir()) {
+                            world.setBlock(pos.above(), Blocks.FIRE.defaultBlockState(), 11);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /**

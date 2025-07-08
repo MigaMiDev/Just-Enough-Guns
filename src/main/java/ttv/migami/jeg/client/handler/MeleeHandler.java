@@ -7,6 +7,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.lwjgl.glfw.GLFW;
 import ttv.migami.jeg.client.KeyBinds;
 import ttv.migami.jeg.init.ModItems;
+import ttv.migami.jeg.item.AnimatedBowItem;
 import ttv.migami.jeg.network.PacketHandler;
 import ttv.migami.jeg.network.message.C2SMessageMelee;
 
@@ -39,7 +40,7 @@ public class MeleeHandler
 
         if(KeyBinds.KEY_MELEE.isDown() && event.getAction() == GLFW.GLFW_PRESS)
         {
-            if (player.getMainHandItem().is(ModItems.COMPOUND_BOW.get()) || player.getMainHandItem().is(ModItems.MINIGUN.get())) {
+            if (player.getMainHandItem().getItem() instanceof AnimatedBowItem || player.getMainHandItem().is(ModItems.MINIGUN.get())) {
                 return;
             }
 

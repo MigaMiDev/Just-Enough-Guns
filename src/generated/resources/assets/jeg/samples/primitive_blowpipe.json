@@ -1,11 +1,4 @@
 {
-  "display": {
-    "flash": {
-      "size": 0.8,
-      "yOffset": 4.45,
-      "zOffset": -2.205
-    }
-  },
   "general": {
     "drawTimer": 10,
     "fireMode": "jeg:semi_automatic",
@@ -14,28 +7,10 @@
     "recoilAngle": 1.0,
     "recoilKick": 0.33
   },
-  "modules": {
-    "attachments": {
-      "barrel": {
-        "yOffset": 4.475,
-        "zOffset": -1.2
-      },
-      "magazine": {
-        "scale": 0.0
-      },
-      "special": {
-        "xOffset": -0.8,
-        "yOffset": 3.8
-      },
-      "stock": {
-        "scale": 0.0
-      }
-    }
-  },
   "potionEffect": {
     "potionEffect": "minecraft:poison",
     "potionEffectDuration": 100,
-    "potionEffectStrength": 2
+    "potionEffectStrength": 0
   },
   "projectile": {
     "advantage": "jeg:none",
