@@ -54,8 +54,6 @@ public class AnimatedGunModel extends DefaultedItemGeoModel<AnimatedGunItem> {
                     return new ResourceLocation(Reference.MOD_ID, "animations/item/" + "abstract_gun" + ".animation.json");
                 }
             }
-        } else {
-            return new ResourceLocation(Reference.MOD_ID, "animations/item/" + "abstract_gun" + ".animation.json");
         }
 
         return currentAnimation != null ? currentAnimation : new ResourceLocation(gunItem.getModID(), "animations/item/" + gunItem.toString() + ".animation.json");
