@@ -376,9 +376,9 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 		if (stack.hasTag() && stack.getTag() != null) {
 			if (!stack.getTag().contains("GunId")) {
 				this.updateGunResources(stack);
-			} /*else {
+			} else {
 				loadDataGunResources(stack);
-			}*/
+			}
 		}
 
 		/* Applies some of the original transforms */

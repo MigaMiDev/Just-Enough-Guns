@@ -20,47 +20,11 @@ public class AnimatedGunModel extends DefaultedItemGeoModel<AnimatedGunItem> {
     }
 
     public ResourceLocation getModelResource(AnimatedGunItem gunItem) {
-        Player player = ClientUtils.getClientPlayer();
-        ItemStack gunStack = player.getMainHandItem();
-
-        if (gunStack.is(ModItems.ABSTRACT_GUN.get())) {
-            if (gunStack.getOrCreateTag().contains("GunId")) {
-                ResourceLocation id = new ResourceLocation(gunStack.getOrCreateTag().getString("GunId"));
-                ResourceLocation geo = new ResourceLocation(Reference.MOD_ID, "geo/" + id.getPath() + ".geo.json");
-
-                if (Minecraft.getInstance().getResourceManager().getResource(geo).isPresent()) {
-                    return geo;
-                } else {
-                    return new ResourceLocation(Reference.MOD_ID, "geo/item/gun/" + "abstract_gun" + ".geo.json");
-                }
-            }
-        } else {
-            return new ResourceLocation(Reference.MOD_ID, "geo/item/gun/" + "abstract_gun" + ".geo.json");
-        }
-
         return currentModel != null ? currentModel : new ResourceLocation(gunItem.getModID(), "geo/item/gun/" + gunItem.toString() + ".geo.json");
     }
 
     @Override
     public ResourceLocation getTextureResource(AnimatedGunItem gunItem) {
-        Player player = ClientUtils.getClientPlayer();
-        ItemStack gunStack = player.getMainHandItem();
-
-        if (gunStack.is(ModItems.ABSTRACT_GUN.get())) {
-            if (gunStack.getOrCreateTag().contains("GunId")) {
-                ResourceLocation id = new ResourceLocation(gunStack.getOrCreateTag().getString("GunId"));
-                ResourceLocation txt = new ResourceLocation(Reference.MOD_ID, "textures/" + id.getPath() + ".png");
-
-                if (Minecraft.getInstance().getResourceManager().getResource(txt).isPresent()) {
-                    return txt;
-                } else {
-                    return new ResourceLocation(Reference.MOD_ID, "textures/animated/gun/" + "abstract_gun" + ".png");
-                }
-            }
-        } else {
-            return new ResourceLocation(Reference.MOD_ID, "textures/animated/gun/" + "abstract_gun" + ".png");
-        }
-
         return currentTexture != null ? currentTexture : new ResourceLocation(gunItem.getModID(), "textures/animated/gun/" + gunItem.toString() + ".png");
     }
 
