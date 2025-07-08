@@ -102,7 +102,8 @@ public class GunFireEvent extends PlayerEvent
                     || stack.is(ModItems.TYPHOONEE.get())
                     || stack.is(ModItems.ATLANTEAN_SPEAR.get())
                     || stack.getItem() instanceof AnimatedBowItem
-                    || stack.getOrCreateTag().getString("GunId").endsWith("bow");
+                    || stack.getOrCreateTag().getString("GunId").endsWith("bow")
+                    || stack.getOrCreateTag().getString("GunId").endsWith("blowpipe");
 
             if (Config.COMMON.gameplay.dynamicLightsOnShooting.get() && !doesNotLight) {
                 BlockState targetState = player.level().getBlockState(BlockPos.containing(player.getEyePosition()));
