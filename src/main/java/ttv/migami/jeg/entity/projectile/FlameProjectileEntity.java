@@ -12,7 +12,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BaseFireBlock;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -21,6 +24,7 @@ import net.minecraftforge.common.MinecraftForge;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.common.Gun;
 import ttv.migami.jeg.event.GunProjectileHitEvent;
+import ttv.migami.jeg.init.ModBlocks;
 import ttv.migami.jeg.init.ModItems;
 import ttv.migami.jeg.init.ModParticleTypes;
 import ttv.migami.jeg.item.GunItem;
@@ -136,7 +140,17 @@ public class FlameProjectileEntity extends ProjectileEntity {
 		super.tick();
 
         if(!this.level().isClientSide) {
-
+            if (Config.COMMON.gameplay.dynamicLightsOnShooting.get()) {
+                BlockState targetState = this.level().getBlockState(BlockPos.containing(this.position()));
+                if (targetState.getBlock() == ModBlocks.BRIGHT_DYNAMIC_LIGHT.get()) {
+                    if (getValue(this.level(), BlockPos.containing(this.getEyePosition()), "Delay") < 1.0) {
+                        updateDelayAndNotify(this.level(), BlockPos.containing(this.getEyePosition()), targetState);
+                    }
+                } else if (targetState.getBlock() == Blocks.AIR || targetState.getBlock() == Blocks.CAVE_AIR) {
+                    BlockState dynamicLightState = ModBlocks.BRIGHT_DYNAMIC_LIGHT.get().defaultBlockState();
+                    this.level().setBlock(BlockPos.containing(this.getEyePosition()), dynamicLightState, 3);
+                }
+            }
             if (this.isUnderWater()) {
                 sendParticlesToAll(
                         (ServerLevel) this.level(),
@@ -259,4 +273,19 @@ public class FlameProjectileEntity extends ProjectileEntity {
         }
 		
 	}
+
+    private static void updateDelayAndNotify(LevelAccessor world, BlockPos pos, BlockState state) {
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        if (blockEntity != null) {
+            blockEntity.getPersistentData().putDouble("Delay", 1.0);
+        }
+        if (world instanceof Level) {
+            ((Level) world).sendBlockUpdated(pos, state, state, 3);
+        }
+    }
+
+    public static double getValue(LevelAccessor world, BlockPos pos, String tag) {
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        return blockEntity != null ? blockEntity.getPersistentData().getDouble(tag) : -1.0;
+    }
 }
