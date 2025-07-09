@@ -150,7 +150,7 @@ public class CFGGunGen extends CFGGunProvider
                 .setAmmo(Items.FIRE_CHARGE)
                 .setEjectsCasing(true)
                 .setProjectileVisible(false)
-                .setDamage(12F)
+                .setDamage(17F)
                 .setAdvantage(ModTags.Entities.VERY_HEAVY.location())
                 .setReduceDamageOverLife(true)
                 .setProjectileSize(0.05F)
