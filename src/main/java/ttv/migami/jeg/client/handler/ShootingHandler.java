@@ -406,7 +406,7 @@ public class ShootingHandler
             int rate = GunEnchantmentHelper.getRate(heldItem, modifiedGun);
             rate = GunModifierHelper.getModifiedRate(heldItem, rate);
 
-            if(stack.isDamageableItem() && currentDamage < (maxDamage - 1))
+            if(!stack.isDamageableItem() || currentDamage < (maxDamage - 1))
             {
                 tracker.addCooldown(heldItem.getItem(), rate);
 
@@ -428,13 +428,6 @@ public class ShootingHandler
                             ModSyncedDataKeys.BURST_COUNT.setValue(player, ModSyncedDataKeys.BURST_COUNT.getValue(player) - 1);
                 }
 
-                PacketHandler.getPlayChannel().sendToServer(new C2SMessageShoot(player));
-                MinecraftForge.EVENT_BUS.post(new GunFireEvent.Post(player, heldItem));
-                ModSyncedDataKeys.RELOADING.setValue(player, false);
-            }
-            else if(!stack.isDamageableItem())
-            {
-                tracker.addCooldown(heldItem.getItem(), rate);
                 PacketHandler.getPlayChannel().sendToServer(new C2SMessageShoot(player));
                 MinecraftForge.EVENT_BUS.post(new GunFireEvent.Post(player, heldItem));
                 ModSyncedDataKeys.RELOADING.setValue(player, false);
