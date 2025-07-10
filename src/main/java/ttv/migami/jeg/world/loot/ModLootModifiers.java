@@ -77,6 +77,9 @@ public class ModLootModifiers {
     public static final RegistryObject<Codec<? extends IGlobalLootModifier>> FIRE_SWEEPER_BASTION =
             LOOT_MODIFIER_SERIALIZERS.register("fire_sweeper_bastion", FireSweeperBastionModifier.CODEC);
 
+    public static final RegistryObject<Codec<? extends IGlobalLootModifier>> VINDICATOR_SMG_EVOKER =
+            LOOT_MODIFIER_SERIALIZERS.register("vindicator_smg_evoker", VindicatorSMGEvokerModifier.CODEC);
+
     public static void register(IEventBus bus) {
         LOOT_MODIFIER_SERIALIZERS.register(bus);
     }

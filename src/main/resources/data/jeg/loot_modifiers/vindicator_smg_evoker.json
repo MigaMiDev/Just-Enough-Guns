@@ -1,0 +1,10 @@
+{
+  "type": "jeg:vindicator_smg_evoker",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:entities/evoker"
+    }
+  ],
+  "item": "jeg:abstract_gun"
+}
