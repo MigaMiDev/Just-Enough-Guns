@@ -498,7 +498,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
             if (headshot && entity instanceof LivingEntity livingEntity) {
                 ItemStack helmet = livingEntity.getItemBySlot(EquipmentSlot.HEAD);
                 if (!helmet.isEmpty()) {
-                    headshot = helmetHit(livingEntity, helmet);
+                    helmetHit(livingEntity, helmet);
                 }
             }
         }
@@ -517,29 +517,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 
     private boolean helmetHit(LivingEntity livingEntity, ItemStack helmet) {
         int durabilityLeft = helmet.getMaxDamage() - helmet.getDamageValue();
-        if (livingEntity instanceof Player player && Config.COMMON.gameplay.playersDropHelmets.get()) {
-            // TODO: replace with datapacks!
-            if (helmet.is(Items.TURTLE_HELMET) && (this.random.nextFloat() < 0.2F || this.getAdvantage().equals(ModTags.Entities.VERY_HEAVY.location()))) {
-                if (this.projectile.getDamage() > livingEntity.getHealth() && livingEntity.getHealth() > 5F) {
-                    if (!this.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
-                        removeHelmet(livingEntity, helmet);
-                    }
-                    livingEntity.setHealth(0.5F);
-                    livingEntity.invulnerableTime = 40;
-                    player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 40, 0, false, false));
-                }
-
-                if (durabilityLeft <= 1) {
-                    helmet.hurtAndBreak(1, livingEntity, e -> {
-                        e.broadcastBreakEvent(EquipmentSlot.HEAD);
-                    });
-                    livingEntity.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
-                } else {
-                    helmet.setDamageValue(helmet.getMaxDamage() - 1);
-                }
-                return false;
-            }
-        } else if (!(livingEntity instanceof Player) && Config.COMMON.gameplay.mobsDropHelmets.get()) {
+        if (!(livingEntity instanceof Player) && Config.COMMON.gameplay.mobsDropHelmets.get()) {
             if (livingEntity.getTags().contains("EliteGunner") && this.random.nextBoolean()) {
                 return false;
             }
@@ -991,6 +969,36 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
             damage = damage / damageDivisor;
         }
 
+        if(headshot)
+        {
+            if (entity instanceof Player player && Config.COMMON.gameplay.playersDropHelmets.get()) {
+                if (!player.hasEffect(ModEffects.BULLET_PROTECTION.get()) || (this.shooter instanceof Player && !player.hasEffect(ModEffects.PLAYER_BULLET_PROTECTION.get()))) {
+                    ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
+                    int durabilityLeft = helmet.getMaxDamage() - helmet.getDamageValue();
+
+                    if (player.getItemBySlot(EquipmentSlot.HEAD).is(Items.TURTLE_HELMET) && this.getAdvantage().equals(ModTags.Entities.VERY_HEAVY.location())) {
+                        if (durabilityLeft <= 1) {
+                            helmet.hurtAndBreak(1, player, e -> {
+                                e.broadcastBreakEvent(EquipmentSlot.HEAD);
+                            });
+                            player.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
+                        } else {
+                            helmet.setDamageValue(helmet.getMaxDamage() - 1);
+                        }
+
+                        if (this.projectile.getDamage() > player.getHealth() && player.getHealth() > 10F) {
+                            if (!this.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
+                                removeHelmet(player, helmet);
+                            }
+                            player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 40, 0, false, false));
+                            damage = player.getHealth() - 0.5F;
+                            //player.invulnerableTime = 40;
+                        }
+                    }
+                }
+            }
+        }
+
         entity.hurt(source, damage);
         if (!Config.COMMON.gameplay.enableKnockback.get()) {
             entity.setDeltaMovement(0, 0, 0);
@@ -1031,12 +1039,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
                     entity.addTag("JEGDying");
                 }
             }
-            if (livingEntity.isDeadOrDying()) {
-                //PacketHandler.getPlayChannel().sendToPlayer(() -> (ServerPlayer) player, new S2CMessageSendHeadshot(headshot));
-            }
-            //if (!(livingEntity.isDeadOrDying())) {
-                PacketHandler.getPlayChannel().sendToPlayer(() -> (ServerPlayer) this.shooter, new S2CMessageProjectileHitEntity(hitVec.x, hitVec.y, hitVec.z, hitType, entity instanceof Player));
-            //}
+            PacketHandler.getPlayChannel().sendToPlayer(() -> (ServerPlayer) this.shooter, new S2CMessageProjectileHitEntity(hitVec.x, hitVec.y, hitVec.z, hitType, entity instanceof Player));
         }
 
         /* Send blood particle to tracking clients. */
