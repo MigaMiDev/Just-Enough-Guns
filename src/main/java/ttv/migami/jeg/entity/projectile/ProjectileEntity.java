@@ -977,7 +977,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
                     int durabilityLeft = helmet.getMaxDamage() - helmet.getDamageValue();
 
                     if (player.getItemBySlot(EquipmentSlot.HEAD).is(Items.TURTLE_HELMET) && this.getAdvantage().equals(ModTags.Entities.VERY_HEAVY.location())) {
-                        if (durabilityLeft <= 1) {
+                        if (durabilityLeft <= 1 && helmet.getEnchantmentLevel(Enchantments.MENDING) == 0) {
                             helmet.hurtAndBreak(1, player, e -> {
                                 e.broadcastBreakEvent(EquipmentSlot.HEAD);
                             });
