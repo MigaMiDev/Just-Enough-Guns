@@ -61,17 +61,10 @@ import static ttv.migami.jeg.faction.GunMobValues.*;
 
 public class ModCommands {
     private static final SuggestionProvider<CommandSourceStack> CFG_GUN_ID_SUGGESTIONS =
-            (context, builder) -> {
-                NetworkGunManager mgr = NetworkGunManager.get();
-                if (mgr == null) return builder.buildFuture();
-
-                return SharedSuggestionProvider.suggest(
-                        mgr.getRegisteredGuns().keySet().stream()
-                                .filter(id -> id.getNamespace()
-                                        .equals(NetworkGunManager.CONFIG_NAMESPACE))
-                                .map(ResourceLocation::toString),
-                        builder);
-            };
+            (context, builder) -> SharedSuggestionProvider.suggest(
+                    NetworkGunManager.clientConfigGunIDs.keySet().stream()
+                            .map(ResourceLocation::toString),
+                    builder);
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(

@@ -17,6 +17,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.ForgeRegistries;
 import ttv.migami.jeg.Config;
 import ttv.migami.jeg.JustEnoughGuns;
@@ -330,9 +331,11 @@ public class GunItem extends Item implements IColored, IMeta {
         CompoundTag tagCompound = stack.getTag();
         if (tagCompound != null && tagCompound.contains("GunId", Tag.TAG_STRING)) {
             ResourceLocation id = new ResourceLocation(tagCompound.getString("GunId"));
-            Gun data = NetworkGunManager.get() != null
+            Gun data = FMLEnvironment.dist.isClient()
+                    ? NetworkGunManager.getClientGun(id)
+                    : (NetworkGunManager.get() != null
                     ? NetworkGunManager.get().getRegisteredGuns().get(id)
-                    : null;
+                    : null);
             return data != null ? data : this.gun;
         }
 

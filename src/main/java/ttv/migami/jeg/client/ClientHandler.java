@@ -353,15 +353,14 @@ public class ClientHandler {
             stack.getOrCreateTag().putBoolean("IgnoreAmmo", true);
             return stack;
         });
-        builder.displayItems((flags, output) ->
-        {
-            ModItems.REGISTER.getEntries().forEach(registryObject ->
-            {
-
-                ClientSideCache.INSTANCE.getCreativeSamples()
-                        .forEach(output::accept);
+        builder.displayItems((flags, output) -> {
+            NetworkGunManager.clientConfigGunIDs.forEach((id, gun) -> {
+                ItemStack stack = GunItem.makeGunStack(id);
+                if (gun != null) {
+                    stack.getOrCreateTag().putInt("AmmoCount", gun.getReloads().getMaxAmmo());
+                }
+                output.accept(stack);
             });
-            //CustomGunManager.fill(output);
         });
         register.register("data_guns_tab", builder::build);
         register.register(bus);

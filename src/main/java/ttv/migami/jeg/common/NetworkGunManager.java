@@ -27,7 +27,6 @@ import org.apache.commons.lang3.Validate;
 import ttv.migami.jeg.JustEnoughGuns;
 import ttv.migami.jeg.Reference;
 import ttv.migami.jeg.annotation.Validator;
-import ttv.migami.jeg.client.ClientSideCache;
 import ttv.migami.jeg.client.util.Easings;
 import ttv.migami.jeg.init.ModItems;
 import ttv.migami.jeg.item.GunItem;
@@ -75,6 +74,12 @@ public class NetworkGunManager extends SimplePreparableReloadListener<Map<Resour
     private static NetworkGunManager instance;
 
     private Map<ResourceLocation, Gun> registeredGuns = new HashMap<>();
+    private static final Map<ResourceLocation, Gun> clientConfigGuns = new HashMap<>();
+    public static final Map<ResourceLocation, Gun> clientConfigGunIDs = new HashMap<>();
+
+    public static Gun getClientGun(ResourceLocation id) {
+        return clientConfigGuns.get(id);
+    }
 
     @Override
     protected Map<ResourceLocation, Gun> prepare(ResourceManager rm,
@@ -130,10 +135,16 @@ public class NetworkGunManager extends SimplePreparableReloadListener<Map<Resour
 
             try (Stream<Path> files = Files.walk(CONFIG_GUN_DIR)) {
                 files.filter(p -> p.toString().endsWith(".json"))
-                        .forEach(p -> readJson(CONFIG_NAMESPACE,
-                                p.getFileName().toString(),
-                                () -> Files.newInputStream(p),
-                                map, null));
+                        .forEach(p -> {
+                            readJson(CONFIG_NAMESPACE,
+                                    p.getFileName().toString(),
+                                    () -> Files.newInputStream(p),
+                                    map, null);
+
+                            String base = p.getFileName().toString().replace(".json", "");
+                            ResourceLocation id = new ResourceLocation(CONFIG_NAMESPACE, base);
+                            clientConfigGunIDs.put(id, map.get(id));
+                        });
             }
         } catch (IOException e) {
             JustEnoughGuns.LOGGER.error("Couldn't scan {}", CONFIG_GUN_DIR, e);
@@ -168,7 +179,7 @@ public class NetworkGunManager extends SimplePreparableReloadListener<Map<Resour
                     samples.add(stack);
                 }
             }
-            ClientSideCache.INSTANCE.setCreativeSamples(samples);
+            //ClientSideCache.INSTANCE.setCreativeSamples(samples);
         }
     }
 
@@ -228,12 +239,13 @@ public class NetworkGunManager extends SimplePreparableReloadListener<Map<Resour
             GunItem targetItem;
             if (item instanceof GunItem gi) {
                 targetItem = gi;
-            } else {
-                targetItem = (GunItem) ModItems.ABSTRACT_GUN.get();
-            }
 
-            targetItem.setGun(new Supplier(gun));
-            clientRegisteredGuns.add(targetItem);
+                targetItem.setGun(new Supplier(gun));
+                clientRegisteredGuns.add(targetItem);
+            } else {
+                targetItem = ModItems.ABSTRACT_GUN.get();
+                clientConfigGuns.put(id, gun);
+            }
         });
         return true;
     }
