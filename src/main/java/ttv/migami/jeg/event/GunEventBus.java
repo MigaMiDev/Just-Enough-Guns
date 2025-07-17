@@ -74,7 +74,7 @@ public class GunEventBus {
                 runningPlayers.putIfAbsent(playerId, currentTime);
 
                 ItemCooldowns tracker = player.getCooldowns();
-                if (runningPlayers.get(playerId) != null && currentTime - runningPlayers.get(playerId) >= RUN_DURATION_THRESHOLD
+                if (!runningPlayers.isEmpty() && runningPlayers.get(playerId) != null && currentTime - runningPlayers.get(playerId) >= RUN_DURATION_THRESHOLD
                         && !tracker.isOnCooldown(gunItem)
                         && !player.hasEffect(MobEffects.MOVEMENT_SLOWDOWN)
                         && (Gun.getAttachment(IAttachment.Type.BARREL, player.getMainHandItem()).getItem() instanceof SwordItem swordItem)) {
