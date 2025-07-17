@@ -260,6 +260,7 @@ public class Config
 		public final ForgeConfigSpec.IntValue flashlightDistance;
 		public final ForgeConfigSpec.BooleanValue glowingLaserPointers;
 		public final ForgeConfigSpec.BooleanValue overrideHideMedals;
+		public final ForgeConfigSpec.IntValue maxResonanceLevel;
 
 		public Gameplay(ForgeConfigSpec.Builder builder)
 		{
@@ -290,6 +291,7 @@ public class Config
 				this.flashlightDistance = builder.comment("The max distance flashlights can illuminate. Watch out for performance!").defineInRange("flashlightDistance", 32, 1, 64);
 				this.glowingLaserPointers = builder.comment("If false, laser pointers will apply Glowing to the entity it hits!").define("glowingLaserPointers", true);
 				this.overrideHideMedals = builder.comment("If enabled, the Server will not have medals.").define("overrideHideMedals", false);
+				this.maxResonanceLevel = builder.comment("The max Resonance level Guns apply!").defineInRange("maxResonanceLevel", 4, 1, 10);
 			}
 			builder.pop();
 		}

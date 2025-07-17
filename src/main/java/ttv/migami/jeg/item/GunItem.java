@@ -179,7 +179,7 @@ public class GunItem extends Item implements IColored, IMeta {
                 damage = GunEnchantmentHelper.getWitheredDamage(stack, damage);
                 if (modifiedGun.getProjectile().getItem().equals(new ResourceLocation(Items.EMERALD.toString()))){
                     tooltip.add(Component.translatable("info.jeg.damage", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(damage) + additionalDamageText)
-                            .append(Component.literal(" - " + ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format((damage * 4) * 0.8) + additionalDamageText)).withStyle(ChatFormatting.GRAY));
+                            .append(Component.literal(" - " + ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format((damage * Config.COMMON.gameplay.maxResonanceLevel.get()) * 0.8) + additionalDamageText)).withStyle(ChatFormatting.GRAY));
                 } else tooltip.add(Component.translatable("info.jeg.damage", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(damage) + additionalDamageText).withStyle(ChatFormatting.GRAY));
 
                 if (modifiedGun.getProjectile().getItem().equals(new ResourceLocation(Items.EMERALD.toString()))) {

@@ -667,11 +667,13 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
                 }
 
                 boolean advantageFlag = false;
-                if (Config.COMMON.gameplay.gunAdvantage.get() && this.getAdvantage().equals(ModTags.Entities.HEAVY.location()) ||
-                        this.getAdvantage().equals(ModTags.Entities.VERY_HEAVY.location())) {
-                    advantageFlag = true;
-                } else if (!Config.COMMON.gameplay.gunAdvantage.get()) {
-                    advantageFlag = true;
+                if (this.getAdvantage() != null) {
+                    if (Config.COMMON.gameplay.gunAdvantage.get() && this.getAdvantage().equals(ModTags.Entities.HEAVY.location()) ||
+                            this.getAdvantage().equals(ModTags.Entities.VERY_HEAVY.location())) {
+                        advantageFlag = true;
+                    } else if (!Config.COMMON.gameplay.gunAdvantage.get()) {
+                        advantageFlag = true;
+                    }
                 }
 
                 boolean explosiveAmmo = false;

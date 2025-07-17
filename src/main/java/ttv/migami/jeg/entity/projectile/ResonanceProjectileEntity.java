@@ -9,6 +9,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import ttv.migami.jeg.Config;
 import ttv.migami.jeg.common.Gun;
 import ttv.migami.jeg.init.ModEffects;
 import ttv.migami.jeg.item.GunItem;
@@ -48,7 +49,7 @@ public class ResonanceProjectileEntity extends ProjectileEntity {
             int resonanceLevel = 0;
             if (livingEntity.hasEffect(ModEffects.RESONANCE.get())) {
                 resonanceLevel = livingEntity.getEffect(ModEffects.RESONANCE.get()).getAmplifier() + 1;
-				if (resonanceLevel > 4) resonanceLevel = 4;
+				if (resonanceLevel > Config.COMMON.gameplay.maxResonanceLevel.get()) resonanceLevel = Config.COMMON.gameplay.maxResonanceLevel.get();
             }
             livingEntity.addEffect(new MobEffectInstance(ModEffects.RESONANCE.get(), 20 + (20 * resonanceLevel), resonanceLevel, false, false));
         }
