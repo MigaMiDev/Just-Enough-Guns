@@ -63,9 +63,7 @@ public class HealingTalismanEntity extends ThrowableItemProjectile {
         super.onHitEntity(pResult);
         Entity entity = this.getOwner();
         Entity entityHit = pResult.getEntity();
-        if (entity instanceof LivingEntity && entityHit instanceof LivingEntity) {
-            LivingEntity livingEntity1 = (LivingEntity)entity;
-            LivingEntity livingEntity2 = (LivingEntity)entityHit;
+        if (entity instanceof LivingEntity livingEntity1 && entityHit instanceof LivingEntity livingEntity2) {
 
             Level level = entity.level();
 

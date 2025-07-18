@@ -662,6 +662,37 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
                             } else {
                                 this.level().destroyBlock(pos, false);
                             }
+                            if (state != null) {
+                                if (state.is(Blocks.ICE)) {
+                                    boolean isIceWater = this.level().getBlockState(pos.below()).is(Blocks.WATER);
+
+                                    if (!isIceWater) {
+                                        int neighbourIce = 0;
+                                        if (this.level().getBlockState(pos.below()).is(Blocks.ICE)) {
+                                            neighbourIce++;
+                                        }
+                                        if (this.level().getBlockState(pos.east()).is(Blocks.ICE)) {
+                                            neighbourIce++;
+                                        }
+                                        if (this.level().getBlockState(pos.west()).is(Blocks.ICE)) {
+                                            neighbourIce++;
+                                        }
+                                        if (this.level().getBlockState(pos.north()).is(Blocks.ICE)) {
+                                            neighbourIce++;
+                                        }
+                                        if (this.level().getBlockState(pos.south()).is(Blocks.ICE)) {
+                                            neighbourIce++;
+                                        }
+                                        if (this.level().getBlockState(pos.above()).is(Blocks.ICE)) {
+                                            neighbourIce++;
+                                        }
+
+                                        if (neighbourIce > 2) isIceWater = true;
+                                    }
+
+                                    if (isIceWater) this.level().setBlock(pos, Blocks.WATER.defaultBlockState(), 0);
+                                }
+                            }
                         }
                     }
                 }

@@ -868,7 +868,7 @@ public class GunGen extends GunProvider
                 .setScope(1.0F, 0.0, 6.0, 3.0)
                 .setBarrel(1.0F, 0.0, 5.1, -9.4)
                         .setSpecial(1.0F, -1.1, 5.0, -6.2)
-                .setUnderBarrel(1.0F, 0.0, 3.9, 2.5)
+                .setUnderBarrel(1.0F, 0.0, 3.9, 0.0)
                 .setMagazine(0.0F, 0.0, 0.0, 0.0)
 
                 .build());

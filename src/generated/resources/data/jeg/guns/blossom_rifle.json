@@ -35,8 +35,7 @@
         "zOffset": -6.2
       },
       "underBarrel": {
-        "yOffset": 3.9,
-        "zOffset": 2.5
+        "yOffset": 3.9
       }
     },
     "zoom": {
