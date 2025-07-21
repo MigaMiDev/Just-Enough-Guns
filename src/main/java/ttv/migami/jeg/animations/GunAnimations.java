@@ -97,29 +97,38 @@ public final class GunAnimations {
                         }
                     }
 
-                    if ((!ModSyncedDataKeys.RELOADING.getValue(player) &&
-                            GunAnimations.isAnimationPlaying(state.getController(), "reload_loop")) ||
-                            GunAnimations.isAnimationPlaying(state.getController(), "reload_stop")) {
-                        state.setControllerSpeed(GunEnchantmentHelper.getReloadAnimationSpeed(gunStack));
-                        return  state.setAndContinue(RELOAD_STOP);
+                    boolean lacksAmmo;
+                    if (animatedGunItem.getModifiedGun(gunStack).getReloads().getReloadType() == ReloadType.SINGLE_ITEM) {
+                        lacksAmmo = Gun.findAmmo(player, animatedGunItem.getModifiedGun(gunStack).getReloads().getReloadItem()).stack().isEmpty();
+                    } else {
+                        lacksAmmo = Gun.findAmmo(player, animatedGunItem.getModifiedGun(gunStack).getProjectile().getItem()).stack().isEmpty();
                     }
-                    if ((ModSyncedDataKeys.RELOADING.getValue(player) ||
-                            ((GunAnimations.isAnimationPlaying(state.getController(), "reload") ||
-                                    GunAnimations.isAnimationPlaying(state.getController(), "reload_alt") ||
-                                    GunAnimations.isAnimationPlaying(state.getController(), "reload_start")) &&
-                                    !state.getController().hasAnimationFinished()))) {
-                        if (animatedGunItem.getModifiedGun(gunStack).getReloads().getReloadType().equals(ReloadType.MANUAL)) {
+
+                    if (!lacksAmmo) {
+                        if ((!ModSyncedDataKeys.RELOADING.getValue(player) &&
+                                GunAnimations.isAnimationPlaying(state.getController(), "reload_loop")) ||
+                                GunAnimations.isAnimationPlaying(state.getController(), "reload_stop")) {
                             state.setControllerSpeed(GunEnchantmentHelper.getReloadAnimationSpeed(gunStack));
-                            return state.setAndContinue(RELOAD_START);
+                            return  state.setAndContinue(RELOAD_STOP);
                         }
-                        state.setControllerSpeed(GunEnchantmentHelper.getReloadAnimationSpeed(gunStack));
-                        if (gunStack.is(ModItems.INFANTRY_RIFLE.get())) {
-                            if (Gun.getAttachment(IAttachment.Type.MAGAZINE, gunStack).getItem() == ModItems.EXTENDED_MAG.get() ||
-                                    Gun.getAttachment(IAttachment.Type.MAGAZINE, gunStack).getItem() == ModItems.DRUM_MAG.get()) {
-                                return state.setAndContinue(RELOAD_ALT);
+                        if ((ModSyncedDataKeys.RELOADING.getValue(player) ||
+                                ((GunAnimations.isAnimationPlaying(state.getController(), "reload") ||
+                                        GunAnimations.isAnimationPlaying(state.getController(), "reload_alt") ||
+                                        GunAnimations.isAnimationPlaying(state.getController(), "reload_start")) &&
+                                        !state.getController().hasAnimationFinished()))) {
+                            if (animatedGunItem.getModifiedGun(gunStack).getReloads().getReloadType().equals(ReloadType.MANUAL)) {
+                                state.setControllerSpeed(GunEnchantmentHelper.getReloadAnimationSpeed(gunStack));
+                                return state.setAndContinue(RELOAD_START);
                             }
+                            state.setControllerSpeed(GunEnchantmentHelper.getReloadAnimationSpeed(gunStack));
+                            if (gunStack.is(ModItems.INFANTRY_RIFLE.get())) {
+                                if (Gun.getAttachment(IAttachment.Type.MAGAZINE, gunStack).getItem() == ModItems.EXTENDED_MAG.get() ||
+                                        Gun.getAttachment(IAttachment.Type.MAGAZINE, gunStack).getItem() == ModItems.DRUM_MAG.get()) {
+                                    return state.setAndContinue(RELOAD_ALT);
+                                }
+                            }
+                            return state.setAndContinue(RELOAD);
                         }
-                        return state.setAndContinue(RELOAD);
                     }
 
                     if (tag.getBoolean("IsInspecting") ||

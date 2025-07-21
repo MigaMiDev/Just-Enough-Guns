@@ -19,10 +19,7 @@ import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animation.AnimationController;
 import ttv.migami.jeg.JustEnoughGuns;
 import ttv.migami.jeg.client.KeyBinds;
-import ttv.migami.jeg.common.ChargeTracker;
-import ttv.migami.jeg.common.FireMode;
-import ttv.migami.jeg.common.GripType;
-import ttv.migami.jeg.common.Gun;
+import ttv.migami.jeg.common.*;
 import ttv.migami.jeg.compat.PlayerReviveHelper;
 import ttv.migami.jeg.event.GunFireEvent;
 import ttv.migami.jeg.init.ModItems;
@@ -154,9 +151,13 @@ public class ShootingHandler
         if(player != null)
         {
             ItemStack heldItem = player.getMainHandItem();
-            if (heldItem.getItem() instanceof GunItem && KeyBinds.getShootMapping().isDown() && !Gun.hasAmmo(heldItem) && !PlayerReviveHelper.isBleeding(player)) {
+            if (heldItem.getItem() instanceof GunItem gunItem && KeyBinds.getShootMapping().isDown() && !Gun.hasAmmo(heldItem) && !PlayerReviveHelper.isBleeding(player)) {
+                Gun gun = gunItem.getModifiedGun(heldItem);
+
                 if (heldItem.hasTag() && heldItem.getTag() != null && heldItem.getTag().getInt("AmmoCount") <= 0 && !player.isCreative()) {
-                    ReloadHandler.get().setReloading(true);
+                    if (!gun.getReloads().getReloadType().equals(ReloadType.INVENTORY_FED)) {
+                        ReloadHandler.get().setReloading(true);
+                    }
                 }
             }
             if(heldItem.getItem() instanceof GunItem gunItem && (Gun.hasAmmo(heldItem) || player.isCreative()) && !PlayerReviveHelper.isBleeding(player))
