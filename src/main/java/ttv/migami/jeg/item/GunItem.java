@@ -122,6 +122,8 @@ public class GunItem extends Item implements IColored, IMeta {
                 tooltip.add(Component.translatable("info.jeg.flare_raid").withStyle(ChatFormatting.GRAY)
                         .append(Component.translatable("faction.jeg." + factionName).withStyle(ChatFormatting.WHITE)));
                 tooltip.add(Component.literal(""));
+            } else {
+                tooltip.add(Component.translatable("info.jeg.flare_gun.color").withStyle(ChatFormatting.BLUE));
             }
         }
 
