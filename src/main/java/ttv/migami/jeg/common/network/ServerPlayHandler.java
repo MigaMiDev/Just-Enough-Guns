@@ -57,6 +57,7 @@ import ttv.migami.jeg.crafting.workbench.AbstractWorkbenchRecipe;
 import ttv.migami.jeg.crafting.workbench.WorkbenchRecipes;
 import ttv.migami.jeg.entity.monster.phantom.gunner.PhantomGunner;
 import ttv.migami.jeg.entity.monster.phantom.terror.TerrorPhantom;
+import ttv.migami.jeg.entity.projectile.FlareProjectileEntity;
 import ttv.migami.jeg.entity.projectile.ProjectileEntity;
 import ttv.migami.jeg.event.BurstFireEvent;
 import ttv.migami.jeg.event.GunFireEvent;
@@ -73,6 +74,7 @@ import ttv.migami.jeg.network.message.C2SMessagePreFireSound;
 import ttv.migami.jeg.network.message.C2SMessageShoot;
 import ttv.migami.jeg.network.message.S2CMessageBulletTrail;
 import ttv.migami.jeg.network.message.S2CMessageGunSound;
+import ttv.migami.jeg.util.DyeUtils;
 import ttv.migami.jeg.util.GunEnchantmentHelper;
 import ttv.migami.jeg.util.GunModifierHelper;
 
@@ -196,6 +198,11 @@ public class ServerPlayHandler
                         world.addFreshEntity(projectileEntity);
                         spawnedProjectiles[i] = projectileEntity;
                         projectileEntity.tick();
+
+                        if (projectileEntity instanceof FlareProjectileEntity flareProjectileEntity && DyeUtils.hasDye(heldItem)) {
+                            flareProjectileEntity.setColor(DyeUtils.getStoredDyeRGB(heldItem));
+                            flareProjectileEntity.setCustomColored(true);
+                        }
                     }
                     if (!modifiedGun.getProjectile().hideTrail()) {
                         if(!projectileProps.isVisible())

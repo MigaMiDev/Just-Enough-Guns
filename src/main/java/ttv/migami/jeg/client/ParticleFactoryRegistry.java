@@ -35,6 +35,7 @@ public class ParticleFactoryRegistry
         event.registerSpriteSet(ModParticleTypes.BIG_SONIC_RING.get(), SonicRingParticle.BigProvider::new);
         event.registerSpriteSet(ModParticleTypes.FLARE_SMOKE.get(), FlareSmokeParticle.SmokeProvider::new);
         event.registerSpriteSet(ModParticleTypes.FLARE.get(), FlareSmokeParticle.RedProvider::new);
+        event.registerSpriteSet(ModParticleTypes.COLORED_FLARE_SMOKE.get(), ColoredFlareSmokeParticle.Provider::new);
         event.registerSpriteSet(ModParticleTypes.BLUE_FLARE.get(), FlareSmokeParticle.BlueProvider::new);
         event.registerSpriteSet(ModParticleTypes.FLAME.get(), FlameParticle.Provider::new);
         event.registerSpriteSet(ModParticleTypes.BLUE_FLAME.get(), FlameParticle.BlueProvider::new);

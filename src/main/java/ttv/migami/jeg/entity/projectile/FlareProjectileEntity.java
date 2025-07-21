@@ -1,7 +1,12 @@
 package ttv.migami.jeg.entity.projectile;
 
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -17,6 +22,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
 import ttv.migami.jeg.Config;
+import ttv.migami.jeg.JustEnoughGuns;
 import ttv.migami.jeg.common.Gun;
 import ttv.migami.jeg.event.GunProjectileHitEvent;
 import ttv.migami.jeg.faction.Faction;
@@ -24,6 +30,7 @@ import ttv.migami.jeg.faction.GunnerManager;
 import ttv.migami.jeg.init.ModCommands;
 import ttv.migami.jeg.init.ModParticleTypes;
 import ttv.migami.jeg.item.GunItem;
+import ttv.migami.jeg.particles.ColoredFlareData;
 
 import java.util.function.Predicate;
 
@@ -35,6 +42,25 @@ public class FlareProjectileEntity extends ProjectileEntity {
     private boolean hasRaid = false;
     private String raid = null;
     private boolean terrorRaid = false;
+
+    private static final EntityDataAccessor<Boolean> DATA_IS_CUSTOM_COLORED = SynchedEntityData.defineId(FlareProjectileEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> DATA_COLOR = SynchedEntityData.defineId(FlareProjectileEntity.class, EntityDataSerializers.INT);
+
+    public void setColor(int color) {
+        this.entityData.set(DATA_COLOR, color);
+    }
+
+    public int getColor() {
+        return this.entityData.get(DATA_COLOR);
+    }
+
+    public void setCustomColored(boolean customColored) {
+        this.entityData.set(DATA_IS_CUSTOM_COLORED, customColored);
+    }
+
+    public boolean isCustomColored() {
+        return this.entityData.get(DATA_IS_CUSTOM_COLORED);
+    }
 
     public FlareProjectileEntity(EntityType<? extends ProjectileEntity> entityType, Level worldIn) {
 		super(entityType, worldIn);
@@ -79,6 +105,19 @@ public class FlareProjectileEntity extends ProjectileEntity {
                 }
             }
         }
+
+        JustEnoughGuns.LOGGER.atInfo().log(this.isCustomColored());
+        JustEnoughGuns.LOGGER.atInfo().log(this.getColor());
+
+        if (this.level() instanceof ClientLevel && (this.tickCount > 1 && this.tickCount < this.life) && this.isCustomColored()) {
+            int r = (this.getColor() >> 16) & 0xFF;
+            int g = (this.getColor() >> 8) & 0xFF;
+            int b = this.getColor() & 0xFF;
+
+            // Colored Smoke
+            this.level().addAlwaysVisibleParticle(new ColoredFlareData(r, g, b), true,
+                    this.getX(), this.getY(), this.getZ(), 0, 0.1, 0);
+        }
         if (this.level() instanceof ServerLevel serverLevel && (this.tickCount > 1 && this.tickCount < this.life)) {
             if (this.terrorRaid) {
                 sendParticlesToAll(
@@ -92,7 +131,8 @@ public class FlareProjectileEntity extends ProjectileEntity {
                         0, 0, 0,
                         0
                 );
-            } else {
+            } else if (!this.isCustomColored()) {
+                // Default Red Smoke
                 sendParticlesToAll(
                         serverLevel,
                         ModParticleTypes.FLARE_SMOKE.get(),
@@ -135,24 +175,6 @@ public class FlareProjectileEntity extends ProjectileEntity {
         super.tick();
 
         if(!this.level().isClientSide) {
-
-            /*if (!this.raid) {
-                this.raidTimer--;
-            }
-            if (this.getY() > 120 && this.raid) {
-                this.raid = false;
-            }
-            if (this.raidTimer <= 0 && this.playRaid) {
-                ServerLevel level = (ServerLevel) this.level();
-                int x = level.random.nextInt(-50, 50);
-                int z = level.random.nextInt(-50, 50);
-                level.playSound(null, BlockPos.containing(this.getPosition(1F).add(x, -50, z)), ModSounds.terror_horn.get(), SoundSource.HOSTILE, 1000F, 1);
-                for (ServerPlayer player : level.players()) {
-                    player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 260, 0, true, false));
-                }
-                this.playRaid = false;
-            }*/
-
             Vec3 startVec = this.position();
             Vec3 endVec = startVec.add(this.getDeltaMovement());
             HitResult result = rayTraceBlocks(this.level(), new ClipContext(startVec, endVec, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this), IGNORE_LEAVES);
@@ -204,6 +226,32 @@ public class FlareProjectileEntity extends ProjectileEntity {
                 }
 
             }
+        }
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+
+        this.entityData.define(DATA_COLOR, 15790320);
+        this.entityData.define(DATA_IS_CUSTOM_COLORED, false);
+    }
+
+    @Override
+    protected void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putInt("Color", this.getColor());
+        tag.putBoolean("CustomColored", this.isCustomColored());
+    }
+
+    @Override
+    protected void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        if (tag.contains("Color")) {
+            this.setColor(tag.getInt("Color"));
+        }
+        if (tag.contains("CustomColored")) {
+            this.setCustomColored(tag.getBoolean("CustomColored"));
         }
     }
 }

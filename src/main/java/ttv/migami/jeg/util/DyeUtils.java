@@ -10,6 +10,19 @@ import net.minecraft.world.item.ItemStack;
 
 public final class DyeUtils {
 
+    public static boolean hasDye(ItemStack parent) {
+        CompoundTag root = parent.getTag();
+        if (root == null) return false;
+
+        CompoundTag cosmetics = root.getCompound("Cosmetics");
+        if (!cosmetics.contains("Dye", CompoundTag.TAG_COMPOUND)) return false;
+
+        CompoundTag dyeTag = cosmetics.getCompound("Dye");
+
+        ItemStack dyeStack = ItemStack.of(dyeTag);
+        return dyeStack.getItem() instanceof DyeItem;
+    }
+
     /**
      * Reads the dye stored under Cosmetics.Dye and returns its colour
      * as an opaque 0xRRGGBB integer.  

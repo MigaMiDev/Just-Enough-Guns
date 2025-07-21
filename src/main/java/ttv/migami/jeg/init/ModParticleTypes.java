@@ -8,6 +8,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import ttv.migami.jeg.Reference;
 import ttv.migami.jeg.particles.BulletHoleData;
+import ttv.migami.jeg.particles.ColoredFlareData;
 import ttv.migami.jeg.particles.LaserData;
 import ttv.migami.jeg.particles.TrailData;
 
@@ -48,6 +49,12 @@ public class ModParticleTypes {
     public static final RegistryObject<SimpleParticleType> SONIC_RING = REGISTER.register("sonic_ring", () -> new SimpleParticleType(true));
     public static final RegistryObject<SimpleParticleType> BIG_SONIC_RING = REGISTER.register("big_sonic_ring", () -> new SimpleParticleType(true));
     public static final RegistryObject<SimpleParticleType> FLARE_SMOKE = REGISTER.register("flare_smoke", () -> new SimpleParticleType(true));
+    public static final RegistryObject<ParticleType<ColoredFlareData>> COLORED_FLARE_SMOKE = REGISTER.register("colored_flare_smoke", () -> new ParticleType<>(true, ColoredFlareData.DESERIALIZER) {
+        @Override
+        public Codec<ColoredFlareData> codec() {
+            return ColoredFlareData.CODEC;
+        }
+    });
     public static final RegistryObject<SimpleParticleType> FLARE = REGISTER.register("flare", () -> new SimpleParticleType(true));
     public static final RegistryObject<SimpleParticleType> BLUE_FLARE = REGISTER.register("flare_blue", () -> new SimpleParticleType(true));
     public static final RegistryObject<SimpleParticleType> FLAME = REGISTER.register("flame", () -> new SimpleParticleType(true));
