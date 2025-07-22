@@ -521,7 +521,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
             if (livingEntity.getTags().contains("EliteGunner") && this.random.nextBoolean()) {
                 return false;
             }
-            if (!livingEntity.getType().is(ModTags.Entities.VERY_HEAVY) && (this.random.nextFloat() < 0.4F || this.getAdvantage().equals(ModTags.Entities.VERY_HEAVY.location()))) {
+            if (!livingEntity.getType().is(ModTags.Entities.VERY_HEAVY) && (this.random.nextFloat() < 0.4F || (this.getAdvantage().equals(ModTags.Entities.VERY_HEAVY.location())))) {
                 if (this.random.nextBoolean() || this.getAdvantage().equals(ModTags.Entities.VERY_HEAVY.location())) {
                     removeHelmet(livingEntity, helmet);
                     livingEntity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 40, 0, false, false));
@@ -851,8 +851,13 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 
     public ResourceLocation getAdvantage() {
         if (!Config.COMMON.gameplay.gunAdvantage.get()) {
-            return null;
+            return ModTags.Entities.NONE.location();
         }
+
+        if (this.getProjectile().getAdvantage() == null) {
+            return ModTags.Entities.NONE.location();
+        }
+
         return this.getProjectile().getAdvantage();
     }
 
