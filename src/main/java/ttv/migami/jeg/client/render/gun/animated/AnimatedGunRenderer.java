@@ -1032,6 +1032,13 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 	}
 
 	private String getModID(ItemStack stack) {
+		if (stack.getItem() == Items.WOODEN_SWORD ||
+				stack.getItem() == Items.STONE_SWORD ||
+				stack.getItem() == Items.IRON_SWORD ||
+				stack.getItem() == Items.GOLDEN_SWORD ||
+				stack.getItem() == Items.DIAMOND_SWORD ||
+				stack.getItem() == Items.NETHERITE_SWORD) return Reference.MOD_ID;
+
 		Item item = stack.getItem();
 		ResourceLocation registryName = ForgeRegistries.ITEMS.getKey(item);
 		if (registryName != null)
