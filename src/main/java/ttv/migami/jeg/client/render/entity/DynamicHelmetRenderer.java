@@ -17,6 +17,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
+import net.minecraftforge.registries.ForgeRegistries;
 import ttv.migami.jeg.entity.DynamicHelmet;
 
 public class DynamicHelmetRenderer extends EntityRenderer<DynamicHelmet> {
@@ -128,7 +129,11 @@ public class DynamicHelmetRenderer extends EntityRenderer<DynamicHelmet> {
     private ResourceLocation getArmorTexture(ArmorItem armorItem) {
         String materialName = armorItem.getMaterial().getName();
         String layer = "1";
-        return new ResourceLocation("minecraft", "textures/models/armor/" + materialName + "_layer_" + layer + ".png");
+
+        ResourceLocation itemKey = ForgeRegistries.ITEMS.getKey(armorItem);
+        String modid = (itemKey != null) ? itemKey.getNamespace() : "minecraft";
+
+        return new ResourceLocation(modid, "textures/models/armor/" + materialName + "_layer_" + layer + ".png");
     }
 }
 
