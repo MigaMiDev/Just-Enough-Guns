@@ -15,9 +15,10 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.client.ForgeHooksClient;
 import ttv.migami.jeg.entity.DynamicHelmet;
 
 public class DynamicHelmetRenderer extends EntityRenderer<DynamicHelmet> {
@@ -78,7 +79,7 @@ public class DynamicHelmetRenderer extends EntityRenderer<DynamicHelmet> {
             defaultModel.leftLeg.visible = false;
             defaultModel.rightLeg.visible = false;
 
-            ResourceLocation texture = getArmorTexture(armorItem);
+            ResourceLocation texture = getArmorTexture(armorItem, armorItem.getDefaultInstance(), null, EquipmentSlot.HEAD);
 
             if (armorItem.getMaterial() == ArmorMaterials.LEATHER) {
                 int color = 0xA06540;
@@ -126,14 +127,18 @@ public class DynamicHelmetRenderer extends EntityRenderer<DynamicHelmet> {
         return TextureAtlas.LOCATION_BLOCKS;
     }
 
-    private ResourceLocation getArmorTexture(ArmorItem armorItem) {
-        String materialName = armorItem.getMaterial().getName();
-        String layer = "1";
+    private ResourceLocation getArmorTexture(ArmorItem armorItem, ItemStack  stack, Entity entity, EquipmentSlot slot) {
+        String materialName   = armorItem.getMaterial().getName();
+        String defaultPathStr = "minecraft:textures/models/armor/"
+                + materialName + "_layer_1.png";
 
-        ResourceLocation itemKey = ForgeRegistries.ITEMS.getKey(armorItem);
-        String modid = (itemKey != null) ? itemKey.getNamespace() : "minecraft";
+        String resolved = ForgeHooksClient.getArmorTexture(null,
+                stack,
+                defaultPathStr,
+                slot,
+                null);
 
-        return new ResourceLocation(modid, "textures/models/armor/" + materialName + "_layer_" + layer + ".png");
+        return new ResourceLocation(resolved);
     }
 }
 
