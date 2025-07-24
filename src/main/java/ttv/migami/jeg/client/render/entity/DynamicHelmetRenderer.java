@@ -15,11 +15,13 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
-import net.minecraftforge.client.ForgeHooksClient;
+import net.minecraftforge.registries.ForgeRegistries;
 import ttv.migami.jeg.entity.DynamicHelmet;
+
+import java.util.Optional;
 
 public class DynamicHelmetRenderer extends EntityRenderer<DynamicHelmet> {
 
@@ -79,7 +81,7 @@ public class DynamicHelmetRenderer extends EntityRenderer<DynamicHelmet> {
             defaultModel.leftLeg.visible = false;
             defaultModel.rightLeg.visible = false;
 
-            ResourceLocation texture = getArmorTexture(armorItem, armorItem.getDefaultInstance(), null, EquipmentSlot.HEAD);
+            ResourceLocation texture = getArmorTexture(armorItem);
 
             if (armorItem.getMaterial() == ArmorMaterials.LEATHER) {
                 int color = 0xA06540;
@@ -127,18 +129,36 @@ public class DynamicHelmetRenderer extends EntityRenderer<DynamicHelmet> {
         return TextureAtlas.LOCATION_BLOCKS;
     }
 
-    private ResourceLocation getArmorTexture(ArmorItem armorItem, ItemStack  stack, Entity entity, EquipmentSlot slot) {
-        String materialName   = armorItem.getMaterial().getName();
-        String defaultPathStr = "minecraft:textures/models/armor/"
-                + materialName + "_layer_1.png";
+    private ResourceLocation getArmorTexture(ArmorItem armorItem) {
+        String materialName = armorItem.getMaterial().getName();
+        String layer = "1";
 
-        String resolved = ForgeHooksClient.getArmorTexture(null,
-                stack,
-                defaultPathStr,
-                slot,
-                null);
+        String texturePath;
+        String namespace;
 
-        return new ResourceLocation(resolved);
+        if (materialName.contains(":")) {
+            String[] parts = materialName.split(":");
+            namespace = parts[0];
+            texturePath = parts[1];
+        } else {
+            ResourceLocation itemKey = ForgeRegistries.ITEMS.getKey(armorItem);
+            namespace = (itemKey != null) ? itemKey.getNamespace() : "minecraft";
+            texturePath = materialName;
+        }
+
+        ResourceLocation texture = new ResourceLocation(
+                namespace,
+                "textures/models/armor/" + texturePath + "_layer_" + layer + ".png"
+        );
+
+        Minecraft client = Minecraft.getInstance();
+        Optional<Resource> resource = client.getResourceManager().getResource(texture);
+
+        if (resource.isPresent()) {
+            return texture;
+        } else {
+            return new ResourceLocation("minecraft", "textures/models/armor/iron_layer_" + layer + ".png");
+        }
     }
 }
 
