@@ -9,6 +9,7 @@
     "common.AbstractSkeletonMixin",
     "common.CookieItemMixin",
     "common.EndPortalBlockMixin",
+    "common.EntityMixin",
     "common.LeadItemMixin",
     "common.LivingEntityMixin",
     "common.PlayerMixin",

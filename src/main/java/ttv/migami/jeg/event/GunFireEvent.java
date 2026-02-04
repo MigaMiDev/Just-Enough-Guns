@@ -105,7 +105,7 @@ public class GunFireEvent extends PlayerEvent
                     || stack.getOrCreateTag().getString("GunId").endsWith("bow")
                     || stack.getOrCreateTag().getString("GunId").endsWith("blowpipe");
 
-            if (Config.COMMON.gameplay.dynamicLightsOnShooting.get() && !doesNotLight) {
+            if (Config.COMMON.gameplay.dynamicLightsOnShooting.get() && !doesNotLight && !player.isPassenger()) {
                 BlockState targetState = player.level().getBlockState(BlockPos.containing(player.getEyePosition()));
                 if (targetState.getBlock() == ModBlocks.BRIGHT_DYNAMIC_LIGHT.get()) {
                     if (getValue(player.level(), BlockPos.containing(player.getEyePosition()), "Delay") < 1.0) {

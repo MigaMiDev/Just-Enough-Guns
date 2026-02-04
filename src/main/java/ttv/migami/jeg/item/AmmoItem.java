@@ -3,6 +3,8 @@ package ttv.migami.jeg.item;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
@@ -45,6 +47,7 @@ public class AmmoItem extends Item implements IAmmo
 
                     itemStack.shrink(1);
                     player.getInventory().add(new ItemStack(ModItems.BLAZE_ROUND.get()));
+                    world.playSound(null, target, SoundEvents.FIRECHARGE_USE, SoundSource.AMBIENT, 1F, 1F);
                     return InteractionResultHolder.success(itemStack);
                 }
 
@@ -60,7 +63,10 @@ public class AmmoItem extends Item implements IAmmo
         BlockPos blockPos = rayTrace(player, 4.0D);
         EntityHitResult entityHitResult = ServerPlayHandler.hitEntity(player.level(), player, blockPos);
 
-        return entityHitResult.getEntity();
+        if (entityHitResult != null) {
+            return entityHitResult.getEntity();
+        }
+        else return null;
     }
 
     @Override

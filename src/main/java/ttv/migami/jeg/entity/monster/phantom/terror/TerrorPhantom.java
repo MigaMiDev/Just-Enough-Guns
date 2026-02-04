@@ -19,6 +19,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -64,7 +65,7 @@ import static ttv.migami.jeg.common.network.ServerPlayHandler.sendParticlesToAll
 import static ttv.migami.jeg.entity.monster.phantom.PhantomSwarmSpawner.spawnPhantomGunnerSwarm;
 import static ttv.migami.jeg.entity.monster.phantom.PhantomSwarmSpawner.spawnSecondLayerPhantomGunnerSwarm;
 
-public class TerrorPhantom extends Phantom implements GeoEntity {
+public class TerrorPhantom extends Phantom implements GeoEntity, RiderShieldingMount {
     private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private int attackTimer = 0;
     Vec3 moveTargetPoint;
@@ -102,6 +103,9 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
     private static final EntityDataAccessor<Boolean> IS_DYING = SynchedEntityData.defineId(TerrorPhantom.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_OWNED = SynchedEntityData.defineId(TerrorPhantom.class, EntityDataSerializers.BOOLEAN);
 
+    public float travelYaw;
+    public float travelPitch;
+
     public TerrorPhantom(EntityType<? extends Phantom> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
 
@@ -135,6 +139,30 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
 
     public Player getPlayer() {
         return this.player;
+    }
+
+    @Override
+    public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
+        if (pPlayer.isCreative()) {
+            //pPlayer.startRiding(this);
+            //return InteractionResult.CONSUME;
+            return InteractionResult.SUCCESS;
+        }
+        else return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    public double getPassengersRidingOffset() {
+        return super.getPassengersRidingOffset() + 0.2;
+    }
+
+    public double getRiderShieldingHeight() {
+        return 1.0;
+    }
+
+    @Override
+    protected boolean canAddPassenger(Entity passenger) {
+        return this.getPassengers().isEmpty();
     }
 
     @Override
@@ -318,6 +346,13 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
     public void tick() {
         super.tick();
 
+        if (!this.level().isClientSide && this.getControllingPassenger() instanceof Player player) {
+            this.setYRot(player.getYRot());
+            this.setXRot(player.getXRot());
+            this.yRotO = this.getYRot();
+            this.xRotO = this.getXRot();
+        }
+
         if (this.level().isClientSide) {
             if (this.makeSound) {
                 if (this.isPlayerOwned()) {
@@ -418,11 +453,16 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
         }
 
         if (!this.isDying()) {
-            if (this.attackPhase.equals(AttackPhase.SWOOP)) {
-                this.horizontalCollision = false;
+            if (this.getFirstPassenger() instanceof LivingEntity) {
+                this.noPhysics = false;
             }
-            //this.noPhysics = this.attackPhase.equals(AttackPhase.SWOOP);
-            this.noPhysics = (this.getTarget() != null || this.horizontalCollision);
+            else {
+                if (this.attackPhase.equals(AttackPhase.SWOOP)) {
+                    this.horizontalCollision = false;
+                }
+                //this.noPhysics = this.attackPhase.equals(AttackPhase.SWOOP);
+                this.noPhysics = (this.getTarget() != null || this.horizontalCollision);
+            }
         } else {
             this.noPhysics = false;
         }
@@ -624,38 +664,66 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
                 }
             }
 
-            double $$0 = TerrorPhantom.this.moveTargetPoint.x - TerrorPhantom.this.getX();
-            double $$1 = TerrorPhantom.this.moveTargetPoint.y - TerrorPhantom.this.getY();
-            double $$2 = TerrorPhantom.this.moveTargetPoint.z - TerrorPhantom.this.getZ();
-            double $$3 = Math.sqrt($$0 * $$0 + $$2 * $$2);
-            if (Math.abs($$3) > 9.999999747378752E-6) {
-                double $$4 = 1.0 - Math.abs($$1 * 0.699999988079071) / $$3;
-                $$0 *= $$4;
-                $$2 *= $$4;
-                $$3 = Math.sqrt($$0 * $$0 + $$2 * $$2);
-                double $$5 = Math.sqrt($$0 * $$0 + $$2 * $$2 + $$1 * $$1);
-                float $$6 = TerrorPhantom.this.getYRot();
-                float $$7 = (float)Mth.atan2($$2, $$0);
-                float $$8 = Mth.wrapDegrees(TerrorPhantom.this.getYRot() + 90.0F);
-                float $$9 = Mth.wrapDegrees($$7 * 57.295776F);
-                TerrorPhantom.this.setYRot(Mth.approachDegrees($$8, $$9, 4.0F) - 90.0F);
-                TerrorPhantom.this.yBodyRot = TerrorPhantom.this.getYRot();
-                if (Mth.degreesDifferenceAbs($$6, TerrorPhantom.this.getYRot()) < 3.0F) {
-                    this.speed = Mth.approach(this.speed, 2.5F, 0.005F * (1.8F / this.speed));
+            if (TerrorPhantom.this.isVehicle() && TerrorPhantom.this.getFirstPassenger() instanceof LivingEntity living) {
+                TerrorPhantom.this.horizontalCollision = true;
+                TerrorPhantom.this.verticalCollision = true;
+
+                TerrorPhantom.this.setYRot(living.getYRot());
+                TerrorPhantom.this.setXRot(living.getXRot());
+
+                TerrorPhantom.this.yRotO = TerrorPhantom.this.getYRot();
+                TerrorPhantom.this.xRotO = TerrorPhantom.this.getXRot();
+
+                float forward = living.zza;
+                float strafe = living.xxa;
+
+                Vec3 lookAngle = TerrorPhantom.this.calculateViewVector(TerrorPhantom.this.travelPitch, TerrorPhantom.this.travelYaw);
+
+                if (forward >= -0.5) {
+                    if (forward >= 0.5) {
+                        TerrorPhantom.this.setDeltaMovement(lookAngle.scale(2));
+                    }
+                    else {
+                        TerrorPhantom.this.setDeltaMovement(lookAngle.scale(1));
+                    }
                 } else {
-                    this.speed = Mth.approach(this.speed, 0.4F, 0.025F);
+                    Vec3 currentMotion = TerrorPhantom.this.getDeltaMovement();
+                    Vec3 smoothedMotion = currentMotion.lerp(Vec3.ZERO, 0.1);
+                    TerrorPhantom.this.setDeltaMovement(smoothedMotion);
                 }
+            } else {
+                double $$0 = TerrorPhantom.this.moveTargetPoint.x - TerrorPhantom.this.getX();
+                double $$1 = TerrorPhantom.this.moveTargetPoint.y - TerrorPhantom.this.getY();
+                double $$2 = TerrorPhantom.this.moveTargetPoint.z - TerrorPhantom.this.getZ();
+                double $$3 = Math.sqrt($$0 * $$0 + $$2 * $$2);
+                if (Math.abs($$3) > 9.999999747378752E-6) {
+                    double $$4 = 1.0 - Math.abs($$1 * 0.699999988079071) / $$3;
+                    $$0 *= $$4;
+                    $$2 *= $$4;
+                    $$3 = Math.sqrt($$0 * $$0 + $$2 * $$2);
+                    double $$5 = Math.sqrt($$0 * $$0 + $$2 * $$2 + $$1 * $$1);
+                    float $$6 = TerrorPhantom.this.getYRot();
+                    float $$7 = (float)Mth.atan2($$2, $$0);
+                    float $$8 = Mth.wrapDegrees(TerrorPhantom.this.getYRot() + 90.0F);
+                    float $$9 = Mth.wrapDegrees($$7 * 57.295776F);
+                    TerrorPhantom.this.setYRot(Mth.approachDegrees($$8, $$9, 4.0F) - 90.0F);
+                    TerrorPhantom.this.yBodyRot = TerrorPhantom.this.getYRot();
+                    if (Mth.degreesDifferenceAbs($$6, TerrorPhantom.this.getYRot()) < 3.0F) {
+                        this.speed = Mth.approach(this.speed, 2.5F, 0.005F * (1.8F / this.speed));
+                    } else {
+                        this.speed = Mth.approach(this.speed, 0.4F, 0.025F);
+                    }
 
-                float $$10 = (float)(-(Mth.atan2(-$$1, $$3) * 57.2957763671875));
-                TerrorPhantom.this.setXRot($$10);
-                float $$11 = TerrorPhantom.this.getYRot() + 90.0F;
-                double $$12 = (double)(this.speed * Mth.cos($$11 * 0.017453292F)) * Math.abs($$0 / $$5);
-                double $$13 = (double)(this.speed * Mth.sin($$11 * 0.017453292F)) * Math.abs($$2 / $$5);
-                double $$14 = (double)(this.speed * Mth.sin($$10 * 0.017453292F)) * Math.abs($$1 / $$5);
-                Vec3 $$15 = TerrorPhantom.this.getDeltaMovement();
-                TerrorPhantom.this.setDeltaMovement($$15.add((new Vec3($$12, $$14, $$13)).subtract($$15).scale(0.2)));
+                    float $$10 = (float)(-(Mth.atan2(-$$1, $$3) * 57.2957763671875));
+                    TerrorPhantom.this.setXRot($$10);
+                    float $$11 = TerrorPhantom.this.getYRot() + 90.0F;
+                    double $$12 = (double)(this.speed * Mth.cos($$11 * 0.017453292F)) * Math.abs($$0 / $$5);
+                    double $$13 = (double)(this.speed * Mth.sin($$11 * 0.017453292F)) * Math.abs($$2 / $$5);
+                    double $$14 = (double)(this.speed * Mth.sin($$10 * 0.017453292F)) * Math.abs($$1 / $$5);
+                    Vec3 $$15 = TerrorPhantom.this.getDeltaMovement();
+                    TerrorPhantom.this.setDeltaMovement($$15.add((new Vec3($$12, $$14, $$13)).subtract($$15).scale(0.2)));
+                }
             }
-
         }
     }
 
@@ -670,6 +738,9 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
         }
 
         public boolean canUse() {
+            if (TerrorPhantom.this.isVehicle()) {
+                return false;
+            }
             if (TerrorPhantom.this.isPlayerOwned()) {
                 return false;
             }
@@ -812,6 +883,9 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
         }
 
         public boolean canUse() {
+            if (TerrorPhantom.this.isVehicle()) {
+                return false;
+            }
             return !TerrorPhantom.this.isDying() && TerrorPhantom.this.getTarget() != null && TerrorPhantom.this.attackPhase == AttackPhase.SWOOP;
         }
 
@@ -871,6 +945,9 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
         }
 
         public boolean canUse() {
+            if (TerrorPhantom.this.isVehicle()) {
+                return false;
+            }
             return !TerrorPhantom.this.isDying() && TerrorPhantom.this.getTarget() != null && TerrorPhantom.this.attackPhase == AttackPhase.ROLL;
         }
 
@@ -972,6 +1049,9 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
         }
 
         public boolean canUse() {
+            if (TerrorPhantom.this.isVehicle()) {
+                return false;
+            }
             return !TerrorPhantom.this.isDying() && TerrorPhantom.this.getTarget() != null && TerrorPhantom.this.attackPhase == AttackPhase.SWARM;
         }
 
@@ -1031,6 +1111,9 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
         }
 
         public boolean canUse() {
+            if (TerrorPhantom.this.isVehicle()) {
+                return false;
+            }
             return !TerrorPhantom.this.isDying() && TerrorPhantom.this.getTarget() != null && TerrorPhantom.this.attackPhase == AttackPhase.BOMBING;
         }
 
@@ -1127,6 +1210,9 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
         }
 
         public boolean canUse() {
+            if (TerrorPhantom.this.isVehicle()) {
+                return false;
+            }
             return !TerrorPhantom.this.isDying() && (TerrorPhantom.this.getTarget() == null || (TerrorPhantom.this.attackPhase == AttackPhase.CIRCLE || TerrorPhantom.this.attackPhase == AttackPhase.SWARM));
         }
 
@@ -1189,6 +1275,9 @@ public class TerrorPhantom extends Phantom implements GeoEntity {
         }
 
         public boolean canUse() {
+            if (TerrorPhantom.this.isVehicle()) {
+                return false;
+            }
             if (this.nextScanTick > 0) {
                 --this.nextScanTick;
                 return false;

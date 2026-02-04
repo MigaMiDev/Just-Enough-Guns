@@ -462,7 +462,7 @@ public class Config
 				this.fragileBlockDrops = builder.comment("If enabled, fragile blocks will drop their loot when broken").define("fragileBlockDrops", true);
 				this.fragileBaseBreakChance = builder.comment("The base chance that a fragile block is broken when impacted by a bullet. The hardness of a block will scale this value; the harder the block, the lower the final calculated chance will be.").defineInRange("fragileBlockBreakChance", 1.0, 0.0, 1.0);
 				this.woodBaseBreakChance = builder.comment("The base chance that a wooden block is broken when impacted by a bullet. The hardness of a block will scale this value; the harder the block, the lower the final calculated chance will be.").defineInRange("woodBaseBreakChance", 0.1, 0.0, 1.0);
-				this.stoneBaseBreakChance = builder.comment("The base chance that a wooden block is broken when impacted by a bullet. The hardness of a block will scale this value; the harder the block, the lower the final calculated chance will be.").defineInRange("stoneBaseBreakChance", 0.05, 0.0, 1.0);
+				this.stoneBaseBreakChance = builder.comment("The base chance that a stone block is broken when impacted by a bullet. The hardness of a block will scale this value; the harder the block, the lower the final calculated chance will be.").defineInRange("stoneBaseBreakChance", 0.05, 0.0, 1.0);
 				this.setFireToBlocks = builder.comment("If true, allows fire guns to light and spread fires on blocks").define("setFireToBlocks", true);
 				this.extinguishFire = builder.comment("If true, allows water guns to extinguish blocks on fire").define("extinguishFire", true);
 			}

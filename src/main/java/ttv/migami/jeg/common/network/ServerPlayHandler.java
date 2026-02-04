@@ -70,10 +70,7 @@ import ttv.migami.jeg.item.AnimatedGunItem;
 import ttv.migami.jeg.item.GunItem;
 import ttv.migami.jeg.item.attachment.IAttachment;
 import ttv.migami.jeg.network.PacketHandler;
-import ttv.migami.jeg.network.message.C2SMessagePreFireSound;
-import ttv.migami.jeg.network.message.C2SMessageShoot;
-import ttv.migami.jeg.network.message.S2CMessageBulletTrail;
-import ttv.migami.jeg.network.message.S2CMessageGunSound;
+import ttv.migami.jeg.network.message.*;
 import ttv.migami.jeg.util.DyeUtils;
 import ttv.migami.jeg.util.GunEnchantmentHelper;
 import ttv.migami.jeg.util.GunModifierHelper;
@@ -165,7 +162,6 @@ public class ServerPlayHandler
                 player.setXRot(Mth.clamp(message.getRotationPitch(), -90F, 90F));
 
                 // Bingo bango.
-
                 ShootTracker tracker = ShootTracker.getShootTracker(player);
                 if(tracker.hasCooldown(item) && tracker.getRemaining(item) > Config.SERVER.cooldownThreshold.get())
                 {
@@ -938,5 +934,12 @@ public class ServerPlayHandler
     public static int getRandomColor() {
         RandomSource rand = RandomSource.create();
         return rand.nextInt(0xFFFFFF);
+    }
+
+    public static void rotatePhantom(C2SMessagePlayerRotation message, ServerPlayer player) {
+        if (player.getVehicle() instanceof TerrorPhantom terrorPhantom) {
+            terrorPhantom.travelYaw = message.getRotationYaw();
+            terrorPhantom.travelPitch = message.getRotationPitch();
+        }
     }
 }

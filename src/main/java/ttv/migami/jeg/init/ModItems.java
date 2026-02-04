@@ -357,10 +357,6 @@ public class ModItems {
             ));
 
     /* Healing Items */
-    public static final RegistryObject<Item> HEALING_TALISMAN = REGISTER.register("healing_talisman",
-            () -> new HealingTalismanItem(new Item.Properties()
-                    .stacksTo(16)
-            ));
 
     /* Utility Items */
     /*public static final RegistryObject<Item> GRAPPLING_HOOK = REGISTER.register("grappling_hook",

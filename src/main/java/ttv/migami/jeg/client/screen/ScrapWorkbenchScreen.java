@@ -22,6 +22,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.lwjgl.opengl.GL11;
 import ttv.migami.jeg.Reference;
@@ -327,6 +328,10 @@ public class ScrapWorkbenchScreen extends AbstractContainerScreen<ScrapWorkbench
 
     @Override
     protected void renderBg(GuiGraphics pGuiGraphics, float partialTicks, int mouseX, int mouseY) {
+        if (this.displayStack == null) {
+            this.displayStack = Items.AIR.getDefaultInstance();
+        }
+
         /* Fixes partial ticks to use percentage from 0 to 1 */
         partialTicks = Minecraft.getInstance().getFrameTime();
 

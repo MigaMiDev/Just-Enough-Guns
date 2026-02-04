@@ -48,6 +48,7 @@ public class PacketHandler
                 .registerPlayMessage(C2SMessageChargeSync.class, MessageDirection.PLAY_SERVER_BOUND)
                 .registerPlayMessage(C2SMessageOverheat.class, MessageDirection.PLAY_SERVER_BOUND)
                 .registerPlayMessage(C2SMessageBurnPlayer.class, MessageDirection.PLAY_SERVER_BOUND)
+                .registerPlayMessage(C2SMessagePlayerRotation.class, MessageDirection.PLAY_SERVER_BOUND)
                 .build();
     }
 

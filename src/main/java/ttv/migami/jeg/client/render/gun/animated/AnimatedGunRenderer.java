@@ -49,6 +49,7 @@ import ttv.migami.jeg.client.render.gun.animated.model.AttachmentRenderer;
 import ttv.migami.jeg.client.util.PropertyHelper;
 import ttv.migami.jeg.common.GripType;
 import ttv.migami.jeg.common.Gun;
+import ttv.migami.jeg.entity.monster.phantom.terror.TerrorPhantom;
 import ttv.migami.jeg.event.GunFireEvent;
 import ttv.migami.jeg.init.ModEnchantments;
 import ttv.migami.jeg.init.ModItems;
@@ -819,6 +820,8 @@ public class AnimatedGunRenderer extends GeoItemRenderer<AnimatedGunItem> implem
 	{
 		if(Config.CLIENT.display.weaponSway.get() && player != null)
 		{
+			if (player.getVehicle() instanceof TerrorPhantom) return;
+
 			poseStack.translate(x, y, z);
 
 			double zOffset = modifiedGun.getGeneral().getGripType().getHeldAnimation().getFallSwayZOffset();

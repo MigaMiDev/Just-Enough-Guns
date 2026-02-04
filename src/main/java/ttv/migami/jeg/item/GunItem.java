@@ -206,7 +206,7 @@ public class GunItem extends Item implements IColored, IMeta {
                 }
             }
 
-            if (devilFruitsLoaded && KeyBinds.KEY_ATTACHMENTS.getKey() == ttv.migami.mdf.client.KeyBinds.KEY_Z_ACTION.getKey()) {
+            if (devilFruitsLoaded && KeyBinds.KEY_ATTACHMENTS.getKey() == ttv.migami.spas.client.KeyBinds.FRUIT_ACTION.getKey()) {
                 tooltip.add(Component.translatable("info.jeg.attachment_help_mdf", KeyBinds.KEY_ATTACHMENTS.getTranslatedKeyMessage().getString().toUpperCase(Locale.ENGLISH)).withStyle(ChatFormatting.YELLOW));
             } else {
                 tooltip.add(Component.translatable("info.jeg.attachment_help", KeyBinds.KEY_ATTACHMENTS.getTranslatedKeyMessage().getString().toUpperCase(Locale.ENGLISH)).withStyle(ChatFormatting.YELLOW));

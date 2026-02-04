@@ -1,6 +1,5 @@
 package ttv.migami.jeg.entity.projectile;
 
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -22,7 +21,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
 import ttv.migami.jeg.Config;
-import ttv.migami.jeg.JustEnoughGuns;
 import ttv.migami.jeg.common.Gun;
 import ttv.migami.jeg.event.GunProjectileHitEvent;
 import ttv.migami.jeg.faction.Faction;
@@ -106,10 +104,7 @@ public class FlareProjectileEntity extends ProjectileEntity {
             }
         }
 
-        JustEnoughGuns.LOGGER.atInfo().log(this.isCustomColored());
-        JustEnoughGuns.LOGGER.atInfo().log(this.getColor());
-
-        if (this.level() instanceof ClientLevel && (this.tickCount > 1 && this.tickCount < this.life) && this.isCustomColored()) {
+        if (this.level().isClientSide && (this.tickCount > 1 && this.tickCount < this.life) && this.isCustomColored()) {
             int r = (this.getColor() >> 16) & 0xFF;
             int g = (this.getColor() >> 8) & 0xFF;
             int b = this.getColor() & 0xFF;

@@ -59,7 +59,7 @@ import ttv.migami.jeg.item.IColored;
 import ttv.migami.jeg.item.attachment.IAttachment;
 import ttv.migami.jeg.network.PacketHandler;
 import ttv.migami.jeg.network.message.C2SMessageAttachments;
-import ttv.migami.mdf.effect.FruitEffect;
+import ttv.migami.spas.effect.FruitEffect;
 
 import java.lang.reflect.Field;
 import java.nio.file.Files;
@@ -258,7 +258,7 @@ public class ClientHandler {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player != null && mc.screen == null && event.getAction() == GLFW.GLFW_PRESS) {
             if (KeyBinds.KEY_ATTACHMENTS.isDown() && mc.player.getMainHandItem().getItem() != ModItems.FINGER_GUN.get()) {
-                if (devilFruitsLoaded && ttv.migami.mdf.client.KeyBinds.KEY_Z_ACTION.isDown()) {
+                if (devilFruitsLoaded && ttv.migami.spas.client.KeyBinds.FRUIT_ACTION.isDown()) {
                     boolean hasFruitEffect = mc.player.getActiveEffects().stream()
                             .anyMatch(effect -> effect.getEffect() instanceof FruitEffect);
 

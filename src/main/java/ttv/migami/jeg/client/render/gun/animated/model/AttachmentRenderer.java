@@ -71,6 +71,24 @@ public class AttachmentRenderer extends GeoRenderLayer<AnimatedGunItem> {
         ResourceLocation focusModelResource = customModelResource != null ? customModelResource : modelResource;
         ResourceLocation focusTextureResource = customTextureResource != null ? customTextureResource : textureResource;
 
+        if (itemStack.getItem() instanceof SwordItem) {
+            if (itemStack.getItem() != Items.WOODEN_SWORD &&
+                    itemStack.getItem() != Items.STONE_SWORD &&
+                    itemStack.getItem() != Items.IRON_SWORD &&
+                    itemStack.getItem() != Items.GOLDEN_SWORD &&
+                    itemStack.getItem() != Items.DIAMOND_SWORD &&
+                    itemStack.getItem() != Items.NETHERITE_SWORD)
+            {
+                focusModelResource = new ResourceLocation(Reference.MOD_ID, "geo/item/attachment/modded_sword.geo.json");
+                focusTextureResource = DynamicTextureLocator.getItemTexture(itemStack.getItem());
+            }
+            else
+            {
+                focusModelResource = new ResourceLocation(Reference.MOD_ID, "geo/item/attachment/" + itemStack.getItem() + ".geo.json");
+                focusTextureResource = new ResourceLocation(Reference.MOD_ID, "textures/animated/attachment/" + itemStack.getItem() + ".png");
+            }
+        }
+
         if (focusModelResource != null && focusTextureResource != null && itemStack != null) {
             AnimatedGunModel focusModel = new AnimatedGunModel(focusModelResource);
             RenderType focusRenderLayer = RenderType.entityTranslucent(focusTextureResource);

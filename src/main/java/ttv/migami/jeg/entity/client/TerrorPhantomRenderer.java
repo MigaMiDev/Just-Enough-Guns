@@ -5,7 +5,9 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.LivingEntity;
 import org.joml.Vector3d;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
@@ -22,6 +24,12 @@ public class TerrorPhantomRenderer extends GeoEntityRenderer<TerrorPhantom> {
     // Add some particles in the wing
     @Override
     public void renderFinal(PoseStack poseStack, TerrorPhantom animatable, BakedGeoModel model, MultiBufferSource bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        if (animatable.getFirstPassenger() instanceof LivingEntity living) {
+            this.model.getBone("root").ifPresent(root -> {
+                root.setRotX(-living.getXRot() * Mth.DEG_TO_RAD);
+            });
+        }
+
         if (this.currentTick < 0 || this.currentTick != animatable.tickCount) {
             this.currentTick = animatable.tickCount;
 

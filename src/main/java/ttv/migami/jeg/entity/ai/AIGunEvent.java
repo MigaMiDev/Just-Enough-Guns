@@ -132,7 +132,7 @@ public class AIGunEvent {
             );
         }
 
-        if (Config.COMMON.gameplay.mobDynamicLightsOnShooting.get()) {
+        if (Config.COMMON.gameplay.mobDynamicLightsOnShooting.get() && !shooter.isPassenger()) {
             BlockState targetState = shooter.level().getBlockState(BlockPos.containing(shooter.getEyePosition()));
             if (targetState.getBlock() == ModBlocks.BRIGHT_DYNAMIC_LIGHT.get()) {
                 if (getValue(shooter.level(), BlockPos.containing(shooter.getEyePosition()), "Delay") < 1.0) {

@@ -227,6 +227,10 @@ public class BlueprintWorkbenchScreen extends AbstractContainerScreen<BlueprintW
 
     @Override
     protected void renderBg(GuiGraphics pGuiGraphics, float partialTicks, int mouseX, int mouseY) {
+        if (this.displayStack == null) {
+            this.displayStack = Items.AIR.getDefaultInstance();
+        }
+        
         partialTicks = Minecraft.getInstance().getFrameTime();
 
         int startX = this.leftPos;

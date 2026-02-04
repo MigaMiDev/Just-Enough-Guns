@@ -145,7 +145,7 @@ public class AttachmentScreen extends AbstractContainerScreen<AttachmentContaine
                 IAttachment.Type type = IAttachment.Type.values()[i];
                 if(this.menu.getSlot(i).isActive() && this.menu.getSlot(i) instanceof AttachmentSlot slot && slot.getItem().isEmpty())
                 {
-                    if (RenderUtil.isMouseWithin(mouseX, mouseY, startX + x, startY + 26, 18, 18)) {
+                    if (RenderUtil.isMouseWithin(mouseX, mouseY, startX + x, startY + 8, 18, 18)) {
                         pGuiGraphics.renderComponentTooltip(this.font, Arrays.asList(Component.translatable("slot.jeg.attachment." + type.getTranslationKey()), Component.translatable("slot.jeg.attachment.swords").withStyle(ChatFormatting.YELLOW)), mouseX, mouseY);
                     } else {
                         pGuiGraphics.renderComponentTooltip(this.font, Arrays.asList(Component.translatable("slot.jeg.attachment." + type.getTranslationKey())), mouseX, mouseY);

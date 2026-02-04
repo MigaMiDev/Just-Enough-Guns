@@ -60,7 +60,6 @@ public class ItemTagGen extends ItemTagsProvider
                 .add(ModItems.POCKET_BUBBLE.get())
                 .add(ModItems.STUN_GRENADE.get())
                 .add(ModItems.WATER_BOMB.get())
-                .add(ModItems.HEALING_TALISMAN.get())
                 .add(Items.ARROW)
                 .add(Items.TIPPED_ARROW)
                 .add(Items.SPECTRAL_ARROW)

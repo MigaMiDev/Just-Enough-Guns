@@ -15,6 +15,7 @@ import net.minecraftforge.common.ForgeSpawnEggItem;
 import java.util.function.Supplier;
 
 public class GunnerSpawnEggItem extends ForgeSpawnEggItem {
+    private EntityType<? extends Mob> type;
     public GunnerSpawnEggItem(Supplier<? extends EntityType<? extends Mob>> type, int primaryColor, int secondaryColor, Properties properties) {
         super(type, primaryColor, secondaryColor, properties);
     }
@@ -27,7 +28,7 @@ public class GunnerSpawnEggItem extends ForgeSpawnEggItem {
             BlockPos pos = context.getClickedPos().relative(context.getClickedFace());
             ItemStack stack = context.getItemInHand();
 
-            Entity entity = this.getType(null).create(level);
+            Entity entity = this.getType(stack.getTag()).create(level);
             if (entity instanceof PathfinderMob mob) {
                 mob.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, level.getRandom().nextFloat() * 360F, 0);
                 mob.addTag("MobGunner");

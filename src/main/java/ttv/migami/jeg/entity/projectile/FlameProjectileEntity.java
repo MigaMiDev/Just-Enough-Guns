@@ -143,12 +143,12 @@ public class FlameProjectileEntity extends ProjectileEntity {
             if (Config.COMMON.gameplay.dynamicLightsOnShooting.get()) {
                 BlockState targetState = this.level().getBlockState(BlockPos.containing(this.position()));
                 if (targetState.getBlock() == ModBlocks.BRIGHT_DYNAMIC_LIGHT.get()) {
-                    if (getValue(this.level(), BlockPos.containing(this.getEyePosition()), "Delay") < 1.0) {
-                        updateDelayAndNotify(this.level(), BlockPos.containing(this.getEyePosition()), targetState);
+                    if (getValue(this.level(), BlockPos.containing(this.position()), "Delay") < 1.0) {
+                        updateDelayAndNotify(this.level(), BlockPos.containing(this.position()), targetState);
                     }
                 } else if (targetState.getBlock() == Blocks.AIR || targetState.getBlock() == Blocks.CAVE_AIR) {
                     BlockState dynamicLightState = ModBlocks.BRIGHT_DYNAMIC_LIGHT.get().defaultBlockState();
-                    this.level().setBlock(BlockPos.containing(this.getEyePosition()), dynamicLightState, 3);
+                    this.level().setBlock(BlockPos.containing(this.position()), dynamicLightState, 3);
                 }
             }
             if (this.isUnderWater()) {

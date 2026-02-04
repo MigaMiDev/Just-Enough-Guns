@@ -17,9 +17,6 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.function.ToIntFunction;
 
-/**
- * Author: MrCrayfish
- */
 public class ModBlocks {
 
     private static final ToIntFunction<BlockState> light_Level_3 = BlockState -> 3;

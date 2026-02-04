@@ -3,7 +3,6 @@ package ttv.migami.jeg;
 import com.mrcrayfish.framework.api.FrameworkAPI;
 import com.mrcrayfish.framework.api.client.FrameworkClientAPI;
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -120,7 +119,7 @@ public class JustEnoughGuns {
         playerReviveLoaded = ModList.get().isLoaded("playerrevive");
         valkyrienSkiesLoaded = ModList.get().isLoaded("valkyrienskies");
         yungsNetherFortLoaded = ModList.get().isLoaded("betterfortresses");
-        devilFruitsLoaded = ModList.get().isLoaded("mdf");
+        devilFruitsLoaded = ModList.get().isLoaded("spas");
         gunnersLoaded = ModList.get().isLoaded("gunners");
         recruitsLoaded = ModList.get().isLoaded("recruits");
         guardsLoaded = ModList.get().isLoaded("guardvillagers");
@@ -172,7 +171,6 @@ public class JustEnoughGuns {
     private void onClientSetup(FMLClientSetupEvent event) {
         EntityRenderers.register(ModEntities.RAID_ENTITY.get(), RaidEntityRenderer::new);
         EntityRenderers.register(ModEntities.TERROR_RAID_ENTITY.get(), TerrorRaidEntityRenderer::new);
-        EntityRenderers.register(ModEntities.HEALING_TALISMAN.get(), ThrownItemRenderer::new);
         EntityRenderers.register(ModEntities.GHOUL.get(), GhoulRenderer::new);
         EntityRenderers.register(ModEntities.BOO.get(), BooRenderer::new);
         EntityRenderers.register(ModEntities.TERROR_PHANMTOM.get(), TerrorPhantomRenderer::new);

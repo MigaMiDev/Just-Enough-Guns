@@ -59,6 +59,7 @@ import ttv.migami.jeg.common.Gun;
 import ttv.migami.jeg.common.Gun.Projectile;
 import ttv.migami.jeg.common.SpreadTracker;
 import ttv.migami.jeg.entity.DynamicHelmet;
+import ttv.migami.jeg.entity.monster.phantom.terror.TerrorPhantom;
 import ttv.migami.jeg.event.GunProjectileHitEvent;
 import ttv.migami.jeg.event.KillEffectEvent;
 import ttv.migami.jeg.init.*;
@@ -208,8 +209,15 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
         // Big thanks to both of them for this fix!
         gunSpread = Math.min(gunSpread, 170F) * 0.5F * Mth.DEG_TO_RAD;
 
-        Vec3 vecforwards = this.getVectorFromRotation(shooter.getXRot(), shooter.getYRot());
-        Vec3 vecupwards = this.getVectorFromRotation(shooter.getXRot() + 90F, shooter.getYRot());
+        Vec3 vecforwards;
+        Vec3 vecupwards;
+        if (shooter.getVehicle() instanceof TerrorPhantom terrorPhantom) {
+            vecforwards = this.getVectorFromRotation(terrorPhantom.travelPitch, terrorPhantom.travelYaw);
+            vecupwards = this.getVectorFromRotation(terrorPhantom.travelPitch + 90F, terrorPhantom.travelYaw);
+        } else {
+            vecforwards = this.getVectorFromRotation(shooter.getXRot(), shooter.getYRot());
+            vecupwards = this.getVectorFromRotation(shooter.getXRot() + 90F, shooter.getYRot());
+        }
         Vec3 vecsideways = vecforwards.cross(vecupwards);
 
         float theta = random.nextFloat() * 2F * (float) Math.PI;
@@ -995,7 +1003,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 
         if (entity instanceof LivingEntity livingEntity) {
             if (JustEnoughGuns.devilFruitsLoaded && this.projectile.hitsRubberFruit() &&
-                    livingEntity.hasEffect(ttv.migami.mdf.init.ModEffects.RUBBER_FRUIT.get())) {
+                    livingEntity.hasEffect(ttv.migami.spas.init.ModEffects.RUBBER_FRUIT.get())) {
                 entity.push(this);
                 return;
             }
@@ -1049,7 +1057,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
             }
         }
 
-        if (!entity.level().isClientSide) {
+        if (!entity.level().isClientSide && entity instanceof LivingEntity) {
             ((ServerLevel) entity.level()).sendParticles(ParticleTypes.DAMAGE_INDICATOR, entity.getX(), entity.getY(), entity.getZ(), (int) damage / 2, entity.getBbWidth() / 2, entity.getBbHeight() / 2, entity.getBbWidth() / 2, 0.1);
         }
 

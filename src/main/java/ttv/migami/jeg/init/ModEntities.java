@@ -10,7 +10,6 @@ import net.minecraftforge.registries.RegistryObject;
 import ttv.migami.jeg.Reference;
 import ttv.migami.jeg.entity.Bubble;
 import ttv.migami.jeg.entity.DynamicHelmet;
-import ttv.migami.jeg.entity.HealingTalismanEntity;
 import ttv.migami.jeg.entity.Splash;
 import ttv.migami.jeg.entity.animal.Boo;
 import ttv.migami.jeg.entity.monster.Ghoul;
@@ -52,7 +51,6 @@ public class ModEntities
     public static final RegistryObject<EntityType<ThrowableStunGrenadeEntity>> THROWABLE_STUN_GRENADE = registerBasic("throwable_stun_grenade", ThrowableStunGrenadeEntity::new);
     public static final RegistryObject<EntityType<ThrowableSmokeGrenadeEntity>> THROWABLE_SMOKE_GRENADE = registerBasic("throwable_smoke_grenade", ThrowableSmokeGrenadeEntity::new);
     public static final RegistryObject<EntityType<ThrowableMolotovCocktailEntity>> THROWABLE_MOLOTOV_COCKTAIL = registerBasic("throwable_molotov_cocktail", ThrowableMolotovCocktailEntity::new);
-    public static final RegistryObject<EntityType<HealingTalismanEntity>> HEALING_TALISMAN = registerBasic("healing_talisman", HealingTalismanEntity::new);
     public static final RegistryObject<EntityType<ThrowableWaterBombEntity>> THROWABLE_WATER_BOMB = registerBasic("throwable_water_bomb", ThrowableWaterBombEntity::new);
     public static final RegistryObject<EntityType<ThrowablePocketBubbleEntity>> THROWABLE_POCKET_BUBBLE = registerBasic("throwable_pocket_bubble", ThrowablePocketBubbleEntity::new);
     public static final RegistryObject<EntityType<ThrowableFlareEntity>> THROWABLE_FLARE = registerBasic("throwable_flare", ThrowableFlareEntity::new);
@@ -65,7 +63,7 @@ public class ModEntities
     /* Mobs */
     public static final RegistryObject<EntityType<Ghoul>> GHOUL = REGISTER.register("ghoul", () -> EntityType.Builder.of(Ghoul::new, MobCategory.MONSTER).sized(0.6F, 1.95F).build("ghoul"));
     public static final RegistryObject<EntityType<Boo>> BOO = REGISTER.register("boo", () -> EntityType.Builder.of(Boo::new, MobCategory.CREATURE).sized(0.7F, 0.6F).fireImmune().build("boo"));
-    public static final RegistryObject<EntityType<TerrorPhantom>> TERROR_PHANMTOM = REGISTER.register("terror_phantom", () -> EntityType.Builder.of(TerrorPhantom::new, MobCategory.MONSTER).sized(6.0F, 2.0F).fireImmune().build("terror_phantom"));
+    public static final RegistryObject<EntityType<TerrorPhantom>> TERROR_PHANMTOM = REGISTER.register("terror_phantom", () -> EntityType.Builder.of(TerrorPhantom::new, MobCategory.MONSTER).sized(5.0F, 2.0F).fireImmune().build("terror_phantom"));
     public static final RegistryObject<EntityType<PhantomGunner>> PHANTOM_GUNNER = REGISTER.register("phantom_gunner", () -> EntityType.Builder.of(PhantomGunner::new, MobCategory.MONSTER).sized(4.0F, 1.0F).fireImmune().build("phantom_gunner"));
 
     /* Custom */
