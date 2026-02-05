@@ -277,7 +277,11 @@ public class BlockTagGen extends BlockTagsProvider
                 .add(Blocks.INFESTED_MOSSY_STONE_BRICKS)
                 .add(Blocks.INFESTED_DEEPSLATE)
                 .add(ModBlocks.GUNMETAL_WORKBENCH.get())
-                .add(Blocks.DRIPSTONE_BLOCK);
+                .add(Blocks.DRIPSTONE_BLOCK)
+                .add(Blocks.BASALT)
+                .add(Blocks.SMOOTH_BASALT)
+                .add(Blocks.POLISHED_BASALT)
+                .add(Blocks.NETHERRACK);
 
         this.tag(ModTags.Blocks.WOOD)
                 .add(Blocks.OAK_LOG)
