@@ -127,6 +127,7 @@ public class ThrowableGrenadeEntity extends ThrowableItemEntity
     @Override
     public void onDeath()
     {
+        this.spawnLight(this.getOnPos());
         if (this.playerOwnedTerrorPhantom) {
             if (this.level() instanceof ServerLevel serverLevel) {
                 double radius = 10.0;

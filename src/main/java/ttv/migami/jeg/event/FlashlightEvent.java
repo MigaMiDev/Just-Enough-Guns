@@ -22,6 +22,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.*;
@@ -57,7 +58,11 @@ public class FlashlightEvent {
         Player player = event.player;
         boolean isAiming = ModSyncedDataKeys.AIMING.getValue(player);
 
-        if (player.isSprinting()) {
+        if (player.isDeadOrDying()) {
+            return;
+        }
+
+        if (player.isSprinting() && !player.getCooldowns().isOnCooldown(player.getMainHandItem().getItem())) {
             return;
         }
 
@@ -115,7 +120,7 @@ public class FlashlightEvent {
             return;
         }
 
-        if (player.isSprinting()) {
+        if (player.isSprinting() && !player.getCooldowns().isOnCooldown(player.getMainHandItem().getItem())) {
             return;
         }
 
@@ -186,12 +191,20 @@ public class FlashlightEvent {
                         ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player)).getBlockPos();
 
                 BlockState targetState = world.getBlockState(targetPos);
-                if (targetState.getBlock() == ModBlocks.DYNAMIC_LIGHT.get()) {
-                    if (getValue(world, targetPos, "Delay") < 5.0) {
-                        updateDelayAndNotify(world, targetPos, targetState);
+                if (targetState.is(ModBlocks.DYNAMIC_LIGHT.get())) {
+                    BlockEntity be = world.getBlockEntity(targetPos);
+                    if (be != null) {
+                        be.getPersistentData().putDouble("Delay", 2.0);
                     }
                 } else if (targetState.getBlock() == Blocks.AIR || targetState.getBlock() == Blocks.CAVE_AIR) {
                     BlockState dynamicLightState = ModBlocks.DYNAMIC_LIGHT.get().defaultBlockState();
+                    world.setBlock(targetPos, dynamicLightState, 3);
+                } else if (targetState.getBlock() == Blocks.WATER) {
+                    //BlockState dynamicLightState = ModBlocks.DYNAMIC_LIGHT.get().defaultBlockState();
+                    //dynamicLightState.setValue(BlockStateProperties.WATERLOGGED, true);
+                    BlockState dynamicLightState = ModBlocks.DYNAMIC_LIGHT.get()
+                            .defaultBlockState()
+                            .setValue(BlockStateProperties.WATERLOGGED, true);
                     world.setBlock(targetPos, dynamicLightState, 3);
                 }
 

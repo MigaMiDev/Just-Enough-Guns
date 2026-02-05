@@ -1115,6 +1115,9 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 
             }
         }
+
+        this.level().updateNeighborsAt(pos, level().getBlockState(pos).getBlock());
+        this.level().scheduleTick(pos, level().getBlockState(pos).getBlock(), 1);
     }
 
     public void updateHeading()

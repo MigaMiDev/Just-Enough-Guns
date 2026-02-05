@@ -68,6 +68,7 @@ public class ThrowableStunGrenadeEntity extends ThrowableGrenadeEntity
     @Override
     public void onDeath()
     {
+        this.spawnLight(this.getOnPos());
         double y = this.getY() + this.getType().getDimensions().height * 0.5;
         this.level().playSound(null, this.getX(), y, this.getZ(), ModSounds.ENTITY_STUN_GRENADE_EXPLOSION.get(), SoundSource.BLOCKS, 2, (1 + (level().random.nextFloat() - level().random.nextFloat()) * 0.2F) * 0.7F);
         if(this.level().isClientSide)

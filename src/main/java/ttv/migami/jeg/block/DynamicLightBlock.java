@@ -14,7 +14,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.MapColor;
@@ -26,12 +25,10 @@ import ttv.migami.jeg.blockentity.DynamicLightBlockEntity;
 
 public class DynamicLightBlock extends Block implements SimpleWaterloggedBlock, EntityBlock {
     public static final BooleanProperty WATERLOGGED;
-    public static final IntegerProperty AGE;
 
     public DynamicLightBlock() {
         super(Properties.of().randomTicks().liquid().mapColor(MapColor.NONE).sound(SoundType.GLASS).strength(1.0F, 10.0F).lightLevel((s) -> 8).noCollission().noOcclusion().pushReaction(PushReaction.IGNORE).isRedstoneConductor((bs, br, bp) -> false));
         this.registerDefaultState(this.getStateDefinition().any()
-                .setValue(AGE, 0)
                 .setValue(WATERLOGGED, false));
     }
 
@@ -52,7 +49,7 @@ public class DynamicLightBlock extends Block implements SimpleWaterloggedBlock, 
     }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(AGE, WATERLOGGED);
+        builder.add(WATERLOGGED);
     }
 
     public BlockState getStateForPlacement(BlockPlaceContext context) {
@@ -78,7 +75,7 @@ public class DynamicLightBlock extends Block implements SimpleWaterloggedBlock, 
 
     public void onPlace(BlockState blockstate, Level world, BlockPos pos, BlockState oldState, boolean moving) {
         super.onPlace(blockstate, world, pos, oldState, moving);
-        world.scheduleTick(pos, this, 1);
+        world.scheduleTick(pos, this, 2);
         removeDelay(world, pos.getX(), pos.getY(), pos.getZ());
     }
 
@@ -86,8 +83,8 @@ public class DynamicLightBlock extends Block implements SimpleWaterloggedBlock, 
         if (!world.isClientSide()) {
             BlockPos blockPos = BlockPos.containing(x, y, z);
             BlockEntity blockEntity = world.getBlockEntity(blockPos);
-            if (blockEntity != null && blockEntity.getPersistentData().getDouble("Delay") != 5.0) {
-                blockEntity.getPersistentData().putDouble("Delay", 5.0);
+            if (blockEntity != null && blockEntity.getPersistentData().getDouble("Delay") != 2.0) {
+                blockEntity.getPersistentData().putDouble("Delay", 2.0);
                 if (world instanceof Level level) {
                     level.sendBlockUpdated(blockPos, world.getBlockState(blockPos), world.getBlockState(blockPos), 3);
                 }
@@ -95,34 +92,10 @@ public class DynamicLightBlock extends Block implements SimpleWaterloggedBlock, 
         }
     }
 
-    public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
-        this.tick(pState, pLevel, pPos, pRandom);
-    }
-
-    public void tick(BlockState blockstate, ServerLevel world, BlockPos pos, RandomSource random) {
-        super.tick(blockstate, world, pos, random);
-        int x = pos.getX();
-        int y = pos.getY();
-        int z = pos.getZ();
-        //execute(world, (double)x, (double)y, (double)z);
-        vanish(blockstate, world, pos);
-        world.scheduleTick(pos, this, 1);
-    }
-
-    private boolean vanish(BlockState pState, Level pLevel, BlockPos pPos) {
-        int $$3 = pState.getValue(AGE);
-        if ($$3 < 1) {
-            pLevel.setBlock(pPos, (BlockState) pState.setValue(AGE, $$3 + 1), 2);
-            pLevel.scheduleTick(pPos, this, 2);
-            return false;
-        } else {
-            BlockState currentState = pLevel.getBlockState(pPos);
-            BlockState newState = currentState.getFluidState().isSource() ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState();
-            if (currentState != newState) {
-                pLevel.setBlock(pPos, newState, 3);
-            }
-            return true;
-        }
+    @Override
+    public void tick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
+        execute(world, pos.getX(), pos.getY(), pos.getZ());
+        world.scheduleTick(pos, this, 2);
     }
 
     public static void execute(LevelAccessor world, double x, double y, double z) {
@@ -137,9 +110,11 @@ public class DynamicLightBlock extends Block implements SimpleWaterloggedBlock, 
                 }
             } else {
                 BlockState currentState = world.getBlockState(blockPos);
-                BlockState newState = currentState.getFluidState().isSource() ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState();
-                if (currentState != newState) {
-                    world.setBlock(blockPos, newState, 3);
+
+                if (currentState.hasProperty(WATERLOGGED) && currentState.getValue(WATERLOGGED)) {
+                    world.setBlock(blockPos, Blocks.WATER.defaultBlockState(), 3);
+                } else {
+                    world.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
                 }
             }
         }
@@ -155,7 +130,6 @@ public class DynamicLightBlock extends Block implements SimpleWaterloggedBlock, 
     }
 
     static {
-        AGE = BlockStateProperties.AGE_2;
         WATERLOGGED = BlockStateProperties.WATERLOGGED;
     }
 }
