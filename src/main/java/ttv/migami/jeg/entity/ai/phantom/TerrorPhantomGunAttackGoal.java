@@ -93,7 +93,7 @@ public class TerrorPhantomGunAttackGoal<T extends PathfinderMob> extends Goal {
 
     private void shoot(LivingEntity target, Gun gun) {
         ItemStack heldItem = this.shooter.getMainHandItem();
-        AIGunEvent.performGunAttack(this.shooter, target, heldItem, gun, this.spreadModifier);
+        AIGunEvent.performGunAttack(this.shooter, target, heldItem, gun, this.spreadModifier, false);
         this.attackTime = gun.getGeneral().getRate() + 1;
         ejectCasing(this.shooter.level(), this.shooter);
         ResourceLocation fireSound = gun.getSounds().getFire();

@@ -78,7 +78,7 @@ public class AIGunEvent {
         }
     }*/
 
-    public static void performGunAttack(Mob shooter, LivingEntity target, ItemStack itemStack, Gun modifiedGun, float spreadModifier) {
+    public static void performGunAttack(Mob shooter, LivingEntity target, ItemStack itemStack, Gun modifiedGun, float spreadModifier, boolean slowShot) {
         final Level level = shooter.level();
         if (level.isClientSide()) return;
         int count = modifiedGun.getGeneral().getProjectileAmount();
@@ -102,7 +102,7 @@ public class AIGunEvent {
             double speedModifier = GunEnchantmentHelper.getProjectileSpeedModifier(itemStack);
             double speed = GunModifierHelper.getModifiedProjectileSpeed(itemStack, projectileEntity.getProjectile().getSpeed() * speedModifier);
 
-            if (shooter instanceof PhantomGunner || shooter instanceof TerrorPhantom) {
+            if (shooter instanceof PhantomGunner || shooter instanceof TerrorPhantom || slowShot) {
                 speed = 6.0F;
             }
 

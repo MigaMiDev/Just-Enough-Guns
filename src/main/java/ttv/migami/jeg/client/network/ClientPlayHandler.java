@@ -22,18 +22,17 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 import ttv.migami.jeg.Config;
-import ttv.migami.jeg.JustEnoughGuns;
 import ttv.migami.jeg.client.BulletTrail;
 import ttv.migami.jeg.client.CustomGunManager;
 import ttv.migami.jeg.client.audio.GunShotSound;
 import ttv.migami.jeg.client.handler.BulletTrailRenderingHandler;
 import ttv.migami.jeg.client.handler.GunRenderingHandler;
 import ttv.migami.jeg.common.Gun;
-import ttv.migami.jeg.init.ModTags;
 import ttv.migami.jeg.common.NetworkGunManager;
 import ttv.migami.jeg.init.ModItems;
 import ttv.migami.jeg.init.ModParticleTypes;
 import ttv.migami.jeg.init.ModSounds;
+import ttv.migami.jeg.init.ModTags;
 import ttv.migami.jeg.item.attachment.IAttachment;
 import ttv.migami.jeg.network.message.*;
 import ttv.migami.jeg.particles.BulletHoleData;
@@ -225,7 +224,6 @@ public class ClientPlayHandler
                 }
             }
             if (((state.is(BlockTags.MINEABLE_WITH_AXE)) || state.is(ModTags.Blocks.WOOD)) || soundType.equals(SoundType.WOOD)) {
-                JustEnoughGuns.LOGGER.atInfo().log("wiuri");
                 world.playLocalSound(message.getX(), message.getY(), message.getZ(), ModSounds.WOOD_HIT.get(), SoundSource.BLOCKS, 0.4F, 1.0F, false);
                 world.addParticle(ParticleTypes.CLOUD, false, message.getX(), message.getY(), message.getZ(), motion.x * RANDOM.nextFloat() / 10, motion.y * RANDOM.nextFloat() / 10, motion.z * RANDOM.nextFloat() / 10);
             }

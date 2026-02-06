@@ -304,7 +304,7 @@ public class GunAttackGoal<T extends PathfinderMob> extends Goal {
         if (heldItem.getItem() == ModItems.SUPERSONIC_SHOTGUN.get()) {
             GunEventBus.soundwaveBlast(this.shooter.level(), this.shooter, Gun.getAdditionalDamage(heldItem), gun);
         } else {
-            AIGunEvent.performGunAttack(this.shooter, target, heldItem, gun, this.spreadModifier);
+            AIGunEvent.performGunAttack(this.shooter, target, heldItem, gun, this.spreadModifier, false);
         }
         this.attackTime = gun.getGeneral().getRate();
         consumeAmmo(heldItem);
