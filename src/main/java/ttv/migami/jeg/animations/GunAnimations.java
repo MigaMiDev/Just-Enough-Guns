@@ -155,6 +155,7 @@ public final class GunAnimations {
                 }
             }
 
+            if (GunAnimations.isAnimationPlaying(state.getController(), "reload") && !state.getController().hasAnimationFinished()) return state.setAndContinue(RELOAD);
             state.setAndContinue(IDLE);
 
             return PlayState.CONTINUE;
